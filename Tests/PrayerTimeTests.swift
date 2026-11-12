@@ -94,8 +94,10 @@ struct PrayerTimeTests {
         settings.notify = [.fajr]
         settings.reminderMinutes = 30
         let early = AppModel.planned(from: date(2027, 2, 20), place: amsterdam, settings: settings)
-        #expect(early.contains { $0.id.hasPrefix("suhoor") })
-        #expect(!early.contains { $0.id.hasPrefix("before-fajr") })
+        let suhoorTimes = Set(early.filter { $0.id.hasPrefix("suhoor") }.map(\.date))
+        #expect(!suhoorTimes.isEmpty)
+        #expect(!early.contains { $0.id.hasPrefix("before-fajr") && suhoorTimes.contains($0.date) })
+        #expect(early.contains { $0.id.hasPrefix("before-fajr") })  // after Ramadan they come back
     }
 
     @Test func ramadanStartFromBeforeAndDuring() throws {
