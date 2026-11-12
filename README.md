@@ -18,9 +18,9 @@ On the App Store as "Wajh: Qibla & Prayer Times".
 - **Map:** the Qibla as a line to the Kaaba, and mosques nearby.
 - **Tasbih:** a tap counter with haptics. **Tracker:** fasts and missed prayers, kept on the phone.
 - **Siri:** "When is Maghrib in Qibla & Prayer?" without opening the app.
-- **Widgets:** the next prayer with a countdown on the Home Screen and Lock Screen, and an iftar
-  countdown on the Lock Screen and in the Dynamic Island (a Live Activity, from the Ramadan card or
-  the Tracker).
+- **Iftar countdown:** on the Lock Screen and in the Dynamic Island (a Live Activity, from the Ramadan
+  card or the Tracker). The Next prayer widgets are built but off until the App Group is registered in
+  the developer portal (see `Widgets/PrayerWidgets.swift`).
 - **Location:** the phone's location, or a city picked with Apple Maps search.
 
 ## Building

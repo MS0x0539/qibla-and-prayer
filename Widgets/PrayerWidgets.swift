@@ -5,7 +5,10 @@ import WidgetKit
 @main
 struct PrayerWidgets: WidgetBundle {
     var body: some Widget {
-        NextPrayerWidget()
+        // shortcut: the Next prayer widget needs the App Group, which only the developer portal can
+        // register (API keys get a 401). Once it is: add NextPrayerWidget() back here, set
+        // CODE_SIGN_ENTITLEMENTS in project.yml, restore the App Group in SharedStore and ios.yml's
+        // ad hoc signing step (all in the commit that removed them).
         IftarLiveActivity()
     }
 }

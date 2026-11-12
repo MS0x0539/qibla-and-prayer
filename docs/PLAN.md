@@ -33,13 +33,16 @@ Apple-like and calm, in the "Geometry" look: deep green-black, gold, the eight-p
 - **Siri and Shortcuts:** "When is the next prayer" and "When is Maghrib", answered without opening
   the app; phrases in all six languages.
 - **Background refresh:** iOS wakes the app now and then to top up the notifications (at most 64 wait).
-- **Widgets:** next prayer, its time and a countdown (Home Screen small; Lock Screen rectangular and
-  inline). The iftar countdown as a Live Activity (Lock Screen and Dynamic Island), started from the
-  Ramadan card or from "I'm fasting today" in the Tracker. Settings and place reach the widget
-  extension through the App Group `group.org.psbv.qiblaandprayer`; the TestFlight job ad hoc signs the
-  archive with the entitlements so the export keeps them.
+- **Iftar countdown:** a Live Activity (Lock Screen and Dynamic Island), started from the Ramadan card
+  or from "I'm fasting today" in the Tracker. It needs no App Group, so it ships now.
+- **Next prayer widgets (built, switched off):** next prayer, its time and a countdown (Home Screen
+  small; Lock Screen rectangular and inline). They read the settings and place through the App Group
+  `group.org.psbv.qiblaandprayer`, which App Store Connect API keys can't register or assign (HTTP 401,
+  "Authentication failed" in the export). First register the group in the developer portal and assign it
+  to `org.psbv.qiblaandprayer` and `org.psbv.qiblaandprayer.widgets`; then follow the shortcut comment in
+  `Widgets/PrayerWidgets.swift`.
 - **Settings:** location, madhab, method, Asr, per-prayer minute adjustments, Hijri date ±2 days,
-  notifications with a test button, language, setup again, About ("Made by" still empty).
+  notifications with a test button, language, setup again, About ("Made by Melih Sivrikaya").
 - **Correctness from research:** Diyanet's Asr is the standard (first-shadow) time; Diyanet outside
   Turkey uses Isha at 16°; Umm al-Qura adds 30 minutes to Isha in Ramadan; above 48° the one-seventh-
   of-the-night rule applies; times are computed in the place's own time zone.
@@ -53,16 +56,14 @@ The repository is private: about 190 free macOS minutes a month on GitHub Free.
 
 ## Open decisions
 
-1. **Name under the icon.** The App Store Connect record is "Wajh: Qibla & Prayer Times"; the home-screen
-   name is still the working name "Qibla & Prayer". (Bundle ID `org.psbv.qiblaandprayer`, settled.)
-2. **Diyanet in the Netherlands, Belgium and Germany.** In spring and summer Diyanet's tables there use
+1. **Diyanet in the Netherlands, Belgium and Germany.** In spring and summer Diyanet's tables there use
    their own estimates; the app can be up to about 30 minutes off for Fajr and Isha. Options: copy the
    estimation rule into the app (about ±5 minutes on most days, re-check yearly), fetch Diyanet's official
    times online (needs a server or API account), or keep the note shown now.
-3. **Public or private repository.** Public makes macOS builds free and unlimited.
-4. **Details:** Dutch prayer names in English spelling (Fajr) or Dutch (Fadjr); France's default
+2. **Public or private repository.** Public makes macOS builds free and unlimited.
+3. **Details:** Dutch prayer names in English spelling (Fajr) or Dutch (Fadjr); France's default
    (Muslim World League or 12°); Hanafi Asr as the default in Pakistan and India.
-5. **Translations** were drafted by Claude; a native speaker should check the religious terms.
+4. **Translations** were drafted by Claude; a native speaker should check the religious terms.
 
 ## Before the first TestFlight build (owner, in App Store Connect)
 

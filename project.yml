@@ -32,8 +32,8 @@ targets:
         # Registered as an explicit App ID in the developer account; it can't change after the first upload.
         PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer
         TARGETED_DEVICE_FAMILY: "1"
-        # The App Group the widgets read the settings and place from.
-        CODE_SIGN_ENTITLEMENTS: App/QiblaAndPrayer.entitlements
+        # No CODE_SIGN_ENTITLEMENTS until the App Group is registered in the developer portal; then
+        # App/QiblaAndPrayer.entitlements here and Widgets/Widgets.entitlements on the widgets target.
         GENERATE_INFOPLIST_FILE: "YES"
         # Background refresh and Siri's alternative names (arrays); merged with the keys below.
         INFOPLIST_FILE: App/Info.plist
@@ -48,7 +48,8 @@ targets:
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: "NO"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         LOCALIZATION_PREFERS_STRING_CATALOGS: "YES"
-  # Home Screen and Lock Screen widgets and the iftar Live Activity. Shares the calculation with the app.
+  # The iftar Live Activity; the Next prayer widgets return once the App Group is registered.
+  # Shares the calculation with the app.
   QiblaAndPrayerWidgets:
     type: app-extension
     platform: iOS
@@ -68,7 +69,6 @@ targets:
         GENERATE_INFOPLIST_FILE: "YES"
         INFOPLIST_FILE: Widgets/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: "Qibla & Prayer"
-        CODE_SIGN_ENTITLEMENTS: Widgets/Widgets.entitlements
         LOCALIZATION_PREFERS_STRING_CATALOGS: "YES"
         SKIP_INSTALL: "YES"
   QiblaAndPrayerTests:
