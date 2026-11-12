@@ -82,8 +82,7 @@ enum Prayers {
             params.ishaAngle = 16
         }
         // Umm al-Qura puts Isha 30 minutes later in Ramadan (2 hours after Maghrib).
-        if settings.method == .ummAlQura,
-           Calendar(identifier: .islamicUmmAlQura).dateComponents(in: place.timeZone, from: date).month == 9 {
+        if settings.method == .ummAlQura, hijri(of: date, place: place, offset: settings.hijriOffset).month == 9 {
             params.adjustments.isha += 30
         }
         guard let times = PrayerTimes(coordinates: place.coordinates, date: day, calculationParameters: params) else {
@@ -97,6 +96,16 @@ enum Prayers {
             PrayerTime(kind: .maghrib, time: times.maghrib),
             PrayerTime(kind: .isha, time: times.isha),
         ]
+    }
+
+    /// The Hijri date (month, day, year) of a Gregorian day, moved by the user's offset.
+    static func hijri(of day: Date, place: Place, offset: Int) -> DateComponents {
+        var hijri = Calendar(identifier: .islamicUmmAlQura)
+        hijri.timeZone = place.timeZone
+        // Noon keeps daylight-saving changes from moving the day.
+        let noon = place.calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day) ?? day
+        let shifted = place.calendar.date(byAdding: .day, value: offset, to: noon) ?? noon
+        return hijri.dateComponents([.year, .month, .day], from: shifted)
     }
 
     /// The next prayer after `now` (sunrise skipped); after Isha that is tomorrow's Fajr.

@@ -7,12 +7,13 @@ import Foundation
 extension PrayerKind: AppEnum {
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Prayer"
     static let caseDisplayRepresentations: [PrayerKind: DisplayRepresentation] = [
-        .fajr: "Fajr",
+        // Other spellings Siri may hear.
+        .fajr: DisplayRepresentation(title: "Fajr", synonyms: ["Subh", "Fadjr"]),
         .sunrise: "Sunrise",
-        .dhuhr: "Dhuhr",
+        .dhuhr: DisplayRepresentation(title: "Dhuhr", synonyms: ["Zuhr", "Duhr", "Zohr"]),
         .asr: "Asr",
-        .maghrib: "Maghrib",
-        .isha: "Isha",
+        .maghrib: DisplayRepresentation(title: "Maghrib", synonyms: ["Magrib", "Maghreb"]),
+        .isha: DisplayRepresentation(title: "Isha", synonyms: ["Ishaa", "Esha"]),
     ]
 }
 
@@ -59,11 +60,28 @@ struct PrayerShortcuts: AppShortcutsProvider {
     }
 }
 
-/// Siri's answers, in the app's language like the rest of the app.
+/// Siri's answers, in the iPhone's language: Siri listens and speaks in that one, whatever language
+/// is picked inside the app.
 @MainActor
 enum PrayerAnswers {
     static func next(after now: Date) -> String {
-        guard let saved = load() else { return noPlace }
+        inSystemLanguage { nextAnswer(after: now) }
+    }
+
+    static func time(of kind: PrayerKind, after now: Date) -> String {
+        inSystemLanguage { timeAnswer(of: kind, after: now) }
+    }
+
+    /// Runs on the main actor like the app's views, so they never see the switched language.
+    private static func inSystemLanguage(_ answer: () -> String) -> String {
+        let chosen = AppLanguage.current
+        AppLanguage.current = .system
+        defer { AppLanguage.current = chosen }
+        return answer()
+    }
+
+    private static func nextAnswer(after now: Date) -> String {
+        guard let saved = SharedStore.saved() else { return noPlace }
         guard let next = Prayers.next(after: now, place: saved.place, settings: saved.settings) else {
             return cannotCalculate
         }
@@ -74,8 +92,8 @@ enum PrayerAnswers {
     }
 
     /// The next time this prayer begins: today's, or tomorrow's once today's has passed.
-    static func time(of kind: PrayerKind, after now: Date) -> String {
-        guard let saved = load() else { return noPlace }
+    private static func timeAnswer(of kind: PrayerKind, after now: Date) -> String {
+        guard let saved = SharedStore.saved() else { return noPlace }
         let place = saved.place
         for offset in 0...1 {
             guard let day = place.calendar.date(byAdding: .day, value: offset, to: now),
@@ -96,13 +114,5 @@ enum PrayerAnswers {
 
     private static var cannotCalculate: String {
         String(localized: "Prayer times can't be calculated for this place today. This can happen close to the poles.", bundle: .app)
-    }
-
-    /// The saved settings and place, with the text switched to the app's language as the app does.
-    private static func load() -> (settings: AppSettings, place: Place)? {
-        if let settings = SharedStore.load(AppSettings.self, from: "settings") {
-            AppLanguage.current = settings.language
-        }
-        return SharedStore.saved()
     }
 }

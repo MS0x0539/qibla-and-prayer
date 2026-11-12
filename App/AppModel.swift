@@ -76,6 +76,11 @@ final class AppModel {
             self.currentPlace = place
         }
         UNUserNotificationCenter.current().delegate = presenter
+        // Settings saved by versions before the widgets live only in the app's own defaults: copy them
+        // to the App Group now (setting them above doesn't run didSet), so the widgets find them.
+        SharedStore.save(settings, as: "settings")
+        SharedStore.save(currentPlace, as: "currentPlace")
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     var place: Place? { settings.useCurrentLocation ? currentPlace : settings.city }
@@ -195,9 +200,16 @@ final class AppModel {
 
     var liveActivitiesEnabled: Bool { ActivityAuthorizationInfo().areActivitiesEnabled }
 
+    /// iOS ends a Live Activity after 8 hours, so the countdown is offered only that close to iftar.
+    func canCountDown(to iftar: Date, from now: Date) -> Bool {
+        iftar > now && iftar.timeIntervalSince(now) <= 8 * 3600 && liveActivitiesEnabled
+    }
+
     /// Today's iftar (Maghrib) as a countdown on the Lock Screen and in the Dynamic Island.
     func startIftarCountdown() {
-        guard let place, let maghrib = times(on: .now, at: place)?[4].time, maghrib > .now else { return }
+        guard let place, let maghrib = times(on: .now, at: place)?[4].time, canCountDown(to: maghrib, from: .now) else {
+            return
+        }
         let attributes = IftarAttributes(
             title: String(localized: "Iftar", bundle: .app),
             place: place.displayName,
@@ -216,7 +228,7 @@ final class AppModel {
     }
 
     /// Clears countdowns whose iftar is more than half an hour ago, when the app comes back.
-    private func endPastCountdowns() {
+    func endPastCountdowns() {
         Task {
             for activity in Activity<IftarAttributes>.activities
             where activity.content.state.iftar < Date.now.addingTimeInterval(-1_800) {
@@ -261,7 +273,7 @@ final class AppModel {
             guard let day = calendar.date(byAdding: .day, value: offset, to: now),
                   let times = Prayers.compute(on: day, place: place, settings: settings) else { continue }
             let ramadan = settings.ramadanReminders
-                && hijri(of: day, place: place, offset: settings.hijriOffset).month == 9
+                && Prayers.hijri(of: day, place: place, offset: settings.hijriOffset).month == 9
             for item in times where item.kind.isPrayer {
                 let title = item.kind.title(on: item.time, in: zone)
                 let time = Formats.time(item.time, in: zone)
@@ -273,7 +285,8 @@ final class AppModel {
                     add(item.kind.rawValue, item.time, title, ramadan && item.kind == .maghrib
                         ? String(localized: "Time for \(title) and iftar.", bundle: .app)
                         : String(localized: "Time for \(title).", bundle: .app))
-                    if before > 0 {
+                    // In Ramadan the suhoor reminder already comes 30 minutes before Fajr.
+                    if before > 0 && !(ramadan && item.kind == .fajr && before == 30) {
                         add("before-\(item.kind.rawValue)", item.time.addingTimeInterval(Double(-before * 60)), title,
                             String(localized: "\(title) begins in \(before) minutes, at \(time).", bundle: .app))
                     }
@@ -310,13 +323,16 @@ final class AppModel {
         let status = await center.notificationSettings().authorizationStatus
         notificationStatus = status
         guard status == .authorized || status == .provisional, run == scheduleRun else { return }
-        // Keep a pending test notification; everything else is rebuilt below.
+        let now = Date()
+        let planned = place.map { AppModel.planned(from: now, place: $0, settings: settings) } ?? []
+        // Remove only what is no longer planned, and keep a pending test notification. Adding a request
+        // with an existing identifier replaces it, so a run that is cut short (a newer one took over, or
+        // iOS suspended the app after a background refresh) still leaves the earlier ones in place.
+        let keep = Set(planned.map(\.id)).union(["test"])
         let pending = await center.pendingNotificationRequests().map(\.identifier)
         guard run == scheduleRun else { return }
-        center.removePendingNotificationRequests(withIdentifiers: pending.filter { $0 != "test" })
-        guard let place else { return }
-        let now = Date()
-        for item in AppModel.planned(from: now, place: place, settings: settings) {
+        center.removePendingNotificationRequests(withIdentifiers: pending.filter { !keep.contains($0) })
+        for item in planned {
             // A newer run (settings changed meanwhile) takes over.
             guard run == scheduleRun else { return }
             let content = UNMutableNotificationContent()
@@ -339,6 +355,7 @@ final class AppModel {
 
     func backgroundRefresh() async {
         scheduleBackgroundRefresh()
+        endPastCountdowns()
         await rescheduleNotifications()
     }
 }

@@ -90,16 +90,22 @@ struct PrayerTimeTests {
         #expect(!withMaghrib.contains { $0.id.hasPrefix("iftar") })
         #expect(AppModel.planned(from: date(2027, 5, 20), place: amsterdam, settings: settings)
             .allSatisfy { !$0.id.hasPrefix("suhoor") })
+        // A 30-minute early Fajr reminder would land on the suhoor one: only one of them comes.
+        settings.notify = [.fajr]
+        settings.reminderMinutes = 30
+        let early = AppModel.planned(from: date(2027, 2, 20), place: amsterdam, settings: settings)
+        #expect(early.contains { $0.id.hasPrefix("suhoor") })
+        #expect(!early.contains { $0.id.hasPrefix("before-fajr") })
     }
 
     @Test func ramadanStartFromBeforeAndDuring() throws {
         let before = try #require(AppModel.ramadanStart(around: date(2026, 11, 12), place: amsterdam, hijriOffset: 0))
         let during = try #require(AppModel.ramadanStart(around: date(2027, 2, 20), place: amsterdam, hijriOffset: 0))
         #expect(before == during)
-        #expect(AppModel.hijri(of: before, place: amsterdam, offset: 0).day == 1)
-        #expect(AppModel.hijri(of: before, place: amsterdam, offset: 0).month == 9)
+        #expect(Prayers.hijri(of: before, place: amsterdam, offset: 0).day == 1)
+        #expect(Prayers.hijri(of: before, place: amsterdam, offset: 0).month == 9)
         let previous = try #require(amsterdam.calendar.date(byAdding: .day, value: -1, to: before))
-        #expect(AppModel.hijri(of: previous, place: amsterdam, offset: 0).month == 8)
+        #expect(Prayers.hijri(of: previous, place: amsterdam, offset: 0).month == 8)
     }
 
     @Test func tasbihRounds() {

@@ -8,6 +8,9 @@ struct QiblaMapView: View {
     @State private var showingWhole = false
     @State private var mosques: [MKMapItem] = []
     @State private var search = SearchState.loading
+    /// The camera is placed once, and mosques are searched once per place, not on every return to the map.
+    @State private var framed = false
+    @State private var searchedKey: String?
 
     private enum SearchState { case loading, done, failed }
 
@@ -66,7 +69,11 @@ struct QiblaMapView: View {
                 .accessibilityLabel(showingWhole ? Text("Show nearby") : Text("Show the whole line"))
             }
         }
-        .onAppear { position = .region(nearby(here)) }
+        .onAppear {
+            guard !framed else { return }
+            framed = true
+            position = .region(nearby(here))
+        }
         .task(id: "\(place.latitude),\(place.longitude)") { await findMosques(near: here) }
     }
 
@@ -116,7 +123,8 @@ struct QiblaMapView: View {
     }
 
     private func findMosques(near here: CLLocationCoordinate2D) async {
-        search = .loading
+        let key = "\(here.latitude),\(here.longitude)"
+        guard key != searchedKey else { return }
         let request = MKLocalSearch.Request()
         // shortcut: one English query; Apple Maps matches it to mosques in other countries too.
         request.naturalLanguageQuery = "mosque"
@@ -126,11 +134,16 @@ struct QiblaMapView: View {
             let items = try await MKLocalSearch(request: request).start().mapItems
             let origin = CLLocation(latitude: here.latitude, longitude: here.longitude)
             mosques = items.sorted { distance($0, from: origin) < distance($1, from: origin) }
+            searchedKey = key
+            search = .done
+        } catch let error as MKError where error.code == .placemarkNotFound {
+            // "Nothing found" also arrives as an error.
+            mosques = []
+            searchedKey = key
             search = .done
         } catch {
-            mosques = []
-            // "Nothing found" also arrives as an error.
-            search = (error as? MKError)?.code == .placemarkNotFound ? .done : .failed
+            // Offline or throttled: keep what an earlier search found.
+            if mosques.isEmpty { search = .failed }
         }
     }
 

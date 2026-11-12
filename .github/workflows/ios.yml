@@ -62,8 +62,10 @@ jobs:
       - name: Build and test
         run: |
           set -o pipefail
+          # The tail keeps the log short; on failure every error is listed, wherever it was in the log.
           xcodebuild test -project QiblaAndPrayer.xcodeproj -scheme QiblaAndPrayer \
-            -destination "id=$UDID" -derivedDataPath build CODE_SIGNING_ALLOWED=NO | tail -150
+            -destination "id=$UDID" -derivedDataPath build CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log | tail -150 \
+            || { echo "::group::All errors"; grep -E ": error:|✘" build.log | sort -u; echo "::endgroup::"; exit 1; }
 
       - name: Check the app bundle
         run: |
@@ -72,9 +74,11 @@ jobs:
           for lang in en nl de fr tr ar; do
             test "$lang" = en || test -f "$APP/$lang.lproj/Localizable.strings" || echo "::warning::$lang.lproj/Localizable.strings is missing"
             test -f "$APP/$lang.lproj/InfoPlist.strings" || echo "::warning::$lang.lproj/InfoPlist.strings is missing"
+            test -f "$APP/$lang.lproj/AppShortcuts.strings" || echo "::warning::$lang.lproj/AppShortcuts.strings (Siri phrases) is missing"
           done
           test -f "$APP/PrivacyInfo.xcprivacy" || echo "::warning::PrivacyInfo.xcprivacy is missing"
           test -d "$APP/PlugIns/QiblaAndPrayerWidgets.appex" || echo "::error::The widget extension is not embedded"
+          grep -q ValidateAppShortcutStringsMetadata build.log || echo "::warning::Xcode did not validate the Siri phrases"
           plutil -p "$APP/Info.plist" | grep -E 'CFBundleDisplayName|NSLocation|ITSApp|UISupportedInterfaceOrientations' || true
 
       - name: Screenshots

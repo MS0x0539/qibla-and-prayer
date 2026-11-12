@@ -9,67 +9,79 @@ struct TrackerView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    // One "now" for the check and the range: a second Date.now could be past iftar.
-                    let now = Date.now
-                    Toggle("I'm fasting today", isOn: fastingToday)
-                    if fastingToday.wrappedValue, let place = model.place, let maghrib = model.times(on: now, at: place)?[4].time {
-                        LabeledContent("Iftar", value: Formats.time(maghrib, in: place.timeZone))
-                        if now < maghrib {
-                            Text("Iftar in \(Text(timerInterval: now...maghrib, countsDown: true))")
-                                .monospacedDigit()
-                                .foregroundStyle(Theme.gold)
-                            if model.liveActivitiesEnabled {
-                                Button {
-                                    model.startIftarCountdown()
-                                } label: {
-                                    Label("Iftar countdown on Lock Screen", systemImage: "lock.iphone")
-                                }
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Today")
-                } footer: {
-                    Text("Days fasted this year: \(Formats.number(fastedThisYear))")
-                }
-                .listRowBackground(Theme.card)
-
-                Section {
-                    Stepper(value: $fastsToMakeUp, in: 0...999) {
-                        LabeledContent("Fasts to make up", value: Formats.number(fastsToMakeUp))
-                    }
-                } footer: {
-                    Text("Days of Ramadan you missed and still have to make up.")
-                }
-                .listRowBackground(Theme.card)
-
-                Section {
-                    ForEach(PrayerKind.allCases.filter(\.isPrayer)) { kind in
-                        QadaRow(key: kind.rawValue, title: kind.title)
-                    }
-                    // Witr is wajib for Hanafis, so it is made up too.
-                    if model.settings.school == .hanafi {
-                        QadaRow(key: "witr", title: String(localized: "Witr", bundle: .app))
-                    }
-                } header: {
-                    Text("Missed prayers (qada)")
-                } footer: {
-                    Text("Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.")
-                }
-                .listRowBackground(Theme.card)
+            // Redrawn every minute, so iftar and midnight ("today") arrive while the tab is open.
+            TimelineView(.everyMinute) { context in
+                form(now: context.date)
             }
-            .scrollContentBackground(.hidden)
-            .background(Theme.background.ignoresSafeArea())
-            .navigationTitle("Tracker")
         }
     }
 
-    /// Today in the place the times are for, as stored in `fastingDays`.
-    private var todayKey: String {
+    private func form(now: Date) -> some View {
+        let today = dayKey(now)
+        return Form {
+            Section {
+                Toggle("I'm fasting today", isOn: fasting(on: today))
+                if days.contains(today), let place = model.place, let maghrib = model.times(on: now, at: place)?[4].time {
+                    LabeledContent("Iftar", value: Formats.time(maghrib, in: place.timeZone))
+                    if now < maghrib {
+                        Text("Iftar in \(Text(timerInterval: now...maghrib, countsDown: true))")
+                            .monospacedDigit()
+                            .foregroundStyle(Theme.gold)
+                        if model.canCountDown(to: maghrib, from: now) {
+                            Button {
+                                model.startIftarCountdown()
+                            } label: {
+                                Label("Iftar countdown on Lock Screen", systemImage: "lock.iphone")
+                            }
+                        } else if model.liveActivitiesEnabled {
+                            Text("The Lock Screen countdown can start from 8 hours before iftar.")
+                                .font(.footnote)
+                                .foregroundStyle(Theme.muted)
+                        }
+                    }
+                }
+            } header: {
+                Text("Today")
+            } footer: {
+                Text("Days fasted this year: \(Formats.number(days.filter { $0.hasPrefix(today.prefix(4)) }.count))")
+            }
+            .listRowBackground(Theme.card)
+
+            Section {
+                Stepper(value: $fastsToMakeUp, in: 0...999) {
+                    LabeledContent("Fasts to make up", value: Formats.number(fastsToMakeUp))
+                }
+            } footer: {
+                Text("Days of Ramadan you missed and still have to make up.")
+            }
+            .listRowBackground(Theme.card)
+
+            Section {
+                ForEach(PrayerKind.allCases.filter(\.isPrayer)) { kind in
+                    // The prayer, not the time: Turkish calls the time İmsak and the prayer Sabah.
+                    QadaRow(key: kind.rawValue, title: kind == .fajr
+                        ? String(localized: "qada.fajr", defaultValue: "Fajr", bundle: .app) : kind.title)
+                }
+                // Witr is wajib for Hanafis, so it is made up too.
+                if model.settings.school == .hanafi {
+                    QadaRow(key: "witr", title: String(localized: "Witr", bundle: .app))
+                }
+            } header: {
+                Text("Missed prayers (qada)")
+            } footer: {
+                Text("Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.")
+            }
+            .listRowBackground(Theme.card)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Theme.background.ignoresSafeArea())
+        .navigationTitle("Tracker")
+    }
+
+    /// The day in the place the times are for, as stored in `fastingDays` ("2026-11-12").
+    private func dayKey(_ date: Date) -> String {
         let calendar = model.place?.calendar ?? Calendar(identifier: .gregorian)
-        let parts = calendar.dateComponents([.year, .month, .day], from: .now)
+        let parts = calendar.dateComponents([.year, .month, .day], from: date)
         return String(format: "%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
     }
 
@@ -77,19 +89,15 @@ struct TrackerView: View {
         Set(fastingDays.split(separator: ",").map(String.init))
     }
 
-    private var fastingToday: Binding<Bool> {
+    /// The toggle for the day it was drawn for, so a tap just after midnight can't change the new day.
+    private func fasting(on day: String) -> Binding<Bool> {
         Binding {
-            days.contains(todayKey)
+            days.contains(day)
         } set: { on in
             var updated = days
-            if on { updated.insert(todayKey) } else { updated.remove(todayKey) }
+            if on { updated.insert(day) } else { updated.remove(day) }
             fastingDays = updated.sorted().joined(separator: ",")
         }
-    }
-
-    private var fastedThisYear: Int {
-        let year = String(todayKey.prefix(4))
-        return days.filter { $0.hasPrefix(year) }.count
     }
 }
 

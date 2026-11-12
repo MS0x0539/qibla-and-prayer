@@ -170,7 +170,7 @@ struct IftarLiveActivity: Widget {
                 Image(systemName: "moon.stars.fill")
                     .foregroundStyle(Theme.gold)
             } compactTrailing: {
-                IftarCountdown(context: context)
+                IftarCountdown(context: context, compact: true)
                     .monospacedDigit()
                     .foregroundStyle(Theme.gold)
                     .frame(maxWidth: 56)
@@ -207,14 +207,18 @@ private struct IftarLockScreen: View {
     }
 }
 
-/// Counts down to iftar; once it's time (or the activity went stale), says so instead.
+/// Counts down to iftar; once it's time (or the activity went stale), says so instead, or in the
+/// narrow Dynamic Island shows a tick.
 private struct IftarCountdown: View {
     let context: ActivityViewContext<IftarAttributes>
+    var compact = false
 
     var body: some View {
         let now = Date.now
         let iftar = context.state.iftar
-        if context.isStale || iftar <= now {
+        if (context.isStale || iftar <= now) && compact {
+            Image(systemName: "checkmark.circle.fill")
+        } else if context.isStale || iftar <= now {
             Text(verbatim: context.attributes.arrived)
                 .multilineTextAlignment(.trailing)
         } else {

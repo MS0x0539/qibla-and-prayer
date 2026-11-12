@@ -6665,6 +6665,40 @@
         }
       }
     },
+    "The Lock Screen countdown can start from 8 hours before iftar.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكن بدء العدّ التنازلي على شاشة القفل قبل الإفطار بـ٨ ساعات."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Countdown auf dem Sperrbildschirm kann ab 8 Stunden vor dem Iftar starten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le compte à rebours sur l’écran verrouillé peut démarrer 8 heures avant l’iftar."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De aftelling op het toegangsscherm kan vanaf 8 uur voor de iftar beginnen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranı sayacı iftardan 8 saat öncesinden itibaren başlatılabilir."
+          }
+        }
+      }
+    },
     "The Qibla is the direction of the Kaaba in Mecca, calculated from your location along the shortest route over the globe and measured from true north.": {
       "localizations": {
         "ar": {
@@ -8293,6 +8327,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ayarlarınız bölgeniz için önerilen değerlere döner ve kurulum yeniden başlar."
+          }
+        }
+      }
+    },
+    "qada.fajr": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الفجر"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fajr"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fajr"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fajr"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sabah"
           }
         }
       }

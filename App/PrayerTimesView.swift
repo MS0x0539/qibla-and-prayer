@@ -46,12 +46,14 @@ struct PrayerTimesView: View {
         let next = model.next(after: now, at: place)
         let offset = model.settings.hijriOffset
         let ramadanStart = AppModel.ramadanStart(around: now, place: place, hijriOffset: offset)
-        let hijri = AppModel.hijri(of: now, place: place, offset: offset)
+        let hijri = Prayers.hijri(of: now, place: place, offset: offset)
         return ScrollView {
             VStack(spacing: 0) {
                 header(place: place, next: next, now: now)
                 if hijri.month == 9, let start = ramadanStart {
-                    RamadanCard(start: start, day: hijri.day ?? 1, today: today, now: now, zone: place.timeZone)
+                    RamadanCard(
+                        start: start, day: hijri.day ?? 1, today: today, tomorrow: ramadanTomorrow(after: now, at: place),
+                        now: now, zone: place.timeZone)
                         .padding(.top, 24)
                 }
                 VStack(spacing: 0) {
@@ -77,6 +79,13 @@ struct PrayerTimesView: View {
             .padding(.bottom, 24)
         }
         .scrollBounceBehavior(.basedOnSize)
+    }
+
+    /// Tomorrow's times while tomorrow is still Ramadan: after iftar, the card turns to tomorrow's suhoor.
+    private func ramadanTomorrow(after now: Date, at place: Place) -> [PrayerTime]? {
+        guard let tomorrow = place.calendar.date(byAdding: .day, value: 1, to: now),
+              Prayers.hijri(of: tomorrow, place: place, offset: model.settings.hijriOffset).month == 9 else { return nil }
+        return model.times(on: tomorrow, at: place)
     }
 
     private func header(place: Place, next: PrayerTime?, now: Date) -> some View {
@@ -162,13 +171,16 @@ private struct RamadanCard: View {
     let start: Date
     let day: Int
     let today: [PrayerTime]
+    /// nil on the last day of Ramadan.
+    let tomorrow: [PrayerTime]?
     let now: Date
     let zone: TimeZone
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        let fajr = today[0].time
-        let maghrib = today[4].time
+        // The next suhoor end and the next iftar: today's, or once passed, tomorrow's.
+        let suhoor = today[0].time > now ? today[0].time : tomorrow?[0].time
+        let iftar = today[4].time > now ? today[4].time : tomorrow?[4].time
         VStack(spacing: 10) {
             NavigationLink {
                 RamadanView(start: start)
@@ -188,15 +200,15 @@ private struct RamadanCard: View {
                             .foregroundStyle(Theme.muted)
                     }
                     HStack(alignment: .firstTextBaseline) {
-                        moment("Suhoor ends", fajr, alignment: .leading)
+                        moment("Suhoor ends", suhoor, alignment: .leading)
                         Spacer()
-                        moment("Iftar", maghrib, alignment: .trailing)
+                        moment("Iftar", iftar, alignment: .trailing)
                     }
                     Group {
-                        if now < fajr {
-                            Text("Suhoor ends in \(Text(timerInterval: now...fajr, countsDown: true))")
-                        } else if now < maghrib {
-                            Text("Iftar in \(Text(timerInterval: now...maghrib, countsDown: true))")
+                        if let suhoor, suhoor < iftar ?? .distantFuture {
+                            Text("Suhoor ends in \(Text(timerInterval: now...suhoor, countsDown: true))")
+                        } else if let iftar {
+                            Text("Iftar in \(Text(timerInterval: now...iftar, countsDown: true))")
                         }
                     }
                     .font(.subheadline.monospacedDigit())
@@ -206,7 +218,7 @@ private struct RamadanCard: View {
                 .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
             }
             .buttonStyle(.plain)
-            if now < maghrib && model.liveActivitiesEnabled {
+            if let iftar, model.canCountDown(to: iftar, from: now) {
                 Button { model.startIftarCountdown() } label: {
                     Label("Iftar countdown on Lock Screen", systemImage: "lock.iphone")
                         .frame(maxWidth: .infinity)
@@ -214,16 +226,21 @@ private struct RamadanCard: View {
                 .buttonStyle(.bordered)
                 .controlSize(.large)
                 .foregroundStyle(Theme.gold)
+            } else if today[4].time > now && model.liveActivitiesEnabled {
+                Text("The Lock Screen countdown can start from 8 hours before iftar.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
 
-    private func moment(_ title: LocalizedStringKey, _ time: Date, alignment: HorizontalAlignment) -> some View {
+    private func moment(_ title: LocalizedStringKey, _ time: Date?, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment, spacing: 2) {
             Text(title)
                 .font(.caption)
                 .foregroundStyle(Theme.muted)
-            Text(Formats.time(time, in: zone))
+            Text(verbatim: time.map { Formats.time($0, in: zone) } ?? "—")
                 .font(.system(.title2, design: .serif).monospacedDigit())
                 .foregroundStyle(Theme.ink)
         }
