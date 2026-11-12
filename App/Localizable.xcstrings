@@ -307,6 +307,40 @@
         }
       }
     },
+    "Acknowledgements": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شكر وتقدير"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Danksagungen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remerciements"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dankbetuigingen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teşekkürler"
+          }
+        }
+      }
+    },
     "Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.": {
       "localizations": {
         "ar": {
@@ -613,6 +647,40 @@
         }
       }
     },
+    "Arba'een": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأربعين"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arbain"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arbaïn"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arba'een"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erbain"
+          }
+        }
+      }
+    },
     "Ashura": {
       "localizations": {
         "ar": {
@@ -881,6 +949,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Geri"
+          }
+        }
+      }
+    },
+    "Birth of the Prophet": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المولد النبوي"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geburt des Propheten"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naissance du Prophète"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geboorte van de Profeet"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peygamber Efendimizin doğumu"
           }
         }
       }
@@ -1289,6 +1391,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mevcut konum"
+          }
+        }
+      }
+    },
+    "Dates follow Diyanet's calendar. You can adjust the Hijri date in Settings.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتبع التواريخ تقويم رئاسة الشؤون الدينية التركية (ديانت). ويمكنك تعديل التاريخ الهجري من الإعدادات."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Daten folgen dem Kalender der Diyanet. Du kannst das Hidschri-Datum in den Einstellungen anpassen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les dates suivent le calendrier de la Diyanet. Vous pouvez ajuster la date hégirienne dans Réglages."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De data volgen de kalender van Diyanet. Je kunt de Hidjri-datum aanpassen in Instellingen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarihler Diyanet'in takvimine göredir. Hicri tarihi Ayarlar'dan düzeltebilirsiniz."
           }
         }
       }
@@ -1799,6 +1935,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ramazan Bayramı"
+          }
+        }
+      }
+    },
+    "Eid al-Ghadir": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عيد الغدير"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eid al-Ghadir"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aïd al-Ghadir"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eid al-Ghadir"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gadir-i Hum Bayramı"
+          }
+        }
+      }
+    },
+    "Eid al-Mab'ath": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عيد المبعث"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mab'ath (Berufung des Propheten)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aïd al-Mab’ath (début de la mission du Prophète)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eid al-Mab'ath (roeping van de Profeet)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mebas Bayramı"
           }
         }
       }
@@ -3265,6 +3469,40 @@
         }
       }
     },
+    "Laylat al-Raghaib": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ليلة الرغائب"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laylat al-Raghaib"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laylat al-Raghaïb"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laylat al-Raghaib"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regaib Kandili"
+          }
+        }
+      }
+    },
     "Location": {
       "localizations": {
         "ar": {
@@ -4591,40 +4829,6 @@
         }
       }
     },
-    "Outside Turkey, Diyanet's printed timetables estimate Fajr and Isha in spring and summer. In those months the times here can differ from them by up to about half an hour.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "خارج تركيا تقدّر تقاويم رئاسة الشؤون الدينية الفجر والعشاء في الربيع والصيف، وفي هذه الأشهر قد تختلف المواقيت هنا عنها بما يصل إلى نصف ساعة تقريبًا."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Außerhalb der Türkei schätzen die Gebetspläne von Diyanet Fajr und Isha im Frühling und Sommer. In diesen Monaten können die Zeiten hier bis zu etwa einer halben Stunde davon abweichen."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hors de Turquie, les horaires imprimés de la Diyanet estiment Fajr et Isha au printemps et en été. Pendant ces mois, les horaires ici peuvent en différer jusqu’à une demi-heure environ."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Buiten Turkije schatten de roosters van Diyanet Fajr en Isha in de lente en zomer. In die maanden kunnen de tijden hier tot ongeveer een half uur afwijken."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Türkiye dışında Diyanet'in takvimleri ilkbahar ve yazın imsak ve yatsıyı tahmini olarak belirler. Bu aylarda buradaki vakitler onlardan yarım saate kadar farklı olabilir."
-          }
-        }
-      }
-    },
     "Prayer": {
       "localizations": {
         "ar": {
@@ -4863,36 +5067,36 @@
         }
       }
     },
-    "Prayer times depend on where you are, and the compass needs your location to point to the Qibla. The app uses it only for this and never shares it.": {
+    "Prayer times depend on where you are, and the compass needs your location to point to the Qibla. Apart from Apple Maps, which names the place, shows the map and finds mosques nearby, the app shares it with no one.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تختلف مواقيت الصلاة باختلاف مكانك، وتحتاج البوصلة إلى موقعك لتحديد القبلة. يستخدم التطبيق موقعك لهذا فقط ولا يشاركه أبدًا."
+            "value": "تختلف مواقيت الصلاة باختلاف مكانك، وتحتاج البوصلة إلى موقعك لتحديد القبلة. لا يشارك التطبيق موقعك مع أحد سوى خرائط Apple، التي تحدد اسم المكان وتعرض الخريطة وتبحث عن المساجد القريبة."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gebetszeiten hängen von deinem Standort ab, und der Kompass braucht ihn, um die Qibla anzuzeigen. Die App nutzt ihn nur dafür und gibt ihn nie weiter."
+            "value": "Gebetszeiten hängen von deinem Standort ab, und der Kompass braucht ihn, um die Qibla anzuzeigen. Außer an Apple Karten, das den Ort benennt, die Karte zeigt und Moscheen in der Nähe sucht, gibt die App ihn an niemanden weiter."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les horaires de prière dépendent de l’endroit où vous êtes, et la boussole a besoin de votre position pour indiquer la qibla. L’app ne l’utilise que pour cela et ne la partage jamais."
+            "value": "Les horaires de prière dépendent de l’endroit où vous êtes, et la boussole a besoin de votre position pour indiquer la qibla. Seul Plans d’Apple la reçoit, pour nommer le lieu, afficher la carte et trouver les mosquées proches ; l’app ne la partage avec personne d’autre."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gebedstijden hangen af van waar je bent, en het kompas heeft je locatie nodig om de qibla aan te wijzen. De app gebruikt je locatie alleen hiervoor en deelt hem nooit."
+            "value": "Gebedstijden hangen af van waar je bent, en het kompas heeft je locatie nodig om de qibla aan te wijzen. Behalve met Apple Kaarten, dat de plaats benoemt, de kaart toont en moskeeën in de buurt zoekt, deelt de app hem met niemand."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Namaz vakitleri bulunduğunuz yere göre değişir ve pusulanın kıbleyi gösterebilmesi için konumunuz gerekir. Uygulama konumunuzu yalnızca bunun için kullanır ve asla paylaşmaz."
+            "value": "Namaz vakitleri bulunduğunuz yere göre değişir ve pusulanın kıbleyi gösterebilmesi için konumunuz gerekir. Uygulama konumunuzu, yerin adını bulan, haritayı gösteren ve yakındaki camileri arayan Apple Haritalar dışında kimseyle paylaşmaz."
           }
         }
       }
@@ -4961,6 +5165,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Önceki yıl"
+          }
+        }
+      }
+    },
+    "Privacy policy": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سياسة الخصوصية"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datenschutzerklärung"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Politique de confidentialité"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacybeleid"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gizlilik politikası"
           }
         }
       }
@@ -5208,13 +5446,13 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يبدأ رمضان بعد %@"
+            "value": "يبقى على رمضان %@"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Der Ramadan beginnt in %@"
+            "value": "Noch %@ bis zum Ramadan"
           }
         },
         "fr": {
@@ -6495,6 +6733,40 @@
         }
       }
     },
+    "Support": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الدعم"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Support"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assistance"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hulp"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destek"
+          }
+        }
+      }
+    },
     "Takes about a minute.": {
       "localizations": {
         "ar": {
@@ -6529,36 +6801,36 @@
         }
       }
     },
-    "Tap a mosque to open it in Apple Maps. Not every mosque is on the map.": {
+    "Tap a mosque in the list to open it in Apple Maps. Not every mosque is on the map.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اضغط على مسجد لفتحه في خرائط Apple. ليست كل المساجد على الخريطة."
+            "value": "اضغط على مسجد في القائمة لفتحه في خرائط Apple. ليست كل المساجد على الخريطة."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tippe auf eine Moschee, um sie in Apple Karten zu öffnen. Nicht jede Moschee ist auf der Karte."
+            "value": "Tippe in der Liste auf eine Moschee, um sie in Apple Karten zu öffnen. Nicht jede Moschee ist auf der Karte."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Touchez une mosquée pour l’ouvrir dans Plans. Toutes les mosquées ne figurent pas sur la carte."
+            "value": "Touchez une mosquée de la liste pour l’ouvrir dans Plans. Toutes les mosquées ne figurent pas sur la carte."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tik op een moskee om hem in Apple Kaarten te openen. Niet elke moskee staat op de kaart."
+            "value": "Tik op een moskee in de lijst om hem in Apple Kaarten te openen. Niet elke moskee staat op de kaart."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apple Haritalar'da açmak için bir camiye dokunun. Her cami haritada yer almaz."
+            "value": "Apple Haritalar'da açmak için listeden bir camiye dokunun. Her cami haritada yer almaz."
           }
         }
       }
@@ -6767,6 +7039,40 @@
         }
       }
     },
+    "The countdown is on your Lock Screen": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العدّ التنازلي على شاشة القفل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Countdown ist auf deinem Sperrbildschirm"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le compte à rebours est sur l’écran verrouillé"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De aftelling staat op je toegangsscherm"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayaç kilit ekranınızda"
+          }
+        }
+      }
+    },
     "The next prayer is %@, at %@.": {
       "localizations": {
         "ar": {
@@ -6831,6 +7137,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sıradaki vakit, saati ve geri sayım."
+          }
+        }
+      }
+    },
+    "This app uses Adhan, by Batoul Apps, under the MIT License.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدم هذا التطبيق مكتبة Adhan من Batoul Apps بموجب ترخيص MIT."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese App verwendet Adhan von Batoul Apps unter der MIT-Lizenz."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette app utilise Adhan, de Batoul Apps, sous licence MIT."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze app gebruikt Adhan van Batoul Apps, onder de MIT-licentie."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu uygulama, Batoul Apps'in Adhan kütüphanesini MIT Lisansı altında kullanır."
           }
         }
       }

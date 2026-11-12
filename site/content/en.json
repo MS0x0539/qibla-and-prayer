@@ -1,0 +1,158 @@
+{
+  "language": "English",
+  "dir": "ltr",
+  "appName": "Wajh: Qibla & Prayer Times",
+  "tagline": "Prayer times and the Qibla, without ads or tracking.",
+  "nav": {
+    "home": "Home",
+    "privacy": "Privacy policy",
+    "support": "Support",
+    "accessibility": "Accessibility"
+  },
+  "home": {
+    "intro": "Prayer times for 17 calculation methods, a Qibla compass and map, Ramadan times, a tasbih and a tracker for fasts and missed prayers. In English, Dutch, German, French, Turkish and Arabic.",
+    "points": [
+      "No ads, no subscriptions, no account.",
+      "Nothing is collected about you, and nothing is sent to me. Your settings, tasbih and tracker stay on your iPhone; place names, city search and the map come from Apple Maps.",
+      "Times follow the method of your mosque or authority and were checked against the timetables authorities publish. You can move each time by a few minutes to match your mosque."
+    ]
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "updated": "Last updated: 12 November 2026",
+    "intro": "Wajh (called “Qibla & Prayer” on the Home Screen) is made by Melih Sivrikaya. This policy explains what happens to your data when you use the app.",
+    "summary": "In short: the app sends nothing to me, and I don't collect data about you. There is no account, no advertising, no analytics code and no tracking. To name your place, search for a city and show the map and mosques nearby, your iPhone asks Apple Maps; see below.",
+    "sections": [
+      {
+        "heading": "Who is responsible",
+        "paragraphs": [
+          "I, Melih Sivrikaya (ms@psbv.org), am responsible for this app and for the personal data described in this policy (the “controller” under the GDPR). Apple is responsible for its own services that the app uses: Apple Maps, Siri, crash reporting and iCloud Backup.",
+          "The app asks Apple Maps only for what the features you use need. I answer emails and use the reports Apple passes on because of my legitimate interest in supporting and improving the app (Article 6(1)(f) GDPR)."
+        ]
+      },
+      {
+        "heading": "Your location",
+        "paragraphs": [
+          "The app uses your iPhone's location to calculate prayer times and the direction of the Qibla, to suggest the calculation method used in your country, and to let the compass use true north. That calculation happens on your iPhone.",
+          "Some features use Apple Maps, so Apple receives what they need: your location, when the app looks up the name, country and time zone of your place (when it starts, and again after you have moved more than about a kilometre); what you type in the city search, as you type it; and, when you open the Qibla map, the area around you or around the city you chose, to show the map and search it for mosques. Tapping a mosque opens it in the Apple Maps app. The app adds nothing that identifies you. Apple handles these requests under its own privacy policy (apple.com/legal/privacy).",
+          "The app asks for your location only while you use it (“While Using the App”), so iOS never gives it your location in the background. It saves the last place it found; Siri's answers and the reminders it schedules in the background use that saved place. You can also use the app without location access: choose a city, and turn location access off for the app in your iPhone's Settings."
+        ]
+      },
+      {
+        "heading": "What stays on your iPhone",
+        "paragraphs": [
+          "The app stores your settings (including your school and calculation method), the last place it found or the city you chose (name and coordinates), the tasbih count, and the tracker (the days you marked as fasting, the fasts to make up and the missed prayers). They are kept on your iPhone, not on any server, and are not synced through iCloud. Like other app data, they are included in your iPhone's backups (iCloud Backup or a backup on your computer), if you make them. Deleting the app removes them from your iPhone.",
+          "Reminders are scheduled on your iPhone itself; no server sends them. The iftar countdown on the Lock Screen also runs on your iPhone."
+        ]
+      },
+      {
+        "heading": "Siri and Shortcuts",
+        "paragraphs": [
+          "When you ask Siri for a prayer time, Apple handles your question as it does for any app. The app works out the answer on your iPhone, without opening, from the settings and the place saved there."
+        ]
+      },
+      {
+        "heading": "Crash reports and statistics",
+        "paragraphs": [
+          "If you share analytics with app developers (in your iPhone's Settings: Privacy & Security, Analytics & Improvements), Apple sends me crash reports and statistics about how the app performs and is used, such as the number of sessions. Apple also shows me totals such as the number of downloads per country. Apple collects this itself, under its own privacy policy, and says it does not identify you; the app contains no code for it. I use it only to fix problems and improve the app."
+        ]
+      },
+      {
+        "heading": "No advertising or tracking",
+        "paragraphs": [
+          "The app contains no advertising, analytics or tracking code. Besides Apple's own frameworks it uses only Adhan, an open-source library that calculates prayer times on your iPhone and sends nothing anywhere. Apart from the Apple Maps requests described above, the app shares nothing with anyone. I don't collect personal data from anyone, including children."
+        ]
+      },
+      {
+        "heading": "If you email me",
+        "paragraphs": [
+          "If you email me, I receive your email address, your name if you give it, and what you write. I use them only to answer you, and I delete the conversation once it is no longer needed, or sooner if you ask. My email provider stores the emails for me."
+        ]
+      },
+      {
+        "heading": "Your rights",
+        "paragraphs": [
+          "Apart from emails you send me, I keep no personal data about you. For those emails you can ask me for a copy, ask me to correct or delete them, ask me to limit how I use them, or object to how I use them. Everything the app stores is on your iPhone: you can change it in the app, or remove all of it by deleting the app. Data held by Apple is handled by Apple (apple.com/legal/privacy).",
+          "If you think I handle your data wrongly, you can complain to a data protection authority, for example the one in the country where you live."
+        ]
+      },
+      {
+        "heading": "Changes",
+        "paragraphs": [
+          "If this policy changes, the new version will appear on this page with a new date."
+        ]
+      }
+    ]
+  },
+  "support": {
+    "title": "Support",
+    "intro": "A question, a problem, or a time that doesn't match your mosque? Email ms@psbv.org.",
+    "faqHeading": "Common questions",
+    "faq": [
+      {
+        "q": "The times differ from my mosque's timetable.",
+        "a": "Mosques use different calculation methods, mostly for Fajr and Isha. In Settings, choose the method your mosque uses: each one shows today's Fajr and Isha, so you can compare them with your mosque's timetable. Check the Asr setting too, and if a time is still a few minutes off, move it under Adjust times."
+      },
+      {
+        "q": "The Hijri date is a day off.",
+        "a": "The app follows the Umm al-Qura calendar, or Diyanet's calendar when you use the Diyanet method. Where you live, the month can start a day earlier or later because of moon sighting. You can move the Hijri date by a day or two in Settings."
+      },
+      {
+        "q": "The compass points the wrong way.",
+        "a": "Hold your iPhone flat, away from metal, magnets and other electronics, and move it in a figure eight to calibrate the compass. Allow location access, so the compass can use true north instead of magnetic north."
+      },
+      {
+        "q": "I don't get notifications.",
+        "a": "Check that notifications are allowed for the app in your iPhone's Settings, that the bell next to the prayer is on, and that no Focus mode is holding them back. Open the app now and then: iOS keeps a limited number of reminders waiting. The app schedules the next days each time you open it, and now and then in the background if Background App Refresh is on for it."
+      },
+      {
+        "q": "The iftar countdown doesn't appear on my Lock Screen.",
+        "a": "Start it yourself: from the Ramadan card on the Prayer times tab, or in the Tracker after turning on “I'm fasting today”. It can start from 8 hours before iftar, and Live Activities must be allowed for the app in your iPhone's Settings."
+      },
+      {
+        "q": "Does the app collect my data?",
+        "a": "No. Nothing is sent to me. Place names, city search and the map use Apple Maps; the privacy policy has the details."
+      }
+    ]
+  },
+  "accessibility": {
+    "title": "Accessibility",
+    "updated": "Last updated: 12 November 2026",
+    "intro": "“Qibla & Prayer” should work for everyone. This page says what the app does for accessibility today, what isn’t finished yet, and how to tell me when something doesn’t work for you.",
+    "sections": [
+      {
+        "heading": "What the app supports",
+        "paragraphs": [
+          "Dark interface: the app is always dark, with light text.",
+          "Contrast: all text has a contrast of at least 6.3 to 1 against its background. The Web Content Accessibility Guidelines (WCAG) ask for 4.5 to 1.",
+          "Not by colour alone: the next prayer and the next day in the Islamic calendar have a diamond in front, today’s row in the tables is bold, and a selected choice has a check mark. A bell that is off is crossed out.",
+          "Reduce Motion: when it is on in your iPhone’s accessibility settings, the compass, the setup and the tasbih counter no longer animate.",
+          "Haptics: your iPhone taps when you face the Qibla, with every count of the tasbih, and when a round is complete.",
+          "Languages: English, Dutch, German, French, Turkish and Arabic. Arabic reads right to left."
+        ]
+      },
+      {
+        "heading": "Not finished yet",
+        "paragraphs": [
+          "VoiceOver: buttons and icons have spoken labels, and the Qibla screen tells you which way to turn. I haven’t yet tested every screen with VoiceOver, so the App Store doesn’t list it yet.",
+          "Larger Text: most text grows with the text size set on your iPhone. The monthly timetable stops growing where its seven columns no longer fit, and the large tasbih counter keeps its size.",
+          "Voice Control: I haven’t tested the app with Voice Control yet.",
+          "The app has no videos or spoken audio, so captions and audio descriptions don’t apply."
+        ]
+      },
+      {
+        "heading": "This website",
+        "paragraphs": [
+          "This website is plain HTML with headings and no scripts, and follows your browser’s text size and zoom."
+        ]
+      },
+      {
+        "heading": "Tell me what doesn’t work",
+        "paragraphs": [
+          "If something in the app is hard to see, hear, reach or understand, please email ms@psbv.org. It helps to mention your iPhone model, your iOS version and the accessibility settings you use."
+        ]
+      }
+    ]
+  },
+  "footer": "Made by Melih Sivrikaya"
+}

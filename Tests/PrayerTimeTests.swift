@@ -142,19 +142,6 @@ struct PrayerTimeTests {
         #expect(AppSettings.suggested(region: nil, language: nil).method == .muslimWorldLeague)
     }
 
-    /// Adhan's own check against Diyanet's published Istanbul timetable of 16 April 2020.
-    @Test func istanbulMatchesDiyanet() throws {
-        let istanbul = Place(
-            name: "Istanbul", latitude: 41.005616, longitude: 28.976380, timeZoneID: "Europe/Istanbul", countryCode: "TR")
-        let day = istanbul.calendar.date(from: DateComponents(year: 2020, month: 4, day: 16, hour: 12))!
-        let times = try #require(Prayers.compute(on: day, place: istanbul, settings: AppSettings(method: .turkey, asr: .standard)))
-        let expected = [(4, 44), (6, 16), (13, 9), (16, 53), (19, 52), (21, 19)]
-        for (item, (hour, minute)) in zip(times, expected) {
-            let target = istanbul.calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day)!
-            #expect(abs(item.time.timeIntervalSince(target)) <= 60, "\(item.kind)")
-        }
-    }
-
     @Test func diyanetAbroadUsesIsha16() throws {
         let settings = AppSettings(method: .turkey, asr: .standard)
         var inTurkey = amsterdam
@@ -188,6 +175,133 @@ struct PrayerTimeTests {
             #expect((29...30).contains(days.count))
             #expect(days.first?.hijriDay == 1)
         }
+    }
+
+    /// Shia observance: the Prophet's birthday on 17 Rabi' al-Awwal (by day), the Mab'ath instead of the Mi'raj,
+    /// three Laylat al-Qadr nights, Ghadir and Arba'een. Dates from the Umm al-Qura calendar, offset 0.
+    @Test func shiaCalendarHasItsOwnDays() throws {
+        let shia = AppModel.islamicDates(inYear: 2026, place: amsterdam, hijriOffset: 0, shia: true)
+        let sunni = AppModel.islamicDates(inYear: 2026, place: amsterdam, hijriOffset: 0)
+        #expect(shia.filter { $0.day == .laylatAlQadr }.count == 3)
+        #expect(sunni.filter { $0.day == .laylatAlQadr }.count == 1)
+        #expect(shia.contains { $0.day == .ghadir } && !sunni.contains { $0.day == .ghadir })
+        #expect(shia.contains { $0.day == .arbaeen } && !sunni.contains { $0.day == .arbaeen })
+        #expect(shia.contains { $0.day == .mabath } && !shia.contains { $0.day == .israMiraj })
+        let birth = try #require(shia.first { $0.day == .mawlid })
+        #expect(!birth.isNight)
+        #expect(amsterdam.calendar.component(.month, from: birth.date) == 8)
+        #expect(amsterdam.calendar.component(.day, from: birth.date) == 30)
+        let mawlid = try #require(sunni.first { $0.day == .mawlid })
+        #expect(mawlid.isNight)
+        #expect(amsterdam.calendar.component(.day, from: mawlid.date) == 24)
+    }
+
+    /// Days from each authority's own published timetable that the method must reproduce to the minute
+    /// (Fajr, sunrise, Dhuhr, Asr, Maghrib, Isha; nil where the authority publishes no such time).
+    @Test func officialTimetables() throws {
+        struct Day {
+            let place: Place
+            let date: (Int, Int, Int)
+            let method: CalcMethod
+            var school: School? = nil
+            var asr = AsrMethod.standard
+            let times: [String?]
+        }
+        let london = Place(name: "London", latitude: 51.5074, longitude: -0.1278, timeZoneID: "Europe/London", countryCode: "GB")
+        let newYork = Place(name: "New York", latitude: 40.7128, longitude: -74.006, timeZoneID: "America/New_York", countryCode: "US")
+        // Kemenag's own point for Kota Jakarta (SIHAT); ESA's and Banuri Town's points fitted to their tables.
+        let jakarta = Place(name: "Jakarta", latitude: -6.170089, longitude: 106.83105, timeZoneID: "Asia/Jakarta", countryCode: "ID")
+        let singapore = Place(name: "Singapore", latitude: 1.3521, longitude: 103.8198, timeZoneID: "Asia/Singapore", countryCode: "SG")
+        let cairo = Place(name: "Cairo", latitude: 30.075, longitude: 31.275, timeZoneID: "Africa/Cairo", countryCode: "EG")
+        let karachi = Place(name: "Karachi", latitude: 24.866667, longitude: 67.05, timeZoneID: "Asia/Karachi", countryCode: "PK")
+        let tehran = Place(name: "Tehran", latitude: 35.70, longitude: 51.42, timeZoneID: "Asia/Tehran", countryCode: "IR")
+        // KACST's own Makkah point; Doha's and Dubai's points fitted to their authorities' tables.
+        let makkah = Place(name: "Makkah", latitude: 21.426666, longitude: 39.831666, timeZoneID: "Asia/Riyadh", countryCode: "SA")
+        let doha = Place(name: "Doha", latitude: 25.283333, longitude: 51.533333, timeZoneID: "Asia/Qatar", countryCode: "QA")
+        let dubai = Place(name: "Dubai", latitude: 25.105, longitude: 55.31, timeZoneID: "Asia/Dubai", countryCode: "AE")
+        // Diyanet's points for its Istanbul, Amsterdam and Oslo tables, fitted to them.
+        let istanbul = Place(name: "Istanbul", latitude: 41.01197, longitude: 28.97396, timeZoneID: "Europe/Istanbul", countryCode: "TR")
+        let amsterdamDiyanet = Place(name: "Amsterdam", latitude: 52.36986, longitude: 4.88398, timeZoneID: "Europe/Amsterdam", countryCode: "NL")
+        let oslo = Place(name: "Oslo", latitude: 59.90962, longitude: 10.76456, timeZoneID: "Europe/Oslo", countryCode: "NO")
+        let days = [
+            // moonsighting.com's tables: "general" Isha, and the Shafi'i (ahmer) one.
+            Day(place: london, date: (2026, 11, 12), method: .moonsightingCommittee, times: ["05:35", "07:13", "11:50", "13:52", "16:18", "17:45"]),
+            Day(place: london, date: (2026, 11, 12), method: .moonsightingCommittee, school: .shafii, times: ["05:35", "07:13", "11:50", "13:52", "16:18", "17:24"]),
+            Day(place: london, date: (2026, 11, 12), method: .moonsightingCommittee, asr: .hanafi, times: [nil, nil, nil, "14:27", nil, nil]),
+            Day(place: london, date: (2026, 6, 21), method: .moonsightingCommittee, times: ["02:43", "04:43", "13:07", "17:25", "21:25", "22:42"]),
+            Day(place: newYork, date: (2026, 3, 20), method: .moonsightingCommittee, times: ["05:30", "06:59", "13:08", "16:29", "19:11", "20:25"]),
+            // Near the equator the 18° Isha comes before the seasonal one.
+            Day(place: Place(name: "Jakarta", latitude: -6.2088, longitude: 106.8456, timeZoneID: "Asia/Jakarta", countryCode: "ID"),
+                date: (2026, 11, 12), method: .moonsightingCommittee, times: ["04:12", "05:25", "11:42", "14:58", "17:51", "19:01"]),
+            // Kemenag (bimasislam.kemenag.go.id).
+            Day(place: jakarta, date: (2026, 11, 12), method: .indonesia, times: ["04:06", "05:22", "11:40", "15:00", "17:51", "19:04"]),
+            Day(place: jakarta, date: (2026, 6, 21), method: .indonesia, times: ["04:40", "05:58", "11:58", "15:19", "17:51", "19:05"]),
+            // MUIS (data.gov.sg): one table for all of Singapore.
+            Day(place: singapore, date: (2026, 11, 12), method: .singapore, times: ["05:27", "06:48", "12:51", "16:12", "18:51", "20:04"]),
+            Day(place: singapore, date: (2026, 6, 21), method: .singapore, times: ["05:37", "07:01", "13:08", "16:33", "19:13", "20:28"]),
+            // Egyptian General Authority of Survey (esa.gov.eg); June is summer time.
+            Day(place: cairo, date: (2026, 11, 12), method: .egyptian, times: ["04:48", "06:17", "11:39", "14:39", "17:00", "18:20"]),
+            Day(place: cairo, date: (2026, 6, 21), method: .egyptian, times: ["04:08", "05:54", "12:57", "16:32", "19:59", "21:33"]),
+            // Jamia Uloom-ul-Islamia Banuri Town (banuri.edu.pk): Dhuhr is its zawal.
+            Day(place: karachi, date: (2026, 11, 12), method: .karachi, times: ["05:27", "06:46", "12:16", "15:24", "17:46", "19:04"]),
+            Day(place: karachi, date: (2026, 11, 12), method: .karachi, asr: .hanafi, times: [nil, nil, nil, "16:10", nil, nil]),
+            // Institute of Geophysics, University of Tehran (no Asr or Isha published).
+            Day(place: tehran, date: (2026, 1, 15), method: .tehran, times: ["05:45", "07:14", "12:14", nil, "17:34", nil]),
+            // KACST's Umm al-Qura service (ummulqura.org.sa); 25 February is in Ramadan (Isha 120 minutes).
+            Day(place: makkah, date: (2026, 11, 12), method: .ummAlQura, times: ["05:12", "06:29", "12:05", "15:17", "17:40", "19:10"]),
+            Day(place: makkah, date: (2026, 6, 21), method: .ummAlQura, times: ["04:12", "05:39", "12:23", "15:43", "19:06", "20:36"]),
+            Day(place: makkah, date: (2026, 2, 25), method: .ummAlQura, times: ["05:28", "06:44", "12:34", "15:55", "18:24", "20:24"]),
+            // Qatar Calendar House (qatarch.com); 1 March is in Ramadan (Maghrib a minute later).
+            Day(place: doha, date: (2026, 11, 12), method: .qatar, times: ["04:29", "05:49", "11:19", "14:26", "16:49", "18:19"]),
+            Day(place: doha, date: (2026, 6, 21), method: .qatar, times: ["03:13", "04:44", "11:37", "14:59", "18:29", "19:59"]),
+            Day(place: doha, date: (2026, 3, 1), method: .qatar, times: ["04:40", "05:57", "11:47", "15:08", "17:39", "19:09"]),
+            // General Authority of Islamic Affairs and Endowments, UAE (awqaf.gov.ae), Dubai.
+            Day(place: dubai, date: (2026, 11, 12), method: .dubai, times: ["05:14", "06:30", "12:06", "15:11", "17:36", "18:52"]),
+            Day(place: dubai, date: (2026, 6, 21), method: .dubai, times: ["03:59", "05:26", "12:23", "15:44", "19:15", "20:42"]),
+            Day(place: dubai, date: (2026, 3, 1), method: .dubai, times: ["05:25", "06:38", "12:34", "15:53", "18:24", "19:38"]),
+            // Diyanet (namazvakitleri.diyanet.gov.tr): Turkey's program; Amsterdam's summer estimate (takdir) and its
+            // spring transition; Oslo near 60° N.
+            Day(place: istanbul, date: (2026, 11, 12), method: .turkey, times: ["06:13", "07:41", "12:53", "15:31", "17:56", "19:18"]),
+            Day(place: istanbul, date: (2026, 6, 21), method: .turkey, times: ["03:24", "05:25", "13:11", "17:11", "20:47", "22:38"]),
+            Day(place: amsterdamDiyanet, date: (2026, 11, 12), method: .turkey, times: ["05:57", "07:49", "12:30", "14:33", "17:00", "18:39"]),
+            Day(place: amsterdamDiyanet, date: (2026, 6, 21), method: .turkey, times: ["03:46", "05:11", "13:47", "18:11", "22:13", "23:29"]),
+            Day(place: amsterdamDiyanet, date: (2026, 5, 1), method: .turkey, times: ["04:09", "06:03", "13:43", "17:45", "21:12", "22:53"]),
+            Day(place: oslo, date: (2026, 6, 21), method: .turkey, times: ["02:50", "03:54", "13:24", "18:04", "22:51", "23:47"]),
+            Day(place: oslo, date: (2026, 8, 1), method: .turkey, times: ["03:23", "04:51", "13:28", "17:49", "21:56", "23:14"]),
+        ]
+        for day in days {
+            var settings = AppSettings(method: day.method, asr: day.asr)
+            settings.school = day.school
+            let (year, month, dayOfMonth) = day.date
+            let date = day.place.calendar.date(from: DateComponents(year: year, month: month, day: dayOfMonth, hour: 12))!
+            let times = try #require(Prayers.compute(on: date, place: day.place, settings: settings))
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = day.place.timeZone
+            formatter.dateFormat = "HH:mm"
+            for (item, expected) in zip(times, day.times) {
+                guard let expected else { continue }
+                #expect(formatter.string(from: item.time) == expected, "\(day.method) \(day.place.name) \(day.date) \(item.kind)")
+            }
+        }
+    }
+
+    /// Diyanet's own Hijri calendar: today is 3 Cemaziyelahir 1448 for Diyanet, 2 Jumada II in Umm al-Qura.
+    @Test func diyanetCalendar() throws {
+        let today = try #require(DiyanetCalendar.hijri(year: 2026, month: 11, day: 12))
+        #expect(today.year == 1448 && today.month == 6 && today.day == 3)
+        let ramadan = try #require(DiyanetCalendar.firstDay(year: 1447, month: 9))
+        #expect(ramadan.year == 2026 && ramadan.month == 2 && ramadan.day == 19)
+        #expect(DiyanetCalendar.hijri(year: 2040, month: 1, day: 1) == nil)
+        var settings = AppSettings(method: .turkey, asr: .standard)
+        #expect(Prayers.hijri(of: date(2026, 11, 12), place: amsterdam, settings: settings).day == 3)
+        settings.method = .muslimWorldLeague
+        #expect(Prayers.hijri(of: date(2026, 11, 12), place: amsterdam, settings: settings).day == 2)
+        // Regaib Kandili, the night before the first Friday of Rajab: Thursday 10 December 2026.
+        let regaib = try #require(AppModel.islamicDates(inYear: 2026, place: amsterdam, hijriOffset: 0, diyanet: true)
+            .first { $0.day == .raghaib })
+        #expect(amsterdam.calendar.component(.month, from: regaib.date) == 12)
+        #expect(amsterdam.calendar.component(.day, from: regaib.date) == 10)
     }
 
     @Test func addedMethodsGiveTimesInOrder() throws {

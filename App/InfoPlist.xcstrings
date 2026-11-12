@@ -7,37 +7,37 @@
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يُستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة. لا يشاركه هذا التطبيق."
+            "value": "يُستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة. لا يشاركه هذا التطبيق مع أحد سوى خرائط Apple، التي تحدد اسم المكان وتعرض الخريطة وتبحث عن المساجد القريبة."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dein Standort wird genutzt, um Gebetszeiten und die Qibla-Richtung zu berechnen. Diese App gibt ihn nicht weiter."
+            "value": "Dein Standort wird genutzt, um Gebetszeiten und die Qibla-Richtung zu berechnen. Außer an Apple Karten, das den Ort benennt, die Karte zeigt und Moscheen in der Nähe sucht, gibt diese App ihn an niemanden weiter."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Your location is used to calculate prayer times and the Qibla direction. This app doesn't share it."
+            "value": "Your location is used to calculate prayer times and the Qibla direction. Apart from Apple Maps, which names the place, shows the map and finds mosques nearby, this app shares it with no one."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Votre position sert à calculer les horaires de prière et la direction de la qibla. Cette app ne la partage pas."
+            "value": "Votre position sert à calculer les horaires de prière et la direction de la qibla. Seul Plans d’Apple la reçoit, pour nommer le lieu, afficher la carte et trouver les mosquées proches ; cette app ne la partage avec personne d’autre."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Je locatie wordt alleen gebruikt om de gebedstijden en de qibla-richting te berekenen, en wordt niet gedeeld."
+            "value": "Je locatie wordt gebruikt om de gebedstijden en de qibla-richting te berekenen. Behalve met Apple Kaarten, dat de plaats benoemt, de kaart toont en moskeeën in de buurt zoekt, deelt deze app hem met niemand."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Konumunuz namaz vakitlerini ve kıble yönünü hesaplamak için kullanılır. Bu uygulama konumunuzu paylaşmaz."
+            "value": "Konumunuz namaz vakitlerini ve kıble yönünü hesaplamak için kullanılır. Bu uygulama konumunuzu, yerin adını bulan, haritayı gösteren ve yakındaki camileri arayan Apple Haritalar dışında kimseyle paylaşmaz."
           }
         }
       }

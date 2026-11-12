@@ -37,6 +37,10 @@ struct SettingsView: View {
                         get: { model.settings.school },
                         set: { if let school = $0 { model.chooseSchool(school) } }
                     )) {
+                        // Settings from before the school was required have none; without this row it reads blank.
+                        if model.settings.school == nil {
+                            Text("Not set").tag(School?.none)
+                        }
                         ForEach(School.allCases) { school in
                             Text(school.title).tag(Optional(school))
                         }
@@ -53,11 +57,19 @@ struct SettingsView: View {
                         LabeledContent("Asr calculation", value: model.settings.asr.shortTitle)
                     }
                     NavigationLink("Adjust times") { AdjustmentsView() }
-                    Stepper(value: $model.settings.hijriOffset, in: -2...2) {
+                    // Set by hand, the offset no longer follows the school (see AppModel.chooseSchool).
+                    Stepper(value: Binding(
+                        get: { model.settings.hijriOffset },
+                        set: {
+                            model.settings.hijriOffset = $0
+                            model.settings.hijriOffsetFromSchool = false
+                        }
+                    ), in: -2...2) {
                         // The date on its own line: next to the label and the stepper it would wrap.
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Hijri date")
-                            Text(verbatim: Formats.hijriDate(Date(), in: model.place?.timeZone ?? .current, offset: model.settings.hijriOffset))
+                            let here = model.place ?? Place(name: "", latitude: 0, longitude: 0, timeZoneID: TimeZone.current.identifier)
+                            Text(verbatim: Formats.hijriDate(Prayers.hijri(of: Date(), place: here, settings: model.settings)))
                                 .font(.subheadline)
                                 .foregroundStyle(Theme.muted)
                                 .lineLimit(1)
@@ -137,6 +149,9 @@ struct SettingsView: View {
                 Section("About") {
                     LabeledContent("Made by", value: "Melih Sivrikaya")
                     LabeledContent("Version", value: Bundle.main.versionText)
+                    Link("Privacy policy", destination: model.settings.language.siteURL("privacy"))
+                    Link("Support", destination: model.settings.language.siteURL("support"))
+                    NavigationLink("Acknowledgements") { AcknowledgementsView() }
                     Text("No ads, no tracking, no account.")
                         .foregroundStyle(Theme.muted)
                 }
@@ -199,6 +214,47 @@ struct AsrSettingsPage: View {
         }
         .background(Theme.background.ignoresSafeArea())
         .navigationTitle("Asr calculation")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// The open-source code in the app, with the licence its authors ask to keep with every copy.
+struct AcknowledgementsView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("This app uses Adhan, by Batoul Apps, under the MIT License.")
+                    .foregroundStyle(Theme.muted)
+                // Licence text stays in English, as published.
+                Text(verbatim: """
+                    The MIT License (MIT)
+
+                    Copyright (c) 2016 Batoul Apps
+
+                    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and \
+                    associated documentation files (the "Software"), to deal in the Software without restriction, \
+                    including without limitation the rights to use, copy, modify, merge, publish, distribute, \
+                    sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is \
+                    furnished to do so, subject to the following conditions:
+
+                    The above copyright notice and this permission notice shall be included in all copies or \
+                    substantial portions of the Software.
+
+                    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT \
+                    NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND \
+                    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, \
+                    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT \
+                    OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                    """)
+                    .font(.footnote)
+                    .environment(\.layoutDirection, .leftToRight)
+                    .textSelection(.enabled)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(20)
+        }
+        .background(Theme.background.ignoresSafeArea())
+        .navigationTitle("Acknowledgements")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

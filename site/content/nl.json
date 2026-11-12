@@ -1,0 +1,158 @@
+{
+  "language": "Nederlands",
+  "dir": "ltr",
+  "appName": "Wajh: Qibla & Prayer Times",
+  "tagline": "Gebedstijden en de qibla, zonder advertenties of tracking.",
+  "nav": {
+    "home": "Home",
+    "privacy": "Privacybeleid",
+    "support": "Hulp",
+    "accessibility": "Toegankelijkheid"
+  },
+  "home": {
+    "intro": "Gebedstijden met keuze uit 17 berekeningsmethoden, een qibla-kompas en -kaart, tijden voor de ramadan, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
+    "points": [
+      "Geen advertenties, geen abonnementen, geen account.",
+      "Er wordt niets over jou verzameld, en er wordt niets naar mij gestuurd. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen, het zoeken naar een stad en de kaart komen van Apple Kaarten.",
+      "De tijden volgen de methode van je moskee of instantie. Ze zijn gecontroleerd aan de hand van de roosters die instanties publiceren. Je kunt elke tijd een paar minuten verschuiven, zodat die met de tijd van je moskee overeenkomt."
+    ]
+  },
+  "privacy": {
+    "title": "Privacybeleid",
+    "updated": "Laatst bijgewerkt: 12 november 2026",
+    "intro": "Wajh (op het beginscherm heet de app “Qibla & Prayer”) is gemaakt door Melih Sivrikaya. In dit privacybeleid lees je wat er met je gegevens gebeurt als je de app gebruikt.",
+    "summary": "Kort gezegd: de app stuurt niets naar mij, en ik verzamel geen gegevens over jou. Geen account, geen advertenties, geen code voor analytics en geen tracking. Om de naam van je plaats te tonen, een stad te zoeken en de kaart en moskeeën in de buurt te laten zien, raadpleegt je iPhone Apple Kaarten; zie hieronder.",
+    "sections": [
+      {
+        "heading": "Wie verantwoordelijk is",
+        "paragraphs": [
+          "Ik, Melih Sivrikaya (ms@psbv.org), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up.",
+          "De app vraagt bij Apple Kaarten alleen op wat nodig is voor de functies die je gebruikt. Ik beantwoord e-mails en gebruik de rapporten die Apple aan mij doorgeeft. Dat doe ik omdat ik een gerechtvaardigd belang heb bij het ondersteunen en verbeteren van de app (artikel 6 lid 1 sub f AVG)."
+        ]
+      },
+      {
+        "heading": "Je locatie",
+        "paragraphs": [
+          "De app gebruikt de locatie van je iPhone om de gebedstijden en de richting van de qibla te berekenen, om de berekeningsmethode voor te stellen die in jouw land wordt gebruikt, en om het kompas het ware noorden te laten gebruiken. Die berekening gebeurt op je iPhone.",
+          "Sommige functies gebruiken Apple Kaarten, dus krijgt Apple wat die functies nodig hebben. Als de app de naam, het land en de tijdzone van je plaats opzoekt, krijgt Apple je locatie. Dat gebeurt als de app opstart, en opnieuw nadat je je meer dan ongeveer een kilometer hebt verplaatst. Als je een stad zoekt, krijgt Apple wat je typt, terwijl je typt. Als je de qibla-kaart opent, krijgt Apple het gebied om je heen of rond de stad die je hebt gekozen, om de kaart te tonen en daarin naar moskeeën te zoeken. Tik je op een moskee, dan wordt die geopend in de app Apple Kaarten. De app voegt niets toe wat jou identificeert. Apple verwerkt deze verzoeken volgens zijn eigen privacybeleid (apple.com/legal/privacy).",
+          "De app vraagt je locatie alleen op terwijl je hem gebruikt (“Bij gebruik van app”). Daardoor geeft iOS de app op de achtergrond nooit je locatie. De app bewaart de laatste plaats die hij heeft gevonden. De antwoorden van Siri en de herinneringen die de app op de achtergrond inplant, gebruiken die bewaarde plaats. Je kunt de app ook zonder locatietoegang gebruiken: kies een stad en zet de locatietoegang voor de app uit in Instellingen op je iPhone."
+        ]
+      },
+      {
+        "heading": "Wat op je iPhone blijft",
+        "paragraphs": [
+          "De app bewaart je instellingen (waaronder je school en berekeningsmethode), de laatste plaats die hij heeft gevonden of de stad die je hebt gekozen (naam en coördinaten), de tasbih-teller en wat je bijhoudt (de dagen die je als vastendag hebt gemarkeerd, de in te halen vastendagen en de gemiste gebeden). Ze staan op je iPhone, niet op een server, en worden niet via iCloud gesynchroniseerd. Net als andere appgegevens zitten ze in de back-ups van je iPhone (een iCloud-back-up of een back-up op je computer), als je die maakt. Als je de app verwijdert, worden ze van je iPhone gewist.",
+          "Herinneringen worden op je iPhone zelf ingepland; er is geen server die ze verstuurt. Ook de iftar-aftelling op het toegangsscherm draait op je iPhone."
+        ]
+      },
+      {
+        "heading": "Siri en Opdrachten",
+        "paragraphs": [
+          "Als je Siri naar een gebedstijd vraagt, verwerkt Apple je vraag zoals bij elke app. De app bepaalt het antwoord op je iPhone zonder open te gaan, op basis van de instellingen en de plaats die daar zijn opgeslagen."
+        ]
+      },
+      {
+        "heading": "Crashrapporten en statistieken",
+        "paragraphs": [
+          "Als je analysegegevens deelt met appontwikkelaars (in Instellingen op je iPhone: Privacy en beveiliging, Analyse en verbeteringen, Deel met appontwikkelaars), stuurt Apple mij crashrapporten en statistieken over hoe de app presteert en wordt gebruikt, zoals het aantal sessies. Apple laat mij ook totalen zien, zoals het aantal downloads per land. Apple verzamelt dit zelf, volgens zijn eigen privacybeleid, en zegt dat dit jou niet identificeert. De app bevat er geen code voor. Ik gebruik deze gegevens alleen om problemen op te lossen en de app te verbeteren."
+        ]
+      },
+      {
+        "heading": "Geen advertenties of tracking",
+        "paragraphs": [
+          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken aan Apple Kaarten die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
+        ]
+      },
+      {
+        "heading": "Als je me mailt",
+        "paragraphs": [
+          "Als je me mailt, krijg ik je e-mailadres, je naam als je die opgeeft, en wat je schrijft. Ik gebruik die gegevens alleen om je te antwoorden. Ik verwijder de e-mailwisseling zodra die niet meer nodig is, of eerder als je daarom vraagt. Mijn e-mailprovider bewaart de e-mails voor mij."
+        ]
+      },
+      {
+        "heading": "Je rechten",
+        "paragraphs": [
+          "Behalve de e-mails die je me stuurt, bewaar ik geen persoonsgegevens over jou. Voor die e-mails kun je me om een kopie vragen. Je kunt me ook vragen om ze te corrigeren of te verwijderen, of om te beperken hoe ik ze gebruik. En je kunt bezwaar maken tegen hoe ik ze gebruik. Alles wat de app opslaat, staat op je iPhone: je kunt het in de app wijzigen, of alles wissen door de app te verwijderen. Gegevens die Apple bewaart, worden door Apple verwerkt (apple.com/legal/privacy).",
+          "Vind je dat ik verkeerd met je gegevens omga? Dan kun je een klacht indienen bij een toezichthouder voor gegevensbescherming, bijvoorbeeld die in het land waar je woont."
+        ]
+      },
+      {
+        "heading": "Wijzigingen",
+        "paragraphs": [
+          "Als dit privacybeleid verandert, verschijnt de nieuwe versie op deze pagina, met een nieuwe datum."
+        ]
+      }
+    ]
+  },
+  "support": {
+    "title": "Hulp",
+    "intro": "Een vraag, een probleem of een tijd die niet overeenkomt met die van je moskee? Mail naar ms@psbv.org.",
+    "faqHeading": "Veelgestelde vragen",
+    "faq": [
+      {
+        "q": "De tijden wijken af van het rooster van mijn moskee.",
+        "a": "Moskeeën gebruiken verschillende berekeningsmethoden, vooral voor Fajr en Isha. Kies in Instellingen de methode die je moskee gebruikt: bij elke methode zie je de tijden van Fajr en Isha voor vandaag, zodat je ze kunt vergelijken met het rooster van je moskee. Controleer ook de Asr-berekening. Wijkt een tijd daarna nog een paar minuten af? Verschuif hem dan bij Tijden aanpassen."
+      },
+      {
+        "q": "De Hidjri-datum wijkt een dag af.",
+        "a": "De app volgt de Umm al-Qura-kalender, of de kalender van Diyanet als je de Diyanet-methode gebruikt. Waar jij woont, kan de maand door maanwaarneming een dag eerder of later beginnen. In Instellingen kun je de Hidjri-datum een dag of twee verschuiven."
+      },
+      {
+        "q": "Het kompas wijst de verkeerde kant op.",
+        "a": "Houd je iPhone plat, uit de buurt van metaal, magneten en andere elektronica, en beweeg hem in de vorm van een acht om het kompas te kalibreren. Sta locatietoegang toe, zodat het kompas het ware noorden kan gebruiken in plaats van het magnetische noorden."
+      },
+      {
+        "q": "Ik krijg geen meldingen.",
+        "a": "Controleer of meldingen voor de app zijn toegestaan in Instellingen op je iPhone, en of de bel naast het gebed aanstaat. Kijk ook of een Focus ze niet tegenhoudt. Open de app af en toe: iOS houdt maar een beperkt aantal herinneringen klaar. Elke keer dat je de app opent, plant die de herinneringen voor de komende dagen in. Dat gebeurt af en toe ook op de achtergrond, als “Ververs op achtergrond” voor de app aanstaat."
+      },
+      {
+        "q": "De iftar-aftelling verschijnt niet op mijn toegangsscherm.",
+        "a": "Start de aftelling zelf: via de ramadankaart op het tabblad Gebedstijden, of op het tabblad Bijhouden nadat je “Ik vast vandaag” hebt aangezet. De aftelling kan vanaf 8 uur voor de iftar beginnen, en Live Activities moeten voor de app zijn toegestaan in Instellingen op je iPhone."
+      },
+      {
+        "q": "Verzamelt de app mijn gegevens?",
+        "a": "Nee. Er wordt niets naar mij gestuurd. Voor plaatsnamen, het zoeken naar een stad en de kaart gebruikt de app Apple Kaarten. De details lees je in het privacybeleid."
+      }
+    ]
+  },
+  "accessibility": {
+    "title": "Toegankelijkheid",
+    "updated": "Laatst bijgewerkt: 12 november 2026",
+    "intro": "“Qibla & Prayer” moet voor iedereen werken. Op deze pagina lees je wat de app nu voor toegankelijkheid doet, wat nog niet af is en hoe je mij laat weten als iets voor jou niet werkt.",
+    "sections": [
+      {
+        "heading": "Wat de app ondersteunt",
+        "paragraphs": [
+          "Donkere weergave: de app is altijd donker, met lichte tekst.",
+          "Contrast: alle tekst heeft een contrast van minstens 6,3 op 1 met de achtergrond. De Richtlijnen voor Toegankelijkheid van Webcontent (WCAG) vragen 4,5 op 1.",
+          "Niet alleen met kleur: het volgende gebed en de volgende dag in de islamitische kalender hebben een ruitje ervoor, de rij van vandaag is vet in de tabellen en een gekozen optie heeft een vinkje. Een bel die uit staat, is doorgestreept.",
+          "Verminder beweging: als dit aan staat in de toegankelijkheidsinstellingen van je iPhone, bewegen het kompas, de stappen bij het instellen en de tasbih-teller niet meer.",
+          "Haptische feedback: je iPhone geeft een tikje als je op de qibla bent gericht, bij elke tel van de tasbih en als een ronde klaar is.",
+          "Talen: Engels, Nederlands, Duits, Frans, Turks en Arabisch. Arabisch lees je van rechts naar links."
+        ]
+      },
+      {
+        "heading": "Nog niet af",
+        "paragraphs": [
+          "VoiceOver: knoppen en pictogrammen hebben gesproken labels, en het qiblascherm zegt welke kant je op moet draaien. Ik heb nog niet elk scherm met VoiceOver getest, dus de App Store vermeldt het nog niet.",
+          "Grotere tekst: de meeste tekst wordt groter met de tekstgrootte van je iPhone. Het maandoverzicht groeit niet verder dan zijn zeven kolommen passen, en de grote tasbih-teller houdt zijn grootte.",
+          "Stembediening: daarmee heb ik de app nog niet getest.",
+          "De app heeft geen video’s of gesproken audio, dus ondertiteling en audiodescriptie zijn niet van toepassing."
+        ]
+      },
+      {
+        "heading": "Deze website",
+        "paragraphs": [
+          "Deze website is gewone HTML met koppen en zonder scripts, en volgt de tekstgrootte en zoom van je browser."
+        ]
+      },
+      {
+        "heading": "Laat me weten wat niet werkt",
+        "paragraphs": [
+          "Is iets in de app moeilijk te zien, te horen, te bereiken of te begrijpen? Mail dan naar ms@psbv.org. Het helpt als je je iPhone-model, je iOS-versie en de toegankelijkheidsinstellingen die je gebruikt erbij zet."
+        ]
+      }
+    ]
+  },
+  "footer": "Gemaakt door Melih Sivrikaya"
+}

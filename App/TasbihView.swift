@@ -64,6 +64,8 @@ struct TasbihView: View {
             }
             .pickerStyle(.segmented)
             .padding(.top, 20)
+            // A count past the new target (150 with no limit, then 33) starts a fresh round.
+            .onChange(of: target) { if target > 0 && count > target { count = 0 } }
             Spacer(minLength: 24)
             Button(action: tap) {
                 ZStack {

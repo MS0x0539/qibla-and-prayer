@@ -39,49 +39,131 @@ enum CalcMethod: String, CaseIterable, Codable, Identifiable {
 
     var id: String { rawValue }
 
-    /// Adhan's parameters. For our own methods, their minute corrections are in `adjustments`
-    /// (the user's adjustments are added on top in Prayers.compute).
-    var parameters: CalculationParameters {
+    /// How the method's authority computes its own timetable, checked day by day against a year or more
+    /// of its official tables (see MethodRules). `country` is where the times are for.
+    func rules(country: String?) -> MethodRules {
+        var rules = MethodRules()
         switch self {
-        case .muslimWorldLeague: CalculationMethod.muslimWorldLeague.params
-        case .turkey: CalculationMethod.turkey.params
-        case .northAmerica: CalculationMethod.northAmerica.params
-        case .moonsightingCommittee: CalculationMethod.moonsightingCommittee.params
-        case .egyptian: CalculationMethod.egyptian.params
-        case .karachi: CalculationMethod.karachi.params
-        case .ummAlQura: CalculationMethod.ummAlQura.params
-        case .dubai: CalculationMethod.dubai.params
-        case .kuwait: CalculationMethod.kuwait.params
-        case .qatar: CalculationMethod.qatar.params
-        case .singapore: CalculationMethod.singapore.params
-        case .tehran: CalculationMethod.tehran.params
-        // Leva Institute, Qum: Maghrib once the sun is 4° below the horizon (the redness has gone).
-        case .jafari: CalcMethod.custom(fajr: 16, isha: 14, maghribAngle: 4)
-        // Ministry of Habous, checked against its 2026 data.
-        case .morocco: CalcMethod.custom(fajr: 19, isha: 17, offsets: PrayerAdjustments(dhuhr: 5, maghrib: 5))
-        // JAKIM moved Fajr from 20° to 18° in 2019.
+        case .muslimWorldLeague:
+            rules.fajrAngle = 18
+            rules.ishaAngle = 17
+            rules.offsets = [.dhuhr: 60]
+        case .northAmerica:
+            rules.fajrAngle = 15
+            rules.ishaAngle = 15
+            rules.offsets = [.dhuhr: 60]
+        case .egyptian:
+            // ESA's tables: the sun's centre at 19.5° and 17.5°, Dhuhr at noon, no added minutes.
+            rules.fajrAngle = 19.5
+            rules.ishaAngle = 17.5
+        case .karachi:
+            // Jamia Uloom-ul-Islamia Banuri Town (the University of Islamic Sciences) computes its Karachi
+            // tables with PrayTimes.org: 18°/18°, Dhuhr at zawal.
+            rules.engine = .prayTimes
+            rules.fajrAngle = 18
+            rules.ishaAngle = 18
+            rules.exactSeconds = true
+        case .ummAlQura:
+            // KACST's own service (ummulqura.org.sa): one declination per day for Fajr and Asr, everything rounded
+            // up but sunrise, which is rounded down a second after the exact sunrise; Isha 90 minutes (120 in Ramadan).
+            rules.fajrAngle = 18.5
+            rules.ishaInterval = 90
+            rules.ramadanIshaExtra = 30
+            rules.kacst = true
+            rules.rounding = .up
+            rules.sunriseRounding = .down
+            rules.exactSeconds = true
+            rules.offsets = [.sunrise: 1]
+        case .dubai:
+            // Awqaf (awqaf.gov.ae): a perpetual table over 2020-2023, the earliest Fajr and sunrise and the latest
+            // of the others; sunrise and sunset at 1.35°, 18°/18°, fitted to its 2025-2027 Dubai tables.
+            rules.fajrAngle = 18
+            rules.ishaAngle = 18
+            rules.sunriseAngle = 1.35
+            rules.maghribAngle = 1.35
+            rules.offsets = [.fajr: -47, .sunrise: -54, .dhuhr: 168, .asr: 56, .maghrib: 56, .isha: 49]
+            rules.perpetualYears = [2020, 2021, 2022, 2023]
+        case .kuwait:
+            rules.fajrAngle = 18
+            rules.ishaAngle = 17.5
+        case .qatar:
+            // Qatar Calendar House: one perpetual table on the sun of 2006. Fajr 18° minus a minute, Dhuhr and Asr a
+            // minute later (since 1447), Maghrib 2 minutes after sunset (3 in Ramadan), Isha 90 minutes after it.
+            rules.fajrAngle = 18
+            rules.ishaInterval = 90
+            rules.ramadanIshaExtra = 1
+            rules.ramadanMaghribExtra = 1
+            rules.offsets = [.fajr: -60, .dhuhr: 60, .asr: 60, .maghrib: 120, .isha: 120]
+            rules.baseYear = 2006
+        case .singapore:
+            // MUIS: one table for the whole country, the sun taken once a day (the next day at about
+            // 13:17), Zohor 64 s after noon, Maghrib a minute later in Ramadan, everything rounded up.
+            // shortcut: MUIS's 2024, 2026 and 2027 tables use the next day's sun, 2025's the previous day's;
+            // check each new year's table (data.gov.sg) before relying on it.
+            // shortcut: the Ramadan minute follows the user's Hijri calendar; MUIS's own Ramadan can start or end a
+            // day apart from it (2026: 19 Feb-20 Mar against Umm al-Qura's 18 Feb-19 Mar), so Maghrib can be a minute
+            // off on that day. Set the Hijri date a day back in Settings to follow MUIS when it does.
+            rules.engine = .oncePerDay(daysAfterMidnightUTC: 1.22)
+            rules.fajrAngle = 20
+            rules.ishaAngle = 18
+            rules.horizon = 50.0 / 60
+            rules.offsets = [.dhuhr: 64]
+            rules.ramadanMaghribExtra = 1
+            rules.rounding = .up
+            rules.exactSeconds = true
+            rules.nationalPoint = (country: "SG", latitude: 1.2677, longitude: 103.8162)
+        case .tehran:
+            // The Institute of Geophysics' tables (Tehran 1386-1404 SH): 17.7°, Maghrib at 4.5°.
+            rules.fajrAngle = 17.7
+            rules.ishaAngle = 14
+            rules.maghribAngle = 4.5
+        case .jafari:
+            // Leva Institute, Qum: Maghrib once the sun is 4° below the horizon (the redness has gone).
+            rules.fajrAngle = 16
+            rules.ishaAngle = 14
+            rules.maghribAngle = 4
+        case .morocco:
+            rules.fajrAngle = 19
+            rules.ishaAngle = 17
+            rules.offsets = [.dhuhr: 300, .maghrib: 300]
         case .malaysia:
-            CalcMethod.custom(fajr: 18, isha: 18, offsets: PrayerAdjustments(sunrise: -1, dhuhr: 1), rounding: .up)
-        // Kemenag: Maghrib at 1° and a safety margin of about 2 minutes (as in Adhan's upcoming preset).
+            // JAKIM: 18° since 2019, Zohor 64 s after noon (the sun's half-disc), Asar with the declination
+            // at Asar, everything rounded up; Syuruk with its seconds dropped.
+            rules.fajrAngle = 18
+            rules.ishaAngle = 18
+            rules.asrShadow = .atAsr
+            rules.offsets = [.sunrise: -60, .dhuhr: 64]
+            rules.rounding = .up
         case .indonesia:
-            CalcMethod.custom(
-                fajr: 20, isha: 18, maghribAngle: 1,
-                offsets: PrayerAdjustments(fajr: 2, sunrise: -4, dhuhr: 3, asr: 2, maghrib: 2, isha: 2), rounding: .up)
-        case .france: CalcMethod.custom(fajr: 12, isha: 12)
+            // Kemenag (SIHAT): 20°/18°, Maghrib at 1°, 2 minutes' ihtiyat (Dzuhur 3), rounded up; Terbit at 1°
+            // minus 2 minutes with its seconds dropped; Ashar like Adhan's.
+            rules.fajrAngle = 20
+            rules.ishaAngle = 18
+            rules.maghribAngle = 1
+            rules.sunriseAngle = 1
+            rules.asrShadow = .adhan
+            rules.offsets = [.fajr: 120, .sunrise: -180, .dhuhr: 180, .asr: 120, .maghrib: 120, .isha: 120]
+            rules.rounding = .up
+        case .france:
+            rules.fajrAngle = 12
+            rules.ishaAngle = 12
+        case .moonsightingCommittee:
+            // moonsighting.com's own tables: PrayTimes.org's sun, Dhuhr 0.083 h after noon, Maghrib 3 minutes
+            // after sunset, Khalid Shaukat's seasonal Fajr and Isha (bounded by the sun at 18°).
+            rules.engine = .prayTimes
+            rules.moonsighting = true
+            rules.fajrAngle = 18
+            rules.ishaAngle = 18
+            rules.offsets = [.dhuhr: 0.083 * 3600, .maghrib: 180]
+            rules.exactSeconds = true
+        case .turkey:
+            // Diyanet's own reckoning (namazvakitleri.diyanet.gov.tr): its temkin, 17° or 16° for Yatsı by country,
+            // and its high-latitude estimates; rounded half up to the minute.
+            rules.engine = .diyanet
+            rules.country = country
+            rules.exactSeconds = true
         }
-    }
-
-    private static func custom(
-        fajr: Double, isha: Double, maghribAngle: Double? = nil,
-        offsets: PrayerAdjustments = PrayerAdjustments(), rounding: Rounding = .nearest
-    ) -> CalculationParameters {
-        var params = CalculationMethod.other.params
-        params.fajrAngle = fajr
-        params.ishaAngle = isha
-        params.maghribAngle = maghribAngle
-        params.adjustments = offsets
-        params.rounding = rounding
-        return params
+        return rules
     }
 
     var title: String {
@@ -143,6 +225,15 @@ enum School: String, CaseIterable, Codable, Identifiable {
         case .maliki: String(localized: "Maliki", bundle: .app)
         case .hanbali: String(localized: "Hanbali", bundle: .app)
         case .jafari: String(localized: "Ja'fari (Shia)", bundle: .app)
+        }
+    }
+
+    /// The Moonsighting Committee's Isha: when the redness has gone (ahmer) for Shafi'i, Maliki and Hanbali,
+    /// its "general" twilight otherwise, as on moonsighting.com.
+    var shafaq: Shafaq {
+        switch self {
+        case .shafii, .maliki, .hanbali: .ahmer
+        case .hanafi, .jafari: .general
         }
     }
 }
@@ -215,6 +306,13 @@ enum AppLanguage: String, CaseIterable, Codable, Identifiable {
         self == .system ? Locale.current.language.languageCode?.identifier : rawValue
     }
 
+    /// This app's page on qibla.dev ("privacy", "support") in the language shown now; English is at the root.
+    func siteURL(_ page: String) -> URL {
+        let shown = self == .system ? Bundle.main.preferredLocalizations.first ?? "en" : rawValue
+        let folder = ["nl", "de", "fr", "tr", "ar"].contains(shown) ? "\(shown)/" : ""
+        return URL(string: "https://qibla.dev/\(folder)\(page)")!
+    }
+
     var bundle: Bundle {
         guard self != .system,
               let path = Bundle.main.path(forResource: rawValue, ofType: "lproj"),
@@ -252,6 +350,8 @@ struct AppSettings: Codable, Equatable {
     var jumuahReminder = false
     /// In Ramadan: a reminder 30 minutes before suhoor ends, and one at iftar.
     var ramadanReminders = false
+    /// Whether choosing the Ja'fari school set `hijriOffset` (so changing school may undo it, but not a hand-set one).
+    var hijriOffsetFromSchool = false
 
     /// What most people in the region use: only a starting point, the user picks.
     static func suggested(
@@ -298,5 +398,6 @@ extension AppSettings {
         if let value = try? container.decode(Int.self, forKey: .reminderMinutes) { reminderMinutes = value }
         if let value = try? container.decode(Bool.self, forKey: .jumuahReminder) { jumuahReminder = value }
         if let value = try? container.decode(Bool.self, forKey: .ramadanReminders) { ramadanReminders = value }
+        if let value = try? container.decode(Bool.self, forKey: .hijriOffsetFromSchool) { hijriOffsetFromSchool = value }
     }
 }

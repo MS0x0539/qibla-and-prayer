@@ -27,7 +27,10 @@ struct TrackerView: View {
                         Text("Iftar in \(Text(timerInterval: now...maghrib, countsDown: true))")
                             .monospacedDigit()
                             .foregroundStyle(Theme.gold)
-                        if model.canCountDown(to: maghrib, from: now) {
+                        if model.countdownIftar == maghrib {
+                            Label("The countdown is on your Lock Screen", systemImage: "checkmark.circle.fill")
+                                .foregroundStyle(Theme.gold)
+                        } else if model.canCountDown(to: maghrib, from: now) {
                             Button {
                                 model.startIftarCountdown()
                             } label: {
@@ -76,6 +79,7 @@ struct TrackerView: View {
         .scrollContentBackground(.hidden)
         .background(Theme.background.ignoresSafeArea())
         .navigationTitle("Tracker")
+        .sensoryFeedback(.success, trigger: model.countdownIftar) { _, new in new != nil }
     }
 
     /// The day in the place the times are for, as stored in `fastingDays` ("2026-11-12").

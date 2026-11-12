@@ -59,53 +59,50 @@ enum Prayers {
 
     static func compute(on date: Date, place: Place, settings: AppSettings) -> [PrayerTime]? {
         let day = place.calendar.dateComponents([.year, .month, .day], from: date)
-        var params = settings.method.parameters
-        params.madhab = settings.asr == .hanafi ? .hanafi : .shafi
+        guard let year = day.year, let month = day.month, let dayOfMonth = day.day else { return nil }
+        let rules = settings.method.rules(country: place.countryCode)
+        // MUIS publishes one table for all of Singapore, computed at one point.
+        var latitude = place.latitude
+        var longitude = place.longitude
+        if let point = rules.nationalPoint, place.countryCode == point.country {
+            latitude = point.latitude
+            longitude = point.longitude
+        }
         // Above 48° twilight can last all night in summer; this is Adhan's recommendation there. France's
         // 12° is reached all year below ~54°N, and Adhan applies the 1/7 rule as a bound even then
         // (Paris, June: Fajr 04:03 would become 04:39), so it starts higher for that method.
         let limit = settings.method == .france ? 54.0 : 48.0
         let rule: HighLatitudeRule = abs(place.latitude) > limit ? .seventhOfTheNight : .middleOfTheNight
-        params.highLatitudeRule = rule
-        // The user's minutes come on top of the method's own corrections.
-        let minutes = settings.adjustments
-        params.adjustments.fajr += minutes[.fajr] ?? 0
-        params.adjustments.sunrise += minutes[.sunrise] ?? 0
-        params.adjustments.dhuhr += minutes[.dhuhr] ?? 0
-        params.adjustments.asr += minutes[.asr] ?? 0
-        params.adjustments.maghrib += minutes[.maghrib] ?? 0
-        params.adjustments.isha += minutes[.isha] ?? 0
-        // Diyanet's own timetables outside Turkey use Isha at 16° (17° inside Turkey).
-        // shortcut: Diyanet's summer estimates above 45°N (Netherlands, Germany) are not reproduced;
-        // its Fajr and Isha there can differ by up to about 30 minutes in summer.
-        if settings.method == .turkey, let country = place.countryCode, country != "TR" {
-            params.ishaAngle = 16
-        }
-        // Umm al-Qura puts Isha 30 minutes later in Ramadan (2 hours after Maghrib).
-        if settings.method == .ummAlQura, hijri(of: date, place: place, offset: settings.hijriOffset).month == 9 {
-            params.adjustments.isha += 30
-        }
-        guard let times = PrayerTimes(coordinates: place.coordinates, date: day, calculationParameters: params) else {
-            return nil
-        }
-        return [
-            PrayerTime(kind: .fajr, time: times.fajr),
-            PrayerTime(kind: .sunrise, time: times.sunrise),
-            PrayerTime(kind: .dhuhr, time: times.dhuhr),
-            PrayerTime(kind: .asr, time: times.asr),
-            PrayerTime(kind: .maghrib, time: times.maghrib),
-            PrayerTime(kind: .isha, time: times.isha),
-        ]
+        guard let times = PrayerEngine.times(
+            year: year, month: month, day: dayOfMonth, latitude: latitude, longitude: longitude, rules: rules,
+            asrFactor: settings.asr == .hanafi ? 2 : 1, shafaq: settings.school?.shafaq ?? .general,
+            highLatitudeRule: rule, ramadan: hijri(of: date, place: place, settings: settings).month == 9,
+            adjustments: settings.adjustments, timeZone: place.timeZone)
+        else { return nil }
+        return zip(PrayerKind.allCases, times).map { PrayerTime(kind: $0, time: $1) }
     }
 
-    /// The Hijri date (month, day, year) of a Gregorian day, moved by the user's offset.
-    static func hijri(of day: Date, place: Place, offset: Int) -> DateComponents {
-        var hijri = Calendar(identifier: .islamicUmmAlQura)
-        hijri.timeZone = place.timeZone
+    /// The Hijri date (month, day, year) of a Gregorian day, moved by the user's offset: Diyanet's own
+    /// calendar for the Diyanet method (in the years it publishes), Umm al-Qura otherwise.
+    static func hijri(of day: Date, place: Place, offset: Int, diyanet: Bool = false) -> DateComponents {
         // Noon keeps daylight-saving changes from moving the day.
         let noon = place.calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day) ?? day
         let shifted = place.calendar.date(byAdding: .day, value: offset, to: noon) ?? noon
+        if diyanet {
+            let parts = place.calendar.dateComponents([.year, .month, .day], from: shifted)
+            if let year = parts.year, let month = parts.month, let dayOfMonth = parts.day,
+               let date = DiyanetCalendar.hijri(year: year, month: month, day: dayOfMonth) {
+                return DateComponents(year: date.year, month: date.month, day: date.day)
+            }
+        }
+        var hijri = Calendar(identifier: .islamicUmmAlQura)
+        hijri.timeZone = place.timeZone
         return hijri.dateComponents([.year, .month, .day], from: shifted)
+    }
+
+    /// The Hijri date in the calendar that goes with the user's method.
+    static func hijri(of day: Date, place: Place, settings: AppSettings) -> DateComponents {
+        hijri(of: day, place: place, offset: settings.hijriOffset, diyanet: settings.method == .turkey)
     }
 
     /// The next prayer after `now` (sunrise skipped); after Isha that is tomorrow's Fajr.

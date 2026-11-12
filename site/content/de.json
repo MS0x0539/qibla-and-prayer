@@ -1,0 +1,158 @@
+{
+  "language": "Deutsch",
+  "dir": "ltr",
+  "appName": "Wajh: Qibla & Prayer Times",
+  "tagline": "Gebetszeiten und Qibla, ohne Werbung und Tracking.",
+  "nav": {
+    "home": "Startseite",
+    "privacy": "Datenschutz",
+    "support": "Support",
+    "accessibility": "Barrierefreiheit"
+  },
+  "home": {
+    "intro": "Gebetszeiten nach 17 Berechnungsmethoden, ein Qibla-Kompass und eine Qibla-Karte, Ramadan-Zeiten, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
+    "points": [
+      "Keine Werbung, keine Abos, kein Konto.",
+      "Über dich wird nichts gesammelt, und an mich wird nichts gesendet. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone; Ortsnamen, die Stadtsuche und die Karte kommen von Apple Karten.",
+      "Die Zeiten folgen der Methode deiner Moschee oder Institution und wurden mit den Gebetsplänen abgeglichen, die Institutionen veröffentlichen. Du kannst jede Zeit um ein paar Minuten verschieben, damit sie zu deiner Moschee passt."
+    ]
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "updated": "Stand: 12. November 2026",
+    "intro": "Wajh (auf dem Home-Bildschirm „Qibla & Prayer“ genannt) wird von Melih Sivrikaya entwickelt. Diese Datenschutzerklärung beschreibt, was mit deinen Daten passiert, wenn du die App nutzt.",
+    "summary": "Kurz gesagt: Die App sendet nichts an mich, und ich sammle keine Daten über dich. Es gibt kein Konto, keine Werbung, keinen Code für Nutzungsanalyse und kein Tracking. Um deinen Ort zu benennen, nach einer Stadt zu suchen und die Karte und Moscheen in der Nähe anzuzeigen, fragt dein iPhone bei Apple Karten an; siehe unten.",
+    "sections": [
+      {
+        "heading": "Wer verantwortlich ist",
+        "paragraphs": [
+          "Ich, Melih Sivrikaya (ms@psbv.org), bin für diese App und für die personenbezogenen Daten verantwortlich, die in dieser Datenschutzerklärung beschrieben sind. Damit bin ich der „Verantwortliche“ im Sinne der Datenschutz-Grundverordnung (DSGVO). Apple ist für seine eigenen Dienste verantwortlich, die die App nutzt: Apple Karten, Siri, Absturzberichte und iCloud-Backup.",
+          "Die App fragt bei Apple Karten nur das an, was die Funktionen brauchen, die du nutzt. Ich beantworte E-Mails und nutze die Berichte, die Apple weitergibt, aufgrund meines berechtigten Interesses, Support für die App zu leisten und sie zu verbessern (Art. 6 Abs. 1 lit. f DSGVO)."
+        ]
+      },
+      {
+        "heading": "Dein Standort",
+        "paragraphs": [
+          "Die App nutzt den Standort deines iPhone, um Gebetszeiten und die Qibla-Richtung zu berechnen, um die Berechnungsmethode vorzuschlagen, die in deinem Land genutzt wird, und damit der Kompass den geografischen Norden nutzen kann. Diese Berechnung findet auf deinem iPhone statt.",
+          "Einige Funktionen nutzen Apple Karten, deshalb erhält Apple, was diese Funktionen brauchen: deinen Standort, wenn die App Namen, Land und Zeitzone deines Ortes abfragt (beim Start und erneut, nachdem du dich mehr als etwa einen Kilometer fortbewegt hast); was du in die Stadtsuche eingibst, während du tippst; und, wenn du die Qibla-Karte öffnest, deine Umgebung oder die Umgebung der Stadt, die du gewählt hast, um die Karte anzuzeigen und dort nach Moscheen zu suchen. Wenn du auf eine Moschee tippst, wird sie in der App Apple Karten geöffnet. Die App fügt nichts hinzu, was dich identifiziert. Apple verarbeitet diese Anfragen nach seiner eigenen Datenschutzrichtlinie (apple.com/legal/privacy).",
+          "Die App fragt deinen Standort nur ab, während du sie verwendest („Beim Verwenden der App“). Deshalb gibt iOS der App deinen Standort nie im Hintergrund. Die App speichert den zuletzt ermittelten Ort; Siris Antworten und die Erinnerungen, die die App im Hintergrund plant, nutzen diesen gespeicherten Ort. Du kannst die App auch ohne Standortzugriff nutzen: Wähle eine Stadt und schalte den Standortzugriff für die App in den Einstellungen deines iPhone aus."
+        ]
+      },
+      {
+        "heading": "Was auf deinem iPhone bleibt",
+        "paragraphs": [
+          "Die App speichert deine Einstellungen (darunter deine Rechtsschule und deine Berechnungsmethode), den zuletzt ermittelten Ort oder die Stadt, die du gewählt hast (Name und Koordinaten), den Tasbih-Zähler und den Tracker (die Tage, die du als Fastentage markiert hast, die nachzuholenden Fastentage und die verpassten Gebete). Diese Daten liegen auf deinem iPhone, auf keinem Server, und werden nicht über iCloud synchronisiert. Wie andere App-Daten sind sie in den Backups deines iPhone enthalten (iCloud-Backup oder ein Backup auf deinem Computer), falls du welche erstellst. Wenn du die App löschst, werden sie von deinem iPhone entfernt.",
+          "Erinnerungen werden direkt auf deinem iPhone geplant; kein Server verschickt sie. Auch der Iftar-Countdown auf dem Sperrbildschirm läuft auf deinem iPhone."
+        ]
+      },
+      {
+        "heading": "Siri und Kurzbefehle",
+        "paragraphs": [
+          "Wenn du Siri nach einer Gebetszeit fragst, verarbeitet Apple deine Frage wie bei jeder App. Die App ermittelt die Antwort auf deinem iPhone, ohne sich zu öffnen, anhand der Einstellungen und des Ortes, die dort gespeichert sind."
+        ]
+      },
+      {
+        "heading": "Absturzberichte und Statistiken",
+        "paragraphs": [
+          "Wenn du „Mit App-Entwicklern teilen“ eingeschaltet hast (in den Einstellungen deines iPhone: Datenschutz & Sicherheit, Analyse & Verbesserungen), sendet Apple mir Absturzberichte und Statistiken zur Leistung und Nutzung der App, etwa die Anzahl der Sitzungen. Apple zeigt mir außerdem Gesamtzahlen wie die Anzahl der Downloads pro Land. Apple sammelt diese Daten selbst, nach seiner eigenen Datenschutzrichtlinie, und gibt an, dass sie dich nicht identifizieren; die App enthält keinen Code dafür. Ich nutze sie nur, um Probleme zu beheben und die App zu verbessern."
+        ]
+      },
+      {
+        "heading": "Keine Werbung, kein Tracking",
+        "paragraphs": [
+          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen an Apple Karten teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
+        ]
+      },
+      {
+        "heading": "Wenn du mir eine E-Mail schreibst",
+        "paragraphs": [
+          "Wenn du mir eine E-Mail schreibst, erhalte ich deine E-Mail-Adresse, deinen Namen, falls du ihn angibst, und das, was du schreibst. Ich nutze diese Angaben nur, um dir zu antworten, und lösche den E-Mail-Verlauf, sobald er nicht mehr gebraucht wird, oder früher, wenn du darum bittest. Mein E-Mail-Anbieter speichert die E-Mails für mich."
+        ]
+      },
+      {
+        "heading": "Deine Rechte",
+        "paragraphs": [
+          "Abgesehen von E-Mails, die du mir schickst, speichere ich keine personenbezogenen Daten über dich. Zu diesen E-Mails kannst du mich um eine Kopie bitten, mich bitten, sie zu berichtigen oder zu löschen, mich bitten, ihre Nutzung einzuschränken, oder ihrer Nutzung widersprechen. Alles, was die App speichert, liegt auf deinem iPhone: Du kannst es in der App ändern oder alles entfernen, indem du die App löschst. Um Daten, die bei Apple liegen, kümmert sich Apple (apple.com/legal/privacy).",
+          "Wenn du meinst, dass ich falsch mit deinen Daten umgehe, kannst du dich bei einer Datenschutzbehörde beschweren, zum Beispiel bei der Behörde in dem Land, in dem du lebst."
+        ]
+      },
+      {
+        "heading": "Änderungen",
+        "paragraphs": [
+          "Wenn sich diese Datenschutzerklärung ändert, erscheint die neue Version auf dieser Seite mit einem neuen Datum."
+        ]
+      }
+    ]
+  },
+  "support": {
+    "title": "Support",
+    "intro": "Eine Frage, ein Problem oder eine Gebetszeit, die nicht zu deiner Moschee passt? Schreib eine E-Mail an ms@psbv.org.",
+    "faqHeading": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Die Zeiten weichen vom Gebetsplan meiner Moschee ab.",
+        "a": "Moscheen nutzen unterschiedliche Berechnungsmethoden, vor allem für Fajr und Isha. Wähle in den Einstellungen die Methode, die deine Moschee nutzt: Bei jeder Methode siehst du die heutigen Zeiten für Fajr und Isha, so kannst du sie mit dem Gebetsplan deiner Moschee vergleichen. Prüfe auch die Einstellung „Asr-Berechnung“. Weicht eine Zeit dann noch ein paar Minuten ab, verschiebe sie unter „Zeiten anpassen“."
+      },
+      {
+        "q": "Das Hidschri-Datum weicht um einen Tag ab.",
+        "a": "Die App folgt dem Umm-al-Qura-Kalender oder, wenn du die Diyanet-Methode nutzt, dem Kalender der Diyanet. Dort, wo du lebst, kann der Monat wegen der Mondsichtung einen Tag früher oder später beginnen. In den Einstellungen kannst du das Hidschri-Datum um ein, zwei Tage verschieben."
+      },
+      {
+        "q": "Der Kompass zeigt in die falsche Richtung.",
+        "a": "Halte dein iPhone flach und fern von Metall, Magneten und anderer Elektronik, und bewege es in Form einer Acht, um den Kompass zu kalibrieren. Erlaube den Standortzugriff, damit der Kompass den geografischen Norden statt des magnetischen Nordens nutzen kann."
+      },
+      {
+        "q": "Ich bekomme keine Mitteilungen.",
+        "a": "Stell sicher, dass Mitteilungen für die App in den Einstellungen deines iPhone erlaubt sind, dass die Glocke neben dem Gebet eingeschaltet ist und dass kein Fokus sie zurückhält. Öffne die App ab und zu: iOS hält eine begrenzte Zahl an Erinnerungen bereit. Die App plant die nächsten Tage jedes Mal ein, wenn du sie öffnest, und ab und zu im Hintergrund, wenn die Hintergrundaktualisierung für sie eingeschaltet ist."
+      },
+      {
+        "q": "Der Iftar-Countdown erscheint nicht auf meinem Sperrbildschirm.",
+        "a": "Starte ihn selbst: über die Ramadan-Karte im Tab „Gebetszeiten“ oder im Tracker, nachdem du „Ich faste heute“ eingeschaltet hast. Der Countdown kann ab 8 Stunden vor dem Iftar starten, und Live-Aktivitäten müssen für die App in den Einstellungen deines iPhone erlaubt sein."
+      },
+      {
+        "q": "Sammelt die App meine Daten?",
+        "a": "Nein. An mich wird nichts gesendet. Ortsnamen, die Stadtsuche und die Karte nutzen Apple Karten; die Details findest du in der Datenschutzerklärung."
+      }
+    ]
+  },
+  "accessibility": {
+    "title": "Barrierefreiheit",
+    "updated": "Stand: 12. November 2026",
+    "intro": "„Qibla & Prayer“ soll für alle funktionieren. Hier steht, was die App heute für die Barrierefreiheit tut, was noch nicht fertig ist und wie du mir sagen kannst, wenn etwas für dich nicht funktioniert.",
+    "sections": [
+      {
+        "heading": "Was die App unterstützt",
+        "paragraphs": [
+          "Dunkle Darstellung: Die App ist immer dunkel, mit heller Schrift.",
+          "Kontrast: Jeder Text hat zu seinem Hintergrund einen Kontrast von mindestens 6,3 zu 1. Die Richtlinien für barrierefreie Webinhalte (WCAG) verlangen 4,5 zu 1.",
+          "Nicht nur durch Farbe: Vor dem nächsten Gebet und dem nächsten Tag im islamischen Kalender steht eine Raute, die Zeile von heute ist in den Tabellen fett, und eine gewählte Option hat ein Häkchen. Eine ausgeschaltete Glocke ist durchgestrichen.",
+          "Bewegung reduzieren: Wenn das in den Bedienungshilfen deines iPhone eingeschaltet ist, bewegen sich der Kompass, die Einrichtung und der Tasbih-Zähler nicht mehr.",
+          "Haptik: Dein iPhone tippt kurz, wenn du Richtung Qibla schaust, bei jedem Zählen des Tasbih und wenn eine Runde fertig ist.",
+          "Sprachen: Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch. Arabisch wird von rechts nach links gelesen."
+        ]
+      },
+      {
+        "heading": "Noch nicht fertig",
+        "paragraphs": [
+          "VoiceOver: Tasten und Symbole haben gesprochene Bezeichnungen, und der Qibla-Bildschirm sagt dir, in welche Richtung du dich drehen musst. Ich habe noch nicht jeden Bildschirm mit VoiceOver getestet, deshalb nennt der App Store es noch nicht.",
+          "Größerer Text: Der meiste Text wächst mit der Textgröße deines iPhone. Die Monatsübersicht wächst nur so weit, wie ihre sieben Spalten noch passen, und der große Tasbih-Zähler behält seine Größe.",
+          "Sprachsteuerung: Damit habe ich die App noch nicht getestet.",
+          "Die App hat keine Videos und keine gesprochenen Inhalte, deshalb sind Untertitel und Audiodeskriptionen nicht nötig."
+        ]
+      },
+      {
+        "heading": "Diese Website",
+        "paragraphs": [
+          "Diese Website ist einfaches HTML mit Überschriften und ohne Skripte und folgt der Textgröße und dem Zoom deines Browsers."
+        ]
+      },
+      {
+        "heading": "Sag mir, was nicht funktioniert",
+        "paragraphs": [
+          "Wenn etwas in der App schwer zu sehen, zu hören, zu erreichen oder zu verstehen ist, schreib bitte an ms@psbv.org. Es hilft, wenn du dein iPhone-Modell, deine iOS-Version und die Bedienungshilfen nennst, die du verwendest."
+        ]
+      }
+    ]
+  },
+  "footer": "Erstellt von Melih Sivrikaya"
+}

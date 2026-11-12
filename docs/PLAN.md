@@ -42,10 +42,42 @@ Apple-like and calm, in the "Geometry" look: deep green-black, gold, the eight-p
   to `org.psbv.qiblaandprayer` and `org.psbv.qiblaandprayer.widgets`; then follow the shortcut comment in
   `Widgets/PrayerWidgets.swift`.
 - **Settings:** location, madhab, method, Asr, per-prayer minute adjustments, Hijri date ±2 days,
-  notifications with a test button, language, setup again, About ("Made by Melih Sivrikaya").
-- **Correctness from research:** Diyanet's Asr is the standard (first-shadow) time; Diyanet outside
-  Turkey uses Isha at 16°; Umm al-Qura adds 30 minutes to Isha in Ramadan; above 48° the one-seventh-
-  of-the-night rule applies; times are computed in the place's own time zone.
+  notifications with a test button, language, setup again, About ("Made by Melih Sivrikaya", privacy
+  policy, support, acknowledgements with Adhan's MIT licence).
+- **Correctness:** each method computes the way its authority computes its own published tables; see
+  "How the times were checked". Times are computed in the place's own time zone.
+
+## How the times were checked
+
+Each method was compared day by day with its authority's own published tables, at the authority's
+reference point, and the calculation (`App/PrayerEngine.swift`, `App/DiyanetTimes.swift`) was rebuilt until
+it matched. Share of times identical to the minute, November 2026:
+
+| Method | Official tables | Before | Now |
+| --- | --- | --- | --- |
+| Diyanet | namazvakitleri.diyanet.gov.tr 2026: 7 cities here, 151 places in the reconstruction | 43.3% | 99.96% |
+| Moonsighting Committee | moonsighting.com, London, Amsterdam, New York, 2026-2027 | 74.6% | 99.9% |
+| Umm al-Qura | KACST (ummulqura.org.sa), Makkah, Madinah, Riyadh, Jeddah, Dammam, 394 days | 50.4% | 96.7% |
+| Qatar | Qatar Calendar House, Doha, 474 days | 17.6% | 97.4% |
+| Dubai | Awqaf (UAE), Dubai, 2025-2027 | 59.9% | 98.7% |
+| Singapore | MUIS (data.gov.sg), 2026 | 71.2% | 99.7% |
+| Malaysia | JAKIM (e-solat), WLY01, 2026 | 92.0% | 95.8% |
+| Indonesia | Kemenag (SIHAT), 3 cities, 2026 | 94.1% | 98.6% |
+| Egypt | ESA, Cairo, Alexandria, Aswan, 2026 | 75.4% | 97.1% |
+| Karachi | Banuri Town, 2026 | 77.9% | 100% |
+| Kuwait | the Al-Ojeiri table | 72.3% | 75.5% |
+| Tehran | Institute of Geophysics, 1402-1404 SH | 99.1% | 99.1% |
+| Morocco | Habous, 7 cities, 883 days | 52.8% | 59.4% |
+
+Nearly every remaining difference is one minute, where the authority's figure lies within a second or so of a
+minute boundary. Known limits:
+- KACST prints the previous day's times on a few dates a month (5% of days), a quirk of its service.
+- MUIS shifts its table by a day in some years (2025 the other way); see the shortcut in AppSettings.swift.
+- Morocco needs each town's horizon height (Habous publishes 190 towns) to get closer; not done yet.
+- Kuwait's official table is a fixed one from about 1978; not reproduced.
+- An authority's table is for its reference point; at the user's own position a time can differ by a minute.
+- Authorities change their rules now and then (Qatar in 1447, Diyanet's Yatsı temkin since 2020): re-check
+  each year against the new tables. The comparison scripts and data are not in this repository.
 
 ## How it is built without a Mac
 
@@ -56,10 +88,8 @@ The repository is private: about 190 free macOS minutes a month on GitHub Free.
 
 ## Open decisions
 
-1. **Diyanet in the Netherlands, Belgium and Germany.** In spring and summer Diyanet's tables there use
-   their own estimates; the app can be up to about 30 minutes off for Fajr and Isha. Options: copy the
-   estimation rule into the app (about ±5 minutes on most days, re-check yearly), fetch Diyanet's official
-   times online (needs a server or API account), or keep the note shown now.
+1. **Diyanet in the Netherlands, Belgium and Germany:** done 13 November 2026. The app now reproduces
+   Diyanet's own summer estimates (takdir) there, so the note about half an hour is gone.
 2. **Public or private repository.** Public makes macOS builds free and unlimited.
 3. **Details:** Dutch prayer names in English spelling (Fajr) or Dutch (Fadjr); France's default
    (Muslim World League or 12°); Hanafi Asr as the default in Pakistan and India.
@@ -74,7 +104,8 @@ message). "Check App Store Connect key" tests the secrets on Linux without print
 
 ## Before the App Store
 
-- Privacy policy and support page (with contact details) and a link to the policy in Settings → About.
+- Done 12 November 2026: privacy policy, accessibility and support pages on https://qibla.dev in all six
+  languages, linked from Settings → About (privacy and support).
 - App Privacy: "Data Not Collected". Age rating 4+. EU trader status (asked for every new app).
 - Availability: leave out China mainland (religious content permit); untick Mac and Apple Vision Pro
   (no compass).

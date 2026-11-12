@@ -110,7 +110,7 @@ struct QiblaMapView: View {
             } header: {
                 Text("Mosques nearby")
             } footer: {
-                Text("Tap a mosque to open it in Apple Maps. Not every mosque is on the map.")
+                Text("Tap a mosque in the list to open it in Apple Maps. Not every mosque is on the map.")
             }
             .listRowBackground(Theme.card)
         }

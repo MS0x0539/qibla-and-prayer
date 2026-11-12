@@ -44,9 +44,9 @@ struct PrayerTimesView: View {
 
     private func page(place: Place, today: [PrayerTime], now: Date) -> some View {
         let next = model.next(after: now, at: place)
-        let offset = model.settings.hijriOffset
-        let ramadanStart = AppModel.ramadanStart(around: now, place: place, hijriOffset: offset)
-        let hijri = Prayers.hijri(of: now, place: place, offset: offset)
+        let ramadanStart = AppModel.ramadanStart(
+            around: now, place: place, hijriOffset: model.settings.hijriOffset, diyanet: model.settings.method == .turkey)
+        let hijri = Prayers.hijri(of: now, place: place, settings: model.settings)
         return ScrollView {
             VStack(spacing: 0) {
                 header(place: place, next: next, now: now)
@@ -84,7 +84,7 @@ struct PrayerTimesView: View {
     /// Tomorrow's times while tomorrow is still Ramadan: after iftar, the card turns to tomorrow's suhoor.
     private func ramadanTomorrow(after now: Date, at place: Place) -> [PrayerTime]? {
         guard let tomorrow = place.calendar.date(byAdding: .day, value: 1, to: now),
-              Prayers.hijri(of: tomorrow, place: place, offset: model.settings.hijriOffset).month == 9 else { return nil }
+              Prayers.hijri(of: tomorrow, place: place, settings: model.settings).month == 9 else { return nil }
         return model.times(on: tomorrow, at: place)
     }
 
@@ -96,7 +96,7 @@ struct PrayerTimesView: View {
                 .frame(width: 30, height: 30)
                 .padding(.bottom, 8)
                 .accessibilityHidden(true)
-            Text(Formats.hijriDate(now, in: place.timeZone, offset: model.settings.hijriOffset))
+            Text(verbatim: Formats.hijriDate(Prayers.hijri(of: now, place: place, settings: model.settings)))
                 .font(.footnote.weight(.medium))
                 .tracking(1)
                 .foregroundStyle(Theme.gold)
@@ -218,7 +218,12 @@ private struct RamadanCard: View {
                 .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
             }
             .buttonStyle(.plain)
-            if let iftar, model.canCountDown(to: iftar, from: now) {
+            if let iftar, model.countdownIftar == iftar {
+                Label("The countdown is on your Lock Screen", systemImage: "checkmark.circle.fill")
+                    .font(.subheadline)
+                    .foregroundStyle(Theme.gold)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+            } else if let iftar, model.canCountDown(to: iftar, from: now) {
                 Button { model.startIftarCountdown() } label: {
                     Label("Iftar countdown on Lock Screen", systemImage: "lock.iphone")
                         .frame(maxWidth: .infinity)
@@ -233,6 +238,7 @@ private struct RamadanCard: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+        .sensoryFeedback(.success, trigger: model.countdownIftar) { _, new in new != nil }
     }
 
     private func moment(_ title: LocalizedStringKey, _ time: Date?, alignment: HorizontalAlignment) -> some View {
@@ -320,6 +326,8 @@ struct MonthView: View {
                                 }
                             }
                             .font(.footnote.monospacedDigit())
+                            // Today in bold as well as gold: not by colour alone.
+                            .fontWeight(calendar.isDateInToday(day.day) ? .bold : .regular)
                             .foregroundStyle(calendar.isDateInToday(day.day) ? Theme.gold : Theme.ink)
                             .padding(.vertical, 8)
                         }

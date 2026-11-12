@@ -108,6 +108,15 @@ final class AppModel {
 
     /// Sets the school and the Asr time that goes with it.
     func chooseSchool(_ school: School) {
+        // Shia calendars (Najaf, Ayatollah Sistani's office) mostly start each month a day after Umm al-Qura:
+        // all twelve months of 1448. Only the untouched default follows the school, and only that is undone.
+        if school == .jafari && settings.hijriOffset == 0 {
+            settings.hijriOffset = -1
+            settings.hijriOffsetFromSchool = true
+        } else if school != .jafari && settings.hijriOffsetFromSchool {
+            if settings.hijriOffset == -1 { settings.hijriOffset = 0 }
+            settings.hijriOffsetFromSchool = false
+        }
         settings.school = school
         switch school {
         case .hanafi: settings.asr = settings.method == .turkey ? .standard : .hanafi
@@ -125,6 +134,7 @@ final class AppModel {
     func refresh() {
         location.refresh()
         scheduleNotifications()
+        countdownIftar = AppModel.runningCountdown()
         endPastCountdowns()
     }
 
@@ -200,6 +210,14 @@ final class AppModel {
 
     var liveActivitiesEnabled: Bool { ActivityAuthorizationInfo().areActivitiesEnabled }
 
+    /// The iftar the Lock Screen countdown runs for (nil without one), so its buttons can show that it's on.
+    private(set) var countdownIftar: Date? = AppModel.runningCountdown()
+
+    /// Read again when the app comes back: the countdown can be removed from the Lock Screen.
+    private static func runningCountdown() -> Date? {
+        Activity<IftarAttributes>.activities.first { $0.activityState == .active }?.content.state.iftar
+    }
+
     /// iOS ends a Live Activity after 8 hours, so the countdown is offered only that close to iftar.
     func canCountDown(to iftar: Date, from now: Date) -> Bool {
         iftar > now && iftar.timeIntervalSince(now) <= 8 * 3600 && liveActivitiesEnabled
@@ -215,15 +233,16 @@ final class AppModel {
             place: place.displayName,
             time: Formats.time(maghrib, in: place.timeZone),
             arrived: String(localized: "Time for iftar.", bundle: .app))
-        Task {
+        Task { @MainActor in
             // One countdown at a time.
             for activity in Activity<IftarAttributes>.activities {
                 await activity.end(nil, dismissalPolicy: .immediate)
             }
-            _ = try? Activity.request(
+            let started = try? Activity.request(
                 attributes: attributes,
                 content: ActivityContent(state: IftarAttributes.ContentState(iftar: maghrib), staleDate: maghrib),
                 pushType: nil)
+            self.countdownIftar = started == nil ? nil : maghrib
         }
     }
 
@@ -273,7 +292,7 @@ final class AppModel {
             guard let day = calendar.date(byAdding: .day, value: offset, to: now),
                   let times = Prayers.compute(on: day, place: place, settings: settings) else { continue }
             let ramadan = settings.ramadanReminders
-                && Prayers.hijri(of: day, place: place, offset: settings.hijriOffset).month == 9
+                && Prayers.hijri(of: day, place: place, settings: settings).month == 9
             for item in times where item.kind.isPrayer {
                 let title = item.kind.title(on: item.time, in: zone)
                 let time = Formats.time(item.time, in: zone)

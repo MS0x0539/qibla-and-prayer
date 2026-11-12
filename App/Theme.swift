@@ -72,13 +72,12 @@ enum Formats {
         date.formatted(style(zone).weekday(.wide).day().month(.wide))
     }
 
-    /// The Umm al-Qura date ("2 Jumada II 1448"), moved by `offset` days to match local moon sighting.
-    static func hijriDate(_ date: Date, in zone: TimeZone, offset: Int = 0) -> String {
-        let shifted = Calendar(identifier: .gregorian).date(byAdding: .day, value: offset, to: date) ?? date
-        let format = Date.VerbatimFormatStyle(
-            format: "\(day: .defaultDigits) \(month: .wide) \(year: .defaultDigits)",
-            locale: .app, timeZone: zone, calendar: Calendar(identifier: .islamicUmmAlQura))
-        return shifted.formatted(format)
+    /// A Hijri date from Prayers.hijri ("2 Jumada II 1448"), with the month's name in the app's language.
+    static func hijriDate(_ parts: DateComponents) -> String {
+        guard let day = parts.day, let month = parts.month, let year = parts.year, (1...12).contains(month) else { return "" }
+        var calendar = Calendar(identifier: .islamicUmmAlQura)
+        calendar.locale = .app
+        return "\(number(day)) \(calendar.monthSymbols[month - 1]) \(number(year))"
     }
 
     static func monthTitle(_ date: Date, in zone: TimeZone) -> String {

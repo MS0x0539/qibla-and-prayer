@@ -160,7 +160,7 @@ struct SetupView: View {
     private var locationPage: some View {
         SetupPage(
             title: "Where are you?",
-            text: "Prayer times depend on where you are, and the compass needs your location to point to the Qibla. The app uses it only for this and never shares it."
+            text: "Prayer times depend on where you are, and the compass needs your location to point to the Qibla. Apart from Apple Maps, which names the place, shows the map and finds mosques nearby, the app shares it with no one."
         ) {
             VStack(spacing: 10) {
                 ChoiceCard(
@@ -393,13 +393,6 @@ struct MethodChoices: View {
                     model.settings.method = method
                     onPick()
                 }
-            }
-            if model.settings.method == .turkey, let place = model.place,
-               let country = place.countryCode, country != "TR", abs(place.latitude) > 45 {
-                Text("Outside Turkey, Diyanet's printed timetables estimate Fajr and Isha in spring and summer. In those months the times here can differ from them by up to about half an hour.")
-                    .font(.footnote)
-                    .foregroundStyle(Theme.muted)
-                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .sensoryFeedback(.selection, trigger: model.settings.method)

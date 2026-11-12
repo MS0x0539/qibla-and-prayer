@@ -1,0 +1,13 @@
+{
+  "name": "wajh-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "deploy": "node build.mjs && cf deploy"
+  },
+  "devDependencies": {
+    "cf": "^0.15.0",
+    "wrangler": "^4.161.0"
+  }
+}

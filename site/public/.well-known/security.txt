@@ -1,0 +1,4 @@
+Contact: mailto:ms@psbv.org
+Expires: 2027-11-11T23:00:00Z
+Preferred-Languages: en
+Canonical: https://qibla.dev/.well-known/security.txt

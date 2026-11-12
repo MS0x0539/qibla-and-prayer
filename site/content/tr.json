@@ -1,0 +1,158 @@
+{
+  "language": "Türkçe",
+  "dir": "ltr",
+  "appName": "Wajh: Qibla & Prayer Times",
+  "tagline": "Reklamsız ve takipsiz namaz vakitleri ve kıble.",
+  "nav": {
+    "home": "Ana sayfa",
+    "privacy": "Gizlilik politikası",
+    "support": "Destek",
+    "accessibility": "Erişilebilirlik"
+  },
+  "home": {
+    "intro": "17 hesaplama yöntemiyle namaz vakitleri, kıble pusulası ve haritası, Ramazan vakitleri, tesbih, oruç ve kaza namazı takibi. Uygulamayı İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça kullanabilirsiniz.",
+    "points": [
+      "Reklam yok, abonelik yok, hesap yok.",
+      "Hakkınızda hiçbir veri toplanmaz ve bana hiçbir şey gönderilmez. Ayarlarınız, tesbih sayacınız ve Takip sekmesindeki kayıtlarınız iPhone'unuzda kalır; yer adları, şehir araması ve harita Apple Haritalar'dan gelir.",
+      "Vakitler, camiinizin ya da bağlı olduğunuz kurumun yöntemine göredir ve kurumların yayımladığı takvimlerle karşılaştırılarak kontrol edilmiştir. Her vakti camiinize uyması için birkaç dakika kaydırabilirsiniz."
+    ]
+  },
+  "privacy": {
+    "title": "Gizlilik politikası",
+    "updated": "Son güncelleme: 12 Kasım 2026",
+    "intro": "Wajh (ana ekrandaki adı “Qibla & Prayer”) Melih Sivrikaya tarafından geliştirildi. Bu politika, uygulamayı kullandığınızda verilerinize ne olduğunu açıklar.",
+    "summary": "Kısacası: Uygulama bana hiçbir şey göndermez; ben de hakkınızda veri toplamıyorum. Hesap, reklam, analiz kodu ve takip yok. Bulunduğunuz yerin adını bulmak, şehir aramak, haritayı ve yakındaki camileri göstermek için iPhone'unuz Apple Haritalar'a başvurur; ayrıntılar aşağıda.",
+    "sections": [
+      {
+        "heading": "Kim sorumlu",
+        "paragraphs": [
+          "Ben, Melih Sivrikaya (ms@psbv.org), bu uygulamadan ve bu politikada açıklanan kişisel verilerden sorumluyum (GDPR kapsamında “veri sorumlusu”). Apple ise uygulamanın kullandığı kendi hizmetlerinden sorumludur: Apple Haritalar, Siri, çökme raporlama ve iCloud Yedekleme.",
+          "Uygulama, Apple Haritalar'dan yalnızca kullandığınız özelliklerin gerektirdiği bilgileri ister. E-postaları yanıtlamamın ve Apple'ın ilettiği raporları kullanmamın nedeni, uygulama için destek sağlama ve uygulamayı iyileştirme konusundaki meşru menfaatimdir (GDPR madde 6/1-f)."
+        ]
+      },
+      {
+        "heading": "Konumunuz",
+        "paragraphs": [
+          "Uygulama, namaz vakitlerini ve kıble yönünü hesaplamak, ülkenizde kullanılan hesaplama yöntemini önermek ve pusulanın coğrafi kuzeyi kullanmasını sağlamak için iPhone'unuzun konumunu kullanır. Bu hesaplama iPhone'unuzda yapılır.",
+          "Bazı özellikler Apple Haritalar'ı kullanır; bu yüzden Apple, bu özelliklerin ihtiyaç duyduğu bilgileri alır: uygulama bulunduğunuz yerin adını, ülkesini ve saat dilimini sorguladığında konumunuzu (açılışta ve yaklaşık bir kilometreden fazla yer değiştirdikten sonra yeniden); şehir aramasına yazdıklarınızı, siz yazarken; kıble haritasını açtığınızda ise haritayı göstermek ve orada cami aramak için çevrenizdeki ya da seçtiğiniz şehrin çevresindeki alanı. Bir camiye dokunduğunuzda cami, Apple Haritalar uygulamasında açılır. Uygulama bunlara kimliğinizi belirleyen hiçbir şey eklemez. Apple bu istekleri kendi gizlilik politikası (apple.com/legal/privacy) kapsamında işler.",
+          "Uygulama konumunuzu yalnızca siz onu kullanırken ister (“Uygulamayı Kullanırken”); bu yüzden iOS, konumunuzu uygulamaya hiçbir zaman arka planda vermez. Uygulama bulduğu son yeri kaydeder; Siri'nin yanıtları ve uygulamanın arka planda planladığı hatırlatmalar bu kayıtlı yeri kullanır. Uygulamayı konum erişimi olmadan da kullanabilirsiniz: Bir şehir seçin ve iPhone'unuzun Ayarlar'ında bu uygulama için konum erişimini kapatın."
+        ]
+      },
+      {
+        "heading": "iPhone'unuzda kalan veriler",
+        "paragraphs": [
+          "Uygulama ayarlarınızı (mezhebiniz ve hesaplama yönteminiz dahil), bulduğu son yeri ya da seçtiğiniz şehri (adı ve koordinatları), tesbih sayacını ve Takip sekmesindeki kayıtlarınızı (oruçlu olarak işaretlediğiniz günler, kaza oruçları ve kaza namazları) saklar. Bunlar herhangi bir sunucuda değil, iPhone'unuzda tutulur ve iCloud üzerinden eşzamanlanmaz. Diğer uygulama verileri gibi bunlar da, yedek alıyorsanız iPhone'unuzun yedeklerine (iCloud Yedekleme ya da bilgisayarınızdaki bir yedek) dahil edilir. Uygulamayı sildiğinizde bunlar iPhone'unuzdan kaldırılır.",
+          "Hatırlatmalar doğrudan iPhone'unuzda planlanır; onları hiçbir sunucu göndermez. Kilit ekranındaki iftar sayacı da iPhone'unuzda çalışır."
+        ]
+      },
+      {
+        "heading": "Siri ve Kestirmeler",
+        "paragraphs": [
+          "Siri'ye bir namaz vakti sorduğunuzda, Apple sorunuzu her uygulamada olduğu gibi işler. Uygulama yanıtı açılmadan iPhone'unuzda hesaplar; bunun için orada kayıtlı ayarları ve yeri kullanır."
+        ]
+      },
+      {
+        "heading": "Çökme raporları ve istatistikler",
+        "paragraphs": [
+          "iPhone'unuzun Ayarlar'ında (Gizlilik ve Güvenlik, Analiz ve Geliştirmeler) “Uygulama Geliştiricileriyle Paylaş” açıksa, Apple bana çökme raporları ve uygulamanın performansı ile kullanımı hakkında, oturum sayısı gibi istatistikler gönderir. Apple ayrıca bana ülkelere göre indirme sayısı gibi toplam sayıları gösterir. Apple bu verileri kendi gizlilik politikası kapsamında kendisi toplar ve verilerin kimliğinizi belirlemediğini belirtir; uygulamada bunun için hiçbir kod yoktur. Bunları yalnızca sorunları gidermek ve uygulamayı iyileştirmek için kullanırım."
+        ]
+      },
+      {
+        "heading": "Reklam ve takip yok",
+        "paragraphs": [
+          "Uygulama reklam, analiz ya da takip kodu içermez. Apple'ın kendi yazılım çerçeveleri dışında yalnızca Adhan adlı açık kaynaklı kütüphaneyi kullanır; bu kütüphane namaz vakitlerini iPhone'unuzda hesaplar ve hiçbir yere hiçbir şey göndermez. Yukarıda açıklanan Apple Haritalar istekleri dışında uygulama hiç kimseyle hiçbir şey paylaşmaz. Çocuklar dahil hiç kimseden kişisel veri toplamıyorum."
+        ]
+      },
+      {
+        "heading": "Bana e-posta gönderirseniz",
+        "paragraphs": [
+          "Bana e-posta gönderirseniz e-posta adresinizi, belirtirseniz adınızı ve yazdıklarınızı alırım. Bunları yalnızca size yanıt vermek için kullanırım. Yazışmayı, artık gerekli olmadığında ya da benden isterseniz daha erken silerim. E-postaları benim adıma e-posta sağlayıcım saklar."
+        ]
+      },
+      {
+        "heading": "Haklarınız",
+        "paragraphs": [
+          "Bana gönderdiğiniz e-postalar dışında hakkınızda hiçbir kişisel veri saklamıyorum. Bu e-postalar için benden bir kopyasını isteyebilir, düzeltmemi ya da silmemi isteyebilir, kullanımlarını sınırlamamı isteyebilir ya da onları kullanma biçimime itiraz edebilirsiniz. Uygulamanın sakladığı her şey iPhone'unuzdadır: Bunları uygulamada değiştirebilir ya da uygulamayı silerek tümünü kaldırabilirsiniz. Apple'ın tuttuğu verileri Apple yönetir (apple.com/legal/privacy).",
+          "Verilerinizi yanlış işlediğimi düşünüyorsanız bir veri koruma kurumuna, örneğin yaşadığınız ülkedekine şikâyette bulunabilirsiniz."
+        ]
+      },
+      {
+        "heading": "Değişiklikler",
+        "paragraphs": [
+          "Bu politika değişirse yeni sürüm, yeni bir tarihle bu sayfada yer alacak."
+        ]
+      }
+    ]
+  },
+  "support": {
+    "title": "Destek",
+    "intro": "Bir soru, bir sorun ya da camiinizin takvimine uymayan bir vakit mi var? ms@psbv.org adresine e-posta gönderin.",
+    "faqHeading": "Sık sorulan sorular",
+    "faq": [
+      {
+        "q": "Vakitler gittiğim caminin takviminden farklı.",
+        "a": "Camiler, özellikle imsak ve yatsı için farklı hesaplama yöntemleri kullanır. Ayarlar'da camiinizin kullandığı hesaplama yöntemini seçin. Her yöntem bugünkü imsak ve yatsı vaktini gösterir; böylece bunları camiinizin takvimiyle karşılaştırabilirsiniz. İkindi hesabı ayarını da kontrol edin. Bir vakit hâlâ birkaç dakika farklıysa onu Vakitleri ayarla bölümünden kaydırın."
+      },
+      {
+        "q": "Hicri tarihte bir günlük fark var.",
+        "a": "Uygulama Ümmü'l-Kurâ takvimini, Diyanet yöntemini kullandığınızda ise Diyanet'in takvimini izler. Bulunduğunuz yerde hilal gözlemi nedeniyle hicri ay bir gün önce ya da sonra başlayabilir. Hicri tarihi Ayarlar'dan bir iki gün kaydırabilirsiniz."
+      },
+      {
+        "q": "Pusula yanlış yönü gösteriyor.",
+        "a": "iPhone'unuzu metal, mıknatıs ve diğer elektronik cihazlardan uzakta, düz tutun. Pusulayı kalibre etmek için telefonunuzu havada sekiz çizerek hareket ettirin. Pusulanın manyetik kuzey yerine coğrafi kuzeyi kullanabilmesi için konum erişimine izin verin."
+      },
+      {
+        "q": "Bildirim almıyorum.",
+        "a": "iPhone'unuzun Ayarlar'ında bu uygulamanın bildirimlerine izin verildiğini, vaktin yanındaki zilin açık olduğunu ve hiçbir Odak modunun bildirimleri engellemediğini kontrol edin. Uygulamayı arada bir açın: iOS bekleyen hatırlatma sayısını sınırlar. Uygulama, sonraki günlerin hatırlatmalarını her açtığınızda planlar; bu uygulama için Arka Planda Uygulama Yenileme açıksa arada bir arka planda da planlar."
+      },
+      {
+        "q": "İftar sayacı kilit ekranımda görünmüyor.",
+        "a": "Sayacı kendiniz başlatın: Namaz vakitleri sekmesindeki Ramazan kartından ya da Takip sekmesinde “Bugün oruçluyum” seçeneğini açtıktan sonra. Sayaç, iftardan 8 saat öncesinden itibaren başlatılabilir ve iPhone'unuzun Ayarlar'ında bu uygulama için Canlı Etkinlikler'e izin verilmiş olmalıdır."
+      },
+      {
+        "q": "Uygulama verilerimi topluyor mu?",
+        "a": "Hayır. Bana hiçbir şey gönderilmez. Yer adları, şehir araması ve harita Apple Haritalar'ı kullanır; ayrıntıları gizlilik politikasında bulabilirsiniz."
+      }
+    ]
+  },
+  "accessibility": {
+    "title": "Erişilebilirlik",
+    "updated": "Son güncelleme: 12 Kasım 2026",
+    "intro": "“Qibla & Prayer” herkes için çalışmalı. Bu sayfada uygulamanın bugün erişilebilirlik için neler yaptığını, neyin henüz bitmediğini ve sizin için çalışmayan bir şeyi bana nasıl bildirebileceğinizi bulabilirsiniz.",
+    "sections": [
+      {
+        "heading": "Uygulamanın destekledikleri",
+        "paragraphs": [
+          "Koyu arayüz: Uygulama her zaman koyu renklidir ve açık renk yazı kullanır.",
+          "Kontrast: Tüm yazıların arka plana göre kontrastı en az 6,3’e 1’dir. Web İçeriği Erişilebilirlik Yönergeleri (WCAG) 4,5’e 1 ister.",
+          "Yalnızca renkle değil: Sıradaki vaktin ve dini günler takvimindeki sıradaki günün önünde bir baklava işareti vardır, tablolarda bugünün satırı kalın yazılır ve seçili seçeneğin yanında bir onay işareti bulunur. Kapalı bir zil üstü çizili gösterilir.",
+          "Hareketi Azalt: iPhone’unuzun erişilebilirlik ayarlarında bu açıksa pusula, kurulum ekranları ve tesbih sayacı artık hareket etmez.",
+          "Dokunsal geri bildirim: Kıbleye döndüğünüzde, tesbihin her sayımında ve bir tur bittiğinde iPhone’unuz hafifçe titrer.",
+          "Diller: İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça. Arapça sağdan sola okunur."
+        ]
+      },
+      {
+        "heading": "Henüz bitmeyenler",
+        "paragraphs": [
+          "VoiceOver: Düğmelerin ve simgelerin sesli etiketleri vardır ve kıble ekranı size hangi yöne dönmeniz gerektiğini söyler. Her ekranı henüz VoiceOver ile test etmediğim için App Store bunu henüz belirtmiyor.",
+          "Daha büyük metin: Yazıların çoğu, iPhone’unuzda seçtiğiniz metin boyutuyla birlikte büyür. Aylık vakitler tablosu, yedi sütunu sığmaz hâle gelince daha fazla büyümez; büyük tesbih sayacı da boyutunu korur.",
+          "Sesle Denetim: Uygulamayı henüz Sesle Denetim ile test etmedim.",
+          "Uygulamada video ya da sesli içerik bulunmadığından altyazı ve sesli betimleme gerekmez."
+        ]
+      },
+      {
+        "heading": "Bu web sitesi",
+        "paragraphs": [
+          "Bu web sitesi, başlıkları olan ve betik içermeyen düz HTML’dir; tarayıcınızın yazı boyutunu ve yakınlaştırmasını izler."
+        ]
+      },
+      {
+        "heading": "Çalışmayan bir şey varsa bana yazın",
+        "paragraphs": [
+          "Uygulamada görmesi, duyması, ulaşması ya da anlaması zor bir şey varsa lütfen ms@psbv.org adresine yazın. iPhone modelinizi, iOS sürümünüzü ve kullandığınız erişilebilirlik ayarlarını belirtirseniz yardımcı olur."
+        ]
+      }
+    ]
+  },
+  "footer": "Melih Sivrikaya tarafından geliştirildi"
+}

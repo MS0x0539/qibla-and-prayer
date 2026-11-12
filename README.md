@@ -5,10 +5,11 @@ tracking. English, Dutch, German, French, Turkish and Arabic (right to left), sw
 On the App Store as "Wajh: Qibla & Prayer Times".
 
 - **Prayer times:** today's times, the next prayer with a countdown, the Hijri date, a monthly
-  timetable, and a notification per prayer (standard sound). Calculated on the phone with
-  [Adhan](https://github.com/batoulapps/adhan-swift): 17 methods (Adhan's 12 plus Ja'fari, Morocco,
-  Malaysia, Indonesia and France), suggested by country, language and madhab in a step-by-step setup;
-  each prayer can be moved by a few minutes to match a mosque.
+  timetable, and a notification per prayer (standard sound). Calculated on the phone the way each
+  authority computes its own tables ([Adhan](https://github.com/batoulapps/adhan-swift)'s astronomy for most;
+  Diyanet, MUIS, Moonsighting and Banuri Town with their own), checked day by day against those official
+  timetables (see docs/PLAN.md): 17 methods, suggested by country, language and madhab in a step-by-step
+  setup; each prayer can be moved by a few minutes to match a mosque.
 - **Reminders:** optionally 5-30 minutes before each prayer, an hour before Jumu'ah, and before suhoor
   ends and at iftar in Ramadan.
 - **Islamic calendar:** the year's special days and nights, and a Ramadan timetable (suhoor/iftar);
@@ -22,6 +23,15 @@ On the App Store as "Wajh: Qibla & Prayer Times".
   card or the Tracker). The Next prayer widgets are built but off until the App Group is registered in
   the developer portal (see `Widgets/PrayerWidgets.swift`).
 - **Location:** the phone's location, or a city picked with Apple Maps search.
+
+## Website
+
+`site/` builds https://qibla.dev: home, privacy policy, accessibility and support, in all six languages,
+with no scripts, cookies or outside requests. `node build.mjs` writes `public/` from `content/<language>.json`
+and `static/` (the favicons). The Cloudflare Worker `wajh` serves it as static assets: run
+`node node_modules/wrangler/bin/cf-wrangler.js build`, then `cf deploy --prebuilt` (on Windows `cf build`
+can't start Wrangler: spawn EFTYPE). Security headers come from `public/_headers`. `security.txt` expires
+on 11 November 2027, so rebuild before then.
 
 ## Building
 
