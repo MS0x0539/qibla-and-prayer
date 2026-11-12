@@ -1,56 +1,17 @@
-import Adhan
+import ActivityKit
+import BackgroundTasks
 import CoreLocation
 import Foundation
 import Observation
 import UserNotifications
+import WidgetKit
 
-/// Where to calculate for: the phone's location or a city the user picked.
-struct Place: Codable, Equatable {
-    var name: String
-    var latitude: Double
-    var longitude: Double
-    var timeZoneID: String
-    /// ISO country code (e.g. "NL"), used to suggest a calculation method.
-    var countryCode: String? = nil
-
-    var timeZone: TimeZone { TimeZone(identifier: timeZoneID) ?? .current }
-    var displayName: String { name.isEmpty ? String(localized: "Current location", bundle: .app) : name }
-    var coordinates: Coordinates { Coordinates(latitude: latitude, longitude: longitude) }
-
-    var displayNameWithCountry: String {
-        guard let code = countryCode,
-              let country = Locale.app.localizedString(forRegionCode: code),
-              country != name else { return displayName }
-        // Localized so Arabic gets its own comma ("أمستردام، هولندا").
-        return String(localized: "\(displayName), \(country)", bundle: .app)
-    }
-
-    /// Degrees clockwise from true north.
-    var qibla: Double { Qibla(coordinates: coordinates).direction }
-
-    var kilometresToMecca: Double {
-        CLLocation(latitude: latitude, longitude: longitude)
-            .distance(from: CLLocation(latitude: 21.4225, longitude: 39.8262)) / 1000
-    }
-
-    /// The Gregorian calendar in this place's time zone, so "today" means today there.
-    var calendar: Calendar {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = timeZone
-        return calendar
-    }
-}
-
-struct PrayerTime: Identifiable, Equatable {
-    let kind: PrayerKind
-    let time: Date
-    var id: PrayerKind { kind }
-}
-
-struct DayTimes: Identifiable {
-    let day: Date
-    let times: [PrayerTime]
-    var id: Date { day }
+/// One notification to schedule: a prayer, a reminder before one, Jumu'ah, suhoor or iftar.
+struct PlannedNotification: Equatable {
+    let id: String
+    let date: Date
+    let title: String
+    let body: String
 }
 
 @Observable
@@ -58,18 +19,20 @@ final class AppModel {
     var settings: AppSettings {
         didSet {
             AppLanguage.current = settings.language
-            AppModel.save(settings, as: "settings")
+            SharedStore.save(settings, as: "settings")
             // The saved city name is in the old language: look it up again.
             if oldValue.language != settings.language { location.lookUpAgain() }
             scheduleNotifications()
+            if oldValue != settings { WidgetCenter.shared.reloadAllTimelines() }
         }
     }
 
     /// The last place found by GPS, kept so the app also works offline and right at launch.
     var currentPlace: Place? {
         didSet {
-            AppModel.save(currentPlace, as: "currentPlace")
+            SharedStore.save(currentPlace, as: "currentPlace")
             scheduleNotifications()
+            if oldValue != currentPlace { WidgetCenter.shared.reloadAllTimelines() }
         }
     }
 
@@ -85,9 +48,12 @@ final class AppModel {
     @ObservationIgnored private var scheduleRun = 0
     @ObservationIgnored private let presenter = NotificationPresenter()
 
+    /// The background task that tops up the notifications; also listed in Info.plist.
+    static let refreshTask = "org.psbv.qiblaandprayer.refresh"
+
     init() {
-        settings = AppModel.load(AppSettings.self, from: "settings") ?? .suggested()
-        currentPlace = AppModel.load(Place.self, from: "currentPlace")
+        settings = SharedStore.load(AppSettings.self, from: "settings") ?? .suggested()
+        currentPlace = SharedStore.load(Place.self, from: "currentPlace")
         // CI screenshots: `-skipOnboarding YES` treats the setup as done, `-appLanguage ar` picks a language.
         onboarded = UserDefaults.standard.bool(forKey: "onboarded")
             || UserDefaults.standard.bool(forKey: "skipOnboarding")
@@ -110,6 +76,11 @@ final class AppModel {
             self.currentPlace = place
         }
         UNUserNotificationCenter.current().delegate = presenter
+        // Settings saved by versions before the widgets live only in the app's own defaults: copy them
+        // to the App Group now (setting them above doesn't run didSet), so the widgets find them.
+        SharedStore.save(settings, as: "settings")
+        SharedStore.save(currentPlace, as: "currentPlace")
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     var place: Place? { settings.useCurrentLocation ? currentPlace : settings.city }
@@ -154,6 +125,7 @@ final class AppModel {
     func refresh() {
         location.refresh()
         scheduleNotifications()
+        endPastCountdowns()
     }
 
     func finishSetup() {
@@ -182,9 +154,14 @@ final class AppModel {
     func toggleNotify(_ kind: PrayerKind) {
         if settings.notify.contains(kind) {
             settings.notify.remove(kind)
-            return
+        } else {
+            settings.notify.insert(kind)
+            notificationsWanted()
         }
-        settings.notify.insert(kind)
+    }
+
+    /// After switching a reminder on: ask for permission, or explain that it's blocked in Settings.
+    func notificationsWanted() {
         switch notificationStatus {
         case .notDetermined: Task { await requestNotifications() }
         case .denied: showNotificationsOff = true
@@ -219,12 +196,53 @@ final class AppModel {
         }
     }
 
+    // MARK: - Iftar countdown (Live Activity)
+
+    var liveActivitiesEnabled: Bool { ActivityAuthorizationInfo().areActivitiesEnabled }
+
+    /// iOS ends a Live Activity after 8 hours, so the countdown is offered only that close to iftar.
+    func canCountDown(to iftar: Date, from now: Date) -> Bool {
+        iftar > now && iftar.timeIntervalSince(now) <= 8 * 3600 && liveActivitiesEnabled
+    }
+
+    /// Today's iftar (Maghrib) as a countdown on the Lock Screen and in the Dynamic Island.
+    func startIftarCountdown() {
+        guard let place, let maghrib = times(on: .now, at: place)?[4].time, canCountDown(to: maghrib, from: .now) else {
+            return
+        }
+        let attributes = IftarAttributes(
+            title: String(localized: "Iftar", bundle: .app),
+            place: place.displayName,
+            time: Formats.time(maghrib, in: place.timeZone),
+            arrived: String(localized: "Time for iftar.", bundle: .app))
+        Task {
+            // One countdown at a time.
+            for activity in Activity<IftarAttributes>.activities {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
+            _ = try? Activity.request(
+                attributes: attributes,
+                content: ActivityContent(state: IftarAttributes.ContentState(iftar: maghrib), staleDate: maghrib),
+                pushType: nil)
+        }
+    }
+
+    /// Clears countdowns whose iftar is more than half an hour ago, when the app comes back.
+    func endPastCountdowns() {
+        Task {
+            for activity in Activity<IftarAttributes>.activities
+            where activity.content.state.iftar < Date.now.addingTimeInterval(-1_800) {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
+        }
+    }
+
     func times(on date: Date, at place: Place) -> [PrayerTime]? {
-        AppModel.compute(on: date, place: place, settings: settings)
+        Prayers.compute(on: date, place: place, settings: settings)
     }
 
     func next(after now: Date, at place: Place) -> PrayerTime? {
-        AppModel.next(after: now, place: place, settings: settings)
+        Prayers.next(after: now, place: place, settings: settings)
     }
 
     func month(containing date: Date, at place: Place) -> [DayTimes] {
@@ -242,121 +260,103 @@ final class AppModel {
         return days
     }
 
-    // MARK: - Calculation (static, so the tests can call it without a model)
-
-    static func compute(on date: Date, place: Place, settings: AppSettings) -> [PrayerTime]? {
-        let day = place.calendar.dateComponents([.year, .month, .day], from: date)
-        var params = settings.method.parameters
-        params.madhab = settings.asr == .hanafi ? .hanafi : .shafi
-        // Above 48° twilight can last all night in summer; this is Adhan's recommendation there. France's
-        // 12° is reached all year below ~54°N, and Adhan applies the 1/7 rule as a bound even then
-        // (Paris, June: Fajr 04:03 would become 04:39), so it starts higher for that method.
-        let limit = settings.method == .france ? 54.0 : 48.0
-        let rule: HighLatitudeRule = abs(place.latitude) > limit ? .seventhOfTheNight : .middleOfTheNight
-        params.highLatitudeRule = rule
-        // The user's minutes come on top of the method's own corrections.
-        let minutes = settings.adjustments
-        params.adjustments.fajr += minutes[.fajr] ?? 0
-        params.adjustments.sunrise += minutes[.sunrise] ?? 0
-        params.adjustments.dhuhr += minutes[.dhuhr] ?? 0
-        params.adjustments.asr += minutes[.asr] ?? 0
-        params.adjustments.maghrib += minutes[.maghrib] ?? 0
-        params.adjustments.isha += minutes[.isha] ?? 0
-        // Diyanet's own timetables outside Turkey use Isha at 16° (17° inside Turkey).
-        // shortcut: Diyanet's summer estimates above 45°N (Netherlands, Germany) are not reproduced;
-        // its Fajr and Isha there can differ by up to about 30 minutes in summer.
-        if settings.method == .turkey, let country = place.countryCode, country != "TR" {
-            params.ishaAngle = 16
-        }
-        // Umm al-Qura puts Isha 30 minutes later in Ramadan (2 hours after Maghrib).
-        if settings.method == .ummAlQura,
-           Calendar(identifier: .islamicUmmAlQura).dateComponents(in: place.timeZone, from: date).month == 9 {
-            params.adjustments.isha += 30
-        }
-        guard let times = PrayerTimes(coordinates: place.coordinates, date: day, calculationParameters: params) else {
-            return nil
-        }
-        return [
-            PrayerTime(kind: .fajr, time: times.fajr),
-            PrayerTime(kind: .sunrise, time: times.sunrise),
-            PrayerTime(kind: .dhuhr, time: times.dhuhr),
-            PrayerTime(kind: .asr, time: times.asr),
-            PrayerTime(kind: .maghrib, time: times.maghrib),
-            PrayerTime(kind: .isha, time: times.isha),
-        ]
-    }
-
-    /// The next prayer after `now` (sunrise skipped); after Isha that is tomorrow's Fajr.
-    static func next(after now: Date, place: Place, settings: AppSettings) -> PrayerTime? {
-        // From yesterday: far north in summer Isha can fall after midnight (Trondheim, 21 June: 00:07).
-        for offset in -1...1 {
-            guard let day = place.calendar.date(byAdding: .day, value: offset, to: now),
-                  let times = compute(on: day, place: place, settings: settings) else { continue }
-            if let next = times.first(where: { $0.kind.isPrayer && $0.time > now }) {
-                return next
-            }
-        }
-        return nil
-    }
-
-    /// The prayers to notify about, soonest first, within iOS's limit of 64 pending notifications.
-    static func upcoming(from now: Date, place: Place, settings: AppSettings) -> [PrayerTime] {
-        let enabled = settings.notify.filter(\.isPrayer)
-        guard !enabled.isEmpty else { return [] }
-        // shortcut: covers the next 12+ days and is redone whenever the app opens; add a background
-        // refresh task if people who rarely open the app report missing notifications.
-        let days = min(30, 64 / enabled.count)
-        var items: [PrayerTime] = []
-        for offset in -1...days {
-            guard let day = place.calendar.date(byAdding: .day, value: offset, to: now),
-                  let times = compute(on: day, place: place, settings: settings) else { continue }
-            items += times.filter { enabled.contains($0.kind) && $0.time > now }
-        }
-        return Array(items.prefix(64))
-    }
-
     // MARK: - Notifications
 
+    /// Everything to notify about, soonest first, within iOS's limit of 64 pending notifications.
+    static func planned(from now: Date, place: Place, settings: AppSettings) -> [PlannedNotification] {
+        let zone = place.timeZone
+        let calendar = place.calendar
+        let before = settings.reminderMinutes
+        var items: [PlannedNotification] = []
+        // From yesterday: far north Isha can fall after midnight. The limit cuts the list, not the days.
+        for offset in -1...30 {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: now),
+                  let times = Prayers.compute(on: day, place: place, settings: settings) else { continue }
+            let ramadan = settings.ramadanReminders
+                && Prayers.hijri(of: day, place: place, offset: settings.hijriOffset).month == 9
+            for item in times where item.kind.isPrayer {
+                let title = item.kind.title(on: item.time, in: zone)
+                let time = Formats.time(item.time, in: zone)
+                let stamp = Int(item.time.timeIntervalSince1970)
+                func add(_ kind: String, _ date: Date, _ title: String, _ body: String) {
+                    items.append(PlannedNotification(id: "\(kind)-\(stamp)", date: date, title: title, body: body))
+                }
+                if settings.notify.contains(item.kind) {
+                    add(item.kind.rawValue, item.time, title, ramadan && item.kind == .maghrib
+                        ? String(localized: "Time for \(title) and iftar.", bundle: .app)
+                        : String(localized: "Time for \(title).", bundle: .app))
+                    // In Ramadan the suhoor reminder already comes 30 minutes before Fajr.
+                    if before > 0 && !(ramadan && item.kind == .fajr && before == 30) {
+                        add("before-\(item.kind.rawValue)", item.time.addingTimeInterval(Double(-before * 60)), title,
+                            String(localized: "\(title) begins in \(before) minutes, at \(time).", bundle: .app))
+                    }
+                }
+                if settings.jumuahReminder && item.kind == .dhuhr && calendar.component(.weekday, from: item.time) == 6 {
+                    add("jumuah", item.time.addingTimeInterval(-3600), title,
+                        String(localized: "Jumu'ah is in an hour, at \(time).", bundle: .app))
+                }
+                if ramadan && item.kind == .fajr {
+                    add("suhoor", item.time.addingTimeInterval(-30 * 60), String(localized: "Suhoor", bundle: .app),
+                        String(localized: "Suhoor ends in 30 minutes, at \(time).", bundle: .app))
+                }
+                if ramadan && item.kind == .maghrib && !settings.notify.contains(.maghrib) {
+                    add("iftar", item.time, String(localized: "Iftar", bundle: .app),
+                        String(localized: "Time for iftar.", bundle: .app))
+                }
+            }
+        }
+        return Array(items.filter { $0.date > now }.sorted { $0.date < $1.date }.prefix(64))
+    }
+
     func scheduleNotifications() {
+        Task { await rescheduleNotifications() }
+    }
+
+    /// Replaces the pending notifications with the planned ones. A newer call takes over from an older one.
+    @MainActor
+    func rescheduleNotifications() async {
         scheduleRun += 1
         let run = scheduleRun
         let settings = settings
         let place = place
-        Task { @MainActor in
-            let center = UNUserNotificationCenter.current()
-            let status = await center.notificationSettings().authorizationStatus
-            self.notificationStatus = status
-            guard status == .authorized || status == .provisional, run == self.scheduleRun else { return }
-            // Keep a pending test notification; every prayer request is rebuilt below.
-            let pending = await center.pendingNotificationRequests().map(\.identifier)
-            guard run == self.scheduleRun else { return }
-            center.removePendingNotificationRequests(withIdentifiers: pending.filter { $0 != "test" })
-            guard let place else { return }
-            let now = Date()
-            for item in AppModel.upcoming(from: now, place: place, settings: settings) {
-                // A newer run (settings changed meanwhile) takes over.
-                guard run == self.scheduleRun else { return }
-                let title = item.kind.title(on: item.time, in: place.timeZone)
-                let content = UNMutableNotificationContent()
-                content.title = title
-                content.body = String(localized: "Time for \(title).", bundle: .app)
-                content.sound = .default
-                let trigger = UNTimeIntervalNotificationTrigger(
-                    timeInterval: max(1, item.time.timeIntervalSince(now)), repeats: false)
-                let id = "\(item.kind.rawValue)-\(Int(item.time.timeIntervalSince1970))"
-                try? await center.add(UNNotificationRequest(identifier: id, content: content, trigger: trigger))
-            }
+        let center = UNUserNotificationCenter.current()
+        let status = await center.notificationSettings().authorizationStatus
+        notificationStatus = status
+        guard status == .authorized || status == .provisional, run == scheduleRun else { return }
+        let now = Date()
+        let planned = place.map { AppModel.planned(from: now, place: $0, settings: settings) } ?? []
+        // Remove only what is no longer planned, and keep a pending test notification. Adding a request
+        // with an existing identifier replaces it, so a run that is cut short (a newer one took over, or
+        // iOS suspended the app after a background refresh) still leaves the earlier ones in place.
+        let keep = Set(planned.map(\.id)).union(["test"])
+        let pending = await center.pendingNotificationRequests().map(\.identifier)
+        guard run == scheduleRun else { return }
+        center.removePendingNotificationRequests(withIdentifiers: pending.filter { !keep.contains($0) })
+        for item in planned {
+            // A newer run (settings changed meanwhile) takes over.
+            guard run == scheduleRun else { return }
+            let content = UNMutableNotificationContent()
+            content.title = item.title
+            content.body = item.body
+            content.sound = .default
+            let trigger = UNTimeIntervalNotificationTrigger(
+                timeInterval: max(1, item.date.timeIntervalSince(now)), repeats: false)
+            try? await center.add(UNNotificationRequest(identifier: item.id, content: content, trigger: trigger))
         }
     }
 
-    // MARK: - Storage
-
-    private static func save<Value: Encodable>(_ value: Value?, as key: String) {
-        UserDefaults.standard.set(value.flatMap { try? JSONEncoder().encode($0) }, forKey: key)
+    /// Asks iOS to wake the app now and then, so notifications keep coming for people who mostly
+    /// use Siri or rarely open the app: at most 64 can wait, about a week's worth with reminders on.
+    func scheduleBackgroundRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: AppModel.refreshTask)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 12 * 3600)
+        try? BGTaskScheduler.shared.submit(request)
     }
 
-    private static func load<Value: Decodable>(_ type: Value.Type, from key: String) -> Value? {
-        UserDefaults.standard.data(forKey: key).flatMap { try? JSONDecoder().decode(type, from: $0) }
+    func backgroundRefresh() async {
+        scheduleBackgroundRefresh()
+        endPastCountdowns()
+        await rescheduleNotifications()
     }
 }
 

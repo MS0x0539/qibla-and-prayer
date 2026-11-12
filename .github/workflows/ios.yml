@@ -10,9 +10,9 @@ name: iOS
 on:
   push:
     branches: [main]
-    paths: ['App/**', 'Tests/**', 'project.yml', '.github/workflows/ios.yml']
+    paths: ['App/**', 'Widgets/**', 'Tests/**', 'project.yml', '.github/workflows/ios.yml']
   pull_request:
-    paths: ['App/**', 'Tests/**', 'project.yml', '.github/workflows/ios.yml']
+    paths: ['App/**', 'Widgets/**', 'Tests/**', 'project.yml', '.github/workflows/ios.yml']
   workflow_dispatch:
     inputs:
       screenshots:
@@ -62,8 +62,10 @@ jobs:
       - name: Build and test
         run: |
           set -o pipefail
+          # The tail keeps the log short; on failure every error is listed, wherever it was in the log.
           xcodebuild test -project QiblaAndPrayer.xcodeproj -scheme QiblaAndPrayer \
-            -destination "id=$UDID" -derivedDataPath build CODE_SIGNING_ALLOWED=NO | tail -150
+            -destination "id=$UDID" -derivedDataPath build CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log | tail -150 \
+            || { echo "::group::All errors"; grep -E ": error:|✘" build.log | sort -u; echo "::endgroup::"; exit 1; }
 
       - name: Check the app bundle
         run: |
@@ -72,8 +74,11 @@ jobs:
           for lang in en nl de fr tr ar; do
             test "$lang" = en || test -f "$APP/$lang.lproj/Localizable.strings" || echo "::warning::$lang.lproj/Localizable.strings is missing"
             test -f "$APP/$lang.lproj/InfoPlist.strings" || echo "::warning::$lang.lproj/InfoPlist.strings is missing"
+            test -f "$APP/$lang.lproj/AppShortcuts.strings" || echo "::warning::$lang.lproj/AppShortcuts.strings (Siri phrases) is missing"
           done
           test -f "$APP/PrivacyInfo.xcprivacy" || echo "::warning::PrivacyInfo.xcprivacy is missing"
+          test -d "$APP/PlugIns/QiblaAndPrayerWidgets.appex" || echo "::error::The widget extension is not embedded"
+          grep -q ValidateAppShortcutStringsMetadata build.log || echo "::warning::Xcode did not validate the Siri phrases"
           plutil -p "$APP/Info.plist" | grep -E 'CFBundleDisplayName|NSLocation|ITSApp|UISupportedInterfaceOrientations' || true
 
       - name: Screenshots
@@ -101,6 +106,16 @@ jobs:
             done
           done
           shot "de-times" -AppleLanguages "(de)" -AppleLocale de_DE -skipOnboarding YES -startTab times
+          for tab in tasbih tracker; do
+            shot "en-$tab" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab "$tab"
+          done
+          shot "tr-tracker" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab tracker
+          shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab tasbih
+          # The map loads tiles and mosques over the network: give it longer.
+          xcrun simctl terminate "$UDID" "$BID" 2>/dev/null || true
+          xcrun simctl launch "$UDID" "$BID" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showMap YES
+          sleep 15
+          xcrun simctl io "$UDID" screenshot "screenshots/en-map.png"
           shot "fr-settings" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab settings
           for step in 0 1 2 3 4 5 6; do
             shot "setup-$step-en" -AppleLanguages "(en)" -AppleLocale en_US -setupStep "$step"
@@ -120,8 +135,8 @@ jobs:
 
   # Same route as Esports Atlas: the archive is unsigned and Xcode signs it while exporting, with
   # Apple's cloud-managed distribution certificate, authenticated by the App Store Connect API key
-  # (Admin role). No certificate or profile lives in the repo or on the runner. Version 1 uses no
-  # entitlements, which an unsigned archive could not carry.
+  # (Admin role). No certificate or profile lives in the repo or on the runner. Export takes the
+  # entitlements (the widgets' App Group) from the archived binaries, so an ad hoc signature adds them first.
   testflight:
     needs: build
     if: github.ref == 'refs/heads/main' && (inputs.testflight || contains(github.event.head_commit.message, '[testflight]'))
@@ -164,6 +179,14 @@ jobs:
           xcodebuild archive -project QiblaAndPrayer.xcodeproj -scheme QiblaAndPrayer -configuration Release \
             -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
             CODE_SIGNING_ALLOWED=NO CURRENT_PROJECT_VERSION="$BUILD_NUMBER" | tail -80
+
+      - name: Add the entitlements (ad hoc signature, replaced while exporting)
+        run: |
+          APP="$RUNNER_TEMP/App.xcarchive/Products/Applications/QiblaAndPrayer.app"
+          codesign --force --sign - --entitlements Widgets/Widgets.entitlements "$APP/PlugIns/QiblaAndPrayerWidgets.appex"
+          codesign --force --sign - --entitlements App/QiblaAndPrayer.entitlements "$APP"
+          codesign -d --entitlements - "$APP/PlugIns/QiblaAndPrayerWidgets.appex"
+          codesign -d --entitlements - "$APP"
 
       # The key is on disk only during this step and is removed however the step ends.
       - name: Sign and upload to App Store Connect

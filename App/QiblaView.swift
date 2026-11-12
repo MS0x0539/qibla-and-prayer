@@ -7,6 +7,8 @@ struct QiblaView: View {
     @ScaledMetric(relativeTo: .largeTitle) private var readoutSize: CGFloat = 52
     @State private var aligned = false
     @State private var showingHelp = false
+    // `-showMap YES` opens the map first (used for CI screenshots).
+    @State private var showingMap = UserDefaults.standard.bool(forKey: "showMap")
 
     /// The turn from the phone's heading to the Qibla: negative is left, positive is right.
     private var offset: Double? {
@@ -47,6 +49,7 @@ struct QiblaView: View {
                 }
             }
             .sheet(isPresented: $showingHelp) { CompassHelp() }
+            .navigationDestination(isPresented: $showingMap) { QiblaMapView() }
         }
         .onAppear { model.location.startHeading() }
         .onDisappear { model.location.stopHeading() }
@@ -141,6 +144,14 @@ struct QiblaView: View {
         .font(.subheadline)
         .foregroundStyle(Theme.muted)
         .padding(.top, 22)
+
+        Button { showingMap = true } label: {
+            Label("Map and mosques nearby", systemImage: "map")
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.large)
+        .foregroundStyle(Theme.gold)
+        .padding(.top, 18)
     }
 
     /// The turn from the current heading to the Qibla, between -180° (left) and 180° (right).

@@ -1,0 +1,4 @@
+"When is the next prayer in ${applicationName}" = "${applicationName} sıradaki vakit ne zaman";
+"Next prayer in ${applicationName}" = "${applicationName} sıradaki vakit";
+"When is ${prayer} in ${applicationName}" = "${applicationName} ${prayer} ne zaman";
+"${prayer} time in ${applicationName}" = "${applicationName} ${prayer} vakti";

@@ -1,9 +1,11 @@
+import AppIntents
 import SwiftUI
 import UserNotifications
 
 struct SettingsView: View {
     @Environment(AppModel.self) private var model
     @State private var confirmingReset = false
+    @AppStorage("siriTip") private var showingSiriTip = true
 
     var body: some View {
         @Bindable var model = model
@@ -77,6 +79,14 @@ struct SettingsView: View {
                                 if on != model.settings.notify.contains(kind) { model.toggleNotify(kind) }
                             }))
                     }
+                    Picker("Remind me before", selection: $model.settings.reminderMinutes) {
+                        Text("Off").tag(0)
+                        ForEach([5, 10, 15, 20, 30], id: \.self) { minutes in
+                            Text("\(minutes) min").tag(minutes)
+                        }
+                    }
+                    Toggle("Jumu'ah reminder", isOn: $model.settings.jumuahReminder)
+                    Toggle("Suhoor and iftar in Ramadan", isOn: $model.settings.ramadanReminders)
                     if model.notificationStatus == .denied {
                         Button("Allow notifications in Settings") { openAppSettings() }
                     }
@@ -84,9 +94,24 @@ struct SettingsView: View {
                 } header: {
                     Text("Notifications")
                 } footer: {
-                    Text("Notifications use the standard sound. The test notification arrives after 5 seconds.")
+                    Text("“Remind me before” adds a notification a few minutes before each prayer that has its bell on. The Jumu'ah reminder comes an hour before the Friday prayer. In Ramadan you get one 30 minutes before suhoor ends, and one at iftar. Notifications use the standard sound; the test notification arrives after 5 seconds.")
                 }
                 .listRowBackground(Theme.card)
+
+                Section {
+                    if showingSiriTip {
+                        SiriTipView(intent: NextPrayerIntent(), isVisible: $showingSiriTip)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.clear)
+                    }
+                    ShortcutsLink()
+                        .frame(maxWidth: .infinity)
+                        .listRowBackground(Color.clear)
+                } header: {
+                    Text("Siri")
+                } footer: {
+                    Text("Ask Siri when the next prayer is, or when Maghrib begins, without opening the app.")
+                }
 
                 Section {
                     Picker("Language", selection: $model.settings.language) {
@@ -109,9 +134,8 @@ struct SettingsView: View {
                 }
                 .listRowBackground(Theme.card)
 
-                // To fill in later: who made the app, contact, credits.
                 Section("About") {
-                    LabeledContent("Made by", value: "—")
+                    LabeledContent("Made by", value: "Melih Sivrikaya")
                     LabeledContent("Version", value: Bundle.main.versionText)
                     Text("No ads, no tracking, no account.")
                         .foregroundStyle(Theme.muted)
@@ -123,6 +147,15 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .onChange(of: model.settings.useCurrentLocation) { _, isOn in
                 if isOn { model.location.start() }
+            }
+            .onChange(of: model.settings.reminderMinutes) { _, minutes in
+                if minutes > 0 { model.notificationsWanted() }
+            }
+            .onChange(of: model.settings.jumuahReminder) { _, isOn in
+                if isOn { model.notificationsWanted() }
+            }
+            .onChange(of: model.settings.ramadanReminders) { _, isOn in
+                if isOn { model.notificationsWanted() }
             }
             .confirmationDialog("Run setup again?", isPresented: $confirmingReset, titleVisibility: .visible) {
                 Button("Start setup", role: .destructive) { model.resetSetup() }

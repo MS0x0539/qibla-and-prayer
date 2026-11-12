@@ -418,7 +418,7 @@ struct MethodChoices: View {
         guard let place = model.place else { return nil }
         var settings = model.settings
         settings.method = method
-        guard let times = AppModel.compute(on: Date(), place: place, settings: settings) else { return nil }
+        guard let times = Prayers.compute(on: Date(), place: place, settings: settings) else { return nil }
         let fajr = Formats.time(times[0].time, in: place.timeZone)
         let isha = Formats.time(times[5].time, in: place.timeZone)
         return Text("Fajr \(fajr) · Isha \(isha)")
@@ -452,7 +452,7 @@ struct AsrChoices: View {
         guard let place = model.place else { return nil }
         var settings = model.settings
         settings.asr = asr
-        guard let times = AppModel.compute(on: Date(), place: place, settings: settings) else { return nil }
+        guard let times = Prayers.compute(on: Date(), place: place, settings: settings) else { return nil }
         return Text("Asr today: \(Formats.time(times[3].time, in: place.timeZone))")
     }
 }

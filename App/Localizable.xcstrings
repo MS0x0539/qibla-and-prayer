@@ -1,6 +1,108 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ begins in %lld minutes, at %@.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبدأ %@ بعد %lld د، عند %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ beginnt in %lld Minuten, um %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ commence dans %lld minutes, à %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ begint over %lld minuten, om %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ vaktine %lld dakika kaldı (%@)."
+          }
+        }
+      }
+    },
+    "%@ is at %@ today.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ اليوم عند %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ist heute um %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ est aujourd’hui à %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is vandaag om %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ bugün saat %@."
+          }
+        }
+      }
+    },
+    "%@ is at %@ tomorrow.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ غدًا عند %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ist morgen um %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ est demain à %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is morgen om %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ yarın saat %@."
+          }
+        }
+      }
+    },
     "%@ min": {
       "localizations": {
         "ar": {
@@ -103,6 +205,40 @@
         }
       }
     },
+    "%lld min": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld د"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Min."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dk"
+          }
+        }
+      }
+    },
     "A notification when each prayer begins, if you want one.": {
       "localizations": {
         "ar": {
@@ -167,6 +303,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hakkında"
+          }
+        }
+      }
+    },
+    "Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف الصلاة التي فاتتك، واحذفها بعد قضائها. يبقى كل هذا على iPhone الخاص بك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Füge ein verpasstes Gebet hinzu und nimm es weg, sobald du es nachgeholt hast. Alles bleibt auf deinem iPhone."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoutez une prière manquée, puis retirez-la une fois rattrapée. Tout reste sur votre iPhone."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tel een gemist gebed op, en haal het eraf zodra je het hebt ingehaald. Dit alles blijft op je iPhone."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kılamadığınız bir namazı ekleyin, kaza ettiğinizde düşün. Bunların hepsi iPhone'unuzda kalır."
           }
         }
       }
@@ -473,6 +643,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aşure Günü"
+          }
+        }
+      }
+    },
+    "Ask Siri when the next prayer is, or when Maghrib begins, without opening the app.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسأل Siri عن الصلاة القادمة أو عن موعد المغرب دون فتح التطبيق."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frag Siri, wann das nächste Gebet ist oder wann Maghrib beginnt, ohne die App zu öffnen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demandez à Siri quand a lieu la prochaine prière, ou quand commence le Maghrib, sans ouvrir l’app."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vraag Siri wanneer het volgende gebed is, of wanneer Maghrib begint, zonder de app te openen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulamayı açmadan Siri'ye sıradaki vakti ya da akşamın ne zaman gireceğini sorun."
           }
         }
       }
@@ -987,6 +1191,74 @@
         }
       }
     },
+    "Count": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العدد"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zähler"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compteur"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teller"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayaç"
+          }
+        }
+      }
+    },
+    "Count to": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العدّ حتى"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zählen bis"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compter jusqu’à"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tellen tot"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hedef"
+          }
+        }
+      }
+    },
     "Current location": {
       "localizations": {
         "ar": {
@@ -1089,6 +1361,40 @@
         }
       }
     },
+    "Day %@ of Ramadan": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اليوم %@ من رمضان"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tag %@ des Ramadan"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jour %@ du ramadan"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dag %@ van de ramadan"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramazan'ın %@. günü"
+          }
+        }
+      }
+    },
     "Day of Arafah": {
       "localizations": {
         "ar": {
@@ -1119,6 +1425,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Arefe Günü"
+          }
+        }
+      }
+    },
+    "Days fasted this year: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أيام الصيام هذا العام: %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fastentage in diesem Jahr: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jours de jeûne cette année : %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dagen gevast dit jaar: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu yıl tutulan oruç günü: %@"
+          }
+        }
+      }
+    },
+    "Days of Ramadan you missed and still have to make up.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أيام رمضان التي أفطرتها وعليك قضاؤها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramadantage, die du verpasst hast und noch nachholen musst."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les jours de ramadan manqués qu’il vous reste à rattraper."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dagen van de ramadan die je hebt gemist en nog moet inhalen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramazan'da tutamadığınız ve kaza etmeniz gereken günler."
           }
         }
       }
@@ -1221,6 +1595,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tamam"
+          }
+        }
+      }
+    },
+    "Double-tap to count one.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط مرتين لعدّ واحدة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doppeltippen, um eins zu zählen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touchez deux fois pour compter un."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tik dubbel om er een te tellen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir saymak için iki kez dokunun."
           }
         }
       }
@@ -1527,6 +1935,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "İmsak %@ · Yatsı %@"
+          }
+        }
+      }
+    },
+    "Fasts to make up": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أيام القضاء"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nachzuholende Fastentage"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeûnes à rattraper"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In te halen vastendagen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaza orucu"
           }
         }
       }
@@ -2007,6 +2449,40 @@
         }
       }
     },
+    "I'm fasting today": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنا صائم اليوم"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ich faste heute"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je jeûne aujourd’hui"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ik vast vandaag"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün oruçluyum"
+          }
+        }
+      }
+    },
     "ISNA (North America)": {
       "localizations": {
         "ar": {
@@ -2071,6 +2547,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "İftar"
+          }
+        }
+      }
+    },
+    "Iftar countdown on Lock Screen": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عدّ تنازلي للإفطار على شاشة القفل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iftar-Countdown auf dem Sperrbildschirm"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compte à rebours de l’iftar sur l’écran verrouillé"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iftar-aftelling op het toegangsscherm"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranında iftar sayacı"
+          }
+        }
+      }
+    },
+    "Iftar in %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإفطار بعد %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iftar in %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iftar dans %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iftar over %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İftara kalan %@"
           }
         }
       }
@@ -2445,6 +2989,108 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cuma"
+          }
+        }
+      }
+    },
+    "Jumu'ah is in an hour, at %@.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صلاة الجمعة بعد ساعة، عند %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Freitagsgebet ist in einer Stunde, um %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prière du vendredi est dans une heure, à %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het vrijdaggebed is over een uur, om %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuma namazına bir saat kaldı (%@)."
+          }
+        }
+      }
+    },
+    "Jumu'ah reminder": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تذكير الجمعة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erinnerung ans Freitagsgebet"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rappel de la prière du vendredi"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herinnering vrijdaggebed"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuma hatırlatması"
+          }
+        }
+      }
+    },
+    "Kaaba": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الكعبة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaaba"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaaba"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaaba"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kâbe"
           }
         }
       }
@@ -2857,6 +3503,40 @@
         }
       }
     },
+    "Map and mosques nearby": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الخريطة والمساجد القريبة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Karte und Moscheen in der Nähe"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carte et mosquées à proximité"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaart en moskeeën in de buurt"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harita ve yakındaki camiler"
+          }
+        }
+      }
+    },
     "Mawlid": {
       "localizations": {
         "ar": {
@@ -2959,6 +3639,40 @@
         }
       }
     },
+    "Missed prayers (qada)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلوات الفائتة (القضاء)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verpasste Gebete (Qada)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prières manquées (qada)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemiste gebeden (qada)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaza namazları"
+          }
+        }
+      }
+    },
     "Monthly timetable": {
       "localizations": {
         "ar": {
@@ -3057,6 +3771,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fas (Habous Bakanlığı)"
+          }
+        }
+      }
+    },
+    "Mosques nearby": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المساجد القريبة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moscheen in der Nähe"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mosquées à proximité"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moskeeën in de buurt"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yakındaki camiler"
+          }
+        }
+      }
+    },
+    "Mosques nearby could not be loaded. Check your internet connection.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر تحميل المساجد القريبة. تحقّق من اتصالك بالإنترنت."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moscheen in der Nähe konnten nicht geladen werden. Prüfe deine Internetverbindung."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de charger les mosquées à proximité. Vérifiez votre connexion Internet."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moskeeën in de buurt konden niet worden geladen. Controleer je internetverbinding."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yakındaki camiler yüklenemedi. İnternet bağlantınızı kontrol edin."
           }
         }
       }
@@ -3435,6 +4217,74 @@
         }
       }
     },
+    "No limit": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بلا حد"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ohne Grenze"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sans limite"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Onbeperkt"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sınırsız"
+          }
+        }
+      }
+    },
+    "No mosques found nearby.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يُعثر على مساجد قريبة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Moscheen in der Nähe gefunden."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune mosquée trouvée à proximité."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen moskeeën in de buurt gevonden."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yakında cami bulunamadı."
+          }
+        }
+      }
+    },
     "Not now": {
       "localizations": {
         "ar": {
@@ -3605,40 +4455,6 @@
         }
       }
     },
-    "Notifications use the standard sound. The test notification arrives after 5 seconds.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تستخدم الإشعارات الصوت الافتراضي. يصل الإشعار التجريبي بعد ٥ ثوانٍ."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mitteilungen nutzen den Standardton. Die Testmitteilung kommt nach 5 Sekunden."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les notifications utilisent le son standard. La notification de test arrive après 5 secondes."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Meldingen gebruiken het standaardgeluid. De testmelding komt na 5 seconden."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bildirimler standart sesi kullanır. Deneme bildirimi 5 saniye sonra gelir."
-          }
-        }
-      }
-    },
     "Off": {
       "localizations": {
         "ar": {
@@ -3741,6 +4557,40 @@
         }
       }
     },
+    "Open the app first, so it knows where you are.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح التطبيق أولًا ليعرف موقعك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffne zuerst die App, damit sie weiß, wo du bist."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrez d’abord l’app pour qu’elle sache où vous êtes."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open eerst de app, zodat die weet waar je bent."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Önce uygulamayı açın, böylece nerede olduğunuzu bilsin."
+          }
+        }
+      }
+    },
     "Outside Turkey, Diyanet's printed timetables estimate Fajr and Isha in spring and summer. In those months the times here can differ from them by up to about half an hour.": {
       "localizations": {
         "ar": {
@@ -3775,6 +4625,40 @@
         }
       }
     },
+    "Prayer": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebet"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prière"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebed"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vakit"
+          }
+        }
+      }
+    },
     "Prayer notifications will look like this.": {
       "localizations": {
         "ar": {
@@ -3805,6 +4689,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vakit bildirimleri böyle görünecek."
+          }
+        }
+      }
+    },
+    "Prayer time": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وقت الصلاة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebetszeit"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heure de prière"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebedstijd"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Namaz vakti"
           }
         }
       }
@@ -4183,6 +5101,40 @@
         }
       }
     },
+    "Qibla map": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خريطة القبلة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qibla-Karte"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carte de la qibla"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qibla-kaart"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kıble haritası"
+          }
+        }
+      }
+    },
     "Ramadan %@": {
       "localizations": {
         "ar": {
@@ -4251,6 +5203,74 @@
         }
       }
     },
+    "Ramadan begins in %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبدأ رمضان بعد %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Ramadan beginnt in %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le ramadan commence dans %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De ramadan begint over %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramazan'a %@ kaldı"
+          }
+        }
+      }
+    },
+    "Remind me before": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ذكّرني قبلها"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorher erinnern"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Me rappeler avant"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herinner me vooraf"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Önceden hatırlat"
+          }
+        }
+      }
+    },
     "Reminders": {
       "localizations": {
         "ar": {
@@ -4281,6 +5301,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hatırlatmalar"
+          }
+        }
+      }
+    },
+    "Reset": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تصفير"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurücksetzen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remettre à zéro"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zet op nul"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıfırla"
+          }
+        }
+      }
+    },
+    "Reset the count?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تصفير العدّاد؟"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zähler zurücksetzen?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remettre le compteur à zéro ?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De teller op nul zetten?"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayaç sıfırlansın mı?"
           }
         }
       }
@@ -4727,6 +5815,74 @@
         }
       }
     },
+    "Show nearby": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عرض المنطقة القريبة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umgebung zeigen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les environs"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon de omgeving"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yakını göster"
+          }
+        }
+      }
+    },
+    "Show the whole line": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عرض الخط كاملًا"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganze Linie zeigen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher toute la ligne"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon de hele lijn"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çizginin tamamını göster"
+          }
+        }
+      }
+    },
     "Singapore": {
       "localizations": {
         "ar": {
@@ -4757,6 +5913,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Singapur"
+          }
+        }
+      }
+    },
+    "Siri": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri"
           }
         }
       }
@@ -5067,6 +6257,74 @@
         }
       }
     },
+    "Suhoor": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "السحور"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suhur"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sahour"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suhoor"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sahur"
+          }
+        }
+      }
+    },
+    "Suhoor and iftar in Ramadan": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "السحور والإفطار في رمضان"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suhur und Iftar im Ramadan"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sahour et iftar pendant le ramadan"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suhoor en iftar tijdens de ramadan"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ramazan'da sahur ve iftar"
+          }
+        }
+      }
+    },
     "Suhoor ends": {
       "localizations": {
         "ar": {
@@ -5131,6 +6389,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sahur imsakta biter, iftar akşam vaktindedir."
+          }
+        }
+      }
+    },
+    "Suhoor ends in %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ينتهي السحور بعد %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suhur endet in %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fin du sahour dans %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suhoor eindigt over %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İmsaka kalan %@"
+          }
+        }
+      }
+    },
+    "Suhoor ends in 30 minutes, at %@.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ينتهي السحور بعد ٣٠ دقيقة، عند %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Suhur endet in 30 Minuten, um %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le sahour se termine dans 30 minutes, à %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De suhoor eindigt over 30 minuten, om %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İmsaka 30 dakika kaldı (%@)."
           }
         }
       }
@@ -5203,6 +6529,108 @@
         }
       }
     },
+    "Tap a mosque to open it in Apple Maps. Not every mosque is on the map.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على مسجد لفتحه في خرائط Apple. ليست كل المساجد على الخريطة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tippe auf eine Moschee, um sie in Apple Karten zu öffnen. Nicht jede Moschee ist auf der Karte."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touchez une mosquée pour l’ouvrir dans Plans. Toutes les mosquées ne figurent pas sur la carte."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tik op een moskee om hem in Apple Kaarten te openen. Niet elke moskee staat op de kaart."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Haritalar'da açmak için bir camiye dokunun. Her cami haritada yer almaz."
+          }
+        }
+      }
+    },
+    "Tap the circle for each phrase. Your iPhone taps back, and more firmly at the end of each round.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على الدائرة عند كل ذكر. يهتز iPhone مع كل ضغطة، وبقوة أكبر في نهاية كل دورة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tippe bei jedem Satz auf den Kreis. Dein iPhone tippt zurück, am Ende jeder Runde kräftiger."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touchez le cercle à chaque formule. Votre iPhone vibre en retour, plus fort à la fin de chaque tour."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tik op de cirkel bij elke zin. Je iPhone tikt terug, en steviger aan het eind van elke ronde."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her zikirde daireye dokunun. iPhone'unuz her dokunuşta titreşir, her turun sonunda daha güçlü."
+          }
+        }
+      }
+    },
+    "Tasbih": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التسبيح"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasbih"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasbih"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasbih"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tesbih"
+          }
+        }
+      }
+    },
     "Test notification": {
       "localizations": {
         "ar": {
@@ -5233,6 +6661,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Deneme bildirimi"
+          }
+        }
+      }
+    },
+    "The Lock Screen countdown can start from 8 hours before iftar.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكن بدء العدّ التنازلي على شاشة القفل قبل الإفطار بـ٨ ساعات."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Countdown auf dem Sperrbildschirm kann ab 8 Stunden vor dem Iftar starten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le compte à rebours sur l’écran verrouillé peut démarrer 8 heures avant l’iftar."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De aftelling op het toegangsscherm kan vanaf 8 uur voor de iftar beginnen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranı sayacı iftardan 8 saat öncesinden itibaren başlatılabilir."
           }
         }
       }
@@ -5305,6 +6767,74 @@
         }
       }
     },
+    "The next prayer is %@, at %@.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة %@، عند %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das nächste Gebet ist %@, um %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine prière est %@, à %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het volgende gebed is %@, om %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki vakit %@, saat %@."
+          }
+        }
+      }
+    },
+    "The next prayer, its time and a countdown.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة ووقتها وعدّ تنازلي."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das nächste Gebet, seine Zeit und ein Countdown."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine prière, son heure et un compte à rebours."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het volgende gebed, de tijd en een aftelling."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki vakit, saati ve geri sayım."
+          }
+        }
+      }
+    },
     "This device has no compass. The Qibla is at %lld° from north.": {
       "localizations": {
         "ar": {
@@ -5339,6 +6869,40 @@
         }
       }
     },
+    "Time for %@ and iftar.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حان وقت صلاة %@ والإفطار."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für %@ und das Iftar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C’est l’heure du %@ et de l’iftar."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tijd voor %@ en de iftar."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ vakti, iftar zamanı."
+          }
+        }
+      }
+    },
     "Time for %@.": {
       "localizations": {
         "ar": {
@@ -5369,6 +6933,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ vakti."
+          }
+        }
+      }
+    },
+    "Time for iftar.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حان وقت الإفطار."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für das Iftar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "C’est l’heure de l’iftar."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tijd voor de iftar."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İftar vakti."
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اليوم"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aujourd’hui"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vandaag"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün"
           }
         }
       }
@@ -5437,6 +7069,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bugünün vakitleri, sıradaki vakit ve aylık vakitler."
+          }
+        }
+      }
+    },
+    "Total %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المجموع %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insgesamt %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Totaal %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toplam %@"
+          }
+        }
+      }
+    },
+    "Tracker": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المتابعة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tracker"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivi"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bijhouden"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Takip"
           }
         }
       }
@@ -6427,6 +8127,40 @@
         }
       }
     },
+    "Witr": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوتر"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Witr"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Witr"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Witr"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vitir"
+          }
+        }
+      }
+    },
     "Works without location access.": {
       "localizations": {
         "ar": {
@@ -6593,6 +8327,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ayarlarınız bölgeniz için önerilen değerlere döner ve kurulum yeniden başlar."
+          }
+        }
+      }
+    },
+    "qada.fajr": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الفجر"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fajr"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fajr"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fajr"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sabah"
+          }
+        }
+      }
+    },
+    "“Remind me before” adds a notification a few minutes before each prayer that has its bell on. The Jumu'ah reminder comes an hour before the Friday prayer. In Ramadan you get one 30 minutes before suhoor ends, and one at iftar. Notifications use the standard sound; the test notification arrives after 5 seconds.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«ذكّرني قبلها» يرسل إشعارًا قبل كل صلاة جرسها مفعّل ببضع دقائق. يصل تذكير الجمعة قبل صلاة الجمعة بساعة. وفي رمضان يصلك تذكير قبل انتهاء السحور بـ٣٠ دقيقة وآخر عند الإفطار. تستخدم الإشعارات الصوت الافتراضي، ويصل الإشعار التجريبي بعد ٥ ثوانٍ."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Vorher erinnern“ schickt einige Minuten vor jedem Gebet mit eingeschalteter Glocke eine Mitteilung. Die Erinnerung ans Freitagsgebet kommt eine Stunde vorher. Im Ramadan bekommst du eine 30 Minuten vor Ende des Suhur und eine zum Iftar. Mitteilungen nutzen den Standardton; die Testmitteilung kommt nach 5 Sekunden."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "« Me rappeler avant » envoie une notification quelques minutes avant chaque prière dont la cloche est activée. Le rappel de la prière du vendredi arrive une heure avant. Pendant le ramadan, vous en recevez un 30 minutes avant la fin du sahour et un à l’iftar. Les notifications utilisent le son standard ; la notification de test arrive après 5 secondes."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "‘Herinner me vooraf’ stuurt een melding een paar minuten voor elk gebed met de bel aan. De herinnering voor het vrijdaggebed komt een uur ervoor. Tijdens de ramadan krijg je er een 30 minuten voor het einde van de suhoor, en een bij de iftar. Meldingen gebruiken het standaardgeluid; de testmelding komt na 5 seconden."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Önceden hatırlat”, zili açık olan her vakitten birkaç dakika önce bildirim gönderir. Cuma hatırlatması cuma namazından bir saat önce gelir. Ramazan'da imsaktan 30 dakika önce ve iftarda birer bildirim alırsınız. Bildirimler standart sesi kullanır; deneme bildirimi 5 saniye sonra gelir."
           }
         }
       }

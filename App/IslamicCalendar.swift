@@ -60,16 +60,6 @@ struct RamadanDay: Identifiable {
 }
 
 extension AppModel {
-    /// The Hijri date (month, day, year) of a Gregorian day, moved by the user's offset.
-    static func hijri(of day: Date, place: Place, offset: Int) -> DateComponents {
-        var hijri = Calendar(identifier: .islamicUmmAlQura)
-        hijri.timeZone = place.timeZone
-        // Noon keeps daylight-saving changes from moving the day.
-        let noon = place.calendar.date(bySettingHour: 12, minute: 0, second: 0, of: day) ?? day
-        let shifted = place.calendar.date(byAdding: .day, value: offset, to: noon) ?? noon
-        return hijri.dateComponents([.year, .month, .day], from: shifted)
-    }
-
     /// Every special day in a Gregorian year; some years (2030) have two Ramadans.
     static func islamicDates(inYear year: Int, place: Place, hijriOffset: Int) -> [IslamicDate] {
         let calendar = place.calendar
@@ -77,7 +67,7 @@ extension AppModel {
               let end = calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1)) else { return [] }
         var dates: [IslamicDate] = []
         while day < end {
-            let parts = hijri(of: day, place: place, offset: hijriOffset)
+            let parts = Prayers.hijri(of: day, place: place, offset: hijriOffset)
             for event in IslamicDay.allCases where event.hijri.month == parts.month && event.hijri.day == parts.day {
                 let date = event.isNight ? (calendar.date(byAdding: .day, value: -1, to: day) ?? day) : day
                 if calendar.component(.year, from: date) == year {
@@ -95,15 +85,28 @@ extension AppModel {
         var days: [RamadanDay] = []
         var day = start
         for _ in 0..<31 {
-            let parts = hijri(of: day, place: place, offset: settings.hijriOffset)
+            let parts = Prayers.hijri(of: day, place: place, offset: settings.hijriOffset)
             guard parts.month == 9 else { break }
             days.append(RamadanDay(
                 hijriDay: parts.day ?? 0, hijriYear: parts.year ?? 0, date: day,
-                times: compute(on: day, place: place, settings: settings)))
+                times: Prayers.compute(on: day, place: place, settings: settings)))
             guard let next = place.calendar.date(byAdding: .day, value: 1, to: day) else { break }
             day = next
         }
         return days
+    }
+
+    /// The first day of the Ramadan under way on `date`, or else of the next one. Computed directly
+    /// rather than day by day: the Prayer times screen asks on every refresh.
+    static func ramadanStart(around date: Date, place: Place, hijriOffset: Int) -> Date? {
+        let today = Prayers.hijri(of: date, place: place, offset: hijriOffset)
+        guard let year = today.year, let month = today.month else { return nil }
+        var islamic = Calendar(identifier: .islamicUmmAlQura)
+        islamic.timeZone = place.timeZone
+        let calendar = place.calendar
+        guard let first = islamic.date(from: DateComponents(year: month <= 9 ? year : year + 1, month: 9, day: 1, hour: 12)),
+              let local = calendar.date(byAdding: .day, value: -hijriOffset, to: first) else { return nil }
+        return calendar.startOfDay(for: local)
     }
 }
 
