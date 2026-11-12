@@ -33,10 +33,10 @@ struct SettingsView: View {
                 Section {
                     Picker("School (madhab)", selection: Binding(
                         get: { model.settings.school },
-                        set: { model.chooseSchool($0) }
+                        set: { if let school = $0 { model.chooseSchool(school) } }
                     )) {
                         ForEach(School.allCases) { school in
-                            Text(school.title).tag(school)
+                            Text(school.title).tag(Optional(school))
                         }
                     }
                     .pickerStyle(.navigationLink)

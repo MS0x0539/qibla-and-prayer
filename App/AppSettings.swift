@@ -132,7 +132,7 @@ enum CalcMethod: String, CaseIterable, Codable, Identifiable {
 
 /// The school of law (madhab): it sets when Asr begins, and Shia timetables differ more.
 enum School: String, CaseIterable, Codable, Identifiable {
-    case hanafi, shafii, maliki, hanbali, jafari, unsure
+    case hanafi, shafii, maliki, hanbali, jafari
 
     var id: String { rawValue }
 
@@ -143,7 +143,6 @@ enum School: String, CaseIterable, Codable, Identifiable {
         case .maliki: String(localized: "Maliki", bundle: .app)
         case .hanbali: String(localized: "Hanbali", bundle: .app)
         case .jafari: String(localized: "Ja'fari (Shia)", bundle: .app)
-        case .unsure: String(localized: "Not sure", bundle: .app)
         }
     }
 }
@@ -245,7 +244,8 @@ struct AppSettings: Codable, Equatable {
     var language = AppLanguage.system
     /// Days added to the Hijri date (-2...2): the Umm al-Qura calendar and local moon sighting can differ.
     var hijriOffset = 0
-    var school = School.unsure
+    /// Chosen in the setup; nil until then.
+    var school: School?
 
     /// What most people in the region use: only a starting point, the user picks.
     static func suggested(

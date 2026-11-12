@@ -3503,40 +3503,6 @@
         }
       }
     },
-    "Not sure": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "لست متأكدًا"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Weiß nicht genau"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Je ne sais pas"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Weet ik niet zeker"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Emin değilim"
-          }
-        }
-      }
-    },
     "Notifications": {
       "localizations": {
         "ar": {
@@ -6563,36 +6529,36 @@
         }
       }
     },
-    "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha. Not sure? Choose that, and the app uses what most timetables do.": {
+    "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "يحدد مذهبك وقت دخول العصر، وتختلف التقاويم الشيعية في المغرب والعشاء أيضًا. إن لم تكن متأكدًا فاختر ذلك، وسيعتمد التطبيق ما تعتمده معظم التقاويم."
+            "value": "يحدد مذهبك وقت دخول العصر، وتختلف التقاويم الشيعية في المغرب والعشاء أيضًا."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deine Rechtsschule (Madhab) bestimmt, wann Asr beginnt, und schiitische Gebetspläne unterscheiden sich auch bei Maghrib und Isha. Unsicher? Wähle das, dann folgt die App den meisten Gebetsplänen."
+            "value": "Deine Rechtsschule (Madhab) bestimmt, wann Asr beginnt, und schiitische Gebetspläne unterscheiden sich auch bei Maghrib und Isha."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Votre école (madhhab) détermine le début de l’Asr, et les horaires chiites diffèrent aussi pour le Maghrib et l’Isha. Vous ne savez pas ? Choisissez-le, et l’app suivra la plupart des horaires."
+            "value": "Votre école (madhhab) détermine le début de l’Asr, et les horaires chiites diffèrent aussi pour le Maghrib et l’Isha."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Je school (madhab) bepaalt wanneer Asr begint, en sjiitische roosters verschillen ook voor Maghrib en Isha. Weet je het niet zeker? Kies dat, dan volgt de app de meeste roosters."
+            "value": "Je school (madhab) bepaalt wanneer Asr begint, en sjiitische roosters verschillen ook voor Maghrib en Isha."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mezhebiniz ikindinin ne zaman gireceğini belirler; Şii takvimleri akşam ve yatsıda da farklıdır. Emin değilseniz bunu seçin, uygulama çoğu takvimin kullandığını kullanır."
+            "value": "Mezhebiniz ikindinin ne zaman gireceğini belirler; Şii takvimleri akşam ve yatsıda da farklıdır."
           }
         }
       }

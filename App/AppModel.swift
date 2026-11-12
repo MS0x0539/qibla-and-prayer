@@ -124,13 +124,13 @@ final class AppModel {
         let region = place?.countryCode ?? Locale.current.region?.identifier
         var suggestion = AppSettings.suggested(region: region, language: settings.language.code)
         switch settings.school {
-        case .jafari:
+        case .jafari?:
             suggestion.method = region == "IR" ? .tehran : .jafari
             suggestion.asr = .standard
         // Diyanet's timetable uses the earlier Asr even though Turkey is Hanafi.
-        case .hanafi: suggestion.asr = suggestion.method == .turkey ? .standard : .hanafi
-        case .shafii, .maliki, .hanbali: suggestion.asr = .standard
-        case .unsure: break
+        case .hanafi?: suggestion.asr = suggestion.method == .turkey ? .standard : .hanafi
+        case .shafii?, .maliki?, .hanbali?: suggestion.asr = .standard
+        case nil: break
         }
         return suggestion
     }
@@ -141,7 +141,6 @@ final class AppModel {
         switch school {
         case .hanafi: settings.asr = settings.method == .turkey ? .standard : .hanafi
         case .shafii, .maliki, .hanbali, .jafari: settings.asr = .standard
-        case .unsure: settings.asr = suggestion.asr
         }
     }
 

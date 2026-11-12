@@ -70,6 +70,12 @@ struct PrayerTimesView: View {
 
     private func header(place: Place, next: PrayerTime?, now: Date) -> some View {
         VStack(spacing: 4) {
+            // A small emblem, like the app icon, instead of a large star with lines across the screen.
+            EightPointStar()
+                .stroke(Theme.gold.opacity(0.6), lineWidth: 1)
+                .frame(width: 30, height: 30)
+                .padding(.bottom, 8)
+                .accessibilityHidden(true)
             Text(Formats.hijriDate(now, in: place.timeZone, offset: model.settings.hijriOffset))
                 .font(.footnote.weight(.medium))
                 .tracking(1)
@@ -101,14 +107,6 @@ struct PrayerTimesView: View {
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
         .padding(.top, 8)
-        // The star sits above the header text: only its lower points show, without lines through the words.
-        .background(alignment: .top) {
-            EightPointStar()
-                .stroke(Theme.gold.opacity(0.12), lineWidth: 1)
-                .frame(width: 520, height: 520)
-                .offset(y: -510)
-                .accessibilityHidden(true)
-        }
     }
 
     private func row(_ item: PrayerTime, isNext: Bool, zone: TimeZone) -> some View {

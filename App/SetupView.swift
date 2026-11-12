@@ -246,7 +246,7 @@ struct SetupView: View {
     private var schoolPage: some View {
         SetupPage(
             title: "Which school do you follow?",
-            text: "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha. Not sure? Choose that, and the app uses what most timetables do."
+            text: "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha."
         ) {
             VStack(spacing: 10) {
                 ForEach(School.allCases) { school in
@@ -267,6 +267,7 @@ struct SetupView: View {
         } buttons: {
             Button("Continue") { go(1) }
                 .buttonStyle(PrimaryButtonStyle())
+                .disabled(model.settings.school == nil)
         }
     }
 
@@ -334,7 +335,7 @@ struct SetupView: View {
                 VStack(spacing: 0) {
                     SummaryRow(label: "Language", value: model.settings.language.nativeName)
                     SummaryRow(label: "Location", value: model.place?.displayNameWithCountry ?? String(localized: "Not set", bundle: .app))
-                    SummaryRow(label: "School (madhab)", value: model.settings.school.title)
+                    SummaryRow(label: "School (madhab)", value: model.settings.school?.title ?? String(localized: "Not set", bundle: .app))
                     SummaryRow(label: "Calculation method", value: model.settings.method.title)
                     SummaryRow(label: "Asr calculation", value: model.settings.asr.shortTitle)
                     SummaryRow(label: "Reminders", value: remindersSummary, last: true)
