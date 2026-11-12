@@ -132,6 +132,19 @@ struct PrayerTimeTests {
         }
     }
 
+    /// Adhan applies the 1/7 rule as a bound even where 12° is reached; France must not get it in Paris.
+    @Test func franceKeepsTwelveDegreesInParis() throws {
+        let paris = Place(name: "Paris", latitude: 48.8566, longitude: 2.3522, timeZoneID: "Europe/Paris", countryCode: "FR")
+        let day = paris.calendar.date(from: DateComponents(year: 2026, month: 6, day: 21, hour: 12))!
+        let times = try #require(AppModel.compute(on: day, place: paris, settings: AppSettings(method: .france, asr: .standard)))
+        #expect(times[0].time < paris.calendar.date(bySettingHour: 4, minute: 15, second: 0, of: day)!)
+    }
+
+    @Test func yearsHaveNoThousandsSeparator() {
+        #expect(Formats.number(2026) == "2026")
+        #expect(Formats.number(1448) == "1448")
+    }
+
     @Test func fridayNoonIsJumuah() {
         let friday = date(2026, 11, 13)
         #expect(PrayerKind.dhuhr.title(on: friday, in: amsterdam.timeZone) != PrayerKind.dhuhr.title)

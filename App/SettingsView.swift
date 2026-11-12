@@ -28,6 +28,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("Use your location to keep the times right when you travel, or choose a fixed city.")
                 }
+                .listRowBackground(Theme.card)
 
                 Section {
                     Picker("School (madhab)", selection: Binding(
@@ -51,15 +52,22 @@ struct SettingsView: View {
                     }
                     NavigationLink("Adjust times") { AdjustmentsView() }
                     Stepper(value: $model.settings.hijriOffset, in: -2...2) {
-                        LabeledContent(
-                            "Hijri date",
-                            value: Formats.hijriDate(Date(), in: model.place?.timeZone ?? .current, offset: model.settings.hijriOffset))
+                        // The date on its own line: next to the label and the stepper it would wrap.
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Hijri date")
+                            Text(verbatim: Formats.hijriDate(Date(), in: model.place?.timeZone ?? .current, offset: model.settings.hijriOffset))
+                                .font(.subheadline)
+                                .foregroundStyle(Theme.muted)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                        }
                     }
                 } header: {
                     Text("Prayer times")
                 } footer: {
                     Text("Choose the method your mosque uses. You can move each prayer by a few minutes to match its timetable, and the Hijri date by a day or two.")
                 }
+                .listRowBackground(Theme.card)
 
                 Section {
                     ForEach(PrayerKind.allCases.filter(\.isPrayer)) { kind in
@@ -78,6 +86,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("Notifications use the standard sound. The test notification arrives after 5 seconds.")
                 }
+                .listRowBackground(Theme.card)
 
                 Section {
                     Picker("Language", selection: $model.settings.language) {
@@ -89,6 +98,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("Changes the language of this app only. Messages from iOS itself, such as permission requests, follow the language of your iPhone.")
                 }
+                .listRowBackground(Theme.card)
 
                 Section {
                     Button("Run setup again") { confirmingReset = true }
@@ -97,6 +107,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("Choose your location, calculation method and reminders again, step by step.")
                 }
+                .listRowBackground(Theme.card)
 
                 // To fill in later: who made the app, contact, credits.
                 Section("About") {
@@ -105,6 +116,7 @@ struct SettingsView: View {
                     Text("No ads, no tracking, no account.")
                         .foregroundStyle(Theme.muted)
                 }
+                .listRowBackground(Theme.card)
             }
             .scrollContentBackground(.hidden)
             .background(Theme.background.ignoresSafeArea())
@@ -177,6 +189,7 @@ struct AdjustmentsView: View {
             } footer: {
                 Text("Minutes added to the calculated time, to match the timetable of your mosque.")
             }
+            .listRowBackground(Theme.card)
         }
         .scrollContentBackground(.hidden)
         .background(Theme.background.ignoresSafeArea())

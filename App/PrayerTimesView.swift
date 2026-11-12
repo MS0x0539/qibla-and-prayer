@@ -28,7 +28,7 @@ struct PrayerTimesView: View {
                     NavigationLink {
                         IslamicCalendarView()
                     } label: {
-                        Image(systemName: "moon.stars")
+                        Image(systemName: "moon.stars.fill")
                     }
                     .accessibilityLabel(Text("Islamic calendar"))
                     NavigationLink {
@@ -74,7 +74,9 @@ struct PrayerTimesView: View {
                 .font(.footnote.weight(.medium))
                 .tracking(1)
                 .foregroundStyle(Theme.gold)
-            Text(verbatim: "\(place.displayName) · \(Formats.weekdayDate(now, in: place.timeZone))")
+            // The place name is isolated (U+2068...U+2069) so a Latin city name in Arabic doesn't turn the
+            // whole line left to right.
+            Text(verbatim: "\u{2068}\(place.displayName)\u{2069} · \(Formats.weekdayDate(now, in: place.timeZone))")
                 .font(.subheadline)
                 .foregroundStyle(Theme.muted)
             if let next {
@@ -111,7 +113,9 @@ struct PrayerTimesView: View {
 
     private func row(_ item: PrayerTime, isNext: Bool, zone: TimeZone) -> some View {
         let color = item.kind.isPrayer ? (isNext ? Theme.gold : Theme.ink) : Theme.muted
-        let notifying = model.settings.notify.contains(item.kind)
+        // Blocked in iPhone Settings: no bell shows as on, and tapping one explains why.
+        let blocked = model.notificationStatus == .denied
+        let notifying = model.settings.notify.contains(item.kind) && !blocked
         let title = item.kind.title(on: item.time, in: zone)
         return HStack(spacing: 12) {
             Rectangle()
@@ -126,7 +130,7 @@ struct PrayerTimesView: View {
                 .font(.body.monospacedDigit())
             if item.kind.isPrayer {
                 Button {
-                    model.toggleNotify(item.kind)
+                    if blocked { model.showNotificationsOff = true } else { model.toggleNotify(item.kind) }
                 } label: {
                     Image(systemName: notifying ? "bell" : "bell.slash")
                         .foregroundStyle(notifying ? Theme.gold : Theme.muted)
@@ -177,7 +181,7 @@ struct MonthView: View {
                                 Text(verbatim: Formats.dayOfMonth(day.day, in: place.timeZone))
                                     .gridColumnAlignment(.leading)
                                 ForEach(day.times) { item in
-                                    Text(Formats.time(item.time, in: place.timeZone))
+                                    Text(Formats.gridTime(item.time, in: place.timeZone))
                                 }
                             }
                             .font(.footnote.monospacedDigit())
@@ -186,6 +190,8 @@ struct MonthView: View {
                         }
                     }
                     .padding(.horizontal, 16)
+                    // Seven columns: beyond this text size a row no longer fits on an iPhone.
+                    .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 }
                 .navigationTitle(Formats.monthTitle(anchor, in: place.timeZone))
             } else {
@@ -206,6 +212,8 @@ struct MonthView: View {
     }
 
     private func shift(_ months: Int) {
-        anchor = Calendar.current.date(byAdding: .month, value: months, to: anchor) ?? anchor
+        // Gregorian months, also on an iPhone set to the Islamic or Persian calendar.
+        let calendar = model.place?.calendar ?? Calendar(identifier: .gregorian)
+        anchor = calendar.date(byAdding: .month, value: months, to: anchor) ?? anchor
     }
 }

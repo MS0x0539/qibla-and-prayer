@@ -11,6 +11,8 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     /// Error margin in degrees; negative means the compass needs calibrating.
     private(set) var headingAccuracy: Double = -1
     private(set) var authorization: CLAuthorizationStatus = .notDetermined
+    /// The last location request failed (no fix in time): the UI stops waiting and offers a retry.
+    private(set) var failed = false
 
     @ObservationIgnored var onPlace: ((Place) -> Void)?
     @ObservationIgnored private var lastResolved: CLLocation?
@@ -43,12 +45,21 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func refresh() {
+        failed = false
         if isAuthorized { manager.requestLocation() }
+    }
+
+    /// Names the current place again, for example in the app's new language.
+    func lookUpAgain() {
+        lastResolved = nil
+        refresh()
     }
 
     func startHeading() {
         // True north (trueHeading) is only valid while the same manager also delivers locations;
         // without it the heading falls back to magnetic north, 3-6° off in the Netherlands and Turkey.
+        // It only needs location running, not every fix: fewer fixes, fewer place lookups.
+        manager.distanceFilter = 500
         if isAuthorized { manager.startUpdatingLocation() }
         if CLLocationManager.headingAvailable() { manager.startUpdatingHeading() }
     }
@@ -56,6 +67,7 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     func stopHeading() {
         manager.stopUpdatingHeading()
         manager.stopUpdatingLocation()
+        manager.distanceFilter = kCLDistanceFilterNone
     }
 
     // MARK: - CLLocationManagerDelegate
@@ -66,10 +78,13 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        failed = false
         guard let location = locations.last else { return }
         // Within a kilometre of the last named place nothing changes, so skip the lookup.
         if let last = lastResolved, last.distance(from: location) < 1_000 { return }
-        geocoder.reverseGeocodeLocation(location) { [weak self] marks, _ in
+        // CLGeocoder takes one request at a time and is rate-limited; the Qibla screen streams locations.
+        guard !geocoder.isGeocoding else { return }
+        geocoder.reverseGeocodeLocation(location, preferredLocale: .app) { [weak self] marks, _ in
             let mark = marks?.first
             if mark != nil { self?.lastResolved = location }
             self?.onPlace?(Place(
@@ -81,7 +96,10 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        // Heading trouble (magnetic interference) is reported here too; only a missing location fix counts.
+        if (error as? CLError)?.code != .headingFailure { failed = true }
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         let value = newHeading.trueHeading >= 0 ? newHeading.trueHeading : newHeading.magneticHeading

@@ -1,3 +1,4 @@
+import CoreLocation
 import SwiftUI
 
 struct QiblaView: View {
@@ -9,30 +10,33 @@ struct QiblaView: View {
 
     /// The turn from the phone's heading to the Qibla: negative is left, positive is right.
     private var offset: Double? {
-        guard let place = model.place, let heading = model.location.heading else { return nil }
+        guard let place = model.qiblaPlace, let heading = model.location.heading else { return nil }
         return QiblaView.signedOffset(place.qibla - heading)
     }
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                Text("Qibla")
-                    .font(.system(.largeTitle, design: .serif).weight(.semibold))
-                Text("Hold your phone flat, away from magnets.")
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.muted)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 2)
-                if let place = model.place {
-                    compass(place)
-                } else {
-                    NoPlaceView()
+            ScrollView {
+                VStack(spacing: 0) {
+                    Text("Qibla")
+                        .font(.system(.largeTitle, design: .serif).weight(.semibold))
+                    Text("Hold your phone flat, away from magnets.")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 2)
+                    if let place = model.qiblaPlace {
+                        compass(place)
+                    } else {
+                        NoPlaceView()
+                    }
                 }
-                Spacer(minLength: 0)
+                .padding(.horizontal, 22)
+                .padding(.bottom, 16)
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, 22)
+            .scrollBounceBehavior(.basedOnSize)
             .foregroundStyle(Theme.ink)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Theme.background.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -48,7 +52,8 @@ struct QiblaView: View {
         .onDisappear { model.location.stopHeading() }
         .onChange(of: offset, initial: true) { _, new in
             // Line up within 3°, let go only beyond 5°, so the haptic doesn't stutter at the edge.
-            guard let new else {
+            // A negative accuracy means the heading is invalid: no "Facing the Qibla" or haptic then.
+            guard let new, model.location.headingAccuracy >= 0 else {
                 aligned = false
                 return
             }
@@ -62,7 +67,7 @@ struct QiblaView: View {
         let qibla = place.qibla
         let location = model.location
 
-        VStack(spacing: 10) {
+        VStack(spacing: 16) {
             Triangle()
                 .fill(aligned ? Theme.gold : Theme.muted)
                 .frame(width: 16, height: 14)
@@ -79,6 +84,8 @@ struct QiblaView: View {
             }
             .frame(width: 300, height: 300)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.25), value: location.continuousHeading)
+            // A compass shows physical directions: it must never be mirrored for right-to-left languages.
+            .environment(\.layoutDirection, .leftToRight)
             .accessibilityHidden(true)
         }
         .padding(.top, 26)
@@ -86,6 +93,8 @@ struct QiblaView: View {
         if let heading = location.heading, let offset {
             Text(verbatim: Formats.bearing(heading))
                 .font(.system(size: readoutSize, weight: .medium, design: .serif).monospacedDigit())
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
                 .padding(.top, 24)
             Group {
                 if aligned {
@@ -103,8 +112,20 @@ struct QiblaView: View {
                 Text("Low accuracy: move your phone in a figure eight.")
                     .font(.footnote)
                     .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(.center)
                     .padding(.top, 4)
             }
+            if !location.isAuthorized {
+                Text("Without location access the compass uses magnetic north, which can be a few degrees off.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 4)
+            }
+        } else if CLLocationManager.headingAvailable() {
+            // The first heading takes a moment; don't claim there is no compass meanwhile.
+            ProgressView()
+                .padding(.top, 24)
         } else {
             Text("This device has no compass. The Qibla is at \(Int(qibla.rounded()))° from north.")
                 .font(.headline)
@@ -112,7 +133,7 @@ struct QiblaView: View {
                 .padding(.top, 24)
         }
 
-        HStack(spacing: 14) {
+        HStack(spacing: 6) {
             Text("Qibla \(Formats.bearing(qibla))")
             Text(verbatim: "·").foregroundStyle(Theme.gold)
             Text("Mecca \(Formats.distance(place.kilometresToMecca))")
@@ -128,7 +149,7 @@ struct QiblaView: View {
     }
 }
 
-/// The part that turns: ticks, N/E/S/W and the Kaaba marker at the Qibla bearing.
+/// The part that turns: ticks, N/E/S/W and the Kaaba marker on the rim at the Qibla bearing.
 private struct Dial: View {
     let qibla: Double
     /// The dial turns by -heading; the letters turn back by the same amount so they stay upright.
@@ -152,13 +173,14 @@ private struct Dial: View {
                     .offset(y: -108)
                     .rotationEffect(.degrees(Double(index) * 90))
             }
+            // From the central star to the marker, which sits on the rim, clear of the letters.
             Rectangle()
                 .fill(Theme.gold.opacity(0.55))
-                .frame(width: 2, height: 60)
-                .offset(y: -72)
+                .frame(width: 2, height: 92)
+                .offset(y: -90)
                 .rotationEffect(.degrees(qibla))
             KaabaMarker()
-                .offset(y: -114)
+                .offset(y: -150)
                 .rotationEffect(.degrees(qibla))
         }
         .frame(width: 300, height: 300)

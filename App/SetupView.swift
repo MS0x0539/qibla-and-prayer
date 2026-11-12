@@ -53,7 +53,7 @@ struct SetupView: View {
             HStack(spacing: 8) {
                 ForEach(Step.allCases, id: \.self) { item in
                     Rectangle()
-                        .fill(item.rawValue <= step.rawValue ? Theme.gold : Theme.gold.opacity(0.25))
+                        .fill(item.rawValue <= step.rawValue ? Theme.gold : Theme.gold.opacity(0.5))
                         .frame(width: 7, height: 7)
                         .rotationEffect(.degrees(45))
                 }
@@ -209,7 +209,7 @@ struct SetupView: View {
             }
             .font(.headline)
             .frame(maxWidth: .infinity, alignment: .leading)
-        } else if model.settings.useCurrentLocation && model.location.isAuthorized {
+        } else if model.settings.useCurrentLocation && model.location.isAuthorized && !model.location.failed {
             ProgressView("Finding your location")
                 .frame(maxWidth: .infinity, alignment: .leading)
         } else if model.location.isDenied {
@@ -217,6 +217,14 @@ struct SetupView: View {
                 Text("Location access is off for this app. Choose a city instead, or turn it on in Settings.")
                     .foregroundStyle(Theme.muted)
                 Button("Open Settings") { openAppSettings() }
+                    .foregroundStyle(Theme.gold)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else if model.settings.useCurrentLocation && model.location.failed {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Your location could not be found.")
+                    .foregroundStyle(Theme.muted)
+                Button("Try again") { model.refresh() }
                     .foregroundStyle(Theme.gold)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -354,7 +362,7 @@ struct SetupView: View {
 
     private var remindersSummary: String {
         let kinds = PrayerKind.allCases.filter { $0.isPrayer && model.settings.notify.contains($0) }
-        if kinds.isEmpty { return String(localized: "Off", bundle: .app) }
+        if kinds.isEmpty || model.notificationStatus == .denied { return String(localized: "Off", bundle: .app) }
         if kinds.count == 5 { return String(localized: "All prayers", bundle: .app) }
         let formatter = ListFormatter()
         formatter.locale = .app
@@ -396,10 +404,11 @@ struct MethodChoices: View {
         .sensoryFeedback(.selection, trigger: model.settings.method)
     }
 
+    // The city reads well after "for" in every language ("Suggested for Amsterdam"); a bare country
+    // name doesn't ("for Netherlands" needs "the").
     private var suggestedBadge: Text {
-        if let code = model.place?.countryCode ?? Locale.current.region?.identifier,
-           let country = Locale.app.localizedString(forRegionCode: code) {
-            return Text("Suggested for \(country)")
+        if let place = model.place, !place.name.isEmpty {
+            return Text("Suggested for \(place.name)")
         }
         return Text("Suggested")
     }
@@ -501,7 +510,7 @@ struct ChoiceCard: View {
             .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(selected ? Theme.gold : Theme.line, lineWidth: selected ? 1.5 : 1))
+                    .strokeBorder(selected ? Theme.gold : Theme.line, lineWidth: selected ? 2 : 1))
             .contentShape(RoundedRectangle(cornerRadius: 16))
         }
         .buttonStyle(.plain)
@@ -538,6 +547,13 @@ private struct SetupPage<Content: View, Buttons: View>: View {
                 .padding(.horizontal, 24)
                 .padding(.vertical, 12)
                 .background(Theme.background)
+                // Cards scrolling under the buttons fade out instead of being cut off by a hard edge.
+                .background(alignment: .top) {
+                    LinearGradient(colors: [Theme.background.opacity(0), Theme.background], startPoint: .top, endPoint: .bottom)
+                        .frame(height: 28)
+                        .offset(y: -28)
+                        .allowsHitTesting(false)
+                }
         }
     }
 }

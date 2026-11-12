@@ -21,7 +21,8 @@ struct Place: Codable, Equatable {
         guard let code = countryCode,
               let country = Locale.app.localizedString(forRegionCode: code),
               country != name else { return displayName }
-        return "\(displayName), \(country)"
+        // Localized so Arabic gets its own comma ("أمستردام، هولندا").
+        return String(localized: "\(displayName), \(country)", bundle: .app)
     }
 
     /// Degrees clockwise from true north.
@@ -58,6 +59,8 @@ final class AppModel {
         didSet {
             AppLanguage.current = settings.language
             AppModel.save(settings, as: "settings")
+            // The saved city name is in the old language: look it up again.
+            if oldValue.language != settings.language { location.lookUpAgain() }
             scheduleNotifications()
         }
     }
@@ -93,12 +96,27 @@ final class AppModel {
         }
         AppLanguage.current = settings.language
         location.onPlace = { [weak self] place in
-            self?.currentPlace = place
+            guard let self else { return }
+            // A failed lookup (offline, rate-limited) has no name, country or time zone. Near the last
+            // place keep those, so the name and Diyanet's Isha rule abroad don't change while offline.
+            var place = place
+            if place.countryCode == nil, let previous = self.currentPlace,
+               CLLocation(latitude: previous.latitude, longitude: previous.longitude)
+                   .distance(from: CLLocation(latitude: place.latitude, longitude: place.longitude)) < 50_000 {
+                place.name = previous.name
+                place.timeZoneID = previous.timeZoneID
+                place.countryCode = previous.countryCode
+            }
+            self.currentPlace = place
         }
         UNUserNotificationCenter.current().delegate = presenter
     }
 
     var place: Place? { settings.useCurrentLocation ? currentPlace : settings.city }
+
+    /// The Qibla is measured from where the phone is: the GPS place whenever location is allowed,
+    /// also when the prayer times are for a chosen city.
+    var qiblaPlace: Place? { location.isAuthorized ? currentPlace ?? place : place }
 
     /// The method and Asr suggested for the country the user is in (or the phone's region),
     /// their language and their school.
@@ -128,7 +146,9 @@ final class AppModel {
     }
 
     func start() {
-        location.start()
+        // Someone who chose a city ("Works without location access") is not asked for location;
+        // turning on "Use current location" asks then (useCurrentLocation() / Settings onChange).
+        if settings.useCurrentLocation { location.start() } else { location.refresh() }
         scheduleNotifications()
     }
 
@@ -229,8 +249,11 @@ final class AppModel {
         let day = place.calendar.dateComponents([.year, .month, .day], from: date)
         var params = settings.method.parameters
         params.madhab = settings.asr == .hanafi ? .hanafi : .shafi
-        // Above 48° twilight can last all night in summer; this is Adhan's recommendation there.
-        let rule: HighLatitudeRule = abs(place.latitude) > 48 ? .seventhOfTheNight : .middleOfTheNight
+        // Above 48° twilight can last all night in summer; this is Adhan's recommendation there. France's
+        // 12° is reached all year below ~54°N, and Adhan applies the 1/7 rule as a bound even then
+        // (Paris, June: Fajr 04:03 would become 04:39), so it starts higher for that method.
+        let limit = settings.method == .france ? 54.0 : 48.0
+        let rule: HighLatitudeRule = abs(place.latitude) > limit ? .seventhOfTheNight : .middleOfTheNight
         params.highLatitudeRule = rule
         // The user's minutes come on top of the method's own corrections.
         let minutes = settings.adjustments
@@ -266,7 +289,8 @@ final class AppModel {
 
     /// The next prayer after `now` (sunrise skipped); after Isha that is tomorrow's Fajr.
     static func next(after now: Date, place: Place, settings: AppSettings) -> PrayerTime? {
-        for offset in 0...1 {
+        // From yesterday: far north in summer Isha can fall after midnight (Trondheim, 21 June: 00:07).
+        for offset in -1...1 {
             guard let day = place.calendar.date(byAdding: .day, value: offset, to: now),
                   let times = compute(on: day, place: place, settings: settings) else { continue }
             if let next = times.first(where: { $0.kind.isPrayer && $0.time > now }) {
@@ -284,7 +308,7 @@ final class AppModel {
         // refresh task if people who rarely open the app report missing notifications.
         let days = min(30, 64 / enabled.count)
         var items: [PrayerTime] = []
-        for offset in 0...days {
+        for offset in -1...days {
             guard let day = place.calendar.date(byAdding: .day, value: offset, to: now),
                   let times = compute(on: day, place: place, settings: settings) else { continue }
             items += times.filter { enabled.contains($0.kind) && $0.time > now }
@@ -304,7 +328,10 @@ final class AppModel {
             let status = await center.notificationSettings().authorizationStatus
             self.notificationStatus = status
             guard status == .authorized || status == .provisional, run == self.scheduleRun else { return }
-            center.removeAllPendingNotificationRequests()
+            // Keep a pending test notification; every prayer request is rebuilt below.
+            let pending = await center.pendingNotificationRequests().map(\.identifier)
+            guard run == self.scheduleRun else { return }
+            center.removePendingNotificationRequests(withIdentifiers: pending.filter { $0 != "test" })
             guard let place else { return }
             let now = Date()
             for item in AppModel.upcoming(from: now, place: place, settings: settings) {

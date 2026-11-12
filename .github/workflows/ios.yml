@@ -84,7 +84,8 @@ jobs:
           xcrun simctl install "$UDID" "$APP"
           xcrun simctl privacy "$UDID" grant location "$BID"
           xcrun simctl location "$UDID" set 52.3676,4.9041
-          xcrun simctl status_bar "$UDID" override --time 9:41 --batteryState charged --batteryLevel 100
+          xcrun simctl status_bar "$UDID" override --time 9:41 --dataNetwork wifi --wifiMode active --wifiBars 3 \
+            --cellularMode active --cellularBars 4 --batteryState discharging --batteryLevel 100
           mkdir -p screenshots
           shot() {  # shot <file name> <app arguments...>
             local name=$1; shift

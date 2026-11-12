@@ -202,7 +202,11 @@ enum AppLanguage: String, CaseIterable, Codable, Identifiable {
     }
 
     var locale: Locale {
-        self == .system ? .autoupdatingCurrent : Locale(identifier: rawValue)
+        guard self != .system else { return .autoupdatingCurrent }
+        // Keep the iPhone's region, as iOS's own per-app language does: English on a Dutch iPhone
+        // becomes en_NL (16:16, "Thursday 12 November"), not en_US (4:16 PM).
+        guard let region = Locale.current.region?.identifier else { return Locale(identifier: rawValue) }
+        return Locale(identifier: "\(rawValue)_\(region)")
     }
 
     var isRightToLeft: Bool { locale.language.characterDirection == .rightToLeft }

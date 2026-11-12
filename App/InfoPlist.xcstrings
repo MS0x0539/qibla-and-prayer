@@ -31,7 +31,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Je locatie wordt gebruikt om de gebedstijden en de qibla-richting te berekenen. Deze app deelt hem niet."
+            "value": "Je locatie wordt alleen gebruikt om de gebedstijden en de qibla-richting te berekenen, en wordt niet gedeeld."
           }
         },
         "tr": {

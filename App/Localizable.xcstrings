@@ -69,6 +69,40 @@
         }
       }
     },
+    "%@, %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@، %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        }
+      }
+    },
     "A notification when each prayer begins, if you want one.": {
       "localizations": {
         "ar": {
@@ -126,7 +160,7 @@
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Over"
+            "value": "Over deze app"
           }
         },
         "tr": {
@@ -256,7 +290,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "C'est prêt"
+            "value": "C’est prêt"
           }
         },
         "nl": {
@@ -290,7 +324,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Autoriser l'accès à la position"
+            "value": "Autoriser l’accès à la position"
           }
         },
         "nl": {
@@ -358,7 +392,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Autorisez les notifications de cette app dans les Réglages de l'iPhone pour recevoir des rappels."
+            "value": "Autorisez les notifications de cette app dans les Réglages de l’iPhone pour recevoir des rappels."
           }
         },
         "nl": {
@@ -494,7 +528,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'Asr commence quand l'ombre d'un objet fait sa longueur. La plupart des horaires l'utilisent, dont ceux de la Diyanet."
+            "value": "L’Asr commence quand l’ombre d’un objet fait sa longueur. La plupart des horaires l’utilisent, dont ceux de la Diyanet."
           }
         },
         "nl": {
@@ -528,7 +562,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'Asr commence quand l'ombre d'un objet fait deux fois sa longueur, environ une heure plus tard. Certaines mosquées hanafites l'utilisent."
+            "value": "L’Asr commence quand l’ombre d’un objet fait deux fois sa longueur, environ une heure plus tard. Certaines mosquées hanafites l’utilisent."
           }
         },
         "nl": {
@@ -562,7 +596,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Calcul de l'Asr"
+            "value": "Calcul de l’Asr"
           }
         },
         "nl": {
@@ -596,7 +630,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Asr aujourd'hui : %@"
+            "value": "Asr aujourd’hui : %@"
           }
         },
         "nl": {
@@ -732,7 +766,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Change uniquement la langue de cette app. Les messages d'iOS lui-même, comme les demandes d'autorisation, suivent la langue de votre iPhone."
+            "value": "Change uniquement la langue de cette app. Les messages d’iOS lui-même, comme les demandes d’autorisation, suivent la langue de votre iPhone."
           }
         },
         "nl": {
@@ -800,7 +834,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisissez la méthode de votre mosquée. Vous pouvez décaler chaque prière de quelques minutes pour correspondre à ses horaires, et la date hégirienne d'un ou deux jours."
+            "value": "Choisissez la méthode de votre mosquée. Vous pouvez décaler chaque prière de quelques minutes pour correspondre à ses horaires, et la date hégirienne d’un ou deux jours."
           }
         },
         "nl": {
@@ -1004,7 +1038,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les dates suivent le calendrier Umm al-Qura. L'observation de la lune là où vous vivez peut les décaler d'un jour ; vous pouvez ajuster la date hégirienne dans Réglages."
+            "value": "Les dates suivent le calendrier Umm al-Qura. L’observation de la lune là où vous vivez peut les décaler d’un jour ; vous pouvez ajuster la date hégirienne dans Réglages."
           }
         },
         "nl": {
@@ -1072,7 +1106,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Jour d'Arafat"
+            "value": "Jour d’Arafat"
           }
         },
         "nl": {
@@ -1276,7 +1310,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Autorité générale égyptienne d'arpentage"
+            "value": "Autorité générale égyptienne d’arpentage"
           }
         },
         "nl": {
@@ -1526,7 +1560,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Konumunuz bulunuyor"
+            "value": "Konumunuz belirleniyor"
           }
         }
       }
@@ -1582,7 +1616,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recevez une notification au début d'une prière. Choisissez lesquelles ; vous pourrez changer cela plus tard avec la cloche à côté de chaque horaire."
+            "value": "Recevez une notification au début d’une prière. Choisissez lesquelles ; vous pourrez changer cela plus tard avec la cloche à côté de chaque horaire."
           }
         },
         "nl": {
@@ -1662,7 +1696,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hanefî"
+            "value": "Hanefi"
           }
         }
       }
@@ -1752,7 +1786,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les horaires hanafites diffèrent : la Diyanet utilise l'Asr le plus tôt, d'autres le plus tardif. Choisissez celui de votre mosquée."
+            "value": "Les horaires hanafites diffèrent : la Diyanet utilise l’Asr le plus tôt, d’autres le plus tardif. Choisissez celui de votre mosquée."
           }
         },
         "nl": {
@@ -1798,7 +1832,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hanbelî"
+            "value": "Hanbeli"
           }
         }
       }
@@ -2126,7 +2160,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Institut de géophysique de l'Université de Téhéran. Utilisée en Iran."
+            "value": "Institut de géophysique de l’Université de Téhéran. Utilisée en Iran."
           }
         },
         "nl": {
@@ -2330,7 +2364,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Isra et Mi'raj"
+            "value": "Isra et Mi’raj"
           }
         },
         "nl": {
@@ -2376,7 +2410,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Caferî (Şii)"
+            "value": "Caferi (Şii)"
           }
         }
       }
@@ -2534,7 +2568,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Laylat al-Bara'a"
+            "value": "Laylat al-Bara’a"
           }
         },
         "nl": {
@@ -2636,7 +2670,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'accès à la position est désactivé pour cette app. Choisissez une ville, ou activez-le dans Réglages."
+            "value": "L’accès à la position est désactivé pour cette app. Choisissez une ville, ou activez-le dans Réglages."
           }
         },
         "nl": {
@@ -2716,7 +2750,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Yapan"
+            "value": "Geliştirici"
           }
         }
       }
@@ -2818,7 +2852,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Malikî"
+            "value": "Maliki"
           }
         }
       }
@@ -2908,7 +2942,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Minutes ajoutées à l'heure calculée, pour correspondre aux horaires de votre mosquée."
+            "value": "Minutes ajoutées à l’heure calculée, pour correspondre aux horaires de votre mosquée."
           }
         },
         "nl": {
@@ -2920,7 +2954,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hesaplanan vakte eklenen dakikalar; camiinizin takvimiyle eşleşmesi için."
+            "value": "Camiinizin takvimine uyması için hesaplanan vakte eklenen dakikalar."
           }
         }
       }
@@ -3078,7 +3112,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les mosquées suivent des règles un peu différentes, surtout pour Fajr et Isha. Choisissez celle de votre mosquée, ou gardez la suggestion si vous n'êtes pas sûr."
+            "value": "Les mosquées suivent des règles un peu différentes, surtout pour Fajr et Isha. Choisissez celle de votre mosquée, ou gardez la suggestion si vous n’êtes pas sûr."
           }
         },
         "nl": {
@@ -3112,7 +3146,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La plupart des horaires, dont ceux de la Diyanet, utilisent l'heure standard de l'Asr. Certaines mosquées hanafites en utilisent une plus tardive. Choisissez celle de votre mosquée."
+            "value": "La plupart des horaires, dont ceux de la Diyanet, utilisent l’heure standard de l’Asr. Certaines mosquées hanafites en utilisent une plus tardive. Choisissez celle de votre mosquée."
           }
         },
         "nl": {
@@ -3758,7 +3792,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hors de Turquie, les horaires imprimés de la Diyanet estiment Fajr et Isha au printemps et en été. Pendant ces mois, les horaires ici peuvent en différer jusqu'à une demi-heure environ."
+            "value": "Hors de Turquie, les horaires imprimés de la Diyanet estiment Fajr et Isha au printemps et en été. Pendant ces mois, les horaires ici peuvent en différer jusqu’à une demi-heure environ."
           }
         },
         "nl": {
@@ -3928,7 +3962,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Impossible de calculer les horaires de prière pour ce lieu aujourd'hui. Cela peut arriver près des pôles."
+            "value": "Impossible de calculer les horaires de prière pour ce lieu aujourd’hui. Cela peut arriver près des pôles."
           }
         },
         "nl": {
@@ -3962,7 +3996,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les horaires de prière dépendent de l'endroit où vous êtes, et la boussole a besoin de votre position pour indiquer la qibla. L'app ne l'utilise que pour cela et ne la partage jamais."
+            "value": "Les horaires de prière dépendent de l’endroit où vous êtes, et la boussole a besoin de votre position pour indiquer la qibla. L’app ne l’utilise que pour cela et ne la partage jamais."
           }
         },
         "nl": {
@@ -4472,13 +4506,13 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Comme l'iPhone"
+            "value": "Comme l’iPhone"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zelfde als iPhone"
+            "value": "Hetzelfde als iPhone"
           }
         },
         "tr": {
@@ -4688,7 +4722,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Şafiî"
+            "value": "Şafii"
           }
         }
       }
@@ -5118,7 +5152,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le sahour se termine au Fajr. L'iftar est au Maghrib."
+            "value": "Le sahour se termine au Fajr. L’iftar est au Maghrib."
           }
         },
         "nl": {
@@ -5288,7 +5322,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L'app utilise la langue de votre iPhone, sauf si vous en choisissez une autre ici."
+            "value": "L’app utilise la langue de votre iPhone, sauf si vous en choisissez une autre ici."
           }
         },
         "nl": {
@@ -5322,7 +5356,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cet appareil n'a pas de boussole. La qibla est à %lld° du nord."
+            "value": "Cet appareil n’a pas de boussole. La qibla est à %lld° du nord."
           }
         },
         "nl": {
@@ -5390,7 +5424,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aujourd'hui %@"
+            "value": "Aujourd’hui %@"
           }
         },
         "nl": {
@@ -5437,6 +5471,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bugünün vakitleri, sıradaki vakit ve aylık vakitler."
+          }
+        }
+      }
+    },
+    "Try again": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة المحاولة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erneut versuchen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réessayer"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opnieuw proberen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekrar dene"
           }
         }
       }
@@ -5560,7 +5628,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tournez lentement jusqu'à ce que la Kaaba dorée atteigne le repère en haut. L'étoile se remplit et votre téléphone vibre une fois."
+            "value": "Tournez lentement jusqu’à ce que la Kaaba dorée atteigne le repère en haut. L’étoile se remplit et votre téléphone vibre une fois."
           }
         },
         "nl": {
@@ -5594,7 +5662,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tournez jusqu'à ce que la Kaaba soit en haut."
+            "value": "Tournez jusqu’à ce que la Kaaba soit en haut."
           }
         },
         "nl": {
@@ -5798,7 +5866,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisée par les communautés chiites (jafarites). Le Maghrib commence quand la rougeur du ciel à l'est a disparu."
+            "value": "Utilisée par les communautés chiites (jafarites). Le Maghrib commence quand la rougeur du ciel à l’est a disparu."
           }
         },
         "nl": {
@@ -5810,7 +5878,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Şii (Caferî) topluluklarında kullanılır. Akşam, doğudaki kızıllık kaybolunca girer."
+            "value": "Şii (Caferi) topluluklarında kullanılır. Akşam, doğudaki kızıllık kaybolunca girer."
           }
         }
       }
@@ -5866,7 +5934,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Utilisée en Égypte et dans une grande partie de l'Afrique, en Syrie et au Liban."
+            "value": "Utilisée en Égypte et dans une grande partie de l’Afrique, en Syrie et au Liban."
           }
         },
         "nl": {
@@ -6359,6 +6427,40 @@
         }
       }
     },
+    "Without location access the compass uses magnetic north, which can be a few degrees off.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدون الوصول إلى الموقع تعتمد البوصلة على الشمال المغناطيسي، وقد يختلف بضع درجات."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ohne Standortzugriff nutzt der Kompass den magnetischen Norden, der um einige Grad abweichen kann."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sans accès à la position, la boussole utilise le nord magnétique, qui peut différer de quelques degrés."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zonder locatietoegang wijst het kompas het magnetische noorden aan; dat kan een paar graden afwijken."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konum erişimi olmadan pusula manyetik kuzeyi kullanır; bu birkaç derece sapabilir."
+          }
+        }
+      }
+    },
     "Works without location access.": {
       "localizations": {
         "ar": {
@@ -6427,6 +6529,40 @@
         }
       }
     },
+    "Your location could not be found.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر تحديد موقعك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Standort konnte nicht ermittelt werden."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de déterminer votre position."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je locatie kon niet worden bepaald."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konumunuz belirlenemedi."
+          }
+        }
+      }
+    },
     "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha. Not sure? Choose that, and the app uses what most timetables do.": {
       "localizations": {
         "ar": {
@@ -6444,7 +6580,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Votre école (madhhab) détermine le début de l'Asr, et les horaires chiites diffèrent aussi pour le Maghrib et l'Isha. Vous ne savez pas ? Choisissez-le, et l'app suivra la plupart des horaires."
+            "value": "Votre école (madhhab) détermine le début de l’Asr, et les horaires chiites diffèrent aussi pour le Maghrib et l’Isha. Vous ne savez pas ? Choisissez-le, et l’app suivra la plupart des horaires."
           }
         },
         "nl": {

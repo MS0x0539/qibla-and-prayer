@@ -39,8 +39,8 @@ The repository is private: about 190 free macOS minutes a month on GitHub Free.
 
 ## Open decisions
 
-1. **Name.** Shortlist: Wajh, Tawajjuh. (The bundle ID is settled: `org.psbv.qiblaandprayer`,
-   registered as an explicit App ID.)
+1. **Name under the icon.** The App Store Connect record is "Wajh: Qibla & Prayer Times"; the home-screen
+   name is still the working name "Qibla & Prayer". (Bundle ID `org.psbv.qiblaandprayer`, settled.)
 2. **Diyanet in the Netherlands, Belgium and Germany.** In spring and summer Diyanet's tables there use
    their own estimates; the app can be up to about 30 minutes off for Fajr and Isha. Options: copy the
    estimation rule into the app (about ±5 minutes on most days, re-check yearly), fetch Diyanet's official
@@ -52,13 +52,10 @@ The repository is private: about 190 free macOS minutes a month on GitHub Free.
 
 ## Before the first TestFlight build (owner, in App Store Connect)
 
-1. ~~Register the bundle ID~~ Done: `org.psbv.qiblaandprayer`.
-2. Create the app record (the name must be free in every language it is listed in).
-3. Create an internal TestFlight group with automatic distribution.
-4. Add the repository secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8` (the Admin key from Esports Atlas works).
-
-Then the TestFlight job (the same unsigned-archive and cloud-signing route as Esports Atlas) is added.
-Version 1 uses no entitlements, so that route works unchanged.
+All done on 12 November 2026: bundle ID registered, app record "Wajh: Qibla & Prayer Times", internal
+group "me", the three `ASC_*` secrets. The first build reached App Store Connect the same night.
+Upload a new build: Actions → iOS → Run workflow → "Upload to TestFlight" (or `[testflight]` in a commit
+message). "Check App Store Connect key" tests the secrets on Linux without printing them.
 
 ## Before the App Store
 

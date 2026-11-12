@@ -46,37 +46,56 @@ struct Triangle: Shape {
     }
 }
 
-/// Dates, times and numbers in the app's language (Arabic gets Arabic digits, for example).
+/// Dates, times and numbers in the app's language, always in the Gregorian calendar (or explicitly
+/// Umm al-Qura for the Hijri date), whatever calendar the iPhone itself is set to.
 enum Formats {
+    private static func gregorian(_ zone: TimeZone) -> Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = zone
+        return calendar
+    }
+
+    private static func style(_ zone: TimeZone) -> Date.FormatStyle {
+        Date.FormatStyle(locale: .app, calendar: gregorian(zone), timeZone: zone)
+    }
+
     static func time(_ date: Date, in zone: TimeZone) -> String {
-        date.formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: .app, timeZone: zone))
+        date.formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: .app, calendar: gregorian(zone), timeZone: zone))
+    }
+
+    /// Month grid: the column already names the prayer, so 12-hour clocks drop AM/PM ("4:16", "10:07").
+    static func gridTime(_ date: Date, in zone: TimeZone) -> String {
+        date.formatted(style(zone).hour(.defaultDigits(amPM: .omitted)).minute(.twoDigits))
     }
 
     static func weekdayDate(_ date: Date, in zone: TimeZone) -> String {
-        date.formatted(Date.FormatStyle(locale: .app, timeZone: zone).weekday(.wide).day().month(.wide))
+        date.formatted(style(zone).weekday(.wide).day().month(.wide))
     }
 
-    /// The Umm al-Qura date, moved by `offset` days to match local moon sighting.
+    /// The Umm al-Qura date ("2 Jumada II 1448"), moved by `offset` days to match local moon sighting.
     static func hijriDate(_ date: Date, in zone: TimeZone, offset: Int = 0) -> String {
         let shifted = Calendar(identifier: .gregorian).date(byAdding: .day, value: offset, to: date) ?? date
-        return shifted.formatted(Date.FormatStyle(locale: .app, calendar: Calendar(identifier: .islamicUmmAlQura), timeZone: zone)
-            .day().month(.wide).year())
+        let format = Date.VerbatimFormatStyle(
+            format: "\(day: .defaultDigits) \(month: .wide) \(year: .defaultDigits)",
+            locale: .app, timeZone: zone, calendar: Calendar(identifier: .islamicUmmAlQura))
+        return shifted.formatted(format)
     }
 
     static func monthTitle(_ date: Date, in zone: TimeZone) -> String {
-        date.formatted(Date.FormatStyle(locale: .app, timeZone: zone).month(.wide).year())
+        date.formatted(style(zone).month(.wide).year())
     }
 
     static func shortDate(_ date: Date, in zone: TimeZone) -> String {
-        date.formatted(Date.FormatStyle(locale: .app, timeZone: zone).weekday(.abbreviated).day().month(.abbreviated))
+        date.formatted(style(zone).weekday(.abbreviated).day().month(.abbreviated))
     }
 
     static func dayOfMonth(_ date: Date, in zone: TimeZone) -> String {
-        date.formatted(Date.FormatStyle(locale: .app, timeZone: zone).day())
+        date.formatted(style(zone).day())
     }
 
     static func number(_ value: Int) -> String {
-        value.formatted(.number.locale(.app))
+        // No thousands separator: years read "2026" and "1448", not "2,026" or "1.448".
+        value.formatted(.number.grouping(.never).locale(.app))
     }
 
     static func cardinal(_ degrees: Double) -> String {
@@ -126,21 +145,27 @@ struct NoPlaceView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            if model.settings.useCurrentLocation && model.location.isAuthorized {
+            if model.settings.useCurrentLocation && model.location.isAuthorized && !model.location.failed {
                 ProgressView("Finding your location")
             } else {
                 Image(systemName: "location.slash")
                     .font(.largeTitle)
                     .foregroundStyle(Theme.gold)
-                Text("Prayer times and the Qibla need your location.")
-                    .multilineTextAlignment(.center)
                 if model.location.isDenied {
-                    Button("Allow location access") { openAppSettings() }
+                    Text("Prayer times and the Qibla need your location.")
+                        .multilineTextAlignment(.center)
+                    placeButton("Allow location access") { openAppSettings() }
+                } else if model.settings.useCurrentLocation && model.location.failed {
+                    Text("Your location could not be found.")
+                        .multilineTextAlignment(.center)
+                    placeButton("Try again") { model.refresh() }
                 } else {
-                    Button("Use my location") { model.useCurrentLocation() }
+                    Text("Prayer times and the Qibla need your location.")
+                        .multilineTextAlignment(.center)
+                    placeButton("Use my location") { model.useCurrentLocation() }
                 }
             }
-            Button("Search for a city") { searching = true }
+            placeButton("Search for a city") { searching = true }
         }
         .foregroundStyle(Theme.ink)
         .padding(32)
@@ -148,5 +173,14 @@ struct NoPlaceView: View {
         .sheet(isPresented: $searching) {
             NavigationStack { CitySearchView() }
         }
+    }
+
+    /// Gold, bordered and full-height: the surrounding views set ink text, which would otherwise
+    /// make these buttons look like plain text with a tiny tap area.
+    private func placeButton(_ title: LocalizedStringKey, action: @escaping () -> Void) -> some View {
+        Button(title, action: action)
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .foregroundStyle(Theme.gold)
     }
 }
