@@ -28,8 +28,8 @@ targets:
         - QiblaAndPrayerTests
     settings:
       base:
-        # Permanent once the first build reaches App Store Connect: confirm before that.
-        PRODUCT_BUNDLE_IDENTIFIER: com.ms0x0539.qiblaandprayer
+        # Registered as an explicit App ID in the developer account; it can't change after the first upload.
+        PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: "YES"
         INFOPLIST_KEY_CFBundleDisplayName: "Qibla & Prayer"
@@ -53,4 +53,4 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: "YES"
-        PRODUCT_BUNDLE_IDENTIFIER: com.ms0x0539.qiblaandprayer.tests
+        PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer.tests

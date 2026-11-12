@@ -39,8 +39,8 @@ The repository is private: about 190 free macOS minutes a month on GitHub Free.
 
 ## Open decisions
 
-1. **Name and bundle ID.** Shortlist: Wajh, Tawajjuh. The bundle ID (now the placeholder
-   `com.ms0x0539.qiblaandprayer`) cannot change after the first upload.
+1. **Name.** Shortlist: Wajh, Tawajjuh. (The bundle ID is settled: `org.psbv.qiblaandprayer`,
+   registered as an explicit App ID.)
 2. **Diyanet in the Netherlands, Belgium and Germany.** In spring and summer Diyanet's tables there use
    their own estimates; the app can be up to about 30 minutes off for Fajr and Isha. Options: copy the
    estimation rule into the app (about ±5 minutes on most days, re-check yearly), fetch Diyanet's official
@@ -52,7 +52,7 @@ The repository is private: about 190 free macOS minutes a month on GitHub Free.
 
 ## Before the first TestFlight build (owner, in App Store Connect)
 
-1. Register the bundle ID (Certificates, Identifiers & Profiles → Identifiers).
+1. ~~Register the bundle ID~~ Done: `org.psbv.qiblaandprayer`.
 2. Create the app record (the name must be free in every language it is listed in).
 3. Create an internal TestFlight group with automatic distribution.
 4. Add the repository secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8` (the Admin key from Esports Atlas works).
