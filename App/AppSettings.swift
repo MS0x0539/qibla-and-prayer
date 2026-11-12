@@ -1,7 +1,7 @@
 import Adhan
 import Foundation
 
-enum PrayerKind: String, CaseIterable, Codable, Identifiable {
+enum PrayerKind: String, CaseIterable, Codable, Identifiable, Sendable {
     case fajr, sunrise, dhuhr, asr, maghrib, isha
 
     var id: String { rawValue }
@@ -40,7 +40,7 @@ enum CalcMethod: String, CaseIterable, Codable, Identifiable {
     var id: String { rawValue }
 
     /// Adhan's parameters. For our own methods, their minute corrections are in `adjustments`
-    /// (the user's adjustments are added on top in AppModel.compute).
+    /// (the user's adjustments are added on top in Prayers.compute).
     var parameters: CalculationParameters {
         switch self {
         case .muslimWorldLeague: CalculationMethod.muslimWorldLeague.params
