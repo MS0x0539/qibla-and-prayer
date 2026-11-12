@@ -44,9 +44,16 @@ struct PrayerTimesView: View {
 
     private func page(place: Place, today: [PrayerTime], now: Date) -> some View {
         let next = model.next(after: now, at: place)
+        let offset = model.settings.hijriOffset
+        let ramadanStart = AppModel.ramadanStart(around: now, place: place, hijriOffset: offset)
+        let hijri = AppModel.hijri(of: now, place: place, offset: offset)
         return ScrollView {
             VStack(spacing: 0) {
                 header(place: place, next: next, now: now)
+                if hijri.month == 9, let start = ramadanStart {
+                    RamadanCard(start: start, day: hijri.day ?? 1, today: today, now: now, zone: place.timeZone)
+                        .padding(.top, 24)
+                }
                 VStack(spacing: 0) {
                     ForEach(today) { item in
                         row(item, isNext: item.time == next?.time, zone: place.timeZone)
@@ -54,6 +61,10 @@ struct PrayerTimesView: View {
                 }
                 .overlay(alignment: .top) { Theme.line.frame(height: 1) }
                 .padding(.top, 28)
+                if hijri.month != 9, let start = ramadanStart {
+                    RamadanSoon(start: start, now: now, place: place)
+                        .padding(.top, 20)
+                }
                 Button(action: openSettings) {
                     Text(verbatim: "\(model.settings.method.title) · \(model.settings.asr.shortTitle)")
                         .font(.footnote)
@@ -143,6 +154,115 @@ struct PrayerTimesView: View {
         .foregroundStyle(color)
         .frame(minHeight: 54)
         .overlay(alignment: .bottom) { Theme.line.frame(height: 1) }
+    }
+}
+
+/// In Ramadan, above today's times: suhoor and iftar, with a countdown to the next of the two.
+private struct RamadanCard: View {
+    let start: Date
+    let day: Int
+    let today: [PrayerTime]
+    let now: Date
+    let zone: TimeZone
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        let fajr = today[0].time
+        let maghrib = today[4].time
+        VStack(spacing: 10) {
+            NavigationLink {
+                RamadanView(start: start)
+            } label: {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Label {
+                            Text("Day \(Formats.number(day)) of Ramadan")
+                        } icon: {
+                            Image(systemName: "moon.stars.fill")
+                        }
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Theme.gold)
+                        Spacer()
+                        Image(systemName: "chevron.forward")
+                            .font(.footnote.weight(.semibold))
+                            .foregroundStyle(Theme.muted)
+                    }
+                    HStack(alignment: .firstTextBaseline) {
+                        moment("Suhoor ends", fajr, alignment: .leading)
+                        Spacer()
+                        moment("Iftar", maghrib, alignment: .trailing)
+                    }
+                    Group {
+                        if now < fajr {
+                            Text("Suhoor ends in \(Text(timerInterval: now...fajr, countsDown: true))")
+                        } else if now < maghrib {
+                            Text("Iftar in \(Text(timerInterval: now...maghrib, countsDown: true))")
+                        }
+                    }
+                    .font(.subheadline.monospacedDigit())
+                    .foregroundStyle(Theme.gold)
+                }
+                .padding(16)
+                .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
+            }
+            .buttonStyle(.plain)
+            if now < maghrib && model.liveActivitiesEnabled {
+                Button { model.startIftarCountdown() } label: {
+                    Label("Iftar countdown on Lock Screen", systemImage: "lock.iphone")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .foregroundStyle(Theme.gold)
+            }
+        }
+    }
+
+    private func moment(_ title: LocalizedStringKey, _ time: Date, alignment: HorizontalAlignment) -> some View {
+        VStack(alignment: alignment, spacing: 2) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(Theme.muted)
+            Text(Formats.time(time, in: zone))
+                .font(.system(.title2, design: .serif).monospacedDigit())
+                .foregroundStyle(Theme.ink)
+        }
+    }
+}
+
+/// Outside Ramadan, under today's times: when the next one begins, with its timetable behind it.
+private struct RamadanSoon: View {
+    let start: Date
+    let now: Date
+    let place: Place
+
+    var body: some View {
+        let calendar = place.calendar
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: start).day ?? 0
+        NavigationLink {
+            RamadanView(start: start)
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "moon.stars")
+                    .font(.title3)
+                    .foregroundStyle(Theme.gold)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Ramadan begins in \(Formats.days(days))")
+                        .foregroundStyle(Theme.ink)
+                    Text(verbatim: Formats.weekdayDate(start, in: place.timeZone))
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                }
+                Spacer()
+                Image(systemName: "chevron.forward")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(Theme.muted)
+            }
+            .padding(16)
+            .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
     }
 }
 

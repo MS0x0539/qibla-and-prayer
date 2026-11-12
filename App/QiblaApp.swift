@@ -6,6 +6,7 @@ struct QiblaApp: App {
     @State private var model = AppModel()
 
     var body: some Scene {
+        let model = model
         WindowGroup {
             // A language picked in the app applies to SwiftUI's own text lookups and to layout direction.
             let language = model.settings.language
@@ -16,11 +17,15 @@ struct QiblaApp: App {
                 .preferredColorScheme(.dark)
                 .tint(Theme.gold)
         }
+        // Tops up the notifications while the app isn't opened (iOS decides when).
+        .backgroundTask(.appRefresh(AppModel.refreshTask)) {
+            await model.backgroundRefresh()
+        }
     }
 }
 
 enum AppTab: String, Hashable {
-    case times, qibla, settings
+    case times, qibla, tasbih, tracker, settings
 }
 
 struct RootView: View {
@@ -37,6 +42,12 @@ struct RootView: View {
             }
             Tab("Qibla", systemImage: "safari", value: AppTab.qibla) {
                 QiblaView()
+            }
+            Tab("Tasbih", systemImage: "circle.dotted", value: AppTab.tasbih) {
+                TasbihView()
+            }
+            Tab("Tracker", systemImage: "checklist", value: AppTab.tracker) {
+                TrackerView()
             }
             Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {
                 SettingsView()
@@ -61,10 +72,18 @@ struct RootView: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active && model.onboarded { model.refresh() }
+            if phase == .background { model.scheduleBackgroundRefresh() }
         }
         // Midnight, a new time zone or a clock change: recalculate and reschedule.
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
             if model.onboarded { model.refresh() }
         }
+    }
+}
+
+@MainActor
+func openAppSettings() {
+    if let url = URL(string: UIApplication.openSettingsURLString) {
+        UIApplication.shared.open(url)
     }
 }

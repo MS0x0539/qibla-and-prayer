@@ -99,11 +99,24 @@ extension AppModel {
             guard parts.month == 9 else { break }
             days.append(RamadanDay(
                 hijriDay: parts.day ?? 0, hijriYear: parts.year ?? 0, date: day,
-                times: compute(on: day, place: place, settings: settings)))
+                times: Prayers.compute(on: day, place: place, settings: settings)))
             guard let next = place.calendar.date(byAdding: .day, value: 1, to: day) else { break }
             day = next
         }
         return days
+    }
+
+    /// The first day of the Ramadan under way on `date`, or else of the next one. Computed directly
+    /// rather than day by day: the Prayer times screen asks on every refresh.
+    static func ramadanStart(around date: Date, place: Place, hijriOffset: Int) -> Date? {
+        let today = hijri(of: date, place: place, offset: hijriOffset)
+        guard let year = today.year, let month = today.month else { return nil }
+        var islamic = Calendar(identifier: .islamicUmmAlQura)
+        islamic.timeZone = place.timeZone
+        let calendar = place.calendar
+        guard let first = islamic.date(from: DateComponents(year: month <= 9 ? year : year + 1, month: 9, day: 1, hour: 12)),
+              let local = calendar.date(byAdding: .day, value: -hijriOffset, to: first) else { return nil }
+        return calendar.startOfDay(for: local)
     }
 }
 

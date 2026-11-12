@@ -246,6 +246,12 @@ struct AppSettings: Codable, Equatable {
     var hijriOffset = 0
     /// Chosen in the setup; nil until then.
     var school: School?
+    /// Minutes before each prayer with its bell on for an early reminder; 0 is off.
+    var reminderMinutes = 0
+    /// A reminder an hour before the Friday prayer.
+    var jumuahReminder = false
+    /// In Ramadan: a reminder 30 minutes before suhoor ends, and one at iftar.
+    var ramadanReminders = false
 
     /// What most people in the region use: only a starting point, the user picks.
     static func suggested(
@@ -289,5 +295,8 @@ extension AppSettings {
         if let value = try? container.decode(AppLanguage.self, forKey: .language) { language = value }
         if let value = try? container.decode(Int.self, forKey: .hijriOffset) { hijriOffset = value }
         if let value = try? container.decode(School.self, forKey: .school) { school = value }
+        if let value = try? container.decode(Int.self, forKey: .reminderMinutes) { reminderMinutes = value }
+        if let value = try? container.decode(Bool.self, forKey: .jumuahReminder) { jumuahReminder = value }
+        if let value = try? container.decode(Bool.self, forKey: .ramadanReminders) { ramadanReminders = value }
     }
 }

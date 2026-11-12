@@ -20,7 +20,7 @@ struct PrayerTimeTests {
     func timesAreInOrderAllYear(method: CalcMethod) throws {
         let settings = AppSettings(method: method, asr: .standard)
         for month in 1...12 {
-            let times = try #require(AppModel.compute(on: date(2026, month, 21), place: amsterdam, settings: settings))
+            let times = try #require(Prayers.compute(on: date(2026, month, 21), place: amsterdam, settings: settings))
             #expect(times.map(\.kind) == PrayerKind.allCases)
             let instants = times.map(\.time)
             #expect(instants == instants.sorted(), "month \(month)")
@@ -32,25 +32,93 @@ struct PrayerTimeTests {
         let settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
         // The evening before the clocks go forward, when adding 24 hours would skip a day.
         let late = date(2027, 3, 27, 23, 30)
-        let next = try #require(AppModel.next(after: late, place: amsterdam, settings: settings))
+        let next = try #require(Prayers.next(after: late, place: amsterdam, settings: settings))
         #expect(next.kind == .fajr)
         #expect(amsterdam.calendar.component(.day, from: next.time) == 28)
     }
 
     @Test func notificationsStayWithinTheLimit() {
-        let settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
+        var settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
         let now = date(2026, 11, 12, 13, 0)
-        let items = AppModel.upcoming(from: now, place: amsterdam, settings: settings)
-        #expect(items.count <= 64)
-        #expect(items.count >= 55)
-        #expect(items.allSatisfy { $0.time > now && $0.kind.isPrayer })
+        let plain = AppModel.planned(from: now, place: amsterdam, settings: settings)
+        #expect(plain.count == 64)
+        #expect(plain.allSatisfy { $0.date > now })
+        #expect(plain.map(\.date) == plain.map(\.date).sorted())
+        #expect(Set(plain.map(\.id)).count == plain.count)
+        // With every reminder on the list still stops at 64, now covering fewer days.
+        settings.reminderMinutes = 10
+        settings.jumuahReminder = true
+        settings.ramadanReminders = true
+        let full = AppModel.planned(from: now, place: amsterdam, settings: settings)
+        #expect(full.count == 64)
+        #expect(full.last!.date < plain.last!.date)
+        settings.notify = []
+        settings.reminderMinutes = 0
+        settings.jumuahReminder = false
+        #expect(AppModel.planned(from: now, place: amsterdam, settings: settings).isEmpty)  // not Ramadan
+    }
+
+    @Test func remindersComeBeforeThePrayer() throws {
+        var settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
+        settings.notify = [.asr]
+        settings.reminderMinutes = 15
+        settings.jumuahReminder = true
+        let now = date(2026, 11, 12, 13, 0)  // Thursday
+        let items = AppModel.planned(from: now, place: amsterdam, settings: settings)
+        let asr = try #require(Prayers.compute(on: now, place: amsterdam, settings: settings))[3].time
+        #expect(items[0].date == asr.addingTimeInterval(-15 * 60))
+        #expect(items[1].date == asr)
+        let friday = try #require(Prayers.compute(on: date(2026, 11, 13), place: amsterdam, settings: settings))[2].time
+        #expect(items.contains { $0.id.hasPrefix("jumuah") && $0.date == friday.addingTimeInterval(-3600) })
+        let jumuah = items.filter { $0.id.hasPrefix("jumuah") }
+        #expect(jumuah.count >= 4)
+        #expect(jumuah.allSatisfy { amsterdam.calendar.component(.weekday, from: $0.date) == 6 })
+    }
+
+    @Test func suhoorAndIftarOnlyInRamadan() throws {
+        var settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
+        settings.notify = []
+        settings.ramadanReminders = true
+        let ramadan = AppModel.planned(from: date(2027, 2, 20), place: amsterdam, settings: settings)
+        #expect(ramadan.contains { $0.id.hasPrefix("suhoor") })
+        #expect(ramadan.contains { $0.id.hasPrefix("iftar") })
+        let fajr = try #require(Prayers.compute(on: date(2027, 2, 21), place: amsterdam, settings: settings))[0].time
+        #expect(ramadan.contains { $0.id.hasPrefix("suhoor") && $0.date == fajr.addingTimeInterval(-30 * 60) })
+        // With Maghrib's own notification on, that one mentions iftar instead of a second notification.
+        settings.notify = [.maghrib]
+        let withMaghrib = AppModel.planned(from: date(2027, 2, 20), place: amsterdam, settings: settings)
+        #expect(!withMaghrib.contains { $0.id.hasPrefix("iftar") })
+        #expect(AppModel.planned(from: date(2027, 5, 20), place: amsterdam, settings: settings)
+            .allSatisfy { !$0.id.hasPrefix("suhoor") })
+    }
+
+    @Test func ramadanStartFromBeforeAndDuring() throws {
+        let before = try #require(AppModel.ramadanStart(around: date(2026, 11, 12), place: amsterdam, hijriOffset: 0))
+        let during = try #require(AppModel.ramadanStart(around: date(2027, 2, 20), place: amsterdam, hijriOffset: 0))
+        #expect(before == during)
+        #expect(AppModel.hijri(of: before, place: amsterdam, offset: 0).day == 1)
+        #expect(AppModel.hijri(of: before, place: amsterdam, offset: 0).month == 9)
+        let previous = try #require(amsterdam.calendar.date(byAdding: .day, value: -1, to: before))
+        #expect(AppModel.hijri(of: previous, place: amsterdam, offset: 0).month == 8)
+    }
+
+    @Test func tasbihRounds() {
+        var counter = TasbihCounter(target: 3)
+        let rounds = (1...4).map { _ in counter.tap() }
+        #expect(rounds == [false, false, true, false])  // the fourth tap starts the next round at 1
+        #expect(counter.count == 1)
+        #expect(counter.total == 4)
+        var endless = TasbihCounter(target: 0)
+        let endlessRounds = (1...150).map { _ in endless.tap() }
+        #expect(!endlessRounds.contains(true))
+        #expect(endless.count == 150)
     }
 
     @Test func adjustmentsMoveOnlyThatPrayer() throws {
         var settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
-        let before = try #require(AppModel.compute(on: date(2026, 11, 12), place: amsterdam, settings: settings))
+        let before = try #require(Prayers.compute(on: date(2026, 11, 12), place: amsterdam, settings: settings))
         settings.adjustments[.isha] = 5
-        let after = try #require(AppModel.compute(on: date(2026, 11, 12), place: amsterdam, settings: settings))
+        let after = try #require(Prayers.compute(on: date(2026, 11, 12), place: amsterdam, settings: settings))
         #expect(after[5].time.timeIntervalSince(before[5].time) == 300)
         #expect(after[0].time == before[0].time)
     }
@@ -71,7 +139,7 @@ struct PrayerTimeTests {
         let istanbul = Place(
             name: "Istanbul", latitude: 41.005616, longitude: 28.976380, timeZoneID: "Europe/Istanbul", countryCode: "TR")
         let day = istanbul.calendar.date(from: DateComponents(year: 2020, month: 4, day: 16, hour: 12))!
-        let times = try #require(AppModel.compute(on: day, place: istanbul, settings: AppSettings(method: .turkey, asr: .standard)))
+        let times = try #require(Prayers.compute(on: day, place: istanbul, settings: AppSettings(method: .turkey, asr: .standard)))
         let expected = [(4, 44), (6, 16), (13, 9), (16, 53), (19, 52), (21, 19)]
         for (item, (hour, minute)) in zip(times, expected) {
             let target = istanbul.calendar.date(bySettingHour: hour, minute: minute, second: 0, of: day)!
@@ -85,8 +153,8 @@ struct PrayerTimeTests {
         inTurkey.countryCode = "TR"
         var abroad = amsterdam
         abroad.countryCode = "NL"
-        let a = try #require(AppModel.compute(on: date(2026, 12, 1), place: abroad, settings: settings))
-        let b = try #require(AppModel.compute(on: date(2026, 12, 1), place: inTurkey, settings: settings))
+        let a = try #require(Prayers.compute(on: date(2026, 12, 1), place: abroad, settings: settings))
+        let b = try #require(Prayers.compute(on: date(2026, 12, 1), place: inTurkey, settings: settings))
         #expect(a[5].time < b[5].time)
     }
 
@@ -95,7 +163,7 @@ struct PrayerTimeTests {
         let settings = AppSettings(method: .ummAlQura, asr: .standard)
         func gap(_ month: Int, _ day: Int) throws -> TimeInterval {
             let when = mecca.calendar.date(from: DateComponents(year: 2026, month: month, day: day, hour: 12))!
-            let times = try #require(AppModel.compute(on: when, place: mecca, settings: settings))
+            let times = try #require(Prayers.compute(on: when, place: mecca, settings: settings))
             return times[5].time.timeIntervalSince(times[4].time)
         }
         #expect(try gap(3, 1) == 120 * 60)  // Ramadan 1447
@@ -125,7 +193,7 @@ struct PrayerTimeTests {
         for (method, place) in cases {
             for month in [1, 6] {
                 let when = place.calendar.date(from: DateComponents(year: 2026, month: month, day: 15, hour: 12))!
-                let times = try #require(AppModel.compute(on: when, place: place, settings: AppSettings(method: method, asr: .standard)))
+                let times = try #require(Prayers.compute(on: when, place: place, settings: AppSettings(method: method, asr: .standard)))
                 let instants = times.map(\.time)
                 #expect(instants == instants.sorted(), "\(method) \(month)")
             }
@@ -136,7 +204,7 @@ struct PrayerTimeTests {
     @Test func franceKeepsTwelveDegreesInParis() throws {
         let paris = Place(name: "Paris", latitude: 48.8566, longitude: 2.3522, timeZoneID: "Europe/Paris", countryCode: "FR")
         let day = paris.calendar.date(from: DateComponents(year: 2026, month: 6, day: 21, hour: 12))!
-        let times = try #require(AppModel.compute(on: day, place: paris, settings: AppSettings(method: .france, asr: .standard)))
+        let times = try #require(Prayers.compute(on: day, place: paris, settings: AppSettings(method: .france, asr: .standard)))
         #expect(times[0].time < paris.calendar.date(bySettingHour: 4, minute: 15, second: 0, of: day)!)
     }
 

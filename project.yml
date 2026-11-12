@@ -23,6 +23,7 @@ targets:
       - App
     dependencies:
       - package: Adhan
+      - target: QiblaAndPrayerWidgets
     scheme:
       testTargets:
         - QiblaAndPrayerTests
@@ -31,7 +32,11 @@ targets:
         # Registered as an explicit App ID in the developer account; it can't change after the first upload.
         PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer
         TARGETED_DEVICE_FAMILY: "1"
+        # The App Group the widgets read the settings and place from.
+        CODE_SIGN_ENTITLEMENTS: App/QiblaAndPrayer.entitlements
         GENERATE_INFOPLIST_FILE: "YES"
+        # Background refresh and Siri's alternative names (arrays); merged with the keys below.
+        INFOPLIST_FILE: App/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: "Qibla & Prayer"
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
         INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: "Your location is used to calculate prayer times and the Qibla direction. This app doesn't share it."
@@ -43,6 +48,29 @@ targets:
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: "NO"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         LOCALIZATION_PREFERS_STRING_CATALOGS: "YES"
+  # Home Screen and Lock Screen widgets and the iftar Live Activity. Shares the calculation with the app.
+  QiblaAndPrayerWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Widgets
+      - App/AppSettings.swift
+      - App/Prayers.swift
+      - App/Theme.swift
+      - App/IftarActivity.swift
+      - App/Localizable.xcstrings
+    dependencies:
+      - package: Adhan
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer.widgets
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: "YES"
+        INFOPLIST_FILE: Widgets/Info.plist
+        INFOPLIST_KEY_CFBundleDisplayName: "Qibla & Prayer"
+        CODE_SIGN_ENTITLEMENTS: Widgets/Widgets.entitlements
+        LOCALIZATION_PREFERS_STRING_CATALOGS: "YES"
+        SKIP_INSTALL: "YES"
   QiblaAndPrayerTests:
     type: bundle.unit-test
     platform: iOS
