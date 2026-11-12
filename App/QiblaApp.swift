@@ -1,0 +1,70 @@
+import SwiftUI
+import UIKit
+
+@main
+struct QiblaApp: App {
+    @State private var model = AppModel()
+
+    var body: some Scene {
+        WindowGroup {
+            // A language picked in the app applies to SwiftUI's own text lookups and to layout direction.
+            let language = model.settings.language
+            RootView()
+                .environment(model)
+                .environment(\.locale, language.locale)
+                .environment(\.layoutDirection, language.isRightToLeft ? .rightToLeft : .leftToRight)
+                .preferredColorScheme(.dark)
+                .tint(Theme.gold)
+        }
+    }
+}
+
+enum AppTab: String, Hashable {
+    case times, qibla, settings
+}
+
+struct RootView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.scenePhase) private var scenePhase
+    // `-startTab qibla` opens another tab first (used for CI screenshots).
+    @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .times
+
+    var body: some View {
+        @Bindable var model = model
+        TabView(selection: $tab) {
+            Tab("Prayer times", systemImage: "clock", value: AppTab.times) {
+                PrayerTimesView { tab = .settings }
+            }
+            Tab("Qibla", systemImage: "safari", value: AppTab.qibla) {
+                QiblaView()
+            }
+            Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {
+                SettingsView()
+            }
+        }
+        // Rebuilt when the language changes, so every screen picks up the new text.
+        .id(model.settings.language)
+        .fullScreenCover(isPresented: .constant(!model.onboarded)) {
+            SetupView {
+                tab = .times
+                model.finishSetup()
+            }
+        }
+        .alert("Notifications are off", isPresented: $model.showNotificationsOff) {
+            Button("Open Settings") { openAppSettings() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Allow notifications for this app in iPhone Settings to get reminders.")
+        }
+        .task {
+            if model.onboarded { model.start() }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active && model.onboarded { model.refresh() }
+        }
+        // Midnight, a new time zone or a clock change: recalculate and reschedule.
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
+            if model.onboarded { model.refresh() }
+        }
+    }
+}

@@ -1,0 +1,638 @@
+import CoreLocation
+import SwiftUI
+import UserNotifications
+
+/// The first-run setup, one choice per page. Shown again after "Run setup again" in Settings.
+struct SetupView: View {
+    @Environment(AppModel.self) private var model
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    var done: () -> Void
+
+    private enum Step: Int, CaseIterable {
+        case welcome, language, location, school, method, reminders, ready
+    }
+
+    // `-setupStep 3` opens a later page first (used for CI screenshots).
+    @State private var step = Step(rawValue: UserDefaults.standard.integer(forKey: "setupStep")) ?? .welcome
+    /// Set once the user picks a method or Asr method, so a later location fix doesn't override it.
+    @State private var chosen = false
+    @State private var searchingCity = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            topBar
+            page
+                // A new language rebuilds the page so all its text switches at once.
+                .id("\(step.rawValue)-\(model.settings.language.rawValue)")
+                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.97)))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .background(Theme.background.ignoresSafeArea())
+        .foregroundStyle(Theme.ink)
+        .sensoryFeedback(.selection, trigger: step)
+        .sheet(isPresented: $searchingCity) {
+            NavigationStack { CitySearchView() }
+        }
+        .onChange(of: model.place, initial: true) { suggest() }
+        .onChange(of: model.settings.language) { suggest() }
+        .onChange(of: model.settings.school) { suggest() }
+        .task { model.scheduleNotifications() }  // also reads the current notification permission
+    }
+
+    private var topBar: some View {
+        HStack {
+            Button { go(-1) } label: {
+                Image(systemName: "chevron.backward")
+                    .font(.title3.weight(.semibold))
+                    .frame(width: 44, height: 44)
+            }
+            .accessibilityLabel(Text("Back"))
+            .opacity(step == .welcome ? 0 : 1)
+            .disabled(step == .welcome)
+            Spacer()
+            HStack(spacing: 8) {
+                ForEach(Step.allCases, id: \.self) { item in
+                    Rectangle()
+                        .fill(item.rawValue <= step.rawValue ? Theme.gold : Theme.gold.opacity(0.25))
+                        .frame(width: 7, height: 7)
+                        .rotationEffect(.degrees(45))
+                }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("Step \(step.rawValue + 1) of \(Step.allCases.count)"))
+            Spacer()
+            Color.clear.frame(width: 44, height: 44)
+        }
+        .foregroundStyle(Theme.gold)
+        .padding(.horizontal, 8)
+    }
+
+    @ViewBuilder
+    private var page: some View {
+        switch step {
+        case .welcome: welcomePage
+        case .language: languagePage
+        case .location: locationPage
+        case .school: schoolPage
+        case .method: methodPage
+        case .reminders: remindersPage
+        case .ready: readyPage
+        }
+    }
+
+    private func go(_ delta: Int) {
+        guard let next = Step(rawValue: step.rawValue + delta) else { return }
+        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) { step = next }
+    }
+
+    /// Follows the suggestion for the place found (country) until the user picks something.
+    private func suggest() {
+        guard !chosen else { return }
+        let suggestion = model.suggestion
+        if model.settings.method != suggestion.method { model.settings.method = suggestion.method }
+        if model.settings.asr != suggestion.asr { model.settings.asr = suggestion.asr }
+    }
+
+    // MARK: - Pages
+
+    private var welcomePage: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                StarMark(turning: !reduceMotion)
+                    .frame(width: 140, height: 140)
+                    .padding(.top, 24)
+                Text(verbatim: Bundle.main.displayName)
+                    .font(.system(.largeTitle, design: .serif).weight(.semibold))
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 28)
+                Text("Prayer times and the Qibla, without ads or tracking.")
+                    .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 6)
+                VStack(alignment: .leading, spacing: 18) {
+                    Feature(icon: "clock", title: "Prayer times", text: "Today's times, the next prayer and a monthly timetable.")
+                    Feature(icon: "safari", title: "Qibla compass", text: "Turn until the Kaaba marker reaches the top.")
+                    Feature(icon: "bell", title: "Reminders", text: "A notification when each prayer begins, if you want one.")
+                }
+                .padding(.top, 32)
+            }
+            .padding(.horizontal, 24)
+        }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 8) {
+                Button("Get started") { go(1) }
+                    .buttonStyle(PrimaryButtonStyle())
+                Text("Takes about a minute.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
+            .background(Theme.background)
+        }
+    }
+
+    private var languagePage: some View {
+        SetupPage(
+            title: "Which language?",
+            text: "The app follows the language of your iPhone, unless you choose another one here."
+        ) {
+            VStack(spacing: 10) {
+                ForEach(AppLanguage.allCases) { language in
+                    ChoiceCard(
+                        icon: language == .system ? "iphone" : nil,
+                        title: Text(verbatim: language.nativeName),
+                        detail: language.detail.map { Text(verbatim: $0) },
+                        selected: model.settings.language == language
+                    ) {
+                        model.settings.language = language
+                    }
+                }
+            }
+            .sensoryFeedback(.selection, trigger: model.settings.language)
+        } buttons: {
+            Button("Continue") { go(1) }
+                .buttonStyle(PrimaryButtonStyle())
+        }
+    }
+
+    private var locationPage: some View {
+        SetupPage(
+            title: "Where are you?",
+            text: "Prayer times depend on where you are, and the compass needs your location to point to the Qibla. The app uses it only for this and never shares it."
+        ) {
+            VStack(spacing: 10) {
+                ChoiceCard(
+                    icon: "location.fill",
+                    title: Text("Use my location"),
+                    detail: Text("Stays right when you travel. Recommended."),
+                    selected: model.settings.useCurrentLocation && model.currentPlace != nil
+                ) {
+                    model.useCurrentLocation()
+                }
+                ChoiceCard(
+                    icon: "magnifyingglass",
+                    title: Text("Choose a city"),
+                    detail: Text("Works without location access."),
+                    selected: !model.settings.useCurrentLocation && model.settings.city != nil
+                ) {
+                    searchingCity = true
+                }
+                locationStatus
+                    .padding(.top, 6)
+            }
+        } buttons: {
+            if model.place == nil && model.location.authorization == .notDetermined {
+                // App Review: before the iOS location prompt, one button that always leads to it.
+                Button("Continue") { model.useCurrentLocation() }
+                    .buttonStyle(PrimaryButtonStyle())
+            } else {
+                Button("Continue") { go(1) }
+                    .buttonStyle(PrimaryButtonStyle())
+                    .disabled(model.place == nil)
+                if model.place == nil {
+                    Button("Skip for now") { go(1) }
+                        .buttonStyle(SecondaryButtonStyle())
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var locationStatus: some View {
+        if let place = model.place {
+            Label {
+                Text(verbatim: place.displayNameWithCountry)
+            } icon: {
+                Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.gold)
+            }
+            .font(.headline)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else if model.settings.useCurrentLocation && model.location.isAuthorized {
+            ProgressView("Finding your location")
+                .frame(maxWidth: .infinity, alignment: .leading)
+        } else if model.location.isDenied {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Location access is off for this app. Choose a city instead, or turn it on in Settings.")
+                    .foregroundStyle(Theme.muted)
+                Button("Open Settings") { openAppSettings() }
+                    .foregroundStyle(Theme.gold)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    private var methodPage: some View {
+        SetupPage(
+            title: "How are times calculated?",
+            text: "Mosques use slightly different rules, mostly for Fajr and Isha. Pick the one your mosque uses, or keep the suggestion if you are not sure."
+        ) {
+            MethodChoices(model: model) { chosen = true }
+        } buttons: {
+            Button("Continue") { go(1) }
+                .buttonStyle(PrimaryButtonStyle())
+        }
+    }
+
+    private var schoolPage: some View {
+        SetupPage(
+            title: "Which school do you follow?",
+            text: "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha. Not sure? Choose that, and the app uses what most timetables do."
+        ) {
+            VStack(spacing: 10) {
+                ForEach(School.allCases) { school in
+                    ChoiceCard(title: Text(school.title), selected: model.settings.school == school) {
+                        model.chooseSchool(school)
+                    }
+                }
+                if model.settings.school == .hanafi {
+                    Text("Hanafi timetables differ: Diyanet uses the earlier Asr, others the later one. Pick the one your mosque uses.")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 8)
+                    AsrChoices(model: model) { chosen = true }
+                }
+            }
+            .sensoryFeedback(.selection, trigger: model.settings.school)
+        } buttons: {
+            Button("Continue") { go(1) }
+                .buttonStyle(PrimaryButtonStyle())
+        }
+    }
+
+    private var remindersPage: some View {
+        SetupPage(
+            title: "Reminders",
+            text: "Get a notification when a prayer begins. Choose which ones; you can change this later with the bell next to each time."
+        ) {
+            VStack(spacing: 10) {
+                ForEach(PrayerKind.allCases.filter(\.isPrayer)) { kind in
+                    let on = model.settings.notify.contains(kind)
+                    ChoiceCard(
+                        icon: on ? "bell.fill" : "bell.slash",
+                        title: Text(kind.title),
+                        note: todayText(kind),
+                        selected: on
+                    ) {
+                        if on { model.settings.notify.remove(kind) } else { model.settings.notify.insert(kind) }
+                    }
+                }
+                if model.notificationStatus == .denied {
+                    Text("Notifications are off for this app. You can turn them on in Settings.")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Button("Open Settings") { openAppSettings() }
+                        .foregroundStyle(Theme.gold)
+                }
+            }
+            .sensoryFeedback(.selection, trigger: model.settings.notify)
+        } buttons: {
+            if model.settings.notify.isEmpty || model.notificationStatus != .notDetermined {
+                Button("Continue") { go(1) }
+                    .buttonStyle(PrimaryButtonStyle())
+            } else {
+                Button("Allow notifications") {
+                    Task {
+                        await model.requestNotifications()
+                        go(1)
+                    }
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                Button("Not now") {
+                    model.settings.notify = []
+                    go(1)
+                }
+                .buttonStyle(SecondaryButtonStyle())
+            }
+        }
+    }
+
+    private var readyPage: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                StarMark(filled: true)
+                    .frame(width: 110, height: 110)
+                    .padding(.top, 32)
+                Text("All set")
+                    .font(.system(.largeTitle, design: .serif).weight(.semibold))
+                    .padding(.top, 24)
+                Text("You can change all of this any time in Settings.")
+                    .foregroundStyle(Theme.muted)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 6)
+                VStack(spacing: 0) {
+                    SummaryRow(label: "Language", value: model.settings.language.nativeName)
+                    SummaryRow(label: "Location", value: model.place?.displayNameWithCountry ?? String(localized: "Not set", bundle: .app))
+                    SummaryRow(label: "School (madhab)", value: model.settings.school.title)
+                    SummaryRow(label: "Calculation method", value: model.settings.method.title)
+                    SummaryRow(label: "Asr calculation", value: model.settings.asr.shortTitle)
+                    SummaryRow(label: "Reminders", value: remindersSummary, last: true)
+                }
+                .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
+                .padding(.top, 28)
+            }
+            .padding(.horizontal, 24)
+        }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaInset(edge: .bottom) {
+            Button("Start") { done() }
+                .buttonStyle(PrimaryButtonStyle())
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(Theme.background)
+        }
+    }
+
+    private func todayText(_ kind: PrayerKind) -> Text? {
+        guard let place = model.place,
+              let item = model.times(on: Date(), at: place)?.first(where: { $0.kind == kind }) else { return nil }
+        return Text("Today \(Formats.time(item.time, in: place.timeZone))")
+    }
+
+    private var remindersSummary: String {
+        let kinds = PrayerKind.allCases.filter { $0.isPrayer && model.settings.notify.contains($0) }
+        if kinds.isEmpty { return String(localized: "Off", bundle: .app) }
+        if kinds.count == 5 { return String(localized: "All prayers", bundle: .app) }
+        let formatter = ListFormatter()
+        formatter.locale = .app
+        return formatter.string(from: kinds.map(\.title)) ?? ""
+    }
+}
+
+// MARK: - Choices (also used in Settings)
+
+/// Every calculation method, where it's used, and today's Fajr and Isha at the user's place,
+/// so the choice can be compared with a mosque's timetable.
+struct MethodChoices: View {
+    let model: AppModel
+    var onPick: () -> Void = {}
+
+    var body: some View {
+        let suggested = model.suggestion.method
+        VStack(spacing: 10) {
+            ForEach([suggested] + CalcMethod.allCases.filter { $0 != suggested }) { method in
+                ChoiceCard(
+                    title: Text(method.title),
+                    detail: Text(method.usage),
+                    note: preview(method),
+                    badge: method == suggested ? suggestedBadge : nil,
+                    selected: model.settings.method == method
+                ) {
+                    model.settings.method = method
+                    onPick()
+                }
+            }
+            if model.settings.method == .turkey, let place = model.place,
+               let country = place.countryCode, country != "TR", abs(place.latitude) > 45 {
+                Text("Outside Turkey, Diyanet's printed timetables estimate Fajr and Isha in spring and summer. In those months the times here can differ from them by up to about half an hour.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .sensoryFeedback(.selection, trigger: model.settings.method)
+    }
+
+    private var suggestedBadge: Text {
+        if let code = model.place?.countryCode ?? Locale.current.region?.identifier,
+           let country = Locale.app.localizedString(forRegionCode: code) {
+            return Text("Suggested for \(country)")
+        }
+        return Text("Suggested")
+    }
+
+    private func preview(_ method: CalcMethod) -> Text? {
+        guard let place = model.place else { return nil }
+        var settings = model.settings
+        settings.method = method
+        guard let times = AppModel.compute(on: Date(), place: place, settings: settings) else { return nil }
+        let fajr = Formats.time(times[0].time, in: place.timeZone)
+        let isha = Formats.time(times[5].time, in: place.timeZone)
+        return Text("Fajr \(fajr) · Isha \(isha)")
+    }
+}
+
+struct AsrChoices: View {
+    let model: AppModel
+    var onPick: () -> Void = {}
+
+    var body: some View {
+        let suggested = model.suggestion.asr
+        VStack(spacing: 10) {
+            ForEach(AsrMethod.allCases) { asr in
+                ChoiceCard(
+                    title: Text(asr.title),
+                    detail: Text(asr.explanation),
+                    note: preview(asr),
+                    badge: asr == suggested ? Text("Suggested") : nil,
+                    selected: model.settings.asr == asr
+                ) {
+                    model.settings.asr = asr
+                    onPick()
+                }
+            }
+        }
+        .sensoryFeedback(.selection, trigger: model.settings.asr)
+    }
+
+    private func preview(_ asr: AsrMethod) -> Text? {
+        guard let place = model.place else { return nil }
+        var settings = model.settings
+        settings.asr = asr
+        guard let times = AppModel.compute(on: Date(), place: place, settings: settings) else { return nil }
+        return Text("Asr today: \(Formats.time(times[3].time, in: place.timeZone))")
+    }
+}
+
+/// A large tappable option with a check mark when selected.
+struct ChoiceCard: View {
+    var icon: String? = nil
+    let title: Text
+    var detail: Text? = nil
+    var note: Text? = nil
+    var badge: Text? = nil
+    let selected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                if let icon {
+                    Image(systemName: icon)
+                        .font(.title3)
+                        .foregroundStyle(Theme.gold)
+                        .frame(width: 28)
+                        .accessibilityHidden(true)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    if let badge {
+                        badge
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Theme.background)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 2)
+                            .background(Theme.gold, in: Capsule())
+                    }
+                    title
+                        .font(.headline)
+                        .foregroundStyle(Theme.ink)
+                    if let detail {
+                        detail
+                            .font(.subheadline)
+                            .foregroundStyle(Theme.muted)
+                    }
+                    if let note {
+                        note
+                            .font(.subheadline.monospacedDigit())
+                            .foregroundStyle(Theme.gold)
+                    }
+                }
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: selected ? "checkmark.circle.fill" : "circle")
+                    .font(.title3)
+                    .foregroundStyle(selected ? Theme.gold : Theme.muted)
+                    .accessibilityHidden(true)
+            }
+            .padding(16)
+            .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .strokeBorder(selected ? Theme.gold : Theme.line, lineWidth: selected ? 1.5 : 1))
+            .contentShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+}
+
+// MARK: - Building blocks
+
+/// One setup page: a title and explanation, the choices, and the buttons pinned to the bottom.
+private struct SetupPage<Content: View, Buttons: View>: View {
+    let title: LocalizedStringKey
+    let text: LocalizedStringKey
+    @ViewBuilder var content: Content
+    @ViewBuilder var buttons: Buttons
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(title)
+                    .font(.system(.largeTitle, design: .serif).weight(.semibold))
+                Text(text)
+                    .foregroundStyle(Theme.muted)
+                content
+                    .padding(.top, 14)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 6) { buttons }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .background(Theme.background)
+        }
+    }
+}
+
+/// The app's star: turning slowly on the welcome page, filled in on the last page.
+private struct StarMark: View {
+    var turning = false
+    var filled = false
+    @State private var angle = 0.0
+
+    var body: some View {
+        ZStack {
+            EightPointStar()
+                .stroke(Theme.gold, lineWidth: 2)
+                .rotationEffect(.degrees(angle))
+            EightPointStar()
+                .fill(Theme.gold)
+                .scaleEffect(filled ? 0.62 : 0.3)
+        }
+        .accessibilityHidden(true)
+        .onAppear {
+            guard turning else { return }
+            withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) { angle = 45 }
+        }
+    }
+}
+
+private struct Feature: View {
+    let icon: String
+    let title: LocalizedStringKey
+    let text: LocalizedStringKey
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 14) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundStyle(Theme.gold)
+                .frame(width: 32)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).font(.headline)
+                Text(text).font(.subheadline).foregroundStyle(Theme.muted)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct SummaryRow: View {
+    let label: LocalizedStringKey
+    let value: String
+    var last = false
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Text(label).foregroundStyle(Theme.muted)
+            Spacer(minLength: 8)
+            Text(value).multilineTextAlignment(.trailing)
+        }
+        .font(.subheadline)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .overlay(alignment: .bottom) {
+            if !last { Theme.line.frame(height: 1).padding(.leading, 16) }
+        }
+    }
+}
+
+private struct PrimaryButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        PrimaryLabel(configuration: configuration)
+    }
+
+    private struct PrimaryLabel: View {
+        let configuration: ButtonStyleConfiguration
+        @Environment(\.isEnabled) private var isEnabled
+
+        var body: some View {
+            configuration.label
+                .font(.headline)
+                .foregroundStyle(Theme.background)
+                .frame(maxWidth: .infinity, minHeight: 52)
+                .background(
+                    Theme.gold.opacity(isEnabled ? (configuration.isPressed ? 0.75 : 1) : 0.35),
+                    in: RoundedRectangle(cornerRadius: 14))
+        }
+    }
+}
+
+private struct SecondaryButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.body.weight(.medium))
+            .foregroundStyle(Theme.gold.opacity(configuration.isPressed ? 0.6 : 1))
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .contentShape(Rectangle())
+    }
+}

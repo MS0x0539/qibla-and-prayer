@@ -1,0 +1,47 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSLocationWhenInUseUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُستخدم موقعك لحساب مواقيت الصلاة واتجاه القبلة. لا يشاركه هذا التطبيق."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Standort wird genutzt, um Gebetszeiten und die Qibla-Richtung zu berechnen. Diese App gibt ihn nicht weiter."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your location is used to calculate prayer times and the Qibla direction. This app doesn't share it."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre position sert à calculer les horaires de prière et la direction de la qibla. Cette app ne la partage pas."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je locatie wordt gebruikt om de gebedstijden en de qibla-richting te berekenen. Deze app deelt hem niet."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konumunuz namaz vakitlerini ve kıble yönünü hesaplamak için kullanılır. Bu uygulama konumunuzu paylaşmaz."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
