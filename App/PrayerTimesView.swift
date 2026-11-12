@@ -99,11 +99,12 @@ struct PrayerTimesView: View {
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
         .padding(.top, 8)
+        // The star sits above the header text: only its lower points show, without lines through the words.
         .background(alignment: .top) {
             EightPointStar()
-                .stroke(Theme.gold.opacity(0.16), lineWidth: 1)
+                .stroke(Theme.gold.opacity(0.12), lineWidth: 1)
                 .frame(width: 520, height: 520)
-                .offset(y: -330)
+                .offset(y: -510)
                 .accessibilityHidden(true)
         }
     }

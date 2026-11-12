@@ -70,7 +70,7 @@ struct QiblaView: View {
                 Circle()
                     .strokeBorder(aligned ? Theme.gold : Theme.gold.opacity(0.3), lineWidth: aligned ? 3 : 1)
                     .padding(-8)
-                Dial(qibla: qibla)
+                Dial(qibla: qibla, heading: location.continuousHeading)
                     .rotationEffect(.degrees(-location.continuousHeading))
                 EightPointStar()
                     .fill(aligned ? Theme.gold : Color.clear)
@@ -131,6 +131,8 @@ struct QiblaView: View {
 /// The part that turns: ticks, N/E/S/W and the Kaaba marker at the Qibla bearing.
 private struct Dial: View {
     let qibla: Double
+    /// The dial turns by -heading; the letters turn back by the same amount so they stay upright.
+    let heading: Double
 
     var body: some View {
         ZStack {
@@ -146,6 +148,7 @@ private struct Dial: View {
                 Text(LocalizedStringKey(letter))
                     .font(.system(.title3, design: .serif).weight(.semibold))
                     .foregroundStyle(index == 0 ? Theme.gold : Theme.ink)
+                    .rotationEffect(.degrees(heading - Double(index) * 90))
                     .offset(y: -108)
                     .rotationEffect(.degrees(Double(index) * 90))
             }

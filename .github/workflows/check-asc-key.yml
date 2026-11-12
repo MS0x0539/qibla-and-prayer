@@ -1,0 +1,69 @@
+# Checks the three App Store Connect secrets without printing them: their format, then a real sign-in
+# to the App Store Connect API that looks up this app's bundle ID. Runs on Linux (cheap), by hand only:
+# Actions → Check App Store Connect key → Run workflow.
+name: Check App Store Connect key
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check the key
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          BUNDLE_ID: org.psbv.qiblaandprayer
+        run: |
+          pip install --quiet pyjwt cryptography
+          python3 - <<'PY'
+          import json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
+          import jwt
+
+          kid = os.environ["ASC_KEY_ID"].strip()
+          iss = os.environ["ASC_ISSUER_ID"].strip()
+          p8 = os.environ["ASC_KEY_P8"].strip()
+          ok = True
+          if not re.fullmatch(r"[A-Z0-9]{10}", kid):
+              print(f"::error::ASC_KEY_ID has {len(kid)} characters; it should be the 10-character Key ID from the file name AuthKey_XXXXXXXXXX.p8.")
+              ok = False
+          if not re.fullmatch(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", iss):
+              print(f"::error::ASC_ISSUER_ID ({len(iss)} characters) is not an Issuer ID like 69a6de7e-0000-0000-0000-000000000000.")
+              ok = False
+          if "-----BEGIN PRIVATE KEY-----" not in p8 or "-----END PRIVATE KEY-----" not in p8:
+              print("::error::ASC_KEY_P8 is not the whole .p8 file (it needs the BEGIN and END PRIVATE KEY lines).")
+              ok = False
+          if not ok:
+              sys.exit(1)
+          print("All three secrets have the right format.")
+
+          try:
+              now = int(time.time())
+              token = jwt.encode(
+                  {"iss": iss, "iat": now, "exp": now + 600, "aud": "appstoreconnect-v1"},
+                  p8, algorithm="ES256", headers={"kid": kid, "typ": "JWT"})
+          except Exception as error:
+              print(f"::error::The .p8 in ASC_KEY_P8 can't be read as a private key ({type(error).__name__}).")
+              sys.exit(1)
+
+          query = urllib.parse.urlencode({"filter[bundleId]": os.environ["BUNDLE_ID"]})
+          request = urllib.request.Request(
+              f"https://api.appstoreconnect.apple.com/v1/apps?{query}",
+              headers={"Authorization": f"Bearer {token}"})
+          try:
+              apps = json.load(urllib.request.urlopen(request, timeout=30))["data"]
+          except urllib.error.HTTPError as error:
+              detail = json.loads(error.read() or b"{}").get("errors", [{}])[0]
+              print(f"::error::App Store Connect refused the key: HTTP {error.code} {detail.get('code', '')} {detail.get('detail', '')}")
+              print("401 means the Key ID, Issuer ID and .p8 don't belong together (or the key was revoked, or it is an individual key instead of a team key).")
+              sys.exit(1)
+          if not apps:
+              print(f"::error::Signed in, but no app with bundle ID {os.environ['BUNDLE_ID']} is visible to this key.")
+              sys.exit(1)
+          print(f"Signed in to App Store Connect and found the app: {apps[0]['attributes']['name']}.")
+          PY

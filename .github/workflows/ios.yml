@@ -68,8 +68,9 @@ jobs:
       - name: Check the app bundle
         run: |
           ls -d "$APP"/*.lproj
+          # English is the source language: its text is the keys themselves, so en.lproj has no Localizable.strings.
           for lang in en nl de fr tr ar; do
-            test -f "$APP/$lang.lproj/Localizable.strings" || echo "::warning::$lang.lproj/Localizable.strings is missing"
+            test "$lang" = en || test -f "$APP/$lang.lproj/Localizable.strings" || echo "::warning::$lang.lproj/Localizable.strings is missing"
             test -f "$APP/$lang.lproj/InfoPlist.strings" || echo "::warning::$lang.lproj/InfoPlist.strings is missing"
           done
           test -f "$APP/PrivacyInfo.xcprivacy" || echo "::warning::PrivacyInfo.xcprivacy is missing"
@@ -143,6 +144,13 @@ jobs:
             echo "::error::Add ASC_KEY_ID, ASC_ISSUER_ID and ASC_KEY_P8 to the repository's Actions secrets (see docs/PLAN.md)."
             exit 1
           fi
+          # Wrong-looking secrets fail here, in seconds, instead of after the archive. The full check,
+          # including a real sign-in, is the "Check App Store Connect key" workflow.
+          ok=true
+          [[ "$ASC_KEY_ID" =~ ^[A-Z0-9]{10}$ ]] || { echo "::error::ASC_KEY_ID should be the 10-character Key ID from AuthKey_XXXXXXXXXX.p8."; ok=false; }
+          [[ "$ASC_ISSUER_ID" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]] || { echo "::error::ASC_ISSUER_ID should look like 69a6de7e-0000-0000-0000-000000000000."; ok=false; }
+          grep -q -- "-----BEGIN PRIVATE KEY-----" <<<"$ASC_KEY_P8" || { echo "::error::ASC_KEY_P8 should be the whole .p8 file."; ok=false; }
+          $ok
 
       - name: Generate the Xcode project
         run: |
