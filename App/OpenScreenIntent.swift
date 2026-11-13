@@ -3,12 +3,13 @@ import Foundation
 
 /// The screens the controls open, from Control Center, the Lock Screen or the Action button.
 enum AppScreen: String, AppEnum {
-    case qibla, tasbih
+    case qibla, tasbih, quran
 
     static let typeDisplayRepresentation: TypeDisplayRepresentation = "Screen"
     static let caseDisplayRepresentations: [AppScreen: DisplayRepresentation] = [
         .qibla: "Qibla",
         .tasbih: "Tasbih",
+        .quran: "Qur'an",
     ]
 }
 

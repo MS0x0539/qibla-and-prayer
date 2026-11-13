@@ -341,6 +341,40 @@
         }
       }
     },
+    "About %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نحو %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etwa %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Environ %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ongeveer %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaklaşık %@"
+          }
+        }
+      }
+    },
     "Acknowledgements": {
       "localizations": {
         "ar": {
@@ -1633,6 +1667,40 @@
         }
       }
     },
+    "Continue reading": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متابعة القراءة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiterlesen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reprendre la lecture"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verder lezen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okumaya devam et"
+          }
+        }
+      }
+    },
     "Copied": {
       "localizations": {
         "ar": {
@@ -2211,6 +2279,108 @@
         }
       }
     },
+    "Download": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تنزيل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloaden"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndir"
+          }
+        }
+      }
+    },
+    "Downloaded": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم التنزيل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geladen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Téléchargé"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gedownload"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirildi"
+          }
+        }
+      }
+    },
+    "Downloads stay in the app until you remove them, and play without internet.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تبقى التنزيلات في التطبيق حتى تحذفها، وتعمل دون اتصال بالإنترنت."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads bleiben in der App, bis du sie entfernst, und spielen ohne Internet."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les téléchargements restent dans l’app jusqu’à ce que vous les supprimiez, et se lisent sans Internet."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads blijven in de app tot je ze verwijdert, en spelen af zonder internet."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirilenler siz silene kadar uygulamada kalır ve internetsiz çalınır."
+          }
+        }
+      }
+    },
     "Du'as": {
       "localizations": {
         "ar": {
@@ -2479,6 +2649,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mebas Bayramı"
+          }
+        }
+      }
+    },
+    "End of surah": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نهاية السورة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ende der Sure"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fin de la sourate"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einde van de soera"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sure sonunda"
           }
         }
       }
@@ -5679,6 +5883,40 @@
         }
       }
     },
+    "Offline recitation": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التلاوة دون اتصال"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rezitation offline"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Récitation hors ligne"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recitatie offline"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çevrimdışı tilavet"
+          }
+        }
+      }
+    },
     "On": {
       "localizations": {
         "ar": {
@@ -7039,6 +7277,40 @@
         }
       }
     },
+    "Remove downloads (%@)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف التنزيلات (%@)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads entfernen (%@)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer les téléchargements (%@)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads verwijderen (%@)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirilenleri sil (%@)"
+          }
+        }
+      }
+    },
     "Reset": {
       "localizations": {
         "ar": {
@@ -7855,6 +8127,40 @@
         }
       }
     },
+    "Sleep timer": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مؤقت النوم"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schlaftimer"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minuteur de veille"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Slaaptimer"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uyku zamanlayıcısı"
+          }
+        }
+      }
+    },
     "Smaller text": {
       "localizations": {
         "ar": {
@@ -7885,6 +8191,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Daha küçük yazı"
+          }
+        }
+      }
+    },
+    "Some verses couldn't be downloaded. Download again to finish.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر تنزيل بعض الآيات. نزّلها مرة أخرى لإكمالها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einige Verse konnten nicht geladen werden. Lade erneut, um fertig zu werden."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Certains versets n’ont pas pu être téléchargés. Téléchargez à nouveau pour terminer."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sommige verzen konden niet worden gedownload. Download opnieuw om af te maken."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bazı ayetler indirilemedi. Tamamlamak için yeniden indirin."
           }
         }
       }
@@ -9177,6 +9517,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bulunduğunuz ülkedeki camilerin hesabı, seyahatte de. Şu an: %@"
+          }
+        }
+      }
+    },
+    "The whole Qur'an": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القرآن كاملًا"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der ganze Koran"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Coran entier"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De hele Koran"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an'ın tamamı"
           }
         }
       }

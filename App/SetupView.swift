@@ -56,6 +56,7 @@ struct SetupView: View {
                         .rotationEffect(.degrees(45))
                 }
             }
+            .frame(minHeight: 44)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text("Step \(step.rawValue + 1) of \(Step.allCases.count)"))
             Spacer()

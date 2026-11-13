@@ -139,8 +139,10 @@ struct QiblaView: View {
         HStack(spacing: 6) {
             Text("Qibla \(Formats.bearing(qibla))")
             Text(verbatim: "·").foregroundStyle(Theme.gold)
+                .accessibilityHidden(true)
             Text("Mecca \(Formats.distance(place.kilometresToMecca))")
         }
+        .accessibilityElement(children: .combine)
         .font(.subheadline)
         .foregroundStyle(Theme.muted)
         .padding(.top, 22)

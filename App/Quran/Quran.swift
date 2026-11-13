@@ -33,6 +33,7 @@ final class Quran {
         let pages: [[Int]]
         let juz: [[Int]]
         let quarters: [[Int]]
+        let sajdas: [[Int]]
     }
 
     static let shared = Quran()
@@ -44,8 +45,10 @@ final class Quran {
     /// Index of the first verse of each page (604) and each juz (30).
     let pageStarts: [Int]
     let juzStarts: [Int]
-    /// Verses that begin a quarter of a hizb (the ۞ in the text).
-    let quarterStarts: Set<Int>
+    /// The quarter of a hizb (0...239) each such verse begins (the ۞ in the text): hizb q / 4 + 1, q % 4 quarters in.
+    let quarters: [Int: Int]
+    /// Verses of prostration (the ۩ in the text).
+    let sajdas: Set<Int>
 
     private init() {
         guard let metaURL = Bundle.main.url(forResource: "quran-meta", withExtension: "json"),
@@ -58,7 +61,8 @@ final class Quran {
             verses = []
             pageStarts = []
             juzStarts = []
-            quarterStarts = []
+            quarters = [:]
+            sajdas = []
             return
         }
         surahs = meta.surahs
@@ -68,7 +72,8 @@ final class Quran {
         let start = { (pair: [Int]) in meta.surahs[pair[0] - 1].start + pair[1] - 1 }
         pageStarts = meta.pages.map(start)
         juzStarts = meta.juz.map(start)
-        quarterStarts = Set(meta.quarters.map(start))
+        quarters = Dictionary(uniqueKeysWithValues: meta.quarters.map(start).enumerated().map { ($1, $0) })
+        sajdas = Set(meta.sajdas.map(start))
     }
 
     /// Tanzil's "surah|verse|text" lines; its copyright block (lines starting with #) is skipped.
@@ -202,10 +207,13 @@ final class Quran {
     }()
 
     /// The Amiri Quran font, growing with the text size set on the iPhone.
-    static func uiFont(size: CGFloat) -> UIFont {
+    /// Scaled with the text size: the one in effect, or the one a view is being drawn for.
+    static func uiFont(size: CGFloat, typeSize: DynamicTypeSize? = nil) -> UIFont {
         _ = fontRegistered
         let base = UIFont(name: fontName, size: size) ?? .systemFont(ofSize: size)
-        return UIFontMetrics(forTextStyle: .body).scaledFont(for: base)
+        guard let typeSize else { return UIFontMetrics(forTextStyle: .body).scaledFont(for: base) }
+        let traits = UITraitCollection(preferredContentSizeCategory: UIContentSizeCategory(typeSize))
+        return UIFontMetrics(forTextStyle: .body).scaledFont(for: base, compatibleWith: traits)
     }
 
     static func font(size: CGFloat) -> Font {

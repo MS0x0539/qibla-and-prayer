@@ -46,21 +46,35 @@ final class AccessibilityAuditTests: XCTestCase {
                 sleep(3)  // the times, the compass and the page settle
                 answerLocationPrompt()
                 let place = "\(screen.name) @ \(pass.size)"
-                do {
-                    try app.performAccessibilityAudit(for: pass.types) { issue in
-                        let type = Self.typeNames.first { issue.auditType.contains($0.0) }?.1 ?? "other"
-                        let element = issue.element.map { "\"\($0.label.prefix(80))\" \($0.identifier)" } ?? "-"
-                        print("AUDIT \(place): \(type) | \(issue.compactDescription) | \(element)")
-                        self.issues += 1
-                        return true
-                    }
-                } catch {
-                    print("AUDIT \(place): the audit did not finish: \(error.localizedDescription)")
+                // A long screen can take too long for one audit: then it is audited in parts.
+                let parts: [XCUIAccessibilityAuditType] = pass.size == "default"
+                    ? [.contrast, [.dynamicType, .textClipped], [.sufficientElementDescription, .hitRegion, .trait, .elementDetection]]
+                    : [pass.types]
+                if !audit(app, for: pass.types, at: place, quietly: true) {
+                    for types in parts { _ = audit(app, for: types, at: place, quietly: false) }
                 }
                 app.terminate()
             }
         }
         print("AUDIT done: \(issues) issues")
+    }
+
+    /// False if the audit didn't finish; it says so unless asked to stay quiet.
+    private func audit(_ app: XCUIApplication, for types: XCUIAccessibilityAuditType, at place: String,
+                       quietly: Bool) -> Bool {
+        do {
+            try app.performAccessibilityAudit(for: types) { issue in
+                let type = Self.typeNames.first { issue.auditType.contains($0.0) }?.1 ?? "other"
+                let element = issue.element.map { "\"\($0.label.prefix(80))\" \($0.identifier)" } ?? "-"
+                print("AUDIT \(place): \(type) | \(issue.compactDescription) | \(element)")
+                self.issues += 1
+                return true
+            }
+            return true
+        } catch {
+            if !quietly { print("AUDIT \(place): the audit did not finish: \(error.localizedDescription)") }
+            return false
+        }
     }
 
     private func answerLocationPrompt() {

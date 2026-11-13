@@ -61,6 +61,7 @@ struct TrackerView: View {
                     LabeledContent("Khatm", value: "\(Formats.number(read)) / \(Formats.number(Quran.pageCount))")
                     ProgressView(value: Double(read), total: Double(Quran.pageCount))
                         .tint(Theme.gold)
+                        .accessibilityHidden(true)
                 }
                 if khatmCount > 0 {
                     LabeledContent("Khatms completed", value: Formats.number(khatmCount))

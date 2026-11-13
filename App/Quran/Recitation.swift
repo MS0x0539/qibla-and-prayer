@@ -33,6 +33,17 @@ struct Reciter: Identifiable, Hashable {
     ]
 
     static func named(_ id: String) -> Reciter { all.first { $0.id == id } ?? all[0] }
+
+    /// Verses downloaded to listen offline, per reciter: Application Support, kept until removed, not backed up.
+    static var downloads: URL { URL.applicationSupportDirectory.appending(path: "Recitation", directoryHint: .isDirectory) }
+
+    func downloaded(_ number: Int) -> URL { Self.downloads.appending(path: "\(id)/\(number).mp3") }
+
+    /// Verses played before: Caches, which iOS may clear when it needs space.
+    func cached(_ number: Int) -> URL { URL.cachesDirectory.appending(path: "Recitation/\(id)/\(number).mp3") }
+
+    /// About the size of the whole Qur'an by this reciter: some 30 hours of recitation at its bitrate.
+    var wholeQuranBytes: Int64 { Int64(bitrate) * 1000 / 8 * 30 * 3600 }
 }
 
 /// Recites from any verse on, page after page. Each verse is downloaded once and kept in Caches (the service asks
@@ -48,6 +59,18 @@ final class Recitation {
     private(set) var isPlaying = false
     /// Set when the first verse couldn't be downloaded (no internet); the reader says so.
     var failed = false
+
+    enum SleepTimer: Hashable {
+        case off, minutes(Int), endOfSurah
+    }
+
+    /// Pauses after a while, or stops at the end of the surah.
+    private(set) var sleepTimer = SleepTimer.off
+    @ObservationIgnored private var sleepTask: Task<Void, Never>?
+    /// The surah the recitation stops after, with the timer at "end of surah".
+    @ObservationIgnored private var lastSurah: Int?
+    /// No more verses are queued: the recitation stops when the queued ones end.
+    @ObservationIgnored private var reachedLastSurah = false
 
     private let player = AVQueuePlayer()
     /// What the player has queued, in order, and the verse each item recites (the basmala before a surah counts
@@ -98,6 +121,7 @@ final class Recitation {
         self.reciter = reciter
         self.verse = verse
         next = verse
+        if sleepTimer == .endOfSurah { lastSurah = Quran.shared.verses[verse].surah }
         failed = false
         isPlaying = true
         let session = AVAudioSession.sharedInstance()
@@ -119,9 +143,33 @@ final class Recitation {
         load()
     }
 
+    func setSleepTimer(_ timer: SleepTimer) {
+        sleepTask?.cancel()
+        sleepTask = nil
+        sleepTimer = timer
+        lastSurah = nil
+        reachedLastSurah = false
+        // Queue past the end of the surah again if the timer no longer stops there.
+        defer { if verse != nil { load() } }
+        switch timer {
+        case .off:
+            break
+        case .minutes(let minutes):
+            sleepTask = Task {
+                try? await Task.sleep(for: .seconds(minutes * 60))
+                guard !Task.isCancelled else { return }
+                pause()
+                sleepTimer = .off
+            }
+        case .endOfSurah:
+            lastSurah = verse.map { Quran.shared.verses[$0].surah }
+        }
+    }
+
     func stop() {
         loading?.cancel()
         loading = nil
+        reachedLastSurah = false
         isPlaying = false
         verse = nil
         queue = []
@@ -137,8 +185,10 @@ final class Recitation {
         if let first = queue.first {
             verse = first.verse
             showNowPlaying()
-        } else if loading == nil && next >= Quran.shared.verses.count {
-            stop()  // the end of the Qur'an
+        } else if loading == nil && (next >= Quran.shared.verses.count || reachedLastSurah) {
+            // The end of the Qur'an, or of the surah the sleep timer stops after.
+            if reachedLastSurah { setSleepTimer(.off) }
+            stop()
             return
         }
         load()
@@ -151,6 +201,13 @@ final class Recitation {
             while queue.count < 3, next < Quran.shared.verses.count {
                 let index = next
                 let upcoming = Quran.shared.verses[index]
+                if sleepTimer == .endOfSurah {
+                    if lastSurah == nil { lastSurah = upcoming.surah }
+                    if upcoming.surah != lastSurah {
+                        reachedLastSurah = true
+                        break
+                    }
+                }
                 do {
                     // Every surah but At-Tawbah opens with the basmala, which is Al-Fatiha's first verse.
                     if upcoming.number == 1 && upcoming.surah != 1 && upcoming.surah != 9 {
@@ -184,16 +241,18 @@ final class Recitation {
         if isPlaying { player.play() }
     }
 
-    /// The verse's audio from the cache, downloaded first if it isn't there yet.
+    /// The verse's audio: downloaded for offline, played before, or downloaded now into the cache.
     private func file(ofVerse number: Int) async throws -> URL {
-        let folder = URL.cachesDirectory.appending(path: "Recitation/\(reciter.id)", directoryHint: .isDirectory)
-        let file = folder.appending(path: "\(number).mp3")
-        if FileManager.default.fileExists(atPath: file.path(percentEncoded: false)) { return file }
+        let manager = FileManager.default
+        let downloaded = reciter.downloaded(number)
+        if manager.fileExists(atPath: downloaded.path(percentEncoded: false)) { return downloaded }
+        let file = reciter.cached(number)
+        if manager.fileExists(atPath: file.path(percentEncoded: false)) { return file }
         let (download, response) = try await URLSession.shared.download(from: reciter.url(ofVerse: number))
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
-        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        try? FileManager.default.removeItem(at: file)
-        try FileManager.default.moveItem(at: download, to: file)
+        try manager.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try? manager.removeItem(at: file)
+        try manager.moveItem(at: download, to: file)
         return file
     }
 
@@ -205,5 +264,111 @@ final class Recitation {
             MPMediaItemPropertyTitle: "\(Quran.title(of: quran.surahs[item.surah - 1])) \(item.surah):\(item.number)",
             MPMediaItemPropertyArtist: reciter.displayName,
         ]
+    }
+}
+
+/// Recitations downloaded ahead, to listen without internet: a surah, a juz or the whole Qur'an by one reciter. The
+/// files stay inside the app until removed there; a verse played before is moved over instead of downloaded again.
+@MainActor @Observable
+final class RecitationDownloads {
+    static let shared = RecitationDownloads()
+
+    /// What is downloading, and how far (0...1); nil when nothing is.
+    private(set) var current: (title: String, progress: Double)?
+    /// Verses that failed in the last download (no internet); downloading again fetches only those.
+    private(set) var missing = 0
+    @ObservationIgnored private var task: Task<Void, Never>?
+
+    /// The verse numbers (1...6236) that some verses need, with the basmala if a surah in them begins with it.
+    nonisolated static func numbers(for verses: Range<Int>) -> [Int] {
+        var numbers = Set(verses.map { $0 + 1 })
+        let quran = Quran.shared
+        if verses.contains(where: { quran.verses[$0].number == 1 && ![1, 9].contains(quran.verses[$0].surah) }) {
+            numbers.insert(1)
+        }
+        return numbers.sorted()
+    }
+
+    nonisolated static func isDownloaded(_ verses: Range<Int>, by reciter: Reciter) -> Bool {
+        numbers(for: verses).allSatisfy {
+            FileManager.default.fileExists(atPath: reciter.downloaded($0).path(percentEncoded: false))
+        }
+    }
+
+    /// The space the downloads of a reciter take.
+    nonisolated static func bytes(of reciter: Reciter) -> Int64 {
+        let folder = Reciter.downloads.appending(path: reciter.id, directoryHint: .isDirectory)
+        let files = (try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: [.fileSizeKey])) ?? []
+        return files.reduce(0) { $0 + Int64((try? $1.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) }
+    }
+
+    func download(_ verses: Range<Int>, by reciter: Reciter, title: String) {
+        cancel()
+        let numbers = Self.numbers(for: verses)
+        current = (title, 0)
+        missing = 0
+        task = Task {
+            var folder = Reciter.downloads
+            try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+            var values = URLResourceValues()
+            values.isExcludedFromBackup = true
+            try? folder.setResourceValues(values)
+            var done = 0
+            var failed = 0
+            // Four at a time.
+            await withTaskGroup(of: Bool.self) { group in
+                var pending = numbers[...]
+                for _ in 0..<4 {
+                    guard let number = pending.popFirst() else { break }
+                    group.addTask { await Self.fetch(number, by: reciter) }
+                }
+                while let ok = await group.next() {
+                    done += 1
+                    if !ok { failed += 1 }
+                    if Task.isCancelled { continue }
+                    self.current = (title, Double(done) / Double(numbers.count))
+                    if let number = pending.popFirst() {
+                        group.addTask { await Self.fetch(number, by: reciter) }
+                    }
+                }
+            }
+            guard !Task.isCancelled else { return }
+            missing = failed
+            current = nil
+            task = nil
+        }
+    }
+
+    func cancel() {
+        task?.cancel()
+        task = nil
+        current = nil
+    }
+
+    func remove(_ reciter: Reciter) {
+        cancel()
+        try? FileManager.default.removeItem(at: Reciter.downloads.appending(path: reciter.id, directoryHint: .isDirectory))
+    }
+
+    /// One verse, unless it is here already; one played before is copied from the cache.
+    nonisolated private static func fetch(_ number: Int, by reciter: Reciter) async -> Bool {
+        let manager = FileManager.default
+        let target = reciter.downloaded(number)
+        if manager.fileExists(atPath: target.path(percentEncoded: false)) { return true }
+        do {
+            try manager.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
+            let cached = reciter.cached(number)
+            if manager.fileExists(atPath: cached.path(percentEncoded: false)) {
+                try manager.copyItem(at: cached, to: target)
+                return true
+            }
+            let (download, response) = try await URLSession.shared.download(from: reciter.url(ofVerse: number))
+            guard (response as? HTTPURLResponse)?.statusCode == 200 else { return false }
+            try? manager.removeItem(at: target)
+            try manager.moveItem(at: download, to: target)
+            return true
+        } catch {
+            return false
+        }
     }
 }

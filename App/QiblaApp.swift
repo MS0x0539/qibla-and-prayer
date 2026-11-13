@@ -67,6 +67,8 @@ struct RootView: View {
             case .tasbih:
                 ibadahPart = .tasbih
                 tab = .ibadah
+            case .quran:
+                tab = .quran
             }
         }
         .fullScreenCover(isPresented: .constant(!model.onboarded)) {

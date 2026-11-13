@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PrayerTimesView: View {
     @Environment(AppModel.self) private var model
+    @AppStorage("quranPage") private var quranPage = 1
     var openSettings: () -> Void = {}
     @ScaledMetric(relativeTo: .largeTitle) private var nameSize: CGFloat = 64
 
@@ -66,6 +67,11 @@ struct PrayerTimesView: View {
                 if hijri.month != 9, let start = ramadanStart {
                     RamadanSoon(start: start, now: now, place: place)
                         .padding(.top, 20)
+                }
+                // Once the Qur'an has been opened past its first page.
+                if quranPage > 1 {
+                    ContinueReading(page: quranPage)
+                        .padding(.top, hijri.month != 9 && ramadanStart != nil ? 12 : 20)
                 }
                 Button(action: openSettings) {
                     Text(verbatim: "\(model.settings.method.title) · \(model.settings.asr.shortTitle)")
@@ -250,6 +256,44 @@ private struct RamadanCard: View {
                 .font(.system(.title2, design: .serif).monospacedDigit())
                 .foregroundStyle(Theme.ink)
         }
+    }
+}
+
+/// Back to the page last read in the Qur'an tab.
+private struct ContinueReading: View {
+    let page: Int
+    @AppStorage(OpenScreenIntent.key) private var openScreen = ""
+
+    var body: some View {
+        let quran = Quran.shared
+        let surah = quran.verses(onPage: page).first.map { quran.surahs[$0.surah - 1] }
+        Button {
+            openScreen = AppScreen.quran.rawValue
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "book")
+                    .font(.title3)
+                    .foregroundStyle(Theme.gold)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Continue reading")
+                        .foregroundStyle(Theme.ink)
+                    HStack(spacing: 0) {
+                        if let surah { Text(verbatim: Quran.title(of: surah) + " · ") }
+                        Text("Page \(page)")
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(Theme.muted)
+                }
+                Spacer()
+                Image(systemName: "chevron.forward")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(Theme.muted)
+            }
+            .padding(16)
+            .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
+        }
+        .buttonStyle(.plain)
     }
 }
 

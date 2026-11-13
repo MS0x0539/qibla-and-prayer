@@ -17,6 +17,7 @@ struct QuranView: View {
     @State private var marked: Int?
     /// A verse tapped on the page, shown in a sheet to copy or share.
     @State private var tapped: Int?
+    @State private var showingOffline = false
 
     var body: some View {
         let style = night ? MushafStyle.dark : MushafStyle.printed
@@ -47,9 +48,18 @@ struct QuranView: View {
                     .accessibilityLabel(Text("Index"))
                 }
                 ToolbarItem(placement: .principal) {
-                    Text("Page \(page)")
-                        .font(.subheadline.monospacedDigit())
-                        .foregroundStyle(style.muted)
+                    VStack(spacing: 3) {
+                        Text("Page \(page)")
+                            .font(.subheadline.monospacedDigit())
+                            .foregroundStyle(style.muted)
+                        // A recitation downloading for offline, from the sheet.
+                        if let download = RecitationDownloads.shared.current {
+                            ProgressView(value: download.progress)
+                                .frame(width: 70)
+                                .tint(style.ornament)
+                                .accessibilityLabel(Text(verbatim: download.title))
+                        }
+                    }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -91,6 +101,17 @@ struct QuranView: View {
                             }
                         }
                         .pickerStyle(.menu)
+                        Picker(selection: Binding(get: { recitation.sleepTimer }, set: { recitation.setSleepTimer($0) })) {
+                            Text("Off").tag(Recitation.SleepTimer.off)
+                            ForEach([15, 30, 60], id: \.self) { minutes in
+                                Text("\(minutes) min").tag(Recitation.SleepTimer.minutes(minutes))
+                            }
+                            Text("End of surah").tag(Recitation.SleepTimer.endOfSurah)
+                        } label: {
+                            Label("Sleep timer", systemImage: "moon.zzz")
+                        }
+                        .pickerStyle(.menu)
+                        Button("Offline recitation", systemImage: "arrow.down.circle") { showingOffline = true }
                     } label: {
                         Image(systemName: "ellipsis.circle")
                     }
@@ -109,6 +130,10 @@ struct QuranView: View {
             }
             .sheet(isPresented: Binding(get: { tapped != nil }, set: { if !$0 { tapped = nil } })) {
                 if let tapped { VerseSheet(verse: Quran.shared.verses[tapped]) }
+            }
+            .sheet(isPresented: $showingOffline) {
+                OfflineRecitationView(page: page)
+                    .presentationDetents([.medium, .large])
             }
             // A page open for 10 seconds counts as read, for the khatm in Ibadah; leafing through doesn't.
             .task(id: page) {
@@ -172,8 +197,14 @@ struct MushafPage: View {
     let style: MushafStyle
     var onTapVerse: (Int) -> Void = { _ in }
     @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
+    @Environment(\.dynamicTypeSize) private var typeSize
 
-    private static let smallest = 16.0
+    private static let smallest = 14.0
+    /// The outer margin, wider for the hizb and sajda notes, and the inner one at the fold.
+    private static let outer = 28.0
+    private static let inner = 8.0
+    /// Between the frame and the text.
+    private static let inset = 14.0
 
     var body: some View {
         let quran = Quran.shared
@@ -207,7 +238,9 @@ struct MushafPage: View {
                 // The page itself is labelled "Page 42".
                 .accessibilityHidden(true)
         }
-        .padding(.horizontal, 14)
+        // Pages are laid out right to left, so leading is the right edge: the outer one on a right-hand (odd) page.
+        .padding(.leading, number % 2 == 1 ? Self.outer : Self.inner)
+        .padding(.trailing, number % 2 == 1 ? Self.inner : Self.outer)
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(style.paper)
@@ -227,11 +260,13 @@ struct MushafPage: View {
                         .font(Quran.font(size: size))
                         .foregroundStyle(style.ink)
                 case .text(let text):
-                    ArabicParagraph(text: text, onTapVerse: onTapVerse)
+                    // The notes go in the middle of the outer margin, outside the frame.
+                    ArabicParagraph(text: text, notesOnRight: number % 2 == 1, notesOffset: Self.inset + Self.outer / 2,
+                                    noteColor: UIColor(style.number), onTapVerse: onTapVerse)
                 }
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, Self.inset)
         .padding(.vertical, 18)
         .frame(maxWidth: .infinity)
         .background(MushafFrame(style: style))
@@ -263,7 +298,7 @@ struct MushafPage: View {
             if paragraph.length > 0 { blocks.append(Block(id: blocks.count, kind: .text(paragraph))) }
             paragraph = NSMutableAttributedString()
         }
-        let font = Quran.uiFont(size: size)
+        let font = Quran.uiFont(size: size, typeSize: typeSize)
         let paragraphStyle = NSMutableParagraphStyle()
         // Al-Fatiha and the start of Al-Baqarah are centred, as printed; the other pages are justified.
         paragraphStyle.alignment = number <= 2 ? .center : .justified
@@ -298,6 +333,14 @@ struct MushafPage: View {
             run.append(NSAttributedString(string: "\u{06DD}" + Quran.arabicDigits(verse.number) + " ", attributes: [
                 .font: font, .foregroundColor: number, .paragraphStyle: paragraphStyle, .quranVerse: verse.index,
             ]))
+            // Notes in the margin beside the line, as in print: where a quarter of a hizb begins, and a sajda.
+            if let quarter = Quran.shared.quarters[verse.index] {
+                run.addAttribute(.mushafNote, value: Self.quarterNote(quarter), range: NSRange(location: 0, length: 1))
+            }
+            if Quran.shared.sajdas.contains(verse.index) {
+                run.addAttribute(.mushafNote, value: "\u{06E9}\nسجدة",
+                                 range: NSRange(location: (text + " ").utf16.count, length: 1))
+            }
             if verse.index == marked {
                 let whole = NSRange(location: 0, length: run.length)
                 run.addAttribute(.backgroundColor, value: ornament.withAlphaComponent(0.2), range: whole)
@@ -312,6 +355,17 @@ struct MushafPage: View {
         }
         flush()
         return blocks
+    }
+
+    /// Word under word, as in print: "ربع / الحزب / ٥" where the second quarter of the fifth hizb begins.
+    static func quarterNote(_ quarter: Int) -> String {
+        let hizb = Quran.arabicDigits(quarter / 4 + 1)
+        switch quarter % 4 {
+        case 1: return "ربع\nالحزب\n" + hizb
+        case 2: return "نصف\nالحزب\n" + hizb
+        case 3: return "ثلاثة\nأرباع\nالحزب\n" + hizb
+        default: return "الحزب\n" + hizb
+        }
     }
 
     private struct Block: Identifiable {
@@ -374,12 +428,16 @@ struct SurahHeader: View {
 /// Arabic text justified from right to left, as in a printed mushaf (SwiftUI's Text can't justify).
 struct ArabicParagraph: UIViewRepresentable {
     let text: NSAttributedString
+    var notesOnRight = true
+    /// From the edge of the text to the middle of the margin the notes are in.
+    var notesOffset = 0.0
+    var noteColor = UIColor.label
     var onTapVerse: (Int) -> Void = { _ in }
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
-    func makeUIView(context: Context) -> UILabel {
-        let label = UILabel()
+    func makeUIView(context: Context) -> MushafLabel {
+        let label = MushafLabel()
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -391,10 +449,17 @@ struct ArabicParagraph: UIViewRepresentable {
         return label
     }
 
-    func updateUIView(_ label: UILabel, context: Context) {
+    func updateUIView(_ label: MushafLabel, context: Context) {
         context.coordinator.onTapVerse = onTapVerse
+        if label.notesOnRight != notesOnRight || label.notesOffset != notesOffset || label.noteColor != noteColor {
+            label.notesOnRight = notesOnRight
+            label.notesOffset = notesOffset
+            label.noteColor = noteColor
+            label.setNeedsLayout()
+        }
         guard label.attributedText?.isEqual(to: text) != true else { return }
         label.attributedText = text
+        label.setNeedsLayout()
         // VoiceOver and Voice Control can't aim at one verse in the text, so each verse is also an action that
         // opens it, as a tap does.
         var verses: [Int] = []
@@ -434,7 +499,7 @@ struct ArabicParagraph: UIViewRepresentable {
         }
     }
 
-    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: MushafLabel, context: Context) -> CGSize? {
         guard let width = proposal.width, width.isFinite, width > 0 else { return nil }
         uiView.preferredMaxLayoutWidth = width
         let height = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
@@ -445,6 +510,55 @@ struct ArabicParagraph: UIViewRepresentable {
 extension NSAttributedString.Key {
     /// The verse a run of mushaf text belongs to (its index in the whole Qur'an), for taps.
     static let quranVerse = NSAttributedString.Key("quranVerse")
+    /// A note for the margin beside the line this character is on.
+    static let mushafNote = NSAttributedString.Key("mushafNote")
+}
+
+/// The mushaf text, with its notes in the outer margin beside their lines, laid out as the label lays out the text.
+final class MushafLabel: UILabel {
+    var notesOnRight = true
+    var notesOffset = 0.0
+    var noteColor = UIColor.label
+    private var notes: [UILabel] = []
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        notes.forEach { $0.removeFromSuperview() }
+        notes = []
+        guard let text = attributedText, text.length > 0, bounds.width > 0 else { return }
+        let storage = NSTextStorage(attributedString: text)
+        let layout = NSLayoutManager()
+        let container = NSTextContainer(size: CGSize(width: bounds.width, height: .greatestFiniteMagnitude))
+        container.lineFragmentPadding = 0
+        layout.addTextContainer(container)
+        storage.addLayoutManager(layout)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        style.minimumLineHeight = 13
+        style.maximumLineHeight = 13
+        let font = UIFont(name: Quran.fontName, size: 10) ?? .systemFont(ofSize: 10)
+        var bottom = -CGFloat.greatestFiniteMagnitude
+        text.enumerateAttribute(.mushafNote, in: NSRange(location: 0, length: text.length)) { value, range, _ in
+            guard let note = value as? String else { return }
+            let line = layout.lineFragmentRect(forGlyphAt: layout.glyphIndexForCharacter(at: range.location),
+                                               effectiveRange: nil)
+            let label = UILabel()
+            label.numberOfLines = 0
+            label.attributedText = NSAttributedString(string: note, attributes: [
+                .font: font, .foregroundColor: noteColor, .paragraphStyle: style,
+            ])
+            let size = label.sizeThatFits(CGSize(width: 44, height: CGFloat.greatestFiniteMagnitude))
+            // Beside its line; below the note before if two lines are close.
+            let y = max(line.midY - size.height / 2, bottom + 4)
+            let middle = notesOnRight ? bounds.maxX + notesOffset : bounds.minX - notesOffset
+            label.frame = CGRect(x: middle - size.width / 2, y: y, width: size.width, height: size.height)
+            // VoiceOver reads the ۞ and ۩ in the text itself.
+            label.isAccessibilityElement = false
+            addSubview(label)
+            notes.append(label)
+            bottom = y + size.height
+        }
+    }
 }
 
 /// A verse tapped on the page: its surah and number, and the Arabic to copy or share.
