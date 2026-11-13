@@ -49,12 +49,12 @@ struct SettingsView: View {
                     NavigationLink {
                         MethodSettingsPage()
                     } label: {
-                        LabeledContent("Calculation method", value: model.settings.method.title)
+                        LabeledContent("Calculation method", value: model.settings.methodSummary)
                     }
                     NavigationLink {
                         AsrSettingsPage()
                     } label: {
-                        LabeledContent("Asr calculation", value: model.settings.asr.shortTitle)
+                        LabeledContent("Asr calculation", value: model.settings.asrSummary)
                     }
                     NavigationLink("Adjust times") { AdjustmentsView() }
                     // Set by hand, the offset no longer follows the school (see AppModel.chooseSchool).
@@ -162,7 +162,9 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .onChange(of: model.settings.useCurrentLocation) { _, isOn in
                 if isOn { model.location.start() }
+                model.applyAutomaticChoices()
             }
+            .onChange(of: model.settings.language) { model.applyAutomaticChoices() }
             .onChange(of: model.settings.reminderMinutes) { _, minutes in
                 if minutes > 0 { model.notificationsWanted() }
             }
@@ -218,8 +220,12 @@ struct AsrSettingsPage: View {
     }
 }
 
-/// The open-source code in the app, with the licence its authors ask to keep with every copy.
+/// The open-source code, text and font in the app, with the licences their authors ask to keep with every copy.
 struct AcknowledgementsView: View {
+    /// The font's licence (OFL 1.1), bundled next to it.
+    private static let amiriLicense = Bundle.main.url(forResource: "AmiriQuran-OFL", withExtension: "txt")
+        .flatMap { try? String(contentsOf: $0, encoding: .utf8) }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -249,6 +255,22 @@ struct AcknowledgementsView: View {
                     .font(.footnote)
                     .environment(\.layoutDirection, .leftToRight)
                     .textSelection(.enabled)
+                Divider().overlay(Theme.line)
+                // Tanzil's terms: the text unchanged, its source named and linked.
+                Text("The Qur'an text is the Uthmani text of the Tanzil Project, used unchanged under its terms (Creative Commons Attribution 3.0).")
+                    .foregroundStyle(Theme.muted)
+                Link(destination: URL(string: "https://tanzil.net")!) {
+                    Text(verbatim: "tanzil.net")
+                }
+                Divider().overlay(Theme.line)
+                Text("The Qur'an is shown in the Amiri Quran font by the Amiri Project, under the SIL Open Font License.")
+                    .foregroundStyle(Theme.muted)
+                if let license = Self.amiriLicense {
+                    Text(verbatim: license)
+                        .font(.footnote)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .textSelection(.enabled)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)

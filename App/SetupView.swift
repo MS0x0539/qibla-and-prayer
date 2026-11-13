@@ -9,13 +9,11 @@ struct SetupView: View {
     var done: () -> Void
 
     private enum Step: Int, CaseIterable {
-        case welcome, language, location, school, method, reminders, ready
+        case welcome, language, location, method, reminders, ready
     }
 
     // `-setupStep 3` opens a later page first (used for CI screenshots).
     @State private var step = Step(rawValue: UserDefaults.standard.integer(forKey: "setupStep")) ?? .welcome
-    /// Set once the user picks a method or Asr method, so a later location fix doesn't override it.
-    @State private var chosen = false
     @State private var searchingCity = false
 
     var body: some View {
@@ -33,9 +31,9 @@ struct SetupView: View {
         .sheet(isPresented: $searchingCity) {
             NavigationStack { CitySearchView() }
         }
-        .onChange(of: model.place, initial: true) { suggest() }
-        .onChange(of: model.settings.language) { suggest() }
-        .onChange(of: model.settings.school) { suggest() }
+        // "Automatic" (the default) follows the country found and the language picked.
+        .onChange(of: model.place, initial: true) { model.applyAutomaticChoices() }
+        .onChange(of: model.settings.language) { model.applyAutomaticChoices() }
         .task { model.scheduleNotifications() }  // also reads the current notification permission
     }
 
@@ -73,7 +71,6 @@ struct SetupView: View {
         case .welcome: welcomePage
         case .language: languagePage
         case .location: locationPage
-        case .school: schoolPage
         case .method: methodPage
         case .reminders: remindersPage
         case .ready: readyPage
@@ -83,14 +80,6 @@ struct SetupView: View {
     private func go(_ delta: Int) {
         guard let next = Step(rawValue: step.rawValue + delta) else { return }
         withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.3)) { step = next }
-    }
-
-    /// Follows the suggestion for the place found (country) until the user picks something.
-    private func suggest() {
-        guard !chosen else { return }
-        let suggestion = model.suggestion
-        if model.settings.method != suggestion.method { model.settings.method = suggestion.method }
-        if model.settings.asr != suggestion.asr { model.settings.asr = suggestion.asr }
     }
 
     // MARK: - Pages
@@ -234,40 +223,12 @@ struct SetupView: View {
     private var methodPage: some View {
         SetupPage(
             title: "How are times calculated?",
-            text: "Mosques use slightly different rules, mostly for Fajr and Isha. Pick the one your mosque uses, or keep the suggestion if you are not sure."
+            text: "Mosques use slightly different rules, mostly for Fajr and Isha. Automatic uses the rules of the mosques in the country you're in, also when you travel. Or pick the one your mosque uses."
         ) {
-            MethodChoices(model: model) { chosen = true }
+            MethodChoices(model: model)
         } buttons: {
             Button("Continue") { go(1) }
                 .buttonStyle(PrimaryButtonStyle())
-        }
-    }
-
-    private var schoolPage: some View {
-        SetupPage(
-            title: "Which school do you follow?",
-            text: "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha."
-        ) {
-            VStack(spacing: 10) {
-                ForEach(School.allCases) { school in
-                    ChoiceCard(title: Text(school.title), selected: model.settings.school == school) {
-                        model.chooseSchool(school)
-                    }
-                }
-                if model.settings.school == .hanafi {
-                    Text("Hanafi timetables differ: Diyanet uses the earlier Asr, others the later one. Pick the one your mosque uses.")
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 8)
-                    AsrChoices(model: model) { chosen = true }
-                }
-            }
-            .sensoryFeedback(.selection, trigger: model.settings.school)
-        } buttons: {
-            Button("Continue") { go(1) }
-                .buttonStyle(PrimaryButtonStyle())
-                .disabled(model.settings.school == nil)
         }
     }
 
@@ -335,9 +296,8 @@ struct SetupView: View {
                 VStack(spacing: 0) {
                     SummaryRow(label: "Language", value: model.settings.language.nativeName)
                     SummaryRow(label: "Location", value: model.place?.displayNameWithCountry ?? String(localized: "Not set", bundle: .app))
-                    SummaryRow(label: "School (madhab)", value: model.settings.school?.title ?? String(localized: "Not set", bundle: .app))
-                    SummaryRow(label: "Calculation method", value: model.settings.method.title)
-                    SummaryRow(label: "Asr calculation", value: model.settings.asr.shortTitle)
+                    SummaryRow(label: "Calculation method", value: model.settings.methodSummary)
+                    SummaryRow(label: "Asr calculation", value: model.settings.asrSummary)
                     SummaryRow(label: "Reminders", value: remindersSummary, last: true)
                 }
                 .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
@@ -382,15 +342,32 @@ struct MethodChoices: View {
     var body: some View {
         let suggested = model.suggestion.method
         VStack(spacing: 10) {
+            ChoiceCard(
+                icon: "location.circle",
+                title: Text("Automatic"),
+                detail: Text("The rules of the mosques in the country you're in, also when you travel. Now: \(suggested.title)"),
+                note: preview(suggested),
+                selected: model.settings.automaticMethod
+            ) {
+                var settings = model.settings
+                settings.automaticMethod = true
+                model.settings = settings
+                model.applyAutomaticChoices()
+                onPick()
+            }
             ForEach([suggested] + CalcMethod.allCases.filter { $0 != suggested }) { method in
                 ChoiceCard(
                     title: Text(method.title),
                     detail: Text(method.usage),
                     note: preview(method),
                     badge: method == suggested ? suggestedBadge : nil,
-                    selected: model.settings.method == method
+                    selected: !model.settings.automaticMethod && model.settings.method == method
                 ) {
-                    model.settings.method = method
+                    // A method picked by hand stays, wherever the user goes.
+                    var settings = model.settings
+                    settings.method = method
+                    settings.automaticMethod = false
+                    model.settings = settings
                     onPick()
                 }
             }
@@ -425,15 +402,31 @@ struct AsrChoices: View {
     var body: some View {
         let suggested = model.suggestion.asr
         VStack(spacing: 10) {
+            ChoiceCard(
+                icon: "location.circle",
+                title: Text("Automatic"),
+                detail: Text("The Asr of the mosques in the country you're in, also when you travel. Now: \(suggested.shortTitle)"),
+                note: preview(suggested),
+                selected: model.settings.automaticAsr
+            ) {
+                var settings = model.settings
+                settings.automaticAsr = true
+                model.settings = settings
+                model.applyAutomaticChoices()
+                onPick()
+            }
             ForEach(AsrMethod.allCases) { asr in
                 ChoiceCard(
                     title: Text(asr.title),
                     detail: Text(asr.explanation),
                     note: preview(asr),
                     badge: asr == suggested ? Text("Suggested") : nil,
-                    selected: model.settings.asr == asr
+                    selected: !model.settings.automaticAsr && model.settings.asr == asr
                 ) {
-                    model.settings.asr = asr
+                    var settings = model.settings
+                    settings.asr = asr
+                    settings.automaticAsr = false
+                    model.settings = settings
                     onPick()
                 }
             }

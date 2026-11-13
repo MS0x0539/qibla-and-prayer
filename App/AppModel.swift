@@ -74,6 +74,7 @@ final class AppModel {
                 place.countryCode = previous.countryCode
             }
             self.currentPlace = place
+            self.applyAutomaticChoices()
         }
         UNUserNotificationCenter.current().delegate = presenter
         // Settings saved by versions before the widgets live only in the app's own defaults: copy them
@@ -106,6 +107,17 @@ final class AppModel {
         return suggestion
     }
 
+    /// With "Automatic", the method and Asr of the country the times are for: what its mosques use, also after
+    /// travelling. Called when the place, the language or the school changes.
+    func applyAutomaticChoices() {
+        guard settings.automaticMethod || settings.automaticAsr else { return }
+        let suggestion = suggestion
+        var updated = settings
+        if settings.automaticMethod { updated.method = suggestion.method }
+        if settings.automaticAsr { updated.asr = suggestion.asr }
+        if updated != settings { settings = updated }
+    }
+
     /// Sets the school and the Asr time that goes with it.
     func chooseSchool(_ school: School) {
         // Shia calendars (Najaf, Ayatollah Sistani's office) mostly start each month a day after Umm al-Qura:
@@ -118,6 +130,8 @@ final class AppModel {
             settings.hijriOffsetFromSchool = false
         }
         settings.school = school
+        applyAutomaticChoices()
+        guard !settings.automaticAsr else { return }
         switch school {
         case .hanafi: settings.asr = settings.method == .turkey ? .standard : .hanafi
         case .shafii, .maliki, .hanbali, .jafari: settings.asr = .standard
@@ -159,6 +173,7 @@ final class AppModel {
     func chooseCity(_ city: Place) {
         settings.city = city
         settings.useCurrentLocation = false
+        applyAutomaticChoices()
     }
 
     func toggleNotify(_ kind: PrayerKind) {

@@ -27,7 +27,7 @@ struct TasbihView: View {
     @State private var confirmingReset = false
 
     var body: some View {
-        NavigationStack {
+        Group {
             // Scrolls only when it doesn't fit (large text sizes, small iPhones).
             ViewThatFits(in: .vertical) {
                 counter

@@ -106,18 +106,23 @@ jobs:
             done
           done
           shot "de-times" -AppleLanguages "(de)" -AppleLocale de_DE -skipOnboarding YES -startTab times
-          for tab in tasbih tracker; do
-            shot "en-$tab" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab "$tab"
+          for part in tasbih tracker; do
+            shot "en-$part" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart "$part"
           done
-          shot "tr-tracker" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab tracker
-          shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab tasbih
+          shot "tr-tracker" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab ibadah -ibadahPart tracker
+          shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab ibadah -ibadahPart tasbih
+          # The Qur'an: Al-Fatiha, Al-Baqarah's first page and Ayat al-Kursi's page.
+          for page in 1 2 42; do
+            shot "en-quran-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage "$page"
+          done
+          shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranPage 2
           # The map loads tiles and mosques over the network: give it longer.
           xcrun simctl terminate "$UDID" "$BID" 2>/dev/null || true
           xcrun simctl launch "$UDID" "$BID" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showMap YES
           sleep 15
           xcrun simctl io "$UDID" screenshot "screenshots/en-map.png"
           shot "fr-settings" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab settings
-          for step in 0 1 2 3 4 5 6; do
+          for step in 0 1 2 3 4 5; do
             shot "setup-$step-en" -AppleLanguages "(en)" -AppleLocale en_US -setupStep "$step"
           done
           shot "setup-3-ar" -AppleLanguages "(ar)" -AppleLocale ar_SA -setupStep 3

@@ -8,7 +8,7 @@ struct TrackerView: View {
     @AppStorage("fastsToMakeUp") private var fastsToMakeUp = 0
 
     var body: some View {
-        NavigationStack {
+        Group {
             // Redrawn every minute, so iftar and midnight ("today") arrive while the tab is open.
             TimelineView(.everyMinute) { context in
                 form(now: context.date)

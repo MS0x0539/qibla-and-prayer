@@ -25,7 +25,7 @@ struct QiblaApp: App {
 }
 
 enum AppTab: String, Hashable {
-    case times, qibla, tasbih, tracker, settings
+    case times, qibla, quran, ibadah, settings
 }
 
 struct RootView: View {
@@ -43,11 +43,11 @@ struct RootView: View {
             Tab("Qibla", systemImage: "safari", value: AppTab.qibla) {
                 QiblaView()
             }
-            Tab("Tasbih", systemImage: "circle.dotted", value: AppTab.tasbih) {
-                TasbihView()
+            Tab("Qur'an", systemImage: "book", value: AppTab.quran) {
+                QuranView()
             }
-            Tab("Tracker", systemImage: "checklist", value: AppTab.tracker) {
-                TrackerView()
+            Tab("Ibadah", systemImage: "circle.dotted", value: AppTab.ibadah) {
+                IbadahView()
             }
             Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {
                 SettingsView()

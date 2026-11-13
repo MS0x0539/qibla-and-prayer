@@ -919,6 +919,74 @@
         }
       }
     },
+    "Automatic": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تلقائي"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatique"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otomatik"
+          }
+        }
+      }
+    },
+    "Automatic: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تلقائي: %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatique : %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otomatik: %@"
+          }
+        }
+      }
+    },
     "Back": {
       "localizations": {
         "ar": {
@@ -1769,6 +1837,40 @@
         }
       }
     },
+    "Du'as": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأدعية"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Douas"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du'a's"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dualar"
+          }
+        }
+      }
+    },
     "Dubai": {
       "localizations": {
         "ar": {
@@ -2415,40 +2517,6 @@
         }
       }
     },
-    "Hanafi timetables differ: Diyanet uses the earlier Asr, others the later one. Pick the one your mosque uses.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تختلف التقاويم الحنفية: تعتمد رئاسة الشؤون الدينية التركية العصر الأول، وغيرها العصر الثاني. اختر ما يعتمده مسجدك."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hanafitische Gebetspläne unterscheiden sich: Diyanet nutzt den früheren Asr, andere den späteren. Wähle den deiner Moschee."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les horaires hanafites diffèrent : la Diyanet utilise l’Asr le plus tôt, d’autres le plus tardif. Choisissez celui de votre mosquée."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hanafi-roosters verschillen: Diyanet gebruikt de vroegere Asr, andere de latere. Kies wat je moskee gebruikt."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hanefi takvimleri farklıdır: Diyanet asr-ı evveli, bazıları asr-ı saniyi kullanır. Camiinizin kullandığını seçin."
-          }
-        }
-      }
-    },
     "Hanbali": {
       "localizations": {
         "ar": {
@@ -2721,6 +2789,40 @@
         }
       }
     },
+    "Ibadah": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عبادات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ibadah"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ibadah"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ibadah"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İbadet"
+          }
+        }
+      }
+    },
     "Iftar": {
       "localizations": {
         "ar": {
@@ -2819,6 +2921,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "İftara kalan %@"
+          }
+        }
+      }
+    },
+    "Index": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الفهرس"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inhalt"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sommaire"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inhoud"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fihrist"
           }
         }
       }
@@ -3265,6 +3401,74 @@
         }
       }
     },
+    "Juz": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأجزاء"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dschuz"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juz"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juz'"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cüzler"
+          }
+        }
+      }
+    },
+    "Juz %lld": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الجزء %lld"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dschuz %lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juz %lld"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Juz' %lld"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld. cüz"
+          }
+        }
+      }
+    },
     "Kaaba": {
       "localizations": {
         "ar": {
@@ -3397,6 +3601,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dil"
+          }
+        }
+      }
+    },
+    "Larger text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خط أكبر"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Größere Schrift"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texte plus grand"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grotere tekst"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha büyük yazı"
           }
         }
       }
@@ -3843,6 +4081,74 @@
         }
       }
     },
+    "Meccan · %lld verses": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مكية · %lld آية"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mekkanisch · %lld Verse"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mecquoise · %lld versets"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mekkaans · %lld verzen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mekkî · %lld ayet"
+          }
+        }
+      }
+    },
+    "Medinan · %lld verses": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مدنية · %lld آية"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medinensisch · %lld Verse"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Médinoise · %lld versets"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medinees · %lld verzen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medenî · %lld ayet"
+          }
+        }
+      }
+    },
     "Minutes added to the calculated time, to match the timetable of your mosque.": {
       "localizations": {
         "ar": {
@@ -4081,6 +4387,40 @@
         }
       }
     },
+    "Mosques use slightly different rules, mostly for Fajr and Isha. Automatic uses the rules of the mosques in the country you're in, also when you travel. Or pick the one your mosque uses.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتبع المساجد طرقًا مختلفة قليلًا، خاصة في الفجر والعشاء. يتبع الخيار التلقائي مساجد البلد الذي أنت فيه، حتى في السفر. أو اختر طريقة مسجدك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moscheen rechnen leicht unterschiedlich, vor allem bei Fajr und Isha. Automatisch folgt den Moscheen des Landes, in dem du bist, auch auf Reisen. Oder wähle die Methode deiner Moschee."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les mosquées suivent des règles un peu différentes, surtout pour Fajr et Isha. Automatique suit les mosquées du pays où vous êtes, même en voyage. Ou choisissez celle de votre mosquée."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moskeeën gebruiken iets andere regels, vooral voor Fajr en Isha. Automatisch volgt de moskeeën van het land waar je bent, ook op reis. Of kies de methode van je moskee."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camiler özellikle imsak ve yatsı için biraz farklı kurallar kullanır. Otomatik, bulunduğunuz ülkedeki camilerin hesabını izler, seyahatte de. Ya da camiinizin yöntemini seçin."
+          }
+        }
+      }
+    },
     "Mosques use slightly different rules, mostly for Fajr and Isha. Compare the times below with the timetable of your mosque.": {
       "localizations": {
         "ar": {
@@ -4111,40 +4451,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Camiler özellikle imsak ve yatsı için biraz farklı kurallar kullanır. Aşağıdaki vakitleri camiinizin takvimiyle karşılaştırın."
-          }
-        }
-      }
-    },
-    "Mosques use slightly different rules, mostly for Fajr and Isha. Pick the one your mosque uses, or keep the suggestion if you are not sure.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تتبع المساجد طرقًا مختلفة قليلًا، خاصة في الفجر والعشاء. اختر طريقة مسجدك، أو أبقِ على الاقتراح إن لم تكن متأكدًا."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Moscheen rechnen leicht unterschiedlich, vor allem bei Fajr und Isha. Wähle die Methode deiner Moschee oder behalte den Vorschlag, wenn du unsicher bist."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les mosquées suivent des règles un peu différentes, surtout pour Fajr et Isha. Choisissez celle de votre mosquée, ou gardez la suggestion si vous n’êtes pas sûr."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Moskeeën gebruiken iets andere regels, vooral voor Fajr en Isha. Kies de methode van je moskee, of houd de suggestie aan als je het niet zeker weet."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Camiler özellikle imsak ve yatsı için biraz farklı kurallar kullanır. Camiinizin yöntemini seçin; emin değilseniz öneriyi koruyun."
           }
         }
       }
@@ -4523,6 +4829,40 @@
         }
       }
     },
+    "No results": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا نتائج"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Treffer"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun résultat"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen resultaten"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonuç yok"
+          }
+        }
+      }
+    },
     "Not now": {
       "localizations": {
         "ar": {
@@ -4825,6 +5165,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Önce uygulamayı açın, böylece nerede olduğunuzu bilsin."
+          }
+        }
+      }
+    },
+    "Page %lld": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صفحة %lld"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seite %lld"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Page %lld"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pagina %lld"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayfa %lld"
           }
         }
       }
@@ -5373,6 +5747,74 @@
         }
       }
     },
+    "Qur'an": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القرآن"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koran"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coran"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koran"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an"
+          }
+        }
+      }
+    },
+    "Qur'an text: Tanzil Project (tanzil.net)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نص القرآن: مشروع تنزيل (tanzil.net)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korantext: Tanzil Project (tanzil.net)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texte du Coran : Tanzil Project (tanzil.net)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korantekst: Tanzil Project (tanzil.net)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an metni: Tanzil Projesi (tanzil.net)"
+          }
+        }
+      }
+    },
     "Ramadan %@": {
       "localizations": {
         "ar": {
@@ -5883,6 +6325,40 @@
         }
       }
     },
+    "Search surahs, du'as and verses": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابحث في السور والأدعية والآيات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suren, Duas und Verse suchen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher sourates, douas et versets"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek soera's, du'a's en verzen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sure, dua ve ayet ara"
+          }
+        }
+      }
+    },
     "Send a test notification": {
       "localizations": {
         "ar": {
@@ -6219,6 +6695,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Şimdilik atla"
+          }
+        }
+      }
+    },
+    "Smaller text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خط أصغر"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleinere Schrift"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texte plus petit"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleinere tekst"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha küçük yazı"
           }
         }
       }
@@ -6767,6 +7277,40 @@
         }
       }
     },
+    "Surahs": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "السور"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suren"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sourates"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soera's"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sureler"
+          }
+        }
+      }
+    },
     "Takes about a minute.": {
       "localizations": {
         "ar": {
@@ -6937,6 +7481,74 @@
         }
       }
     },
+    "Text size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حجم الخط"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schriftgröße"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taille du texte"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekstgrootte"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yazı boyutu"
+          }
+        }
+      }
+    },
+    "The Asr of the mosques in the country you're in, also when you travel. Now: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عصر مساجد البلد الذي أنت فيه، حتى في السفر. الآن: %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Asr der Moscheen in dem Land, in dem du bist, auch auf Reisen. Jetzt: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’Asr des mosquées du pays où vous êtes, même en voyage. Actuellement : %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De Asr van de moskeeën in het land waar je bent, ook op reis. Nu: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bulunduğunuz ülkedeki camilerin ikindi vakti, seyahatte de. Şu an: %@"
+          }
+        }
+      }
+    },
     "The Lock Screen countdown can start from 8 hours before iftar.": {
       "localizations": {
         "ar": {
@@ -7001,6 +7613,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kıble, Mekke'deki Kâbe'nin yönüdür; konumunuzdan yeryüzündeki en kısa yol boyunca hesaplanır ve coğrafi kuzeyden ölçülür."
+          }
+        }
+      }
+    },
+    "The Qur'an is shown in the Amiri Quran font by the Amiri Project, under the SIL Open Font License.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُعرض القرآن بخط Amiri Quran من مشروع أميري، بموجب رخصة SIL Open Font License."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Koran wird in der Schrift Amiri Quran des Amiri Project angezeigt, unter der SIL Open Font License."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Coran est affiché avec la police Amiri Quran de l’Amiri Project, sous la licence SIL Open Font License."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De Koran wordt getoond in het lettertype Amiri Quran van het Amiri Project, onder de SIL Open Font License."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an, Amiri Projesi'nin Amiri Quran yazı tipiyle, SIL Open Font License kapsamında gösterilir."
+          }
+        }
+      }
+    },
+    "The Qur'an text is the Uthmani text of the Tanzil Project, used unchanged under its terms (Creative Commons Attribution 3.0).": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نص القرآن هو النص العثماني لمشروع تنزيل، ويُستخدم دون تغيير وفق شروطه (المشاع الإبداعي، نسب المصنف 3.0)."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Korantext ist der Uthmani-Text des Tanzil Project, unverändert nach dessen Bedingungen verwendet (Creative Commons Namensnennung 3.0)."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le texte du Coran est le texte uthmani du Tanzil Project, utilisé sans modification selon ses conditions (Creative Commons Attribution 3.0)."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De Korantekst is de Uthmani-tekst van het Tanzil Project, ongewijzigd gebruikt volgens de voorwaarden ervan (Creative Commons Naamsvermelding 3.0)."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an metni, Tanzil Projesi'nin Osmanî metnidir ve şartlarına uygun olarak değiştirilmeden kullanılır (Creative Commons Atıf 3.0)."
           }
         }
       }
@@ -7137,6 +7817,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sıradaki vakit, saati ve geri sayım."
+          }
+        }
+      }
+    },
+    "The rules of the mosques in the country you're in, also when you travel. Now: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قواعد مساجد البلد الذي أنت فيه، حتى في السفر. الآن: %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Regeln der Moscheen in dem Land, in dem du bist, auch auf Reisen. Jetzt: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les règles des mosquées du pays où vous êtes, même en voyage. Actuellement : %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De regels van de moskeeën in het land waar je bent, ook op reis. Nu: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bulunduğunuz ülkedeki camilerin hesabı, seyahatte de. Şu an: %@"
           }
         }
       }
@@ -8263,6 +8977,40 @@
         }
       }
     },
+    "Verses": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الآيات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verse"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versets"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verzen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayetler"
+          }
+        }
+      }
+    },
     "Version": {
       "localizations": {
         "ar": {
@@ -8395,40 +9143,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hangi dil?"
-          }
-        }
-      }
-    },
-    "Which school do you follow?": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ما المذهب الذي تتبعه؟"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welcher Rechtsschule folgst du?"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quelle école suivez-vous ?"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welke school (madhab) volg je?"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hangi mezhebe uyuyorsunuz?"
           }
         }
       }
@@ -8599,40 +9313,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Konumunuz belirlenemedi."
-          }
-        }
-      }
-    },
-    "Your school (madhab) decides when Asr begins, and Shia timetables also differ for Maghrib and Isha.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يحدد مذهبك وقت دخول العصر، وتختلف التقاويم الشيعية في المغرب والعشاء أيضًا."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deine Rechtsschule (Madhab) bestimmt, wann Asr beginnt, und schiitische Gebetspläne unterscheiden sich auch bei Maghrib und Isha."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Votre école (madhhab) détermine le début de l’Asr, et les horaires chiites diffèrent aussi pour le Maghrib et l’Isha."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Je school (madhab) bepaalt wanneer Asr begint, en sjiitische roosters verschillen ook voor Maghrib en Isha."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mezhebiniz ikindinin ne zaman gireceğini belirler; Şii takvimleri akşam ve yatsıda da farklıdır."
           }
         }
       }

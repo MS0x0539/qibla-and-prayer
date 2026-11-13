@@ -342,7 +342,7 @@ struct AppSettings: Codable, Equatable {
     var language = AppLanguage.system
     /// Days added to the Hijri date (-2...2): the Umm al-Qura calendar and local moon sighting can differ.
     var hijriOffset = 0
-    /// Chosen in the setup; nil until then.
+    /// Set in Settings (the setup doesn't ask); nil when none is chosen.
     var school: School?
     /// Minutes before each prayer with its bell on for an early reminder; 0 is off.
     var reminderMinutes = 0
@@ -352,6 +352,10 @@ struct AppSettings: Codable, Equatable {
     var ramadanReminders = false
     /// Whether choosing the Ja'fari school set `hijriOffset` (so changing school may undo it, but not a hand-set one).
     var hijriOffsetFromSchool = false
+    /// The method follows the country the times are for, as its mosques calculate, also after travelling.
+    var automaticMethod = true
+    /// The Asr time follows that country too (the later Hanafi Asr in Pakistan and India, for example).
+    var automaticAsr = true
 
     /// What most people in the region use: only a starting point, the user picks.
     static func suggested(
@@ -382,6 +386,17 @@ struct AppSettings: Codable, Equatable {
 }
 
 extension AppSettings {
+    /// "Automatic: Diyanet (Turkey)", or the method picked by hand.
+    var methodSummary: String {
+        automaticMethod ? String(localized: "Automatic: \(method.title)", bundle: .app) : method.title
+    }
+
+    var asrSummary: String {
+        automaticAsr ? String(localized: "Automatic: \(asr.shortTitle)", bundle: .app) : asr.shortTitle
+    }
+}
+
+extension AppSettings {
     /// Reads whatever it can, so settings saved by an older version survive new fields.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -399,5 +414,8 @@ extension AppSettings {
         if let value = try? container.decode(Bool.self, forKey: .jumuahReminder) { jumuahReminder = value }
         if let value = try? container.decode(Bool.self, forKey: .ramadanReminders) { ramadanReminders = value }
         if let value = try? container.decode(Bool.self, forKey: .hijriOffsetFromSchool) { hijriOffsetFromSchool = value }
+        // Settings from before "Automatic" keep the method and Asr that were picked.
+        automaticMethod = (try? container.decode(Bool.self, forKey: .automaticMethod)) ?? false
+        automaticAsr = (try? container.decode(Bool.self, forKey: .automaticAsr)) ?? false
     }
 }

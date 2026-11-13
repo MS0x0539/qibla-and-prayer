@@ -9,10 +9,11 @@ Apple-like and calm, in the "Geometry" look: deep green-black, gold, the eight-p
 | --- | --- |
 | Platform | iPhone only, iOS 18 and later, portrait, dark |
 | Code | Native SwiftUI; prayer times from [Adhan](https://github.com/batoulapps/adhan-swift) 1.5.0, calculated on the phone |
-| Tabs | Prayer times (start screen), Qibla, Tasbih, Tracker, Settings |
+| Tabs | Prayer times (start screen), Qibla, Qur'an, Ibadah (tasbih and tracker), Settings |
 | Compass | Rotating dial with the Kaaba marker on the rim; gold star and one haptic tap when facing the Qibla |
 | Languages | English (default), Dutch, German, French, Turkish, Arabic (right to left), switchable inside the app |
-| Calculation | The user chooses, step by step: madhab, then method (17 to choose from), suggested by country, language and madhab |
+| Calculation | "Automatic" by default: the method and Asr of the country the times are for (and the language), also when travelling; any of the 17 methods, the Asr and the madhab can be fixed in Settings. The setup no longer asks the madhab (13 November 2026). |
+| Qur'an | Arabic only: Tanzil's Uthmani text (CC BY 3.0, unchanged, credited with a link) on the Madinah mushaf's 604 pages, Amiri Quran font (OFL). The exact Madinah calligraphy and 15-line layout (King Fahd Complex page fonts) needs the Complex's written permission first. |
 | Notifications | One per prayer (switch per prayer), optional reminder 5-30 minutes before, Jumu'ah reminder, suhoor/iftar in Ramadan; standard sound |
 | Name | App Store: "Wajh: Qibla & Prayer Times" (store names must be unique); under the icon: "Qibla & Prayer" |
 | Later | Duas and adhkar, Quran, zakat calculator; Apple Watch; an adhan sound |

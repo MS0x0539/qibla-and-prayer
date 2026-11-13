@@ -9,7 +9,11 @@ On the App Store as "Wajh: Qibla & Prayer Times".
   authority computes its own tables ([Adhan](https://github.com/batoulapps/adhan-swift)'s astronomy for most;
   Diyanet, MUIS, Moonsighting and Banuri Town with their own), checked day by day against those official
   timetables (see docs/PLAN.md): 17 methods, suggested by country, language and madhab in a step-by-step
-  setup; each prayer can be moved by a few minutes to match a mosque.
+  setup; each prayer can be moved by a few minutes to match a mosque. By default ("Automatic") the method and Asr
+  follow the country you're in, as its mosques calculate, also when you travel.
+- **Qur'an:** the full Arabic text (Tanzil's Uthmani text, unchanged) on the 604 pages of the Madinah mushaf,
+  turned right to left, in the Amiri Quran font; an index of surahs, juz and the Qur'an's du'as, and search by
+  surah name (Arabic, Latin, Turkish, Dutch, German, French), du'a name or Arabic words.
 - **Reminders:** optionally 5-30 minutes before each prayer, an hour before Jumu'ah, and before suhoor
   ends and at iftar in Ramadan.
 - **Islamic calendar:** the year's special days and nights, and a Ramadan timetable (suhoor/iftar);
@@ -17,7 +21,7 @@ On the App Store as "Wajh: Qibla & Prayer Times".
 - **Qibla:** a compass dial with the Kaaba marker on the rim; it turns gold with a haptic tap when
   the phone faces the Qibla.
 - **Map:** the Qibla as a line to the Kaaba, and mosques nearby.
-- **Tasbih:** a tap counter with haptics. **Tracker:** fasts and missed prayers, kept on the phone.
+- **Ibadah:** the tasbih (a tap counter with haptics) and the tracker (fasts and missed prayers, kept on the phone).
 - **Siri:** "When is Maghrib in Qibla & Prayer?" without opening the app.
 - **Iftar countdown:** on the Lock Screen and in the Dynamic Island (a Live Activity, from the Ramadan
   card or the Tracker). The Next prayer widgets are built but off until the App Group is registered in
