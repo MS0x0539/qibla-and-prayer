@@ -123,27 +123,29 @@
   },
   "accessibility": {
     "title": "Accessibilité",
-    "updated": "Dernière mise à jour : 12 novembre 2026",
-    "intro": "« Qibla & Prayer » doit fonctionner pour tout le monde. Cette page indique ce que l’app fait aujourd’hui pour l’accessibilité, ce qui n’est pas encore terminé, et comment me signaler ce qui ne fonctionne pas pour vous.",
+    "updated": "Dernière mise à jour : 13 novembre 2026",
+    "intro": "« Qibla & Prayer » doit fonctionner pour tout le monde. Cette page indique ce que l’app fait aujourd’hui pour l’accessibilité, et comment me signaler ce qui ne fonctionne pas pour vous.",
     "sections": [
       {
         "heading": "Ce que l’app prend en charge",
         "paragraphs": [
-          "Interface sombre : l’app est toujours sombre, avec un texte clair.",
+          "VoiceOver : chaque bouton, icône et commande a une étiquette parlée, et l’écran de la Qibla vous indique de quel côté vous tourner. Le Coran est lu avec une voix arabe, et chaque verset d’une page est une action (dans le rotor) qui l’ouvre pour le copier, le partager ou l’écouter.",
+          "Commande vocale : chaque commande a un nom que vous pouvez prononcer, conforme à ce que vous voyez. Les actions d’une page du Coran permettent d’ouvrir chacun de ses versets.",
+          "Texte plus grand : le texte s’agrandit avec la taille de texte de votre iPhone, jusqu’aux plus grandes tailles d’accessibilité. À ces tailles, le calendrier du mois présente les horaires de chaque jour en liste plutôt qu’en sept colonnes. La page du Coran a aussi sa propre taille de texte dans son menu. Le compteur du tasbih, déjà très grand, garde sa taille.",
+          "Interface sombre : l’app est sombre, avec du texte clair. Le Coran s’ouvre sur une page claire couleur papier ; choisissez Nuit dans son menu et il reste sombre.",
           "Contraste : tout le texte a un contraste d’au moins 6,3 pour 1 avec son arrière-plan. Les Règles pour l’accessibilité des contenus Web (WCAG) demandent 4,5 pour 1.",
-          "Pas seulement par la couleur : la prochaine prière et la prochaine date du calendrier hégirien sont précédées d’un losange, la ligne d’aujourd’hui est en gras dans les tableaux, et un choix sélectionné porte une coche. Une cloche désactivée est barrée.",
+          "Pas seulement par la couleur : la prochaine prière et la prochaine date du calendrier hégirien sont précédées d’un losange, la ligne d’aujourd’hui est en gras dans les tableaux, et un choix sélectionné porte une coche. Une cloche désactivée est barrée. Dans le Coran, le verset récité ou recherché est surligné, et aussi souligné lorsque « Différencier sans couleur » est activé.",
           "Réduire les animations : lorsque ce réglage est activé dans les réglages d’accessibilité de votre iPhone, la boussole, la configuration et le compteur de tasbih ne s’animent plus.",
+          "Sous-titres : quand le Coran est récité, la page affiche le texte arabe récité et marque le verset. La récitation correspond exactement au texte de la page.",
           "Retour haptique : votre iPhone vibre légèrement lorsque vous faites face à la qibla, à chaque compte du tasbih et à la fin de chaque tour.",
           "Langues : anglais, néerlandais, allemand, français, turc et arabe. L’arabe se lit de droite à gauche."
         ]
       },
       {
-        "heading": "Pas encore terminé",
+        "heading": "Bon à savoir",
         "paragraphs": [
-          "VoiceOver : les boutons et les icônes ont des libellés lus à voix haute, et l’écran de la qibla vous indique de quel côté tourner. Je n’ai pas encore testé chaque écran avec VoiceOver ; c’est pourquoi l’App Store ne l’indique pas encore.",
-          "Police plus grande : la plupart des textes grandissent avec la taille du texte choisie sur votre iPhone. Les horaires du mois cessent de grandir lorsque leurs sept colonnes ne tiennent plus, et le grand compteur de tasbih garde sa taille.",
-          "Contrôle vocal : je n’ai pas encore testé l’app avec le Contrôle vocal.",
-          "L’app ne contient ni vidéos ni contenu audio parlé, donc les sous-titres et l’audiodescription ne s’appliquent pas."
+          "L’app n’a pas de vidéos, donc l’audiodescription ne s’applique pas.",
+          "À chaque version, l’audit d’accessibilité automatique d’Apple vérifie chaque écran, à la taille de texte normale et à la plus grande. Un tel audit ne trouve pas tout : dites-moi si quelque chose ne fonctionne pas pour vous."
         ]
       },
       {

@@ -268,7 +268,10 @@ struct MushafPage: View {
         // Al-Fatiha and the start of Al-Baqarah are centred, as printed; the other pages are justified.
         paragraphStyle.alignment = number <= 2 ? .center : .justified
         paragraphStyle.baseWritingDirection = .rightToLeft
-        paragraphStyle.lineHeightMultiple = 1.3
+        // Amiri Quran's own line height (2.45 em) is for its tallest stacked marks; 2.1 em between lines fits a
+        // page's 15 lines on an iPhone, as in print, without the marks of two lines meeting.
+        paragraphStyle.minimumLineHeight = font.pointSize * 2.1
+        paragraphStyle.maximumLineHeight = font.pointSize * 2.1
         let ink = UIColor(style.ink)
         let ornament = UIColor(style.ornament)
         let number = UIColor(style.number)
