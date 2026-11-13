@@ -23,8 +23,10 @@ struct MushafPager: UIViewControllerRepresentable {
         controller.delegate = context.coordinator
         controller.view.backgroundColor = .clear
         handle?.controller = controller
-        // Right to left, as a mushaf is read.
-        controller.view.semanticContentAttribute = .forceRightToLeft
+        // Right to left, as a mushaf is read. A curl gets that from its spine on the right; in a right-to-left layout
+        // UIKit would mirror the spine again (a right swipe then turned back), so its layout stays left to right
+        // whatever the iPhone's language. A slide needs the right-to-left layout itself.
+        controller.view.semanticContentAttribute = curl ? .forceLeftToRight : .forceRightToLeft
         // A stored page out of range (an old or damaged value) opens the nearest real one.
         let first = min(max(page, 1), Quran.pageCount)
         controller.setViewControllers([context.coordinator.controller(for: first)], direction: .forward, animated: false)
