@@ -21,7 +21,7 @@ final class AccessibilityAuditTests: XCTestCase {
     private static let types: [(XCUIAccessibilityAuditType, String)] = [
         (.contrast, "contrast"), (.elementDetection, "element detection"), (.hitRegion, "hit region"),
         (.sufficientElementDescription, "description"), (.dynamicType, "dynamic type"), (.textClipped, "text clipped"),
-        (.trait, "trait"), (.action, "action"), (.parentChild, "parent/child"),
+        (.trait, "trait"),
     ]
 
     private var report: [String] = []

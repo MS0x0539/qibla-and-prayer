@@ -298,6 +298,8 @@ struct MushafPage: View {
             if verse.index == marked {
                 let whole = NSRange(location: 0, length: run.length)
                 run.addAttribute(.backgroundColor, value: ornament.withAlphaComponent(0.2), range: whole)
+                // On the highlight the number in ink keeps every text above 6.3:1, as the accessibility page says.
+                run.addAttribute(.foregroundColor, value: ink, range: whole)
                 // Differentiate Without Color: underlined as well.
                 if differentiateWithoutColor {
                     run.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: whole)
