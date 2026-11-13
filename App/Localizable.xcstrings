@@ -749,6 +749,40 @@
         }
       }
     },
+    "Allow camera access in iPhone Settings to see the Qibla on the camera picture.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسمح بالوصول إلى الكاميرا في إعدادات iPhone لرؤية القبلة على صورة الكاميرا."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erlaube den Kamerazugriff in den iPhone-Einstellungen, um die Qibla im Kamerabild zu sehen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorisez l’accès à l’appareil photo dans les Réglages de l’iPhone pour voir la Qibla sur l’image."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sta cameratoegang toe in de iPhone-instellingen om de qibla op het camerabeeld te zien."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kıbleyi kamera görüntüsünde görmek için iPhone Ayarlar'ında kamera erişimine izin verin."
+          }
+        }
+      }
+    },
     "Allow location access": {
       "localizations": {
         "ar": {
@@ -1459,6 +1493,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hesaplama yöntemi"
+          }
+        }
+      }
+    },
+    "Camera": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الكاميرا"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appareil photo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camera"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera"
           }
         }
       }
@@ -3537,6 +3605,40 @@
         }
       }
     },
+    "Hold your phone upright and turn until the star is in the middle.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أمسك هاتفك عموديًا واستدر حتى تصبح النجمة في المنتصف."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halte dein Telefon aufrecht und drehe dich, bis der Stern in der Mitte ist."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tenez votre téléphone droit et tournez jusqu’à ce que l’étoile soit au milieu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Houd je telefoon rechtop en draai tot de ster in het midden staat."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefonunuzu dik tutun ve yıldız ortaya gelene kadar dönün."
+          }
+        }
+      }
+    },
     "How are times calculated?": {
       "localizations": {
         "ar": {
@@ -4795,6 +4897,40 @@
         }
       }
     },
+    "Live from the Masjid al-Haram, on the Saudi Quran TV channel on YouTube.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بث مباشر من المسجد الحرام على قناة القرآن الكريم السعودية في YouTube."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live aus der Masjid al-Haram, auf dem Kanal von Saudi Quran TV auf YouTube."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En direct de la Masjid al-Haram, sur la chaîne Saudi Quran TV sur YouTube."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live vanuit de Masjid al-Haram, op het kanaal van Saudi Quran TV op YouTube."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mescid-i Haram'dan canlı, YouTube'daki Saudi Quran TV kanalında."
+          }
+        }
+      }
+    },
     "Location": {
       "localizations": {
         "ar": {
@@ -4995,6 +5131,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Akşam"
+          }
+        }
+      }
+    },
+    "Makkah live": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مكة مباشرة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mekka live"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La Mecque en direct"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makkah live"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mekke canlı"
           }
         }
       }
@@ -10439,6 +10609,40 @@
         }
       }
     },
+    "The stream comes from YouTube, which receives your IP address while you watch, under Google's own privacy policy.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يأتي البث من YouTube، الذي يتلقى عنوان IP الخاص بك أثناء المشاهدة وفق سياسة الخصوصية الخاصة بـ Google."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Stream kommt von YouTube, das deine IP-Adresse erhält, während du zusiehst, gemäß Googles eigener Datenschutzerklärung."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le flux vient de YouTube, qui reçoit votre adresse IP pendant que vous regardez, selon la politique de confidentialité de Google."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De stream komt van YouTube, dat je IP-adres ontvangt terwijl je kijkt, onder het eigen privacybeleid van Google."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yayın YouTube'dan gelir; YouTube izlerken IP adresinizi Google'ın kendi gizlilik politikasına göre alır."
+          }
+        }
+      }
+    },
     "The tasbih with the tasbihat after prayer, and the tracker with your khatm.": {
       "localizations": {
         "ar": {
@@ -10571,6 +10775,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bu uygulama, Batoul Apps'in Adhan kütüphanesini MIT Lisansı altında kullanır."
+          }
+        }
+      }
+    },
+    "This device has no camera that can show the Qibla.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يحتوي هذا الجهاز على كاميرا يمكنها إظهار القبلة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dieses Gerät hat keine Kamera, die die Qibla zeigen kann."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cet appareil n’a pas d’appareil photo pouvant montrer la Qibla."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit apparaat heeft geen camera die de qibla kan tonen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu cihazda kıbleyi gösterebilecek bir kamera yok."
           }
         }
       }

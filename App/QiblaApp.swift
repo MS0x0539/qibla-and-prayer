@@ -67,10 +67,14 @@ struct RootView: View {
         // From the widgets: wajh://page/42 opens a page, wajh://verse/261 a verse.
         .onOpenURL { url in
             guard url.scheme == "wajh", let number = Int(url.lastPathComponent) else { return }
+            // Any app can open such a link: only real pages and verses are taken.
             switch url.host() {
-            case "page": SharedStore.defaults.set(number, forKey: QuranProgress.pageKey)
-            case "verse": UserDefaults.standard.set(number, forKey: "openVerse")
-            default: return
+            case "page" where (1...Quran.pageCount).contains(number):
+                SharedStore.defaults.set(number, forKey: QuranProgress.pageKey)
+            case "verse" where Quran.shared.verses.indices.contains(number):
+                UserDefaults.standard.set(number, forKey: "openVerse")
+            default:
+                return
             }
             tab = .quran
         }

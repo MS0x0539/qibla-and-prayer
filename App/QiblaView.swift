@@ -9,6 +9,9 @@ struct QiblaView: View {
     @State private var showingHelp = false
     // `-showMap YES` opens the map first (used for CI screenshots).
     @State private var showingMap = UserDefaults.standard.bool(forKey: "showMap")
+    @State private var showingCamera = false
+    // `-showLive YES` opens Makkah live first (used for CI screenshots).
+    @State private var showingLive = UserDefaults.standard.bool(forKey: "showLive")
 
     /// The turn from the phone's heading to the Qibla: negative is left, positive is right.
     private var offset: Double? {
@@ -50,6 +53,8 @@ struct QiblaView: View {
             }
             .sheet(isPresented: $showingHelp) { CompassHelp() }
             .navigationDestination(isPresented: $showingMap) { QiblaMapView() }
+            .navigationDestination(isPresented: $showingLive) { MakkahLiveView() }
+            .fullScreenCover(isPresented: $showingCamera) { QiblaCameraView() }
         }
         .onAppear { model.location.startHeading() }
         .onDisappear { model.location.stopHeading() }
@@ -155,6 +160,19 @@ struct QiblaView: View {
         .controlSize(.large)
         .foregroundStyle(Theme.gold)
         .padding(.top, 18)
+
+        HStack(spacing: 12) {
+            Button { showingCamera = true } label: {
+                Label("Camera", systemImage: "camera")
+            }
+            Button { showingLive = true } label: {
+                Label("Makkah live", systemImage: "play.tv")
+            }
+        }
+        .buttonStyle(.bordered)
+        .controlSize(.large)
+        .foregroundStyle(Theme.gold)
+        .padding(.top, 10)
     }
 
     /// The turn from the current heading to the Qibla, between -180° (left) and 180° (right).

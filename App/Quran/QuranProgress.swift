@@ -28,6 +28,7 @@ enum QuranProgress {
     static let keys = [pageKey, bookmarksKey, khatmPagesKey, khatmCountKey, todayKey]
 
     static func toggleBookmark(_ page: Int, defaults: UserDefaults = SharedStore.defaults) {
+        guard (1...Quran.pageCount).contains(page) else { return }
         var bookmarks = pages(defaults.string(forKey: bookmarksKey) ?? "")
         if bookmarks.contains(page) { bookmarks.remove(page) } else { bookmarks.insert(page) }
         defaults.set(text(bookmarks), forKey: bookmarksKey)
@@ -35,6 +36,7 @@ enum QuranProgress {
 
     /// Counts a page as read today and in the current khatm; the 604th page completes the khatm and starts a new one.
     static func markRead(_ page: Int, on date: Date = .now, defaults: UserDefaults = SharedStore.defaults) {
+        guard (1...Quran.pageCount).contains(page) else { return }
         var khatm = pages(defaults.string(forKey: khatmPagesKey) ?? "")
         khatm.insert(page)
         if khatm.count >= Quran.pageCount {

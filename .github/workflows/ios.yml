@@ -131,6 +131,7 @@ jobs:
           xcrun simctl launch "$UDID" "$BID" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showMap YES
           sleep 15
           xcrun simctl io "$UDID" screenshot "screenshots/en-map.png"
+          shot "en-makkah-live" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showLive YES
           shot "fr-settings" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab settings
           for step in 0 1 2 3 4 5; do
             shot "setup-$step-en" -AppleLanguages "(en)" -AppleLocale en_US -setupStep "$step"

@@ -1,6 +1,47 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "NSCameraUsageDescription": {
+      "comment": "Asked when the Qibla camera opens.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تُظهر الكاميرا اتجاه مكة على الصورة المباشرة. لا يُسجَّل شيء ولا يُحفظ ولا يُرسَل."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Kamera zeigt die Richtung nach Mekka im Livebild. Nichts wird aufgenommen, gespeichert oder gesendet."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera shows the way to Mecca on the live picture. Nothing is recorded, saved or sent."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’appareil photo montre la direction de La Mecque sur l’image en direct. Rien n’est enregistré, conservé ni envoyé."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De camera toont de richting van Mekka op het live beeld. Er wordt niets opgenomen, bewaard of verstuurd."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera, canlı görüntüde Mekke'nin yönünü gösterir. Hiçbir şey kaydedilmez, saklanmaz ya da gönderilmez."
+          }
+        }
+      }
+    },
     "NSLocationWhenInUseUsageDescription": {
       "extractionState": "manual",
       "localizations": {

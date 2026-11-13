@@ -25,7 +25,9 @@ struct MushafPager: UIViewControllerRepresentable {
         handle?.controller = controller
         // Right to left, as a mushaf is read.
         controller.view.semanticContentAttribute = .forceRightToLeft
-        controller.setViewControllers([context.coordinator.controller(for: page)], direction: .forward, animated: false)
+        // A stored page out of range (an old or damaged value) opens the nearest real one.
+        let first = min(max(page, 1), Quran.pageCount)
+        controller.setViewControllers([context.coordinator.controller(for: first)], direction: .forward, animated: false)
         // A curl also turns on a tap at the page's edge, where a tap should open the verse instead.
         for gesture in controller.gestureRecognizers where gesture is UITapGestureRecognizer {
             gesture.isEnabled = false

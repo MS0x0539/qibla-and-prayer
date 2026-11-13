@@ -41,6 +41,7 @@ targets:
         INFOPLIST_FILE: App/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: "Qibla & Prayer"
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
+        INFOPLIST_KEY_NSCameraUsageDescription: "The camera shows the way to Mecca on the live picture. Nothing is recorded, saved or sent."
         INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: "Your location is used to calculate prayer times and the Qibla direction. Apart from Apple Maps, which names the place, shows the map and finds mosques nearby, this app shares it with no one."
         INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
