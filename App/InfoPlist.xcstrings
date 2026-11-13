@@ -82,6 +82,47 @@
           }
         }
       }
+    },
+    "NSPhotoLibraryAddUsageDescription": {
+      "comment": "Asked when someone saves an image they share (a page, a verse, the day's times) to Photos.",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لتحفظ في الصور صفحةً أو آيةً أو مواقيت اليوم التي تشاركها كصورة. لا يستطيع التطبيق رؤية صورك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Damit kannst du eine Seite, einen Vers oder die Gebetszeiten des Tages, die du als Bild teilst, in Fotos sichern. Die App kann deine Fotos nicht sehen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lets you save a page, verse or the day's prayer times that you share as an image to Photos. The app can't see your photos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pour enregistrer dans Photos une page, un verset ou les horaires du jour que vous partagez en image. L’app ne peut pas voir vos photos."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiermee bewaar je een pagina, vers of de gebedstijden van vandaag die je als afbeelding deelt in Foto's. De app kan je foto's niet zien."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Görsel olarak paylaştığınız bir sayfayı, ayeti ya da günün namaz vakitlerini Fotoğraflar'a kaydedebilmeniz için. Uygulama fotoğraflarınızı göremez."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
