@@ -62,6 +62,8 @@ struct TasbihView: View {
     /// One of Dhikr.all, the after-prayer sequence, or "" to count without a phrase.
     @AppStorage("tasbihDhikr") private var dhikrID = ""
     @AppStorage("tasbihStep") private var step = 0
+    /// The count grows with the text size; it shrinks again to stay inside the circle.
+    @ScaledMetric(relativeTo: .largeTitle) private var countSize: CGFloat = 88
     @State private var taps = 0
     @State private var roundDone = false
     @State private var confirmingReset = false
@@ -180,7 +182,7 @@ struct TasbihView: View {
                         .stroke(Theme.gold.opacity(0.25), lineWidth: 1)
                         .padding(44)
                     Text(verbatim: Formats.number(count))
-                        .font(.system(size: 88, weight: .medium, design: .serif).monospacedDigit())
+                        .font(.system(size: countSize, weight: .medium, design: .serif).monospacedDigit())
                         .foregroundStyle(Theme.ink)
                         .contentTransition(.numericText())
                         .minimumScaleFactor(0.5)

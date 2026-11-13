@@ -131,7 +131,7 @@
         "paragraphs": [
           "VoiceOver: every button, icon and control has a spoken label, and the Qibla screen tells you which way to turn. The Qur’an is read with an Arabic voice, and each verse on a page is an action (in the rotor) that opens it to copy, share or play.",
           "Voice Control: every control has a name you can say, matching what you see. Say “Show actions” on a Qur’an page to open one of its verses.",
-          "Larger Text: text grows with the text size set on your iPhone, up to the largest accessibility sizes. At those sizes the monthly timetable lists each day’s times instead of seven columns. The Qur’an page also has its own text size in its menu. The tasbih’s count, already very large, keeps its size.",
+          "Larger Text: text grows with the text size set on your iPhone, up to the largest accessibility sizes. At those sizes the monthly timetable lists each day’s times instead of seven columns. The Qur’an page also has its own text size in its menu. The tasbih’s count grows until it fills its circle.",
           "Dark interface: the app is dark, with light text. The Qur’an opens on a light paper page; choose Night in its menu and it stays dark.",
           "Contrast: all text has a contrast of at least 6.3 to 1 against its background. The Web Content Accessibility Guidelines (WCAG) ask for 4.5 to 1.",
           "Not by colour alone: the next prayer and the next day in the Islamic calendar have a diamond in front, today’s row in the tables is bold, and a selected choice has a check mark. A bell that is off is crossed out. In the Qur’an, the verse being recited or found is highlighted, and also underlined when Differentiate Without Colour is on.",
