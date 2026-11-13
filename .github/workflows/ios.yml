@@ -116,6 +116,7 @@ jobs:
             shot "en-quran-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage "$page"
           done
           shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranPage 2
+          shot "en-quran-42-night" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage 42 -quranNight YES
           # The map loads tiles and mosques over the network: give it longer.
           xcrun simctl terminate "$UDID" "$BID" 2>/dev/null || true
           xcrun simctl launch "$UDID" "$BID" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showMap YES

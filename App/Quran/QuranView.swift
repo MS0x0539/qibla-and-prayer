@@ -6,24 +6,31 @@ import UIKit
 struct QuranView: View {
     // `-quranPage 42` opens another page first (used for CI screenshots); afterwards the last page read.
     @AppStorage("quranPage") private var page = 1
+    /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
+    // `-quranNight YES` for CI screenshots of the night page.
+    @AppStorage("quranNight") private var night = false
     @State private var showingIndex = false
     /// A verse found through the index or search, marked on its page until another page is shown.
     @State private var marked: Int?
 
     var body: some View {
+        let style = night ? MushafStyle.dark : MushafStyle.printed
         NavigationStack {
             TabView(selection: $page) {
                 ForEach(1...Quran.pageCount, id: \.self) { number in
-                    MushafPage(number: number, textSize: textSize, marked: marked)
+                    MushafPage(number: number, textSize: textSize, marked: marked, style: style)
                         .tag(number)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             // A mushaf is read right to left: the next page lies to the left.
             .environment(\.layoutDirection, .rightToLeft)
-            .background(Theme.background.ignoresSafeArea())
+            .background(style.paper.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(style.paper, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(night ? .dark : .light, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showingIndex = true } label: {
@@ -34,10 +41,14 @@ struct QuranView: View {
                 ToolbarItem(placement: .principal) {
                     Text("Page \(page)")
                         .font(.subheadline.monospacedDigit())
-                        .foregroundStyle(Theme.muted)
+                        .foregroundStyle(style.muted)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
+                        Picker("Page", selection: $night) {
+                            Label("Paper", systemImage: "sun.max").tag(false)
+                            Label("Night", systemImage: "moon").tag(true)
+                        }
                         Button("Larger text", systemImage: "textformat.size.larger") { textSize = min(textSize + 2, 40) }
                             .disabled(textSize >= 40)
                         Button("Smaller text", systemImage: "textformat.size.smaller") { textSize = max(textSize - 2, 18) }
@@ -62,70 +73,130 @@ struct QuranView: View {
     }
 }
 
-/// One page of the mushaf: its surah and juz at the top, the verses with their numbers, the page number below.
+/// How a mushaf page looks: printed paper (the default) or dark for reading at night.
+struct MushafStyle {
+    let paper: Color
+    let ink: Color
+    /// The gold of the frames and the verse-end signs.
+    let ornament: Color
+    /// The green of the inner frame lines and the margin notes.
+    let accent: Color
+    let muted: Color
+    /// How dark the fold of the book is.
+    let fold: Double
+
+    static let printed = MushafStyle(
+        paper: Color(hex: 0xFBF6E8), ink: Color(hex: 0x1E1912), ornament: Color(hex: 0xB0893C),
+        accent: Color(hex: 0x2B5A43), muted: Color(hex: 0x7B6B50), fold: 0.16)
+    static let dark = MushafStyle(
+        paper: Theme.background, ink: Theme.ink, ornament: Theme.gold,
+        accent: Color(hex: 0x7FA88E), muted: Theme.muted, fold: 0.5)
+}
+
+/// One page of the mushaf, laid out like the printed one: the surah and juz in the top margin, the framed text,
+/// the page number in a medallion, and the fold of the book on the inner edge.
 struct MushafPage: View {
     let number: Int
     let textSize: Double
     let marked: Int?
+    let style: MushafStyle
+
+    private static let smallest = 16.0
 
     var body: some View {
         let quran = Quran.shared
         let verses = quran.verses(onPage: number)
-        ScrollView {
-            VStack(spacing: 14) {
-                if let first = verses.first {
-                    HStack {
-                        Text(verbatim: "سورة " + quran.surahs[first.surah - 1].name)
-                        Spacer()
-                        Text(verbatim: "الجزء " + Quran.arabicDigits(quran.juz(ofVerse: first.index)))
-                    }
-                    .font(Quran.font(size: 17))
-                    .foregroundStyle(Theme.gold)
+        VStack(spacing: 8) {
+            if let first = verses.first {
+                HStack {
+                    Text(verbatim: "سورة " + quran.surahs[first.surah - 1].name)
+                    Spacer()
+                    Text(verbatim: "الجزء " + Quran.arabicDigits(quran.juz(ofVerse: first.index)))
                 }
-                ForEach(blocks(verses)) { block in
-                    switch block.kind {
-                    case .header(let surah):
-                        SurahHeader(name: quran.surahs[surah - 1].name)
-                    case .basmala(let basmala):
-                        Text(verbatim: basmala)
-                            .font(Quran.font(size: textSize))
-                            .foregroundStyle(Theme.ink)
-                    case .text(let text):
-                        ArabicParagraph(text: text)
-                    }
-                }
-                Text(verbatim: Quran.arabicDigits(number))
-                    .font(Quran.font(size: 17))
-                    .foregroundStyle(Theme.muted)
-                    .padding(.top, 4)
+                .font(Quran.font(size: 15))
+                .foregroundStyle(style.accent)
+                .padding(.horizontal, 10)
             }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 18)
-                    .strokeBorder(Theme.gold.opacity(0.45), lineWidth: 1.5)
-            )
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
+            // The largest size up to the reader's at which the page fits the screen, as on paper; it scrolls only
+            // when even the smallest doesn't fit (very large text sizes).
+            ViewThatFits(in: .vertical) {
+                ForEach(stride(from: max(textSize, Self.smallest), through: Self.smallest, by: -2).map { $0 }, id: \.self) { size in
+                    framedText(verses, size: size)
+                }
+                ScrollView { framedText(verses, size: Self.smallest) }
+                    .scrollBounceBehavior(.basedOnSize)
+            }
+            Text(verbatim: Quran.arabicDigits(number))
+                .font(Quran.font(size: 15))
+                .foregroundStyle(style.ink)
+                .frame(minWidth: 36, minHeight: 36)
+                .background(Circle().strokeBorder(style.ornament, lineWidth: 1.5))
+                .overlay(Circle().strokeBorder(style.accent.opacity(0.6), lineWidth: 0.8).padding(3))
         }
-        .scrollBounceBehavior(.basedOnSize)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(style.paper)
+        .overlay { fold }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("Page \(number)"))
     }
 
+    private func framedText(_ verses: ArraySlice<Quran.Verse>, size: Double) -> some View {
+        VStack(spacing: 10) {
+            ForEach(blocks(verses, size: size)) { block in
+                switch block.kind {
+                case .header(let surah):
+                    SurahHeader(name: Quran.shared.surahs[surah - 1].name, style: style)
+                case .basmala(let basmala):
+                    Text(verbatim: basmala)
+                        .font(Quran.font(size: size))
+                        .foregroundStyle(style.ink)
+                case .text(let text):
+                    ArabicParagraph(text: text)
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 18)
+        .frame(maxWidth: .infinity)
+        .background(MushafFrame(style: style))
+    }
+
+    /// The fold of the book: shade on the left of a right-hand (odd) page, on the right of a left-hand (even) one.
+    private var fold: some View {
+        HStack(spacing: 0) {
+            if number % 2 == 1 {
+                LinearGradient(colors: [.black.opacity(style.fold), .clear], startPoint: .leading, endPoint: .trailing)
+                    .frame(width: 22)
+                Spacer(minLength: 0)
+            } else {
+                Spacer(minLength: 0)
+                LinearGradient(colors: [.clear, .black.opacity(style.fold)], startPoint: .leading, endPoint: .trailing)
+                    .frame(width: 22)
+            }
+        }
+        .environment(\.layoutDirection, .leftToRight)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
     /// The page's parts in order: a header and basmala where a surah begins, then its verses as one paragraph.
-    private func blocks(_ verses: ArraySlice<Quran.Verse>) -> [Block] {
+    private func blocks(_ verses: ArraySlice<Quran.Verse>, size: Double) -> [Block] {
         var blocks: [Block] = []
         var paragraph = NSMutableAttributedString()
         func flush() {
             if paragraph.length > 0 { blocks.append(Block(id: blocks.count, kind: .text(paragraph))) }
             paragraph = NSMutableAttributedString()
         }
-        let font = Quran.uiFont(size: textSize)
-        let style = NSMutableParagraphStyle()
-        style.alignment = .justified
-        style.baseWritingDirection = .rightToLeft
-        style.lineHeightMultiple = 1.35
+        let font = Quran.uiFont(size: size)
+        let paragraphStyle = NSMutableParagraphStyle()
+        // Al-Fatiha and the start of Al-Baqarah are centred, as printed; the other pages are justified.
+        paragraphStyle.alignment = number <= 2 ? .center : .justified
+        paragraphStyle.baseWritingDirection = .rightToLeft
+        paragraphStyle.lineHeightMultiple = 1.3
+        let ink = UIColor(style.ink)
+        let ornament = UIColor(style.ornament)
         for verse in verses {
             var text = verse.text
             if verse.number == 1 && verse.surah != 1 {
@@ -142,14 +213,15 @@ struct MushafPage: View {
             } else if verse.number == 1 {
                 blocks.append(Block(id: blocks.count, kind: .header(verse.surah)))
             }
-            // The verse, then its number inside the end-of-verse sign (U+06DD takes the digits after it).
-            let run = NSMutableAttributedString(string: text + " \u{06DD}" + Quran.arabicDigits(verse.number) + " ", attributes: [
-                .font: font,
-                .foregroundColor: UIColor(Theme.ink),
-                .paragraphStyle: style,
+            // The verse, then its number inside the end-of-verse sign in gold (U+06DD takes the digits after it).
+            let run = NSMutableAttributedString(string: text + " ", attributes: [
+                .font: font, .foregroundColor: ink, .paragraphStyle: paragraphStyle,
             ])
+            run.append(NSAttributedString(string: "\u{06DD}" + Quran.arabicDigits(verse.number) + " ", attributes: [
+                .font: font, .foregroundColor: ornament, .paragraphStyle: paragraphStyle,
+            ]))
             if verse.index == marked {
-                run.addAttribute(.backgroundColor, value: UIColor(Theme.gold).withAlphaComponent(0.25),
+                run.addAttribute(.backgroundColor, value: ornament.withAlphaComponent(0.25),
                                  range: NSRange(location: 0, length: run.length))
             }
             paragraph.append(run)
@@ -169,19 +241,49 @@ struct MushafPage: View {
     }
 }
 
-/// The framed name at the start of a surah.
-struct SurahHeader: View {
-    let name: String
+/// The frame around the text, as in a printed mushaf: a gold line, a thin green one inside it, stars in the corners.
+struct MushafFrame: View {
+    let style: MushafStyle
 
     var body: some View {
-        Text(verbatim: "سورة " + name)
-            .font(Quran.font(size: 22))
-            .foregroundStyle(Theme.gold)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 8)
-            .background(Theme.card, in: RoundedRectangle(cornerRadius: 10))
-            .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Theme.gold.opacity(0.6), lineWidth: 1))
-            .accessibilityAddTraits(.isHeader)
+        RoundedRectangle(cornerRadius: 4)
+            .strokeBorder(style.ornament, lineWidth: 2.5)
+            .overlay(RoundedRectangle(cornerRadius: 2).strokeBorder(style.accent.opacity(0.65), lineWidth: 1).padding(5))
+            .overlay(alignment: .topLeading) { corner.offset(x: -7, y: -7) }
+            .overlay(alignment: .topTrailing) { corner.offset(x: 7, y: -7) }
+            .overlay(alignment: .bottomLeading) { corner.offset(x: -7, y: 7) }
+            .overlay(alignment: .bottomTrailing) { corner.offset(x: 7, y: 7) }
+            .environment(\.layoutDirection, .leftToRight)
+            .accessibilityHidden(true)
+    }
+
+    private var corner: some View {
+        EightPointStar()
+            .fill(style.ornament)
+            .frame(width: 14, height: 14)
+            .background(Circle().fill(style.paper).frame(width: 12, height: 12))
+    }
+}
+
+/// The framed name at the start of a surah, between two stars, as in a printed mushaf.
+struct SurahHeader: View {
+    let name: String
+    let style: MushafStyle
+
+    var body: some View {
+        HStack(spacing: 12) {
+            EightPointStar().fill(style.ornament).frame(width: 11, height: 11)
+            Text(verbatim: "سورة " + name)
+                .font(Quran.font(size: 21))
+                .foregroundStyle(style.ink)
+            EightPointStar().fill(style.ornament).frame(width: 11, height: 11)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
+        .background(style.ornament.opacity(0.14), in: RoundedRectangle(cornerRadius: 8))
+        .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(style.ornament, lineWidth: 1.5))
+        .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(style.accent.opacity(0.55), lineWidth: 0.8).padding(3))
+        .accessibilityAddTraits(.isHeader)
     }
 }
 
@@ -189,25 +291,22 @@ struct SurahHeader: View {
 struct ArabicParagraph: UIViewRepresentable {
     let text: NSAttributedString
 
-    func makeUIView(context: Context) -> UITextView {
-        let view = UITextView()
-        view.isEditable = false
-        view.isSelectable = false
-        view.isScrollEnabled = false
-        view.backgroundColor = .clear
-        view.textContainerInset = .zero
-        view.textContainer.lineFragmentPadding = 0
-        view.adjustsFontForContentSizeCategory = true
-        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        return view
+    func makeUIView(context: Context) -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        return label
     }
 
-    func updateUIView(_ view: UITextView, context: Context) {
-        if !view.attributedText.isEqual(to: text) { view.attributedText = text }
+    func updateUIView(_ label: UILabel, context: Context) {
+        if label.attributedText?.isEqual(to: text) != true { label.attributedText = text }
     }
 
-    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize? {
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
         guard let width = proposal.width, width.isFinite, width > 0 else { return nil }
+        uiView.preferredMaxLayoutWidth = width
         let height = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude)).height
         return CGSize(width: width, height: ceil(height))
     }
