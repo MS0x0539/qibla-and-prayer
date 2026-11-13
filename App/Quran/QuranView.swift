@@ -21,6 +21,8 @@ struct QuranView: View {
     @State private var showingSettings = UserDefaults.standard.string(forKey: "quranSheet") == "settings"
     @State private var showingGoTo = UserDefaults.standard.string(forKey: "quranSheet") == "goto"
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// Until the first page turn, a line says which way the pages go.
+    @AppStorage("quranTurnHintSeen") private var turnHintSeen = false
 
     var body: some View {
         let style = night ? MushafStyle.dark : MushafStyle.printed
@@ -108,7 +110,12 @@ struct QuranView: View {
             }
             // Under the page: the next page on the left, the previous on the right, the page number between.
             .safeAreaInset(edge: .bottom, spacing: 0) {
-                PageBar(page: page, style: style, turn: turn) { showingGoTo = true }
+                VStack(spacing: 0) {
+                    if !turnHintSeen {
+                        TurnHint(style: style) { turnHintSeen = true }
+                    }
+                    PageBar(page: page, style: style, turn: turn) { showingGoTo = true }
+                }
             }
             .sheet(isPresented: $showingIndex) {
                 QuranIndexView { verse in
@@ -140,6 +147,7 @@ struct QuranView: View {
             }
             .onChange(of: page) {
                 if let marked, Quran.shared.page(ofVerse: marked) != page { self.marked = nil }
+                turnHintSeen = true
             }
             // The page turns with the recitation.
             .onChange(of: recitation.verse) { old, new in
@@ -165,6 +173,33 @@ struct QuranView: View {
     private func turn(to number: Int) {
         guard (1...Quran.pageCount).contains(number) else { return }
         withAnimation(reduceMotion ? nil : .smooth) { page = number }
+    }
+}
+
+/// Shown until the first page turn: which way the pages of a mushaf go.
+private struct TurnHint: View {
+    let style: MushafStyle
+    let close: () -> Void
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "hand.draw")
+                .accessibilityHidden(true)
+            Text("Swipe right or tap ‹ for the next page, as in a mushaf.")
+                .font(.footnote)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+            Button(action: close) {
+                Image(systemName: "xmark")
+                    .frame(width: 44, height: 44)
+            }
+            .accessibilityLabel(Text("Close"))
+        }
+        .foregroundStyle(style.accent)
+        .padding(.leading, 16)
+        .padding(.trailing, 4)
+        .background(style.paper)
+        .overlay(alignment: .top) { style.ornament.opacity(0.5).frame(height: 1) }
     }
 }
 
@@ -835,12 +870,14 @@ private struct SurahRow: View {
                         .font(.subheadline)
                         .foregroundStyle(Theme.ink.opacity(0.8))
                 }
-                Group {
+                HStack(spacing: 0) {
                     if surah.isMeccan {
                         Text("Meccan · \(surah.ayahs) verses")
                     } else {
                         Text("Medinan · \(surah.ayahs) verses")
                     }
+                    Text(verbatim: " · ")
+                    Text("Page \(Quran.shared.page(ofVerse: surah.start))")
                 }
                 .font(.footnote)
                 .foregroundStyle(Theme.muted)

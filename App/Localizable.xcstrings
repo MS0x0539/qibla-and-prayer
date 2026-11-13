@@ -1667,6 +1667,40 @@
         }
       }
     },
+    "Close": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إغلاق"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schließen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fermer"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sluiten"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapat"
+          }
+        }
+      }
+    },
     "Common in Europe, the Far East and parts of the Americas.": {
       "localizations": {
         "ar": {
@@ -9313,6 +9347,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sureler"
+          }
+        }
+      }
+    },
+    "Swipe right or tap ‹ for the next page, as in a mushaf.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "للصفحة التالية اسحب إلى اليمين أو المس ‹، كما في المصحف."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wische nach rechts oder tippe auf ‹ für die nächste Seite, wie in einem Mushaf."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balayez vers la droite ou touchez ‹ pour la page suivante, comme dans un mushaf."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veeg naar rechts of tik op ‹ voor de volgende pagina, zoals in een mushaf."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonraki sayfa için, mushafta olduğu gibi sağa kaydırın ya da ‹ işaretine dokunun."
           }
         }
       }
