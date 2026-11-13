@@ -681,6 +681,40 @@
         }
       }
     },
+    "Allow Live Activities in Settings": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسمح بالأنشطة المباشرة في الإعدادات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live-Aktivitäten in den Einstellungen erlauben"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autoriser les activités en direct dans Réglages"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live Activities toestaan in Instellingen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayarlar'da Canlı Etkinliklere izin ver"
+          }
+        }
+      }
+    },
     "Allow location access": {
       "localizations": {
         "ar": {
@@ -813,6 +847,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ayarlar'da bildirimlere izin ver"
+          }
+        }
+      }
+    },
+    "App icon": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أيقونة التطبيق"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App-Symbol"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icône de l’app"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App-symbool"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulama simgesi"
           }
         }
       }
@@ -3027,6 +3095,40 @@
         }
       }
     },
+    "Green": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الخضراء"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grün"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vert"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Groen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeşil"
+          }
+        }
+      }
+    },
     "Hanafi": {
       "localizations": {
         "ar": {
@@ -4557,6 +4659,40 @@
         }
       }
     },
+    "Lock Screen": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شاشة القفل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sperrbildschirm"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écran verrouillé"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toegangsscherm"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranı"
+          }
+        }
+      }
+    },
     "Low accuracy: move your phone in a figure eight.": {
       "localizations": {
         "ar": {
@@ -5437,6 +5573,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sıradaki vakit"
+          }
+        }
+      }
+    },
+    "Next prayer on the Lock Screen": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة على شاشة القفل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächstes Gebet auf dem Sperrbildschirm"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prochaine prière sur l’écran verrouillé"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volgend gebed op het toegangsscherm"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranında sıradaki vakit"
           }
         }
       }
@@ -9347,6 +9517,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sayaç kilit ekranınızda"
+          }
+        }
+      }
+    },
+    "The next prayer and a countdown on the Lock Screen and in the Dynamic Island. iOS keeps it for up to 8 hours; opening the app brings it back and moves it on to the next prayer.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة مع عدّ تنازلي على شاشة القفل وفي Dynamic Island. يُبقيها iOS حتى ٨ ساعات؛ وعند فتح التطبيق تعود وتنتقل إلى الصلاة التالية."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das nächste Gebet und ein Countdown auf dem Sperrbildschirm und in der Dynamic Island. iOS zeigt das bis zu 8 Stunden; öffnest du die App, kommt es zurück und springt zum nächsten Gebet."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine prière et un compte à rebours sur l’écran verrouillé et dans la Dynamic Island. iOS l’affiche jusqu’à 8 heures ; ouvrir l’app le fait revenir et passer à la prière suivante."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het volgende gebed en een aftelling op het toegangsscherm en in het Dynamic Island. iOS bewaart dit tot 8 uur; als je de app opent, komt het terug en gaat het door naar het volgende gebed."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki vakit ve geri sayım, kilit ekranında ve Dynamic Island'da. iOS bunu en fazla 8 saat gösterir; uygulamayı açınca geri gelir ve sıradaki vakte geçer."
           }
         }
       }

@@ -10,6 +10,7 @@ struct PrayerWidgets: WidgetBundle {
         // CODE_SIGN_ENTITLEMENTS in project.yml, restore the App Group in SharedStore and ios.yml's
         // ad hoc signing step (all in the commit that removed them).
         IftarLiveActivity()
+        NextPrayerLiveActivity()
         QiblaControl()
         TasbihControl()
     }

@@ -48,6 +48,8 @@ targets:
         INFOPLIST_KEY_UIUserInterfaceStyle: Dark
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: "NO"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        # Picked in Settings: the same star on paper or on green.
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "AppIcon-Paper AppIcon-Green"
         LOCALIZATION_PREFERS_STRING_CATALOGS: "YES"
   # The iftar Live Activity; the Next prayer widgets return once the App Group is registered.
   # Shares the calculation with the app.
@@ -63,6 +65,7 @@ targets:
       - App/DiyanetTimes.swift
       - App/Theme.swift
       - App/IftarActivity.swift
+      - App/NextPrayerActivity.swift
       - App/OpenScreenIntent.swift
       - App/Localizable.xcstrings
     dependencies:

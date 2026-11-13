@@ -343,7 +343,10 @@ final class AppModel {
     }
 
     func scheduleNotifications() {
-        Task { await rescheduleNotifications() }
+        Task {
+            await rescheduleNotifications()
+            await updateNextPrayerActivity()
+        }
     }
 
     /// Replaces the pending notifications with the planned ones. A newer call takes over from an older one.
@@ -391,6 +394,42 @@ final class AppModel {
         scheduleBackgroundRefresh()
         endPastCountdowns()
         await rescheduleNotifications()
+        await updateNextPrayerActivity()
+    }
+
+    // MARK: - Next prayer (Live Activity)
+
+    static let nextPrayerActivityKey = "nextPrayerActivity"
+
+    /// The next prayer on the Lock Screen and in the Dynamic Island while the setting is on. iOS lets only the open
+    /// app start a Live Activity and ends it after 8 hours, so each time the app runs it starts it again or moves it
+    /// on to the prayer that is next now (from the background only the moving on works).
+    @MainActor
+    func updateNextPrayerActivity() async {
+        let running = Activity<NextPrayerAttributes>.activities.filter {
+            $0.activityState == .active || $0.activityState == .stale
+        }
+        guard UserDefaults.standard.bool(forKey: Self.nextPrayerActivityKey), liveActivitiesEnabled,
+              let place, let next = next(after: .now, at: place) else {
+            for activity in running { await activity.end(nil, dismissalPolicy: .immediate) }
+            return
+        }
+        let zone = place.timeZone
+        let name = next.kind.title(on: next.time, in: zone)
+        let after = self.next(after: next.time.addingTimeInterval(1), at: place)
+        let state = NextPrayerAttributes.ContentState(
+            time: next.time, name: name, timeText: Formats.time(next.time, in: zone),
+            arrived: String(localized: "Time for \(name).", bundle: .app),
+            following: after.map { "\($0.kind.title(on: $0.time, in: zone)) · \(Formats.time($0.time, in: zone))" } ?? "")
+        let content = ActivityContent(state: state, staleDate: next.time)
+        if let activity = running.first(where: { $0.attributes.place == place.displayName }) {
+            await activity.update(content)
+            for other in running where other.id != activity.id { await other.end(nil, dismissalPolicy: .immediate) }
+        } else {
+            for activity in running { await activity.end(nil, dismissalPolicy: .immediate) }
+            _ = try? Activity.request(attributes: NextPrayerAttributes(place: place.displayName), content: content,
+                                      pushType: nil)
+        }
     }
 }
 

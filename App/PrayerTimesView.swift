@@ -85,6 +85,7 @@ struct PrayerTimesView: View {
             .padding(.bottom, 24)
         }
         .scrollBounceBehavior(.basedOnSize)
+        .background(SkyBackground(today: today, now: now))
     }
 
     /// Tomorrow's times while tomorrow is still Ramadan: after iftar, the card turns to tomorrow's suhoor.
@@ -256,6 +257,33 @@ private struct RamadanCard: View {
                 .font(.system(.title2, design: .serif).monospacedDigit())
                 .foregroundStyle(Theme.ink)
         }
+    }
+}
+
+/// The top of the screen tinted like the sky at this hour: dawn, day, afternoon and dusk, and plain at night. Dark
+/// enough that every text keeps at least 6.3:1; plain with Increase Contrast.
+private struct SkyBackground: View {
+    let today: [PrayerTime]
+    let now: Date
+    @Environment(\.colorSchemeContrast) private var contrast
+
+    var body: some View {
+        let tint = contrast == .increased ? Theme.background : Self.tint(today: today, now: now)
+        LinearGradient(colors: [tint, Theme.background], startPoint: .top, endPoint: .center)
+            .ignoresSafeArea()
+            .animation(.easeInOut(duration: 3), value: tint)
+            .accessibilityHidden(true)
+    }
+
+    static func tint(today: [PrayerTime], now: Date) -> Color {
+        func time(_ kind: PrayerKind) -> Date? { today.first { $0.kind == kind }?.time }
+        guard let fajr = time(.fajr), let sunrise = time(.sunrise), let asr = time(.asr), let maghrib = time(.maghrib),
+              let isha = time(.isha) else { return Theme.background }
+        if now >= fajr && now < sunrise { return Color(hex: 0x161D36) }  // dawn
+        if now >= sunrise && now < asr { return Color(hex: 0x0A2220) }  // day
+        if now >= asr && now < maghrib { return Color(hex: 0x221D0E) }  // afternoon
+        if now >= maghrib && now < isha { return Color(hex: 0x2A1826) }  // dusk
+        return Theme.background  // night
     }
 }
 

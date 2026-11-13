@@ -6,6 +6,9 @@ struct SettingsView: View {
     @Environment(AppModel.self) private var model
     @State private var confirmingReset = false
     @AppStorage("siriTip") private var showingSiriTip = true
+    @AppStorage(AppModel.nextPrayerActivityKey) private var nextPrayerActivity = false
+    /// nil for the standard icon.
+    @State private var icon = UIApplication.shared.alternateIconName
 
     var body: some View {
         @Bindable var model = model
@@ -107,6 +110,40 @@ struct SettingsView: View {
                     Text("Notifications")
                 } footer: {
                     Text("“Remind me before” adds a notification a few minutes before each prayer that has its bell on. The Jumu'ah reminder comes an hour before the Friday prayer. In Ramadan you get one 30 minutes before suhoor ends, and one at iftar. Notifications use the standard sound; the test notification arrives after 5 seconds.")
+                }
+                .listRowBackground(Theme.card)
+
+                Section {
+                    Toggle("Next prayer on the Lock Screen", isOn: $nextPrayerActivity)
+                        .onChange(of: nextPrayerActivity) { model.scheduleNotifications() }
+                    if nextPrayerActivity && !model.liveActivitiesEnabled {
+                        Button("Allow Live Activities in Settings") { openAppSettings() }
+                    }
+                } header: {
+                    Text("Lock Screen")
+                } footer: {
+                    Text("The next prayer and a countdown on the Lock Screen and in the Dynamic Island. iOS keeps it for up to 8 hours; opening the app brings it back and moves it on to the next prayer.")
+                }
+                .listRowBackground(Theme.card)
+
+                Section {
+                    Picker("App icon", selection: $icon) {
+                        AppIconChoice(title: "Standard", paper: Theme.background, star: Theme.gold).tag(String?.none)
+                        AppIconChoice(title: "Paper", paper: Color(hex: 0xFBF6E8), star: Color(hex: 0x8A672B))
+                            .tag(String?.some("AppIcon-Paper"))
+                        AppIconChoice(title: "Green", paper: Color(hex: 0x173D2E), star: Color(hex: 0xD4B068))
+                            .tag(String?.some("AppIcon-Green"))
+                    }
+                    .pickerStyle(.inline)
+                    .labelsHidden()
+                    .onChange(of: icon) {
+                        guard UIApplication.shared.alternateIconName != icon else { return }
+                        UIApplication.shared.setAlternateIconName(icon) { error in
+                            if error != nil { Task { @MainActor in icon = UIApplication.shared.alternateIconName } }
+                        }
+                    }
+                } header: {
+                    Text("App icon")
                 }
                 .listRowBackground(Theme.card)
 
@@ -221,6 +258,25 @@ struct AsrSettingsPage: View {
 }
 
 /// The open-source code, text and font in the app, with the licences their authors ask to keep with every copy.
+/// An icon to pick: its colours on a small tile with the star, and its name.
+private struct AppIconChoice: View {
+    let title: LocalizedStringKey
+    let paper: Color
+    let star: Color
+
+    var body: some View {
+        HStack(spacing: 14) {
+            RoundedRectangle(cornerRadius: 9)
+                .fill(paper)
+                .frame(width: 40, height: 40)
+                .overlay(EightPointStar().stroke(star, lineWidth: 2).padding(9))
+                .overlay(RoundedRectangle(cornerRadius: 9).strokeBorder(Theme.line, lineWidth: 1))
+                .accessibilityHidden(true)
+            Text(title)
+        }
+    }
+}
+
 struct AcknowledgementsView: View {
     /// The font's licence (OFL 1.1), bundled next to it.
     private static let amiriLicense = Bundle.main.url(forResource: "AmiriQuran-OFL", withExtension: "txt")
