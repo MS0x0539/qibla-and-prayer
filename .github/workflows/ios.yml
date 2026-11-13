@@ -121,6 +121,10 @@ jobs:
           done
           shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranPage 2
           shot "en-quran-42-night" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage 42 -quranNight YES
+          shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage 2 -quranSheet settings
+          shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage 42 -quranSheet goto
+          shot "en-tasbih-after-prayer" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tasbih -tasbihDhikr afterPrayer -tasbihStep 1 -tasbihCount 21 -tasbihTotal 54
+          shot "en-tracker-khatm" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tracker -khatmPages "$(seq -s, 1 42)" -quranToday "$(date +%Y-%m-%d):40,41,42"
           # The map loads tiles and mosques over the network: give it longer.
           xcrun simctl terminate "$UDID" "$BID" 2>/dev/null || true
           xcrun simctl launch "$UDID" "$BID" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showMap YES

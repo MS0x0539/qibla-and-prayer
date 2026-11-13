@@ -17,11 +17,15 @@ struct QuranView: View {
     @State private var marked: Int?
     /// A verse tapped on the page, shown in a sheet to copy or share.
     @State private var tapped: Int?
-    @State private var showingOffline = false
+    // `-quranSheet settings` or `goto` opens that sheet first (used for CI screenshots).
+    @State private var showingSettings = UserDefaults.standard.string(forKey: "quranSheet") == "settings"
+    @State private var showingGoTo = UserDefaults.standard.string(forKey: "quranSheet") == "goto"
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         let style = night ? MushafStyle.dark : MushafStyle.printed
         let recitation = Recitation.shared
+        let surah = Quran.shared.verses(onPage: page).first.map { Quran.shared.surahs[$0.surah - 1] }
         NavigationStack {
             TabView(selection: $page) {
                 ForEach(1...Quran.pageCount, id: \.self) { number in
@@ -48,18 +52,28 @@ struct QuranView: View {
                     .accessibilityLabel(Text("Index"))
                 }
                 ToolbarItem(placement: .principal) {
-                    VStack(spacing: 3) {
-                        Text("Page \(page)")
-                            .font(.subheadline.monospacedDigit())
-                            .foregroundStyle(style.muted)
-                        // A recitation downloading for offline, from the sheet.
-                        if let download = RecitationDownloads.shared.current {
-                            ProgressView(value: download.progress)
-                                .frame(width: 70)
-                                .tint(style.ornament)
-                                .accessibilityLabel(Text(verbatim: download.title))
+                    // The surah and the page; a tap opens "Go to page".
+                    Button { showingGoTo = true } label: {
+                        VStack(spacing: 1) {
+                            if let surah {
+                                Text(verbatim: Quran.title(of: surah))
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundStyle(style.ink)
+                            }
+                            Text("Page \(page)")
+                                .font(.caption.monospacedDigit())
+                                .foregroundStyle(style.muted)
+                            // A recitation downloading for offline, from the settings sheet.
+                            if let download = RecitationDownloads.shared.current {
+                                ProgressView(value: download.progress)
+                                    .frame(width: 70)
+                                    .tint(style.ornament)
+                                    .accessibilityLabel(Text(verbatim: download.title))
+                            }
                         }
                     }
+                    .accessibilityHint(Text("Go to page"))
+                    .accessibilityIdentifier("goToPage")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -86,37 +100,15 @@ struct QuranView: View {
                     .sensoryFeedback(.selection, trigger: bookmarked)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        Picker("Page", selection: $night) {
-                            Label("Paper", systemImage: "sun.max").tag(false)
-                            Label("Night", systemImage: "moon").tag(true)
-                        }
-                        Button("Larger text", systemImage: "textformat.size.larger") { textSize = min(textSize + 2, 40) }
-                            .disabled(textSize >= 40)
-                        Button("Smaller text", systemImage: "textformat.size.smaller") { textSize = max(textSize - 2, 18) }
-                            .disabled(textSize <= 18)
-                        Picker("Reciter", selection: $reciterID) {
-                            ForEach(Reciter.all) { reciter in
-                                Text(verbatim: reciter.displayName).tag(reciter.id)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        Picker(selection: Binding(get: { recitation.sleepTimer }, set: { recitation.setSleepTimer($0) })) {
-                            Text("Off").tag(Recitation.SleepTimer.off)
-                            ForEach([15, 30, 60], id: \.self) { minutes in
-                                Text("\(minutes) min").tag(Recitation.SleepTimer.minutes(minutes))
-                            }
-                            Text("End of surah").tag(Recitation.SleepTimer.endOfSurah)
-                        } label: {
-                            Label("Sleep timer", systemImage: "moon.zzz")
-                        }
-                        .pickerStyle(.menu)
-                        Button("Offline recitation", systemImage: "arrow.down.circle") { showingOffline = true }
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
+                    Button { showingSettings = true } label: {
+                        Image(systemName: "slider.horizontal.3")
                     }
                     .accessibilityLabel(Text("Page and recitation"))
                 }
+            }
+            // Under the page: the next page on the left, the previous on the right, the page number between.
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                PageBar(page: page, style: style, turn: turn) { showingGoTo = true }
             }
             .sheet(isPresented: $showingIndex) {
                 QuranIndexView { verse in
@@ -131,9 +123,14 @@ struct QuranView: View {
             .sheet(isPresented: Binding(get: { tapped != nil }, set: { if !$0 { tapped = nil } })) {
                 if let tapped { VerseSheet(verse: Quran.shared.verses[tapped]) }
             }
-            .sheet(isPresented: $showingOffline) {
-                OfflineRecitationView(page: page)
-                    .presentationDetents([.medium, .large])
+            .sheet(isPresented: $showingGoTo) {
+                GoToPageView(page: page) { number in
+                    page = number
+                    showingGoTo = false
+                }
+            }
+            .sheet(isPresented: $showingSettings) {
+                ReaderSettingsView(page: page, night: $night, textSize: $textSize)
             }
             // A page open for 10 seconds counts as read, for the khatm in Ibadah; leafing through doesn't.
             .task(id: page) {
@@ -164,6 +161,68 @@ struct QuranView: View {
             }
         }
     }
+
+    private func turn(to number: Int) {
+        guard (1...Quran.pageCount).contains(number) else { return }
+        withAnimation(reduceMotion ? nil : .smooth) { page = number }
+    }
+}
+
+/// Under the page: the next page on the left and the previous one on the right, as a mushaf turns, with the page
+/// number in its medallion between them, which opens "Go to page".
+private struct PageBar: View {
+    let page: Int
+    let style: MushafStyle
+    let turn: (Int) -> Void
+    let goTo: () -> Void
+
+    var body: some View {
+        HStack(spacing: 0) {
+            Button { turn(page + 1) } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "chevron.left")
+                    Text(verbatim: Formats.number(page + 1))
+                }
+                .frame(minWidth: 88, minHeight: 44, alignment: .leading)
+                .contentShape(Rectangle())
+            }
+            .opacity(page < Quran.pageCount ? 1 : 0)
+            .disabled(page >= Quran.pageCount)
+            .accessibilityLabel(Text("Next page"))
+            .accessibilityIdentifier("nextPage")
+            Spacer(minLength: 8)
+            Button(action: goTo) {
+                Text(verbatim: Quran.arabicDigits(page))
+                    .font(Quran.font(size: 15))
+                    .foregroundStyle(style.ink)
+                    .frame(minWidth: 38, minHeight: 38)
+                    .background(Circle().strokeBorder(style.ornament, lineWidth: 1.5))
+                    .overlay(Circle().strokeBorder(style.accent.opacity(0.6), lineWidth: 0.8).padding(3))
+                    .frame(minWidth: 44, minHeight: 44)
+            }
+            .accessibilityLabel(Text("Go to page"))
+            .accessibilityValue(Text("Page \(page)"))
+            Spacer(minLength: 8)
+            Button { turn(page - 1) } label: {
+                HStack(spacing: 6) {
+                    Text(verbatim: Formats.number(page - 1))
+                    Image(systemName: "chevron.right")
+                }
+                .frame(minWidth: 88, minHeight: 44, alignment: .trailing)
+                .contentShape(Rectangle())
+            }
+            .opacity(page > 1 ? 1 : 0)
+            .disabled(page <= 1)
+            .accessibilityLabel(Text("Previous page"))
+            .accessibilityIdentifier("previousPage")
+        }
+        .font(.subheadline.weight(.semibold).monospacedDigit())
+        .foregroundStyle(style.accent)
+        .padding(.horizontal, 12)
+        .background(style.paper)
+        // The next page lies to the left, as in a mushaf, whatever the app's language.
+        .environment(\.layoutDirection, .leftToRight)
+    }
 }
 
 /// How a mushaf page looks: printed paper (the default) or dark for reading at night.
@@ -188,8 +247,8 @@ struct MushafStyle {
         number: Theme.gold, accent: Color(hex: 0x7FA88E), muted: Theme.muted, fold: 0.5)
 }
 
-/// One page of the mushaf, laid out like the printed one: the surah and juz in the top margin, the framed text,
-/// the page number in a medallion, and the fold of the book on the inner edge.
+/// One page of the mushaf, laid out like the printed one: the surah and juz in the top margin, the framed text, and
+/// the fold of the book on the inner edge. Its number is in the page bar under it.
 struct MushafPage: View {
     let number: Int
     let textSize: Double
@@ -229,14 +288,6 @@ struct MushafPage: View {
                 ScrollView { framedText(verses, size: Self.smallest) }
                     .scrollBounceBehavior(.basedOnSize)
             }
-            Text(verbatim: Quran.arabicDigits(number))
-                .font(Quran.font(size: 15))
-                .foregroundStyle(style.ink)
-                .frame(minWidth: 36, minHeight: 36)
-                .background(Circle().strokeBorder(style.ornament, lineWidth: 1.5))
-                .overlay(Circle().strokeBorder(style.accent.opacity(0.6), lineWidth: 0.8).padding(3))
-                // The page itself is labelled "Page 42".
-                .accessibilityHidden(true)
         }
         // Pages are laid out right to left, so leading is the right edge: the outer one on a right-hand (odd) page.
         .padding(.leading, number % 2 == 1 ? Self.outer : Self.inner)
