@@ -84,6 +84,9 @@ final class Recitation {
     @ObservationIgnored private var observation: NSKeyValueObservation?
 
     private init() {
+        // Recitation is audio: no AirPlay as video to a TV, which made iOS suggest the TV ("Tap to AirPlay").
+        // AirPlay speakers can still be picked in Control Center.
+        player.allowsExternalPlayback = false
         observation = player.observe(\.currentItem) { [weak self] _, _ in
             Task { @MainActor in self?.advanced() }
         }
@@ -134,6 +137,8 @@ final class Recitation {
     func pause() {
         isPlaying = false
         player.pause()
+        // Paused, the app no longer counts as playing (resume() takes the audio session back).
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
 
     func resume() {
