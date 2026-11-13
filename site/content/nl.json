@@ -13,20 +13,20 @@
     "intro": "Gebedstijden met keuze uit 17 berekeningsmethoden, een qibla-kompas en -kaart, tijden voor de ramadan, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
     "points": [
       "Geen advertenties, geen abonnementen, geen account.",
-      "Er wordt niets over jou verzameld, en er wordt niets naar mij gestuurd. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen, het zoeken naar een stad en de kaart komen van Apple Kaarten, en recitaties van de Koran van Islamic Network.",
+      "Er wordt niets over jou verzameld, en er wordt niets naar mij gestuurd. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen, het zoeken naar een stad en de kaart komen van Apple Kaarten, recitaties van de Koran van Islamic Network, en Makkah live van YouTube.",
       "De tijden volgen de methode van je moskee of instantie. Ze zijn gecontroleerd aan de hand van de roosters die instanties publiceren. Je kunt elke tijd een paar minuten verschuiven, zodat die met de tijd van je moskee overeenkomt."
     ]
   },
   "privacy": {
     "title": "Privacybeleid",
-    "updated": "Laatst bijgewerkt: 13 november 2026",
+    "updated": "Laatst bijgewerkt: 14 november 2026",
     "intro": "Wajh (op het beginscherm heet de app “Qibla & Prayer”) is gemaakt door Melih Sivrikaya. In dit privacybeleid lees je wat er met je gegevens gebeurt als je de app gebruikt.",
-    "summary": "Kort gezegd: de app stuurt niets naar mij, en ik verzamel geen gegevens over jou. Geen account, geen advertenties, geen code voor analytics en geen tracking. Om de naam van je plaats te tonen, een stad te zoeken en de kaart en moskeeën in de buurt te laten zien, raadpleegt je iPhone Apple Kaarten. Om een recitatie van de Koran af te spelen, haalt hij de audio op bij Islamic Network. Zie hieronder.",
+    "summary": "Kort gezegd: de app stuurt niets naar mij, en ik verzamel geen gegevens over jou. Geen account, geen advertenties, geen code voor analytics en geen tracking. Om de naam van je plaats te tonen, een stad te zoeken en de kaart en moskeeën in de buurt te laten zien, raadpleegt je iPhone Apple Kaarten. Om een recitatie van de Koran af te spelen, haalt hij de audio op bij Islamic Network; Makkah live speelt een stream van YouTube. Zie hieronder.",
     "sections": [
       {
         "heading": "Wie verantwoordelijk is",
         "paragraphs": [
-          "Ik, Melih Sivrikaya (ms@psbv.org), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up. Islamic Network is verantwoordelijk voor zijn audiodienst, waar de recitaties vandaan komen.",
+          "Ik, Melih Sivrikaya (ms@psbv.org), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up. Islamic Network is verantwoordelijk voor zijn audiodienst, waar de recitaties vandaan komen, en Google voor YouTube.",
           "De app vraagt bij Apple Kaarten en Islamic Network alleen op wat nodig is voor de functies die je gebruikt. Ik beantwoord e-mails en gebruik de rapporten die Apple aan mij doorgeeft. Dat doe ik omdat ik een gerechtvaardigd belang heb bij het ondersteunen en verbeteren van de app (artikel 6 lid 1 sub f AVG)."
         ]
       },
@@ -52,6 +52,18 @@
         ]
       },
       {
+        "heading": "De camera",
+        "paragraphs": [
+          "De qiblacamera toont het live beeld van de camera met de richting van Mekka erop. Het beeld blijft op je iPhone: er wordt niets opgenomen, bewaard of verstuurd. De app vraagt pas om cameratoegang als je de camera opent."
+        ]
+      },
+      {
+        "heading": "Makkah live",
+        "paragraphs": [
+          "Als je in het tabblad Qibla Makkah live opent, toont de app de eigen speler van YouTube met de livestream van het kanaal Saudi Quran TV, in de privacyvriendelijke modus van YouTube (youtube-nocookie.com). YouTube (Google) ontvangt dan je IP-adres en wat de speler nodig heeft, en kan eigen cookies opslaan, onder het privacybeleid van Google (policies.google.com/privacy). De app stuurt YouTube verder niets."
+        ]
+      },
+      {
         "heading": "Siri en Opdrachten",
         "paragraphs": [
           "Als je Siri naar een gebedstijd vraagt, verwerkt Apple je vraag zoals bij elke app. De app bepaalt het antwoord op je iPhone zonder open te gaan, op basis van de instellingen en de plaats die daar zijn opgeslagen."
@@ -66,7 +78,7 @@
       {
         "heading": "Geen advertenties of tracking",
         "paragraphs": [
-          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken aan Apple Kaarten en Islamic Network die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
+          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken aan Apple Kaarten, Islamic Network en YouTube die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
         ]
       },
       {

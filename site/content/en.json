@@ -13,20 +13,20 @@
     "intro": "Prayer times for 17 calculation methods, a Qibla compass and map, Ramadan times, a tasbih and a tracker for fasts and missed prayers. In English, Dutch, German, French, Turkish and Arabic.",
     "points": [
       "No ads, no subscriptions, no account.",
-      "Nothing is collected about you, and nothing is sent to me. Your settings, tasbih and tracker stay on your iPhone; place names, city search and the map come from Apple Maps, and recitations of the Qur'an from Islamic Network.",
+      "Nothing is collected about you, and nothing is sent to me. Your settings, tasbih and tracker stay on your iPhone; place names, city search and the map come from Apple Maps, recitations of the Qur'an from Islamic Network, and Makkah live from YouTube.",
       "Times follow the method of your mosque or authority and were checked against the timetables authorities publish. You can move each time by a few minutes to match your mosque."
     ]
   },
   "privacy": {
     "title": "Privacy policy",
-    "updated": "Last updated: 13 November 2026",
+    "updated": "Last updated: 14 November 2026",
     "intro": "Wajh (called “Qibla & Prayer” on the Home Screen) is made by Melih Sivrikaya. This policy explains what happens to your data when you use the app.",
-    "summary": "In short: the app sends nothing to me, and I don't collect data about you. There is no account, no advertising, no analytics code and no tracking. To name your place, search for a city and show the map and mosques nearby, your iPhone asks Apple Maps. To play a recitation of the Qur'an, it downloads the audio from Islamic Network. See below.",
+    "summary": "In short: the app sends nothing to me, and I don't collect data about you. There is no account, no advertising, no analytics code and no tracking. To name your place, search for a city and show the map and mosques nearby, your iPhone asks Apple Maps. To play a recitation of the Qur'an, it downloads the audio from Islamic Network; Makkah live plays a stream from YouTube. See below.",
     "sections": [
       {
         "heading": "Who is responsible",
         "paragraphs": [
-          "I, Melih Sivrikaya (ms@psbv.org), am responsible for this app and for the personal data described in this policy (the “controller” under the GDPR). Apple is responsible for its own services that the app uses: Apple Maps, Siri, crash reporting and iCloud Backup. Islamic Network is responsible for its audio service, which the recitations come from.",
+          "I, Melih Sivrikaya (ms@psbv.org), am responsible for this app and for the personal data described in this policy (the “controller” under the GDPR). Apple is responsible for its own services that the app uses: Apple Maps, Siri, crash reporting and iCloud Backup. Islamic Network is responsible for its audio service, which the recitations come from, and Google for YouTube.",
           "The app asks Apple Maps and Islamic Network only for what the features you use need. I answer emails and use the reports Apple passes on because of my legitimate interest in supporting and improving the app (Article 6(1)(f) GDPR)."
         ]
       },
@@ -52,6 +52,18 @@
         ]
       },
       {
+        "heading": "The camera",
+        "paragraphs": [
+          "The Qibla camera shows the camera's live picture with the direction of Mecca on it. The picture stays on your iPhone: nothing is recorded, saved or sent. The app asks for camera access only when you open it."
+        ]
+      },
+      {
+        "heading": "Makkah live",
+        "paragraphs": [
+          "When you open Makkah live in the Qibla tab, the app shows YouTube's own player with the live stream of the Saudi Quran TV channel, in YouTube's privacy-enhanced mode (youtube-nocookie.com). YouTube (Google) then receives your IP address and what its player needs, and may store its own cookies, under Google's privacy policy (policies.google.com/privacy). The app sends YouTube nothing else."
+        ]
+      },
+      {
         "heading": "Siri and Shortcuts",
         "paragraphs": [
           "When you ask Siri for a prayer time, Apple handles your question as it does for any app. The app works out the answer on your iPhone, without opening, from the settings and the place saved there."
@@ -66,7 +78,7 @@
       {
         "heading": "No advertising or tracking",
         "paragraphs": [
-          "The app contains no advertising, analytics or tracking code. Besides Apple's own frameworks it uses only Adhan, an open-source library that calculates prayer times on your iPhone and sends nothing anywhere. Apart from the requests to Apple Maps and Islamic Network described above, the app shares nothing with anyone. I don't collect personal data from anyone, including children."
+          "The app contains no advertising, analytics or tracking code. Besides Apple's own frameworks it uses only Adhan, an open-source library that calculates prayer times on your iPhone and sends nothing anywhere. Apart from the requests to Apple Maps, Islamic Network and YouTube described above, the app shares nothing with anyone. I don't collect personal data from anyone, including children."
         ]
       },
       {

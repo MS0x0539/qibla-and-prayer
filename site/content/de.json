@@ -13,20 +13,20 @@
     "intro": "Gebetszeiten nach 17 Berechnungsmethoden, ein Qibla-Kompass und eine Qibla-Karte, Ramadan-Zeiten, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
     "points": [
       "Keine Werbung, keine Abos, kein Konto.",
-      "Über dich wird nichts gesammelt, und an mich wird nichts gesendet. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone; Ortsnamen, die Stadtsuche und die Karte kommen von Apple Karten, Koranrezitationen von Islamic Network.",
+      "Über dich wird nichts gesammelt, und an mich wird nichts gesendet. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone; Ortsnamen, die Stadtsuche und die Karte kommen von Apple Karten, Koranrezitationen von Islamic Network und Mekka live von YouTube.",
       "Die Zeiten folgen der Methode deiner Moschee oder Institution und wurden mit den Gebetsplänen abgeglichen, die Institutionen veröffentlichen. Du kannst jede Zeit um ein paar Minuten verschieben, damit sie zu deiner Moschee passt."
     ]
   },
   "privacy": {
     "title": "Datenschutzerklärung",
-    "updated": "Stand: 13. November 2026",
+    "updated": "Stand: 14. November 2026",
     "intro": "Wajh (auf dem Home-Bildschirm „Qibla & Prayer“ genannt) wird von Melih Sivrikaya entwickelt. Diese Datenschutzerklärung beschreibt, was mit deinen Daten passiert, wenn du die App nutzt.",
-    "summary": "Kurz gesagt: Die App sendet nichts an mich, und ich sammle keine Daten über dich. Es gibt kein Konto, keine Werbung, keinen Code für Nutzungsanalyse und kein Tracking. Um deinen Ort zu benennen, nach einer Stadt zu suchen und die Karte und Moscheen in der Nähe anzuzeigen, fragt dein iPhone bei Apple Karten an. Um eine Koranrezitation abzuspielen, lädt es die Audiodateien von Islamic Network. Siehe unten.",
+    "summary": "Kurz gesagt: Die App sendet nichts an mich, und ich sammle keine Daten über dich. Es gibt kein Konto, keine Werbung, keinen Code für Nutzungsanalyse und kein Tracking. Um deinen Ort zu benennen, nach einer Stadt zu suchen und die Karte und Moscheen in der Nähe anzuzeigen, fragt dein iPhone bei Apple Karten an. Um eine Koranrezitation abzuspielen, lädt es die Audiodateien von Islamic Network; Mekka live spielt einen Stream von YouTube. Siehe unten.",
     "sections": [
       {
         "heading": "Wer verantwortlich ist",
         "paragraphs": [
-          "Ich, Melih Sivrikaya (ms@psbv.org), bin für diese App und für die personenbezogenen Daten verantwortlich, die in dieser Datenschutzerklärung beschrieben sind. Damit bin ich der „Verantwortliche“ im Sinne der Datenschutz-Grundverordnung (DSGVO). Apple ist für seine eigenen Dienste verantwortlich, die die App nutzt: Apple Karten, Siri, Absturzberichte und iCloud-Backup. Islamic Network ist für seinen Audiodienst verantwortlich, von dem die Rezitationen kommen.",
+          "Ich, Melih Sivrikaya (ms@psbv.org), bin für diese App und für die personenbezogenen Daten verantwortlich, die in dieser Datenschutzerklärung beschrieben sind. Damit bin ich der „Verantwortliche“ im Sinne der Datenschutz-Grundverordnung (DSGVO). Apple ist für seine eigenen Dienste verantwortlich, die die App nutzt: Apple Karten, Siri, Absturzberichte und iCloud-Backup. Islamic Network ist für seinen Audiodienst verantwortlich, von dem die Rezitationen kommen, und Google für YouTube.",
           "Die App fragt bei Apple Karten und Islamic Network nur das an, was die Funktionen brauchen, die du nutzt. Ich beantworte E-Mails und nutze die Berichte, die Apple weitergibt, aufgrund meines berechtigten Interesses, Support für die App zu leisten und sie zu verbessern (Art. 6 Abs. 1 lit. f DSGVO)."
         ]
       },
@@ -52,6 +52,18 @@
         ]
       },
       {
+        "heading": "Die Kamera",
+        "paragraphs": [
+          "Die Qibla-Kamera zeigt das Livebild der Kamera mit der Richtung nach Mekka darin. Das Bild bleibt auf deinem iPhone: Nichts wird aufgenommen, gespeichert oder gesendet. Die App fragt erst nach dem Kamerazugriff, wenn du die Kamera öffnest."
+        ]
+      },
+      {
+        "heading": "Mekka live",
+        "paragraphs": [
+          "Wenn du im Tab Qibla „Mekka live“ öffnest, zeigt die App YouTubes eigenen Player mit dem Livestream des Kanals Saudi Quran TV, im erweiterten Datenschutzmodus von YouTube (youtube-nocookie.com). YouTube (Google) erhält dann deine IP-Adresse und was der Player braucht und kann eigene Cookies speichern, gemäß der Datenschutzerklärung von Google (policies.google.com/privacy). Die App sendet YouTube sonst nichts."
+        ]
+      },
+      {
         "heading": "Siri und Kurzbefehle",
         "paragraphs": [
           "Wenn du Siri nach einer Gebetszeit fragst, verarbeitet Apple deine Frage wie bei jeder App. Die App ermittelt die Antwort auf deinem iPhone, ohne sich zu öffnen, anhand der Einstellungen und des Ortes, die dort gespeichert sind."
@@ -66,7 +78,7 @@
       {
         "heading": "Keine Werbung, kein Tracking",
         "paragraphs": [
-          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen an Apple Karten und Islamic Network teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
+          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen an Apple Karten, Islamic Network und YouTube teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
         ]
       },
       {

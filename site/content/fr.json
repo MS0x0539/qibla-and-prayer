@@ -13,20 +13,20 @@
     "intro": "Les horaires de prière selon 17 méthodes de calcul, une boussole et une carte de la qibla, les horaires du ramadan, un tasbih et un suivi des jeûnes et des prières manquées. En anglais, néerlandais, allemand, français, turc et arabe.",
     "points": [
       "Sans publicité, sans abonnement, sans compte.",
-      "Rien n’est collecté à votre sujet, et rien ne m’est envoyé. Vos réglages, votre tasbih et votre suivi restent sur votre iPhone ; les noms de lieux, la recherche de ville et la carte proviennent de Plans d’Apple, et les récitations du Coran d’Islamic Network.",
+      "Rien n’est collecté à votre sujet, et rien ne m’est envoyé. Vos réglages, votre tasbih et votre suivi restent sur votre iPhone ; les noms de lieux, la recherche de ville et la carte proviennent de Plans d’Apple, les récitations du Coran d’Islamic Network, et La Mecque en direct de YouTube.",
       "Les horaires suivent la méthode de votre mosquée ou de votre autorité de référence, et ont été vérifiés à l’aide des calendriers publiés par les autorités. Vous pouvez décaler chaque horaire de quelques minutes pour qu’il corresponde à celui de votre mosquée."
     ]
   },
   "privacy": {
     "title": "Politique de confidentialité",
-    "updated": "Dernière mise à jour : 13 novembre 2026",
+    "updated": "Dernière mise à jour : 14 novembre 2026",
     "intro": "L’app Wajh (appelée « Qibla & Prayer » sur l’écran d’accueil) est réalisée par Melih Sivrikaya. Cette politique explique ce que deviennent vos données lorsque vous utilisez l’app.",
-    "summary": "En bref : l’app ne m’envoie rien, et je ne collecte pas de données à votre sujet. Il n’y a ni compte, ni publicité, ni code d’analyse, ni pistage. Pour nommer le lieu où vous êtes, rechercher une ville et afficher la carte et les mosquées à proximité, votre iPhone interroge Plans d’Apple. Pour écouter une récitation du Coran, il télécharge l’audio depuis Islamic Network ; voir ci-dessous.",
+    "summary": "En bref : l’app ne m’envoie rien, et je ne collecte pas de données à votre sujet. Il n’y a ni compte, ni publicité, ni code d’analyse, ni pistage. Pour nommer le lieu où vous êtes, rechercher une ville et afficher la carte et les mosquées à proximité, votre iPhone interroge Plans d’Apple. Pour écouter une récitation du Coran, il télécharge l’audio depuis Islamic Network ; La Mecque en direct lit un flux de YouTube ; voir ci-dessous.",
     "sections": [
       {
         "heading": "Qui est responsable",
         "paragraphs": [
-          "Moi, Melih Sivrikaya (ms@psbv.org), je suis responsable de cette app et des données personnelles décrites dans cette politique. Au sens du règlement général sur la protection des données (RGPD), je suis le « responsable du traitement ». Apple est responsable de ses propres services utilisés par l’app : Plans d’Apple, Siri, les rapports de plantage et Sauvegarde iCloud. Islamic Network est responsable de son service audio, d’où proviennent les récitations.",
+          "Moi, Melih Sivrikaya (ms@psbv.org), je suis responsable de cette app et des données personnelles décrites dans cette politique. Au sens du règlement général sur la protection des données (RGPD), je suis le « responsable du traitement ». Apple est responsable de ses propres services utilisés par l’app : Plans d’Apple, Siri, les rapports de plantage et Sauvegarde iCloud. Islamic Network est responsable de son service audio, d’où proviennent les récitations, et Google de YouTube.",
           "L’app ne demande à Plans d’Apple et à Islamic Network que ce qui est nécessaire aux fonctions que vous utilisez. Je réponds aux e-mails et j’utilise les rapports qu’Apple me transmet sur la base de mon intérêt légitime à fournir une assistance pour l’app et à l’améliorer (article 6, paragraphe 1, point f), du RGPD)."
         ]
       },
@@ -52,6 +52,18 @@
         ]
       },
       {
+        "heading": "L’appareil photo",
+        "paragraphs": [
+          "La caméra Qibla montre l’image en direct de l’appareil photo avec la direction de La Mecque. L’image reste sur votre iPhone : rien n’est enregistré, conservé ni envoyé. L’app ne demande l’accès à l’appareil photo que lorsque vous l’ouvrez."
+        ]
+      },
+      {
+        "heading": "La Mecque en direct",
+        "paragraphs": [
+          "Quand vous ouvrez « La Mecque en direct » dans l’onglet Qibla, l’app affiche le lecteur de YouTube avec le direct de la chaîne Saudi Quran TV, dans le mode de confidentialité renforcée de YouTube (youtube-nocookie.com). YouTube (Google) reçoit alors votre adresse IP et ce dont son lecteur a besoin, et peut enregistrer ses propres cookies, selon la politique de confidentialité de Google (policies.google.com/privacy). L’app n’envoie rien d’autre à YouTube."
+        ]
+      },
+      {
         "heading": "Siri et Raccourcis",
         "paragraphs": [
           "Lorsque vous demandez une heure de prière à Siri, Apple traite votre question comme pour n’importe quelle app. L’app calcule la réponse sur votre iPhone, sans s’ouvrir, à partir des réglages et du lieu qui y sont enregistrés."
@@ -66,7 +78,7 @@
       {
         "heading": "Ni publicité ni pistage",
         "paragraphs": [
-          "L’app ne contient aucun code de publicité, d’analyse ou de pistage. En dehors des frameworks d’Apple, elle utilise uniquement Adhan, une bibliothèque open source qui calcule les horaires de prière sur votre iPhone et n’envoie rien nulle part. Hormis les demandes à Plans d’Apple et à Islamic Network décrites ci-dessus, l’app ne partage rien avec personne. Je ne collecte de données personnelles auprès de personne, enfants compris."
+          "L’app ne contient aucun code de publicité, d’analyse ou de pistage. En dehors des frameworks d’Apple, elle utilise uniquement Adhan, une bibliothèque open source qui calcule les horaires de prière sur votre iPhone et n’envoie rien nulle part. Hormis les demandes à Plans d’Apple, à Islamic Network et à YouTube décrites ci-dessus, l’app ne partage rien avec personne. Je ne collecte de données personnelles auprès de personne, enfants compris."
         ]
       },
       {
