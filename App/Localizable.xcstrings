@@ -1871,6 +1871,40 @@
         }
       }
     },
+    "Count one": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عدّ واحدة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eins zählen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compter un"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eén tellen"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir say"
+          }
+        }
+      }
+    },
     "Count to": {
       "localizations": {
         "ar": {
@@ -1901,6 +1935,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hedef"
+          }
+        }
+      }
+    },
+    "Count with a tap, without opening the app.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعدد بلمسة، دون فتح التطبيق."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zähle mit einem Tippen, ohne die App zu öffnen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comptez d’un toucher, sans ouvrir l’app."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tel met een tik, zonder de app te openen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulamayı açmadan, dokunarak sayın."
           }
         }
       }

@@ -146,9 +146,9 @@ jobs:
   # Same route as Esports Atlas: the archive is unsigned and Xcode signs it while exporting, with
   # Apple's cloud-managed distribution certificate, authenticated by the App Store Connect API key
   # (Admin role). No certificate or profile lives in the repo or on the runner. The export takes the
-  # entitlements from the archived binaries: with an App Group, a step before the export has to ad hoc
-  # sign the appex and app with their .entitlements files, and the group has to be registered and
-  # assigned in the developer portal first (the key gets a 401 on App Groups). Removed for now.
+  # entitlements (the widgets' App Group) from the archived binaries, so an ad hoc signature adds them
+  # first. The group is registered and assigned to both App IDs in the developer portal (the key gets a
+  # 401 on App Groups, so the export can't do that itself).
   testflight:
     needs: build
     if: github.ref == 'refs/heads/main' && (inputs.testflight || contains(github.event.head_commit.message, '[testflight]'))
@@ -191,6 +191,14 @@ jobs:
           xcodebuild archive -project QiblaAndPrayer.xcodeproj -scheme QiblaAndPrayer -configuration Release \
             -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
             CODE_SIGNING_ALLOWED=NO CURRENT_PROJECT_VERSION="$BUILD_NUMBER" | tail -80
+
+      - name: Add the entitlements (ad hoc signature, replaced while exporting)
+        run: |
+          APP="$RUNNER_TEMP/App.xcarchive/Products/Applications/QiblaAndPrayer.app"
+          codesign --force --sign - --entitlements Widgets/Widgets.entitlements "$APP/PlugIns/QiblaAndPrayerWidgets.appex"
+          codesign --force --sign - --entitlements App/QiblaAndPrayer.entitlements "$APP"
+          codesign -d --entitlements - "$APP/PlugIns/QiblaAndPrayerWidgets.appex"
+          codesign -d --entitlements - "$APP"
 
       # The key is on disk only during this step and is removed however the step ends.
       - name: Sign and upload to App Store Connect

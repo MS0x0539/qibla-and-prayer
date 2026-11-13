@@ -1,67 +1,17 @@
 import SwiftUI
-
-/// A phrase to count: how it is written, how people say it, and how many times it is usually said.
-struct Dhikr: Identifiable {
-    let id: String
-    let arabic: String
-    /// The transliteration (Turkish spelling in Turkish), looked up in the app's language.
-    let key: String.LocalizationValue
-    let count: Int
-
-    var name: String { String(localized: key, bundle: .app) }
-
-    static let all = [
-        Dhikr(id: "subhanAllah", arabic: "سُبْحَانَ اللَّهِ", key: "SubhanAllah", count: 33),
-        Dhikr(id: "alhamdulillah", arabic: "الْحَمْدُ لِلَّهِ", key: "Alhamdulillah", count: 33),
-        Dhikr(id: "allahuAkbar", arabic: "اللَّهُ أَكْبَرُ", key: "Allahu Akbar", count: 33),
-        Dhikr(id: "tahlil", arabic: "لَا إِلَٰهَ إِلَّا اللَّهُ", key: "La ilaha illallah", count: 100),
-        Dhikr(id: "istighfar", arabic: "أَسْتَغْفِرُ اللَّهَ", key: "Astaghfirullah", count: 100),
-        Dhikr(id: "subhanAllahiWaBihamdihi", arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", key: "SubhanAllahi wa bihamdihi", count: 100),
-        Dhikr(id: "hawqala", arabic: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", key: "La hawla wa la quwwata illa billah", count: 33),
-        Dhikr(id: "salawat", arabic: "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ", key: "Salawat", count: 33),
-    ]
-
-    /// The tasbihat after each prayer, counted in turn: 33 times SubhanAllah, 33 Alhamdulillah and 34 Allahu Akbar
-    /// (Sahih Muslim 596).
-    static let afterPrayerID = "afterPrayer"
-    static let afterPrayer = Array(all.prefix(3))
-    static let afterPrayerCounts = [33, 33, 34]
-}
-
-/// The counting behind the tasbih: rounds of 33, 99 or 100, no limit, or a sequence of phrases in turn.
-struct TasbihCounter: Equatable {
-    var count = 0
-    var total = 0
-    /// 0 means no limit.
-    var target = 33
-    /// The rounds of a sequence (after prayer), counted in turn; empty for a single phrase.
-    var steps: [Int] = []
-    var step = 0
-
-    /// The count that completes the round now being counted.
-    var goal: Int { steps.isEmpty ? target : steps[step % steps.count] }
-
-    /// Counts one; true when that completes a round. The next tap starts the next round (the next phrase) at 1.
-    mutating func tap() -> Bool {
-        if goal > 0 && count >= goal {
-            count = 0
-            if !steps.isEmpty { step = (step + 1) % steps.count }
-        }
-        count += 1
-        total += 1
-        return goal > 0 && count == goal
-    }
-}
+import WidgetKit
 
 /// A tasbih (dhikr counter): tap the circle for each phrase, the phone taps back.
 struct TasbihView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @AppStorage("tasbihCount") private var count = 0
-    @AppStorage("tasbihTotal") private var total = 0
-    @AppStorage("tasbihTarget") private var target = 33
+    @Environment(\.scenePhase) private var scenePhase
+    // In the App Group, shared with the Tasbih widget.
+    @AppStorage(TasbihStore.countKey, store: TasbihStore.defaults) private var count = 0
+    @AppStorage(TasbihStore.totalKey, store: TasbihStore.defaults) private var total = 0
+    @AppStorage(TasbihStore.targetKey, store: TasbihStore.defaults) private var target = 33
     /// One of Dhikr.all, the after-prayer sequence, or "" to count without a phrase.
-    @AppStorage("tasbihDhikr") private var dhikrID = ""
-    @AppStorage("tasbihStep") private var step = 0
+    @AppStorage(TasbihStore.dhikrKey, store: TasbihStore.defaults) private var dhikrID = ""
+    @AppStorage(TasbihStore.stepKey, store: TasbihStore.defaults) private var step = 0
     /// The count grows with the text size; it shrinks again to stay inside the circle.
     @ScaledMetric(relativeTo: .largeTitle) private var countSize: CGFloat = 88
     @State private var taps = 0
@@ -105,6 +55,19 @@ struct TasbihView: View {
                 Button("Cancel", role: .cancel) {}
             }
             .sensoryFeedback(trigger: taps) { _, _ in roundDone ? .success : .impact(weight: .light) }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    // Counted on the widget meanwhile.
+                    let stored = TasbihStore.counter
+                    if stored.count != count || stored.total != total || stored.step != step {
+                        count = stored.count
+                        total = stored.total
+                        step = stored.step
+                    }
+                } else {
+                    WidgetCenter.shared.reloadTimelines(ofKind: TasbihStore.widgetKind)
+                }
+            }
         }
     }
 

@@ -119,12 +119,9 @@ enum Prayers {
     }
 }
 
-/// Where the app keeps its settings and place; with the Next prayer widget, shared through the App Group.
+/// Where the app keeps its settings, place and tasbih count, shared with the widgets through the App Group.
 enum SharedStore {
-    // shortcut: the app's own defaults until the App Group is registered (see PrayerWidgets); then
-    // UserDefaults(suiteName: "group.org.psbv.qiblaandprayer") ?? .standard again. Not an unentitled
-    // group suite: its values would be lost when the real group arrives.
-    static let defaults = UserDefaults.standard
+    static let defaults = UserDefaults(suiteName: "group.org.psbv.qiblaandprayer") ?? .standard
 
     static func save<Value: Encodable>(_ value: Value?, as key: String) {
         defaults.set(value.flatMap { try? JSONEncoder().encode($0) }, forKey: key)
