@@ -33,6 +33,9 @@ struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
     // `-startTab qibla` opens another tab first (used for CI screenshots).
     @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .times
+    /// Left by a control (Control Center, the Lock Screen, the Action button) that opened the app.
+    @AppStorage(OpenScreenIntent.key) private var openScreen = ""
+    @AppStorage("ibadahPart") private var ibadahPart = IbadahPart.tasbih
 
     var body: some View {
         @Bindable var model = model
@@ -55,6 +58,17 @@ struct RootView: View {
         }
         // Rebuilt when the language changes, so every screen picks up the new text.
         .id(model.settings.language)
+        .onChange(of: openScreen, initial: true) {
+            guard let screen = AppScreen(rawValue: openScreen) else { return }
+            openScreen = ""
+            switch screen {
+            case .qibla:
+                tab = .qibla
+            case .tasbih:
+                ibadahPart = .tasbih
+                tab = .ibadah
+            }
+        }
         .fullScreenCover(isPresented: .constant(!model.onboarded)) {
             SetupView {
                 tab = .times

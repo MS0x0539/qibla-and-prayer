@@ -263,6 +263,12 @@ struct AcknowledgementsView: View {
                     Text(verbatim: "tanzil.net")
                 }
                 Divider().overlay(Theme.line)
+                Text("Recitations stream verse by verse from Islamic Network (alquran.cloud) and remain the copyright of their reciters.")
+                    .foregroundStyle(Theme.muted)
+                Link(destination: URL(string: "https://alquran.cloud")!) {
+                    Text(verbatim: "alquran.cloud")
+                }
+                Divider().overlay(Theme.line)
                 Text("The Qur'an is shown in the Amiri Quran font by the Amiri Project, under the SIL Open Font License.")
                     .foregroundStyle(Theme.muted)
                 if let license = Self.amiriLicense {

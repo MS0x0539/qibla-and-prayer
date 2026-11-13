@@ -62,6 +62,7 @@ targets:
       - App/DiyanetTimes.swift
       - App/Theme.swift
       - App/IftarActivity.swift
+      - App/OpenScreenIntent.swift
       - App/Localizable.xcstrings
     dependencies:
       - package: Adhan

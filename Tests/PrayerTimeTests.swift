@@ -120,6 +120,12 @@ struct PrayerTimeTests {
         let endlessRounds = (1...150).map { _ in endless.tap() }
         #expect(!endlessRounds.contains(true))
         #expect(endless.count == 150)
+        // After prayer: each phrase in turn, the tap after the last one starts the first again.
+        var sequence = TasbihCounter(steps: [2, 1])
+        let ends = (1...4).map { _ in sequence.tap() }
+        #expect(ends == [false, true, true, false])
+        #expect(sequence.step == 0 && sequence.count == 1 && sequence.total == 4)
+        #expect(Dhikr.afterPrayerCounts.reduce(0, +) == 100)
     }
 
     @Test func adjustmentsMoveOnlyThatPrayer() throws {

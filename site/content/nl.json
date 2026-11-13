@@ -13,21 +13,21 @@
     "intro": "Gebedstijden met keuze uit 17 berekeningsmethoden, een qibla-kompas en -kaart, tijden voor de ramadan, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
     "points": [
       "Geen advertenties, geen abonnementen, geen account.",
-      "Er wordt niets over jou verzameld, en er wordt niets naar mij gestuurd. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen, het zoeken naar een stad en de kaart komen van Apple Kaarten.",
+      "Er wordt niets over jou verzameld, en er wordt niets naar mij gestuurd. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen, het zoeken naar een stad en de kaart komen van Apple Kaarten, en recitaties van de Koran van Islamic Network.",
       "De tijden volgen de methode van je moskee of instantie. Ze zijn gecontroleerd aan de hand van de roosters die instanties publiceren. Je kunt elke tijd een paar minuten verschuiven, zodat die met de tijd van je moskee overeenkomt."
     ]
   },
   "privacy": {
     "title": "Privacybeleid",
-    "updated": "Laatst bijgewerkt: 12 november 2026",
+    "updated": "Laatst bijgewerkt: 13 november 2026",
     "intro": "Wajh (op het beginscherm heet de app “Qibla & Prayer”) is gemaakt door Melih Sivrikaya. In dit privacybeleid lees je wat er met je gegevens gebeurt als je de app gebruikt.",
-    "summary": "Kort gezegd: de app stuurt niets naar mij, en ik verzamel geen gegevens over jou. Geen account, geen advertenties, geen code voor analytics en geen tracking. Om de naam van je plaats te tonen, een stad te zoeken en de kaart en moskeeën in de buurt te laten zien, raadpleegt je iPhone Apple Kaarten; zie hieronder.",
+    "summary": "Kort gezegd: de app stuurt niets naar mij, en ik verzamel geen gegevens over jou. Geen account, geen advertenties, geen code voor analytics en geen tracking. Om de naam van je plaats te tonen, een stad te zoeken en de kaart en moskeeën in de buurt te laten zien, raadpleegt je iPhone Apple Kaarten. Om een recitatie van de Koran af te spelen, haalt hij de audio op bij Islamic Network. Zie hieronder.",
     "sections": [
       {
         "heading": "Wie verantwoordelijk is",
         "paragraphs": [
-          "Ik, Melih Sivrikaya (ms@psbv.org), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up.",
-          "De app vraagt bij Apple Kaarten alleen op wat nodig is voor de functies die je gebruikt. Ik beantwoord e-mails en gebruik de rapporten die Apple aan mij doorgeeft. Dat doe ik omdat ik een gerechtvaardigd belang heb bij het ondersteunen en verbeteren van de app (artikel 6 lid 1 sub f AVG)."
+          "Ik, Melih Sivrikaya (ms@psbv.org), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up. Islamic Network is verantwoordelijk voor zijn audiodienst, waar de recitaties vandaan komen.",
+          "De app vraagt bij Apple Kaarten en Islamic Network alleen op wat nodig is voor de functies die je gebruikt. Ik beantwoord e-mails en gebruik de rapporten die Apple aan mij doorgeeft. Dat doe ik omdat ik een gerechtvaardigd belang heb bij het ondersteunen en verbeteren van de app (artikel 6 lid 1 sub f AVG)."
         ]
       },
       {
@@ -41,8 +41,14 @@
       {
         "heading": "Wat op je iPhone blijft",
         "paragraphs": [
-          "De app bewaart je instellingen (waaronder je school en berekeningsmethode), de laatste plaats die hij heeft gevonden of de stad die je hebt gekozen (naam en coördinaten), de tasbih-teller en wat je bijhoudt (de dagen die je als vastendag hebt gemarkeerd, de in te halen vastendagen en de gemiste gebeden). Ze staan op je iPhone, niet op een server, en worden niet via iCloud gesynchroniseerd. Net als andere appgegevens zitten ze in de back-ups van je iPhone (een iCloud-back-up of een back-up op je computer), als je die maakt. Als je de app verwijdert, worden ze van je iPhone gewist.",
+          "De app bewaart je instellingen (waaronder je school en berekeningsmethode), de laatste plaats die hij heeft gevonden of de stad die je hebt gekozen (naam en coördinaten), de tasbih-teller, wat je bijhoudt (de dagen die je als vastendag hebt gemarkeerd, de in te halen vastendagen en de gemiste gebeden), en je bladwijzers en leesvoortgang in de Koran. Ze staan op je iPhone, niet op een server, en worden niet via iCloud gesynchroniseerd. Net als andere appgegevens zitten ze in de back-ups van je iPhone (een iCloud-back-up of een back-up op je computer), als je die maakt. Als je de app verwijdert, worden ze van je iPhone gewist.",
           "Herinneringen worden op je iPhone zelf ingepland; er is geen server die ze verstuurt. Ook de iftar-aftelling op het toegangsscherm draait op je iPhone."
+        ]
+      },
+      {
+        "heading": "Recitaties van de Koran",
+        "paragraphs": [
+          "Als je in het tabblad Koran een recitatie afspeelt, downloadt je iPhone de audio van elk vers van de audiodienst van Islamic Network (cdn.islamic.network) en bewaart die, zodat geen vers twee keer wordt gedownload; iOS kan deze bestanden verwijderen als er ruimte nodig is. Zoals elke website ontvangt de dienst je IP-adres en welk vers en welke reciteur je iPhone opvraagt; de app stuurt verder niets. Volgens Islamic Network worden logbestanden niet langer dan 29 dagen bewaard (alquran.cloud/terms-and-conditions)."
         ]
       },
       {
@@ -60,7 +66,7 @@
       {
         "heading": "Geen advertenties of tracking",
         "paragraphs": [
-          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken aan Apple Kaarten die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
+          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken aan Apple Kaarten en Islamic Network die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
         ]
       },
       {
@@ -111,7 +117,7 @@
       },
       {
         "q": "Verzamelt de app mijn gegevens?",
-        "a": "Nee. Er wordt niets naar mij gestuurd. Voor plaatsnamen, het zoeken naar een stad en de kaart gebruikt de app Apple Kaarten. De details lees je in het privacybeleid."
+        "a": "Nee. Er wordt niets naar mij gestuurd. Voor plaatsnamen, het zoeken naar een stad en de kaart gebruikt de app Apple Kaarten, en de recitaties komen van Islamic Network. De details lees je in het privacybeleid."
       }
     ]
   },

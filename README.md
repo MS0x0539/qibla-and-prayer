@@ -13,7 +13,10 @@ On the App Store as "Wajh: Qibla & Prayer Times".
   follow the country you're in, as its mosques calculate, also when you travel.
 - **Qur'an:** the full Arabic text (Tanzil's Uthmani text, unchanged) on the 604 pages of the Madinah mushaf,
   turned right to left, in the Amiri Quran font; an index of surahs, juz and the Qur'an's du'as, and search by
-  surah name (Arabic, Latin, Turkish, Dutch, German, French), du'a name or Arabic words.
+  surah name (Arabic, Latin, Turkish, Dutch, German, French), du'a name or Arabic words. Bookmarks, a khatm
+  (pages read, out of 604), and a tap on a verse to copy or share it. Recitation verse by verse by ten reciters,
+  streamed from Islamic Network (cdn.islamic.network, free for personal use) and cached on the phone; it keeps
+  playing with the screen locked, turns the pages and marks the verse being recited.
 - **Reminders:** optionally 5-30 minutes before each prayer, an hour before Jumu'ah, and before suhoor
   ends and at iftar in Ramadan.
 - **Islamic calendar:** the year's special days and nights, and a Ramadan timetable (suhoor/iftar);
@@ -21,7 +24,10 @@ On the App Store as "Wajh: Qibla & Prayer Times".
 - **Qibla:** a compass dial with the Kaaba marker on the rim; it turns gold with a haptic tap when
   the phone faces the Qibla.
 - **Map:** the Qibla as a line to the Kaaba, and mosques nearby.
-- **Ibadah:** the tasbih (a tap counter with haptics) and the tracker (fasts and missed prayers, kept on the phone).
+- **Ibadah:** the tasbih (a tap counter with haptics; free counting, the tasbihat after prayer 33/33/34, or one of
+  eight phrases shown in Arabic) and the tracker (Qur'an reading, fasts and missed prayers, kept on the phone).
+- **Controls:** Qibla and Tasbih buttons for Control Center, the Lock Screen and the Action button.
+- **Icon:** light, dark and tinted versions of the app icon.
 - **Siri:** "When is Maghrib in Qibla & Prayer?" without opening the app.
 - **Iftar countdown:** on the Lock Screen and in the Dynamic Island (a Live Activity, from the Ramadan
   card or the Tracker). The Next prayer widgets are built but off until the App Group is registered in
@@ -61,14 +67,16 @@ hand from the Actions tab.
 | `App/PrayerTimesView.swift` | Prayer times tab and the monthly timetable |
 | `App/QiblaView.swift` | Qibla compass |
 | `App/QiblaMapView.swift` | Qibla map and mosques nearby |
-| `App/TasbihView.swift` | Tasbih counter |
+| `App/TasbihView.swift` | Tasbih counter and its dhikr presets |
+| `App/Quran/` | Qur'an text, reader, index, bookmarks and khatm (`QuranProgress`), recitation (`Recitation`) |
+| `App/OpenScreenIntent.swift` | Opens the app on a screen; used by the controls in `Widgets/Controls.swift` |
 | `App/TrackerView.swift` | Fasting and missed-prayer tracker |
 | `App/PrayerIntents.swift` | Siri and Shortcuts (phrases in `App/*.lproj/AppShortcuts.strings`) |
 | `Widgets/PrayerWidgets.swift` | Widget extension: next-prayer widgets and the iftar Live Activity |
 | `App/IftarActivity.swift` | The Live Activity's data, shared by the app and the widgets |
 | `App/SettingsView.swift` | Settings, time adjustments, first-run setup |
 | `App/CitySearch.swift` | City search |
-| `App/SetupView.swift` | First-run setup (language, location, madhab, method, reminders) |
+| `App/SetupView.swift` | First-run setup (language, location, method, reminders) |
 | `App/IslamicCalendar.swift` | Islamic calendar and Ramadan timetable |
 | `App/Localizable.xcstrings` | All text in English, Dutch, German, French, Turkish and Arabic |
 

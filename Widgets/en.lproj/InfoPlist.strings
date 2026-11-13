@@ -1,0 +1,3 @@
+/* An English folder in the extension, so iPhones set to English show the controls and widgets in English
+   rather than in a second language from the list. */
+"CFBundleDisplayName" = "Qibla & Prayer";

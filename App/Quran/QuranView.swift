@@ -11,6 +11,7 @@ struct QuranView: View {
     // `-quranNight YES` for CI screenshots of the night page.
     @AppStorage("quranNight") private var night = false
     @AppStorage(QuranProgress.bookmarksKey) private var bookmarks = ""
+    @AppStorage("reciter") private var reciterID = Reciter.all[0].id
     @State private var showingIndex = false
     /// A verse found through the index or search, marked on its page until another page is shown.
     @State private var marked: Int?
@@ -19,11 +20,15 @@ struct QuranView: View {
 
     var body: some View {
         let style = night ? MushafStyle.dark : MushafStyle.printed
+        let recitation = Recitation.shared
         NavigationStack {
             TabView(selection: $page) {
                 ForEach(1...Quran.pageCount, id: \.self) { number in
-                    MushafPage(number: number, textSize: textSize, marked: marked, style: style) { tapped = $0 }
-                        .tag(number)
+                    // The verse being recited is marked; otherwise one found through the index.
+                    MushafPage(number: number, textSize: textSize, marked: recitation.verse ?? marked, style: style) {
+                        tapped = $0
+                    }
+                    .tag(number)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -47,6 +52,22 @@ struct QuranView: View {
                         .foregroundStyle(style.muted)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if recitation.isPlaying {
+                            recitation.pause()
+                        } else if let verse = recitation.verse, Quran.shared.page(ofVerse: verse) == page {
+                            recitation.resume()
+                        } else {
+                            // From a verse found on this page, or from the top of the page.
+                            let first = Quran.shared.verses(onPage: page).first?.index ?? 0
+                            recitation.play(from: marked ?? first, reciter: .named(reciterID))
+                        }
+                    } label: {
+                        Image(systemName: recitation.isPlaying ? "pause.fill" : "play.fill")
+                    }
+                    .accessibilityLabel(recitation.isPlaying ? Text("Pause recitation") : Text("Play recitation"))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
                     let bookmarked = QuranProgress.pages(bookmarks).contains(page)
                     Button { QuranProgress.toggleBookmark(page) } label: {
                         Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
@@ -64,10 +85,16 @@ struct QuranView: View {
                             .disabled(textSize >= 40)
                         Button("Smaller text", systemImage: "textformat.size.smaller") { textSize = max(textSize - 2, 18) }
                             .disabled(textSize <= 18)
+                        Picker("Reciter", selection: $reciterID) {
+                            ForEach(Reciter.all) { reciter in
+                                Text(verbatim: reciter.displayName).tag(reciter.id)
+                            }
+                        }
+                        .pickerStyle(.menu)
                     } label: {
-                        Image(systemName: "textformat.size")
+                        Image(systemName: "ellipsis.circle")
                     }
-                    .accessibilityLabel(Text("Text size"))
+                    .accessibilityLabel(Text("Page and recitation"))
                 }
             }
             .sheet(isPresented: $showingIndex) {
@@ -91,6 +118,24 @@ struct QuranView: View {
             }
             .onChange(of: page) {
                 if let marked, Quran.shared.page(ofVerse: marked) != page { self.marked = nil }
+            }
+            // The page turns with the recitation.
+            .onChange(of: recitation.verse) { old, new in
+                guard let old, let new, Quran.shared.page(ofVerse: new) != Quran.shared.page(ofVerse: old) else { return }
+                page = Quran.shared.page(ofVerse: new)
+            }
+            // Another reciter takes over at the same verse.
+            .onChange(of: reciterID) {
+                if recitation.isPlaying, let verse = recitation.verse {
+                    recitation.play(from: verse, reciter: .named(reciterID))
+                } else {
+                    recitation.stop()
+                }
+            }
+            .alert("The recitation can't be loaded", isPresented: Bindable(recitation).failed) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("Check your internet connection and try again.")
             }
         }
     }
@@ -373,6 +418,7 @@ extension NSAttributedString.Key {
 struct VerseSheet: View {
     let verse: Quran.Verse
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("reciter") private var reciterID = Reciter.all[0].id
     @State private var copied = false
 
     var body: some View {
@@ -393,6 +439,13 @@ struct VerseSheet: View {
             .background(Theme.background.ignoresSafeArea())
             .safeAreaInset(edge: .bottom) {
                 HStack(spacing: 12) {
+                    Button {
+                        Recitation.shared.play(from: verse.index, reciter: .named(reciterID))
+                        dismiss()
+                    } label: {
+                        Label("Play", systemImage: "play.fill")
+                            .frame(maxWidth: .infinity)
+                    }
                     Button {
                         UIPasteboard.general.string = shared
                         copied = true

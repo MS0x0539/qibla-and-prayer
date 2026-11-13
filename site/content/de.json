@@ -13,21 +13,21 @@
     "intro": "Gebetszeiten nach 17 Berechnungsmethoden, ein Qibla-Kompass und eine Qibla-Karte, Ramadan-Zeiten, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
     "points": [
       "Keine Werbung, keine Abos, kein Konto.",
-      "Über dich wird nichts gesammelt, und an mich wird nichts gesendet. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone; Ortsnamen, die Stadtsuche und die Karte kommen von Apple Karten.",
+      "Über dich wird nichts gesammelt, und an mich wird nichts gesendet. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone; Ortsnamen, die Stadtsuche und die Karte kommen von Apple Karten, Koranrezitationen von Islamic Network.",
       "Die Zeiten folgen der Methode deiner Moschee oder Institution und wurden mit den Gebetsplänen abgeglichen, die Institutionen veröffentlichen. Du kannst jede Zeit um ein paar Minuten verschieben, damit sie zu deiner Moschee passt."
     ]
   },
   "privacy": {
     "title": "Datenschutzerklärung",
-    "updated": "Stand: 12. November 2026",
+    "updated": "Stand: 13. November 2026",
     "intro": "Wajh (auf dem Home-Bildschirm „Qibla & Prayer“ genannt) wird von Melih Sivrikaya entwickelt. Diese Datenschutzerklärung beschreibt, was mit deinen Daten passiert, wenn du die App nutzt.",
-    "summary": "Kurz gesagt: Die App sendet nichts an mich, und ich sammle keine Daten über dich. Es gibt kein Konto, keine Werbung, keinen Code für Nutzungsanalyse und kein Tracking. Um deinen Ort zu benennen, nach einer Stadt zu suchen und die Karte und Moscheen in der Nähe anzuzeigen, fragt dein iPhone bei Apple Karten an; siehe unten.",
+    "summary": "Kurz gesagt: Die App sendet nichts an mich, und ich sammle keine Daten über dich. Es gibt kein Konto, keine Werbung, keinen Code für Nutzungsanalyse und kein Tracking. Um deinen Ort zu benennen, nach einer Stadt zu suchen und die Karte und Moscheen in der Nähe anzuzeigen, fragt dein iPhone bei Apple Karten an. Um eine Koranrezitation abzuspielen, lädt es die Audiodateien von Islamic Network. Siehe unten.",
     "sections": [
       {
         "heading": "Wer verantwortlich ist",
         "paragraphs": [
-          "Ich, Melih Sivrikaya (ms@psbv.org), bin für diese App und für die personenbezogenen Daten verantwortlich, die in dieser Datenschutzerklärung beschrieben sind. Damit bin ich der „Verantwortliche“ im Sinne der Datenschutz-Grundverordnung (DSGVO). Apple ist für seine eigenen Dienste verantwortlich, die die App nutzt: Apple Karten, Siri, Absturzberichte und iCloud-Backup.",
-          "Die App fragt bei Apple Karten nur das an, was die Funktionen brauchen, die du nutzt. Ich beantworte E-Mails und nutze die Berichte, die Apple weitergibt, aufgrund meines berechtigten Interesses, Support für die App zu leisten und sie zu verbessern (Art. 6 Abs. 1 lit. f DSGVO)."
+          "Ich, Melih Sivrikaya (ms@psbv.org), bin für diese App und für die personenbezogenen Daten verantwortlich, die in dieser Datenschutzerklärung beschrieben sind. Damit bin ich der „Verantwortliche“ im Sinne der Datenschutz-Grundverordnung (DSGVO). Apple ist für seine eigenen Dienste verantwortlich, die die App nutzt: Apple Karten, Siri, Absturzberichte und iCloud-Backup. Islamic Network ist für seinen Audiodienst verantwortlich, von dem die Rezitationen kommen.",
+          "Die App fragt bei Apple Karten und Islamic Network nur das an, was die Funktionen brauchen, die du nutzt. Ich beantworte E-Mails und nutze die Berichte, die Apple weitergibt, aufgrund meines berechtigten Interesses, Support für die App zu leisten und sie zu verbessern (Art. 6 Abs. 1 lit. f DSGVO)."
         ]
       },
       {
@@ -41,8 +41,14 @@
       {
         "heading": "Was auf deinem iPhone bleibt",
         "paragraphs": [
-          "Die App speichert deine Einstellungen (darunter deine Rechtsschule und deine Berechnungsmethode), den zuletzt ermittelten Ort oder die Stadt, die du gewählt hast (Name und Koordinaten), den Tasbih-Zähler und den Tracker (die Tage, die du als Fastentage markiert hast, die nachzuholenden Fastentage und die verpassten Gebete). Diese Daten liegen auf deinem iPhone, auf keinem Server, und werden nicht über iCloud synchronisiert. Wie andere App-Daten sind sie in den Backups deines iPhone enthalten (iCloud-Backup oder ein Backup auf deinem Computer), falls du welche erstellst. Wenn du die App löschst, werden sie von deinem iPhone entfernt.",
+          "Die App speichert deine Einstellungen (darunter deine Rechtsschule und deine Berechnungsmethode), den zuletzt ermittelten Ort oder die Stadt, die du gewählt hast (Name und Koordinaten), den Tasbih-Zähler, den Tracker (die Tage, die du als Fastentage markiert hast, die nachzuholenden Fastentage und die verpassten Gebete) sowie deine Lesezeichen und deinen Lesefortschritt im Koran. Diese Daten liegen auf deinem iPhone, auf keinem Server, und werden nicht über iCloud synchronisiert. Wie andere App-Daten sind sie in den Backups deines iPhone enthalten (iCloud-Backup oder ein Backup auf deinem Computer), falls du welche erstellst. Wenn du die App löschst, werden sie von deinem iPhone entfernt.",
           "Erinnerungen werden direkt auf deinem iPhone geplant; kein Server verschickt sie. Auch der Iftar-Countdown auf dem Sperrbildschirm läuft auf deinem iPhone."
+        ]
+      },
+      {
+        "heading": "Koranrezitationen",
+        "paragraphs": [
+          "Wenn du im Tab „Koran“ eine Rezitation abspielst, lädt dein iPhone die Audiodatei jedes Verses vom Audiodienst von Islamic Network (cdn.islamic.network) und behält sie, damit kein Vers zweimal geladen wird; iOS kann diese Dateien löschen, wenn es Platz braucht. Wie jede Website erhält der Dienst deine IP-Adresse und welchen Vers und welchen Rezitator dein iPhone anfragt; die App sendet sonst nichts. Laut Islamic Network werden Logs höchstens 29 Tage aufbewahrt (alquran.cloud/terms-and-conditions)."
         ]
       },
       {
@@ -60,7 +66,7 @@
       {
         "heading": "Keine Werbung, kein Tracking",
         "paragraphs": [
-          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen an Apple Karten teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
+          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen an Apple Karten und Islamic Network teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
         ]
       },
       {
@@ -111,7 +117,7 @@
       },
       {
         "q": "Sammelt die App meine Daten?",
-        "a": "Nein. An mich wird nichts gesendet. Ortsnamen, die Stadtsuche und die Karte nutzen Apple Karten; die Details findest du in der Datenschutzerklärung."
+        "a": "Nein. An mich wird nichts gesendet. Ortsnamen, die Stadtsuche und die Karte nutzen Apple Karten, die Rezitationen kommen von Islamic Network; die Details findest du in der Datenschutzerklärung."
       }
     ]
   },
