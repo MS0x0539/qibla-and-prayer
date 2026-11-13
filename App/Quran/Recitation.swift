@@ -1,6 +1,7 @@
 import AVFoundation
 import MediaPlayer
 import Observation
+import SwiftUI
 
 /// A reciter whose recitation comes verse by verse from Islamic Network's audio service (cdn.islamic.network).
 /// Its terms allow streaming for personal use; the recitations remain the reciters' copyright.
@@ -256,15 +257,44 @@ final class Recitation {
         return file
     }
 
+    /// The reciter of the recitation playing, for the mini player.
+    var reciterName: String { reciter.displayName }
+
     private func showNowPlaying() {
         guard let verse else { return }
         let quran = Quran.shared
         let item = quran.verses[verse]
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
             MPMediaItemPropertyTitle: "\(Quran.title(of: quran.surahs[item.surah - 1])) \(item.surah):\(item.number)",
-            MPMediaItemPropertyArtist: reciter.displayName,
+            MPMediaItemPropertyArtist: artistLine,
+            MPMediaItemPropertyArtwork: Self.artwork,
         ]
     }
+
+    /// The reciter and the next prayer. While the app's recitation plays, iOS shows its player on the Lock Screen and
+    /// hides the app's own Live Activity (the next prayer), so the player says when the next prayer is.
+    private var artistLine: String {
+        guard let saved = SharedStore.saved(),
+              let next = Prayers.next(after: .now, place: saved.place, settings: saved.settings) else {
+            return reciter.displayName
+        }
+        let zone = saved.place.timeZone
+        return "\(reciter.displayName) · \(next.kind.title(on: next.time, in: zone)) \(Formats.time(next.time, in: zone))"
+    }
+
+    /// The app's star in gold on its dark green, as the player's artwork.
+    private static let artwork: MPMediaItemArtwork = {
+        let size = CGSize(width: 600, height: 600)
+        let image = UIGraphicsImageRenderer(size: size).image { context in
+            UIColor(Theme.background).setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+            let star = UIBezierPath(cgPath: EightPointStar().path(in: CGRect(x: 150, y: 150, width: 300, height: 300)).cgPath)
+            star.lineWidth = 16
+            UIColor(Theme.gold).setStroke()
+            star.stroke()
+        }
+        return MPMediaItemArtwork(boundsSize: size) { _ in image }
+    }()
 }
 
 /// Recitations downloaded ahead, to listen without internet: a surah, a juz or the whole Qur'an by one reciter. The

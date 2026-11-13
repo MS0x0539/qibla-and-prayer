@@ -5,7 +5,10 @@ import SwiftUI
 struct ReaderSettingsView: View {
     let page: Int
     @Binding var night: Bool
+    @Binding var autoNight: Bool
     @Binding var textSize: Double
+    /// The page as it is on screen, to share.
+    var pageImage: UIImage?
     @AppStorage("reciter") private var reciterID = Reciter.all[0].id
     @Environment(\.dismiss) private var dismiss
 
@@ -14,11 +17,24 @@ struct ReaderSettingsView: View {
         NavigationStack {
             List {
                 Section("Page") {
-                    Picker("Page", selection: $night) {
-                        Label("Paper", systemImage: "sun.max").tag(false)
-                        Label("Night", systemImage: "moon").tag(true)
+                    // Automatic: night from Isha until sunrise.
+                    Picker("Page", selection: Binding(
+                        get: { autoNight ? "automatic" : night ? "night" : "paper" },
+                        set: { look in
+                            autoNight = look == "automatic"
+                            if look != "automatic" { night = look == "night" }
+                        })) {
+                        Text("Paper").tag("paper")
+                        Text("Night").tag("night")
+                        Text("Automatic").tag("automatic")
                     }
                     .pickerStyle(.segmented)
+                    if let pageImage {
+                        let image = Image(uiImage: pageImage)
+                        ShareLink(item: image, preview: SharePreview(Text("Page \(page)"), image: image)) {
+                            Label("Share this page", systemImage: "square.and.arrow.up")
+                        }
+                    }
                     Stepper(value: $textSize, in: 18...40, step: 2) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Text size")

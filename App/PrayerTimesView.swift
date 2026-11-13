@@ -25,6 +25,22 @@ struct PrayerTimesView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Theme.background.ignoresSafeArea())
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    // Today's times as a card in the app's colours, with the times as text too.
+                    if let place = model.place, let today = model.times(on: .now, at: place) {
+                        let zone = place.timeZone
+                        let rows = today.map { ($0.kind.title(on: $0.time, in: zone), Formats.time($0.time, in: zone)) }
+                        let hijri = Formats.hijriDate(Prayers.hijri(of: .now, place: place, settings: model.settings))
+                        let placeAndDate = "\(place.displayName) · \(Formats.weekdayDate(.now, in: zone))"
+                        ShareLink(item: CardImage {
+                            CardImage.picture(of: TimesCard(hijri: hijri, placeAndDate: placeAndDate, times: rows))
+                        }, message: Text(verbatim: ([placeAndDate] + rows.map { "\($0.0) \($0.1)" }).joined(separator: "\n")),
+                        preview: SharePreview(Text("Prayer times"))) {
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                        .accessibilityLabel(Text("Share today's times"))
+                    }
+                }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     NavigationLink {
                         IslamicCalendarView()

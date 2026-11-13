@@ -42,18 +42,22 @@ struct RootView: View {
         TabView(selection: $tab) {
             Tab("Prayer times", systemImage: "clock", value: AppTab.times) {
                 PrayerTimesView { tab = .settings }
+                    .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
             Tab("Qibla", systemImage: "safari", value: AppTab.qibla) {
                 QiblaView()
+                    .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
             Tab("Qur'an", systemImage: "book", value: AppTab.quran) {
                 QuranView()
             }
             Tab("Ibadah", systemImage: "circle.dotted", value: AppTab.ibadah) {
                 IbadahView()
+                    .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
             Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {
                 SettingsView()
+                    .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
         }
         // Rebuilt when the language changes, so every screen picks up the new text.

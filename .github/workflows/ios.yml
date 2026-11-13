@@ -117,13 +117,13 @@ jobs:
           shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab ibadah -ibadahPart tasbih
           # The Qur'an: Al-Fatiha, Al-Baqarah's first page and Ayat al-Kursi's page.
           for page in 1 2 42; do
-            shot "en-quran-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranTurnHintSeen YES -quranPage "$page"
+            shot "en-quran-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranTurnHintSeen YES -quranPage "$page"
           done
-          shot "en-quran-hint" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranPage 3
-          shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranTurnHintSeen YES -quranPage 2
-          shot "en-quran-42-night" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranTurnHintSeen YES -quranPage 42 -quranNight YES
-          shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranTurnHintSeen YES -quranPage 2 -quranSheet settings
-          shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranTurnHintSeen YES -quranPage 42 -quranSheet goto
+          shot "en-quran-hint" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranPage 3
+          shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranAutoNight NO -quranTurnHintSeen YES -quranPage 2
+          shot "en-quran-42-night" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranTurnHintSeen YES -quranPage 42 -quranNight YES
+          shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranTurnHintSeen YES -quranPage 2 -quranSheet settings
+          shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranTurnHintSeen YES -quranPage 42 -quranSheet goto
           shot "en-tasbih-after-prayer" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tasbih -tasbihDhikr afterPrayer -tasbihStep 1 -tasbihCount 21 -tasbihTotal 54
           shot "en-tracker-khatm" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tracker -khatmPages "$(seq -s, 1 42)" -quranToday "$(date +%Y-%m-%d):40,41,42"
           # The map loads tiles and mosques over the network: give it longer.

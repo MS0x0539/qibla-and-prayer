@@ -8,8 +8,13 @@ struct QuranView: View {
     @AppStorage("quranPage") private var page = 1
     /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
-    // `-quranNight YES` for CI screenshots of the night page.
+    // `-quranNight YES -quranAutoNight NO` for CI screenshots of the night page.
     @AppStorage("quranNight") private var night = false
+    /// The page turns to night after Isha and back to paper at sunrise, unless paper or night was picked by hand.
+    @AppStorage("quranAutoNight") private var autoNight = true
+    @State private var nightNow = false
+    @State private var pager = PagerHandle()
+    @Environment(AppModel.self) private var model
     @AppStorage(QuranProgress.bookmarksKey) private var bookmarks = ""
     @AppStorage("reciter") private var reciterID = Reciter.all[0].id
     @State private var showingIndex = false
@@ -25,27 +30,27 @@ struct QuranView: View {
     @AppStorage("quranTurnHintSeen") private var turnHintSeen = false
 
     var body: some View {
-        let style = night ? MushafStyle.dark : MushafStyle.printed
+        let isNight = autoNight ? nightNow : night
+        let style = isNight ? MushafStyle.dark : MushafStyle.printed
         let recitation = Recitation.shared
         let surah = Quran.shared.verses(onPage: page).first.map { Quran.shared.surahs[$0.surah - 1] }
         NavigationStack {
-            TabView(selection: $page) {
-                ForEach(1...Quran.pageCount, id: \.self) { number in
-                    // The verse being recited is marked; otherwise one found through the index.
+            // Turned like paper; a slide with Reduce Motion.
+            MushafPager(page: $page, curl: !reduceMotion, handle: pager) { number in
+                // The verse being recited is marked; otherwise one found through the index.
+                AnyView(
                     MushafPage(number: number, textSize: textSize, marked: recitation.verse ?? marked, style: style) {
                         tapped = $0
                     }
-                    .tag(number)
-                }
+                    // A mushaf is read right to left.
+                    .environment(\.layoutDirection, .rightToLeft))
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            // A mushaf is read right to left: the next page lies to the left.
-            .environment(\.layoutDirection, .rightToLeft)
+            .id(reduceMotion)
             .background(style.paper.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(style.paper, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(night ? .dark : .light, for: .navigationBar)
+            .toolbarColorScheme(isNight ? .dark : .light, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showingIndex = true } label: {
@@ -137,7 +142,8 @@ struct QuranView: View {
                 }
             }
             .sheet(isPresented: $showingSettings) {
-                ReaderSettingsView(page: page, night: $night, textSize: $textSize)
+                ReaderSettingsView(page: page, night: $night, autoNight: $autoNight, textSize: $textSize,
+                                   pageImage: pager.snapshot())
             }
             // A page open for 10 seconds counts as read, for the khatm in Ibadah; leafing through doesn't.
             .task(id: page) {
@@ -148,6 +154,9 @@ struct QuranView: View {
             .onChange(of: page) {
                 if let marked, Quran.shared.page(ofVerse: marked) != page { self.marked = nil }
                 turnHintSeen = true
+            }
+            .task(id: autoNight) {
+                if autoNight { await followTheNight() }
             }
             // The page turns with the recitation.
             .onChange(of: recitation.verse) { old, new in
@@ -167,6 +176,19 @@ struct QuranView: View {
             } message: {
                 Text("Check your internet connection and try again.")
             }
+        }
+    }
+
+    /// Night from Isha until sunrise, checked again at each of the two (and at least every quarter of an hour).
+    private func followTheNight() async {
+        while !Task.isCancelled {
+            let now = Date.now
+            guard let place = model.place, let today = model.times(on: now, at: place),
+                  let sunrise = today.first(where: { $0.kind == .sunrise })?.time,
+                  let isha = today.first(where: { $0.kind == .isha })?.time else { return }
+            nightNow = now >= isha || now < sunrise
+            let next = [sunrise, isha].filter { $0 > now }.min() ?? now.addingTimeInterval(900)
+            try? await Task.sleep(for: .seconds(min(900, max(30, next.timeIntervalSince(now)))))
         }
     }
 
@@ -700,7 +722,9 @@ struct VerseSheet: View {
                               systemImage: copied ? "checkmark" : "doc.on.doc")
                             .frame(maxWidth: .infinity)
                     }
-                    ShareLink(item: shared) {
+                    // The verse as a card on the mushaf's paper, with the text itself as the message.
+                    ShareLink(item: CardImage { CardImage.picture(of: VerseCard(verse: verse)) },
+                              message: Text(verbatim: shared), preview: SharePreview(Text(verbatim: reference))) {
                         Label("Share", systemImage: "square.and.arrow.up")
                             .frame(maxWidth: .infinity)
                     }
