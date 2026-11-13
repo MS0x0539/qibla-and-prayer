@@ -7,6 +7,8 @@ struct QiblaMapView: View {
     @State private var position = MapCameraPosition.automatic
     @State private var showingWhole = false
     @State private var mosques: [MKMapItem] = []
+    /// A mosque pin tapped on the map: opened in Apple Maps, as in the list.
+    @State private var selectedMosque: MKMapItem?
     @State private var search = SearchState.loading
     /// The camera is placed once, and mosques are searched once per place, not on every return to the map.
     @State private var framed = false
@@ -31,7 +33,7 @@ struct QiblaMapView: View {
     private func content(_ place: Place) -> some View {
         let here = place.coordinate
         return VStack(spacing: 0) {
-            Map(position: $position) {
+            Map(position: $position, selection: $selectedMosque) {
                 MapPolyline(coordinates: [here, Prayers.kaaba], contourStyle: .geodesic)
                     .stroke(Theme.gold, lineWidth: 4)
                 Annotation("Kaaba", coordinate: Prayers.kaaba) {
@@ -49,9 +51,15 @@ struct QiblaMapView: View {
                 ForEach(mosques, id: \.self) { item in
                     Marker(item: item)
                         .tint(Theme.gold)
+                        .tag(item)
                 }
             }
             .mapStyle(.standard(pointsOfInterest: .excludingAll))
+            .onChange(of: selectedMosque) { _, item in
+                guard let item else { return }
+                item.openInMaps()
+                selectedMosque = nil
+            }
             .mapControls {
                 MapCompass()
                 MapScaleView()
