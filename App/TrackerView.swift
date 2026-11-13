@@ -6,6 +6,10 @@ struct TrackerView: View {
     /// The days fasted, as "2026-11-12" separated by commas.
     @AppStorage("fastingDays") private var fastingDays = ""
     @AppStorage("fastsToMakeUp") private var fastsToMakeUp = 0
+    @AppStorage(QuranProgress.khatmPagesKey) private var khatmPages = ""
+    @AppStorage(QuranProgress.khatmCountKey) private var khatmCount = 0
+    @AppStorage(QuranProgress.todayKey) private var quranToday = ""
+    @State private var confirmingNewKhatm = false
 
     var body: some View {
         Group {
@@ -51,6 +55,26 @@ struct TrackerView: View {
             .listRowBackground(Theme.card)
 
             Section {
+                let read = QuranProgress.pages(khatmPages).count
+                LabeledContent("Pages read today", value: Formats.number(QuranProgress.pagesRead(on: now, in: quranToday).count))
+                VStack(alignment: .leading, spacing: 8) {
+                    LabeledContent("Khatm", value: "\(Formats.number(read)) / \(Formats.number(Quran.pageCount))")
+                    ProgressView(value: Double(read), total: Double(Quran.pageCount))
+                        .tint(Theme.gold)
+                }
+                if khatmCount > 0 {
+                    LabeledContent("Khatms completed", value: Formats.number(khatmCount))
+                }
+                Button("Start a new khatm") { confirmingNewKhatm = true }
+                    .disabled(read == 0)
+            } header: {
+                Text("Qur'an")
+            } footer: {
+                Text("A page counts as read once it has been open for 10 seconds. All 604 pages complete a khatm.")
+            }
+            .listRowBackground(Theme.card)
+
+            Section {
                 Stepper(value: $fastsToMakeUp, in: 0...999) {
                     LabeledContent("Fasts to make up", value: Formats.number(fastsToMakeUp))
                 }
@@ -78,6 +102,12 @@ struct TrackerView: View {
         }
         .scrollContentBackground(.hidden)
         .background(Theme.background.ignoresSafeArea())
+        .confirmationDialog("Start a new khatm?", isPresented: $confirmingNewKhatm, titleVisibility: .visible) {
+            Button("Start a new khatm", role: .destructive) { khatmPages = "" }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("The pages read so far in this khatm are cleared.")
+        }
         .navigationTitle("Tracker")
         .sensoryFeedback(.success, trigger: model.countdownIftar) { _, new in new != nil }
     }

@@ -10,16 +10,19 @@ struct QuranView: View {
     @AppStorage("quranTextSize") private var textSize = 26.0
     // `-quranNight YES` for CI screenshots of the night page.
     @AppStorage("quranNight") private var night = false
+    @AppStorage(QuranProgress.bookmarksKey) private var bookmarks = ""
     @State private var showingIndex = false
     /// A verse found through the index or search, marked on its page until another page is shown.
     @State private var marked: Int?
+    /// A verse tapped on the page, shown in a sheet to copy or share.
+    @State private var tapped: Int?
 
     var body: some View {
         let style = night ? MushafStyle.dark : MushafStyle.printed
         NavigationStack {
             TabView(selection: $page) {
                 ForEach(1...Quran.pageCount, id: \.self) { number in
-                    MushafPage(number: number, textSize: textSize, marked: marked, style: style)
+                    MushafPage(number: number, textSize: textSize, marked: marked, style: style) { tapped = $0 }
                         .tag(number)
                 }
             }
@@ -44,6 +47,14 @@ struct QuranView: View {
                         .foregroundStyle(style.muted)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
+                    let bookmarked = QuranProgress.pages(bookmarks).contains(page)
+                    Button { QuranProgress.toggleBookmark(page) } label: {
+                        Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
+                    }
+                    .accessibilityLabel(bookmarked ? Text("Remove bookmark") : Text("Bookmark"))
+                    .sensoryFeedback(.selection, trigger: bookmarked)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Picker("Page", selection: $night) {
                             Label("Paper", systemImage: "sun.max").tag(false)
@@ -64,7 +75,19 @@ struct QuranView: View {
                     marked = verse
                     page = Quran.shared.page(ofVerse: verse)
                     showingIndex = false
+                } openPage: { number in
+                    page = number
+                    showingIndex = false
                 }
+            }
+            .sheet(isPresented: Binding(get: { tapped != nil }, set: { if !$0 { tapped = nil } })) {
+                if let tapped { VerseSheet(verse: Quran.shared.verses[tapped]) }
+            }
+            // A page open for 10 seconds counts as read, for the khatm in Ibadah; leafing through doesn't.
+            .task(id: page) {
+                try? await Task.sleep(for: .seconds(QuranProgress.readingSeconds))
+                guard !Task.isCancelled else { return }
+                QuranProgress.markRead(page)
             }
             .onChange(of: page) {
                 if let marked, Quran.shared.page(ofVerse: marked) != page { self.marked = nil }
@@ -100,6 +123,7 @@ struct MushafPage: View {
     let textSize: Double
     let marked: Int?
     let style: MushafStyle
+    var onTapVerse: (Int) -> Void = { _ in }
 
     private static let smallest = 16.0
 
@@ -153,7 +177,7 @@ struct MushafPage: View {
                         .font(Quran.font(size: size))
                         .foregroundStyle(style.ink)
                 case .text(let text):
-                    ArabicParagraph(text: text)
+                    ArabicParagraph(text: text, onTapVerse: onTapVerse)
                 }
             }
         }
@@ -215,10 +239,10 @@ struct MushafPage: View {
             }
             // The verse, then its number inside the end-of-verse sign in gold (U+06DD takes the digits after it).
             let run = NSMutableAttributedString(string: text + " ", attributes: [
-                .font: font, .foregroundColor: ink, .paragraphStyle: paragraphStyle,
+                .font: font, .foregroundColor: ink, .paragraphStyle: paragraphStyle, .quranVerse: verse.index,
             ])
             run.append(NSAttributedString(string: "\u{06DD}" + Quran.arabicDigits(verse.number) + " ", attributes: [
-                .font: font, .foregroundColor: ornament, .paragraphStyle: paragraphStyle,
+                .font: font, .foregroundColor: ornament, .paragraphStyle: paragraphStyle, .quranVerse: verse.index,
             ]))
             if verse.index == marked {
                 run.addAttribute(.backgroundColor, value: ornament.withAlphaComponent(0.25),
@@ -290,6 +314,9 @@ struct SurahHeader: View {
 /// Arabic text justified from right to left, as in a printed mushaf (SwiftUI's Text can't justify).
 struct ArabicParagraph: UIViewRepresentable {
     let text: NSAttributedString
+    var onTapVerse: (Int) -> Void = { _ in }
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
 
     func makeUIView(context: Context) -> UILabel {
         let label = UILabel()
@@ -297,11 +324,36 @@ struct ArabicParagraph: UIViewRepresentable {
         label.lineBreakMode = .byWordWrapping
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tapped(_:))))
         return label
     }
 
     func updateUIView(_ label: UILabel, context: Context) {
+        context.coordinator.onTapVerse = onTapVerse
         if label.attributedText?.isEqual(to: text) != true { label.attributedText = text }
+    }
+
+    /// Finds the verse under the finger: the text laid out as the label lays it out, then the verse it carries.
+    final class Coordinator: NSObject {
+        var onTapVerse: (Int) -> Void = { _ in }
+
+        @objc func tapped(_ gesture: UITapGestureRecognizer) {
+            guard let label = gesture.view as? UILabel, let text = label.attributedText, text.length > 0 else { return }
+            let storage = NSTextStorage(attributedString: text)
+            let layout = NSLayoutManager()
+            let container = NSTextContainer(size: label.bounds.size)
+            container.lineFragmentPadding = 0
+            container.lineBreakMode = label.lineBreakMode
+            container.maximumNumberOfLines = label.numberOfLines
+            layout.addTextContainer(container)
+            storage.addLayoutManager(layout)
+            let index = layout.characterIndex(for: gesture.location(in: label), in: container,
+                                              fractionOfDistanceBetweenInsertionPoints: nil)
+            guard index < storage.length, let verse = storage.attribute(.quranVerse, at: index, effectiveRange: nil) as? Int
+            else { return }
+            onTapVerse(verse)
+        }
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
@@ -312,10 +364,72 @@ struct ArabicParagraph: UIViewRepresentable {
     }
 }
 
-/// The index: surahs, juz and du'as, and a search across them and the verses.
+extension NSAttributedString.Key {
+    /// The verse a run of mushaf text belongs to (its index in the whole Qur'an), for taps.
+    static let quranVerse = NSAttributedString.Key("quranVerse")
+}
+
+/// A verse tapped on the page: its surah and number, and the Arabic to copy or share.
+struct VerseSheet: View {
+    let verse: Quran.Verse
+    @Environment(\.dismiss) private var dismiss
+    @State private var copied = false
+
+    var body: some View {
+        let surah = Quran.shared.surahs[verse.surah - 1]
+        let reference = "\(Quran.title(of: surah)) \(verse.surah):\(verse.number)"
+        // Tanzil's terms: copies of its text name the source.
+        let shared = verse.text + "\n\n" + reference + " · tanzil.net"
+        NavigationStack {
+            ScrollView {
+                Text(verbatim: verse.text)
+                    .font(Quran.font(size: 26))
+                    .foregroundStyle(Theme.ink)
+                    .lineSpacing(8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .environment(\.layoutDirection, .rightToLeft)
+                    .padding(20)
+            }
+            .background(Theme.background.ignoresSafeArea())
+            .safeAreaInset(edge: .bottom) {
+                HStack(spacing: 12) {
+                    Button {
+                        UIPasteboard.general.string = shared
+                        copied = true
+                    } label: {
+                        Label(copied ? LocalizedStringKey("Copied") : LocalizedStringKey("Copy"),
+                              systemImage: copied ? "checkmark" : "doc.on.doc")
+                            .frame(maxWidth: .infinity)
+                    }
+                    ShareLink(item: shared) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .padding(16)
+                .background(Theme.background)
+            }
+            .navigationTitle(Text(verbatim: reference))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+            .sensoryFeedback(.success, trigger: copied) { _, new in new }
+        }
+        .presentationDetents([.medium, .large])
+    }
+}
+
+/// The index: bookmarks, surahs, juz and du'as, and a search across them and the verses.
 struct QuranIndexView: View {
     let open: (Int) -> Void
+    let openPage: (Int) -> Void
     @Environment(\.dismiss) private var dismiss
+    @AppStorage(QuranProgress.bookmarksKey) private var bookmarks = ""
     @State private var query = ""
     @AppStorage("quranIndexPart") private var part = Part.surahs
 
@@ -328,6 +442,17 @@ struct QuranIndexView: View {
         NavigationStack {
             List {
                 if query.trimmingCharacters(in: .whitespaces).isEmpty {
+                    let bookmarked = QuranProgress.pages(bookmarks).sorted()
+                    if !bookmarked.isEmpty {
+                        Section("Bookmarks") {
+                            ForEach(bookmarked, id: \.self) { number in
+                                Button { openPage(number) } label: { BookmarkRow(page: number) }
+                            }
+                            .onDelete { offsets in
+                                for offset in offsets { QuranProgress.toggleBookmark(bookmarked[offset]) }
+                            }
+                        }
+                    }
                     Picker("Index", selection: $part) {
                         Text("Surahs").tag(Part.surahs)
                         Text("Juz").tag(Part.juz)
@@ -399,6 +524,32 @@ struct QuranIndexView: View {
                 }
             }
         }
+    }
+}
+
+private struct BookmarkRow: View {
+    let page: Int
+
+    var body: some View {
+        let quran = Quran.shared
+        let first = quran.verses(onPage: page).first
+        HStack(spacing: 14) {
+            Image(systemName: "bookmark.fill")
+                .foregroundStyle(Theme.gold)
+                .frame(minWidth: 28)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Page \(page)")
+                    .font(.headline)
+                    .foregroundStyle(Theme.ink)
+                if let first {
+                    Text(verbatim: "\(Quran.title(of: quran.surahs[first.surah - 1])) \(first.surah):\(first.number)")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                }
+            }
+            Spacer()
+        }
+        .contentShape(Rectangle())
     }
 }
 
