@@ -228,4 +228,4 @@ jobs:
             -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" -exportPath "$RUNNER_TEMP/export" \
             -allowProvisioningUpdates \
             -authenticationKeyPath "$ASC_KEY_PATH" -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" | tail -80
-          echo "Build 1.0 ($BUILD_NUMBER) uploaded. App Store Connect processes it next (10-30 minutes), then TestFlight offers it." >> "$GITHUB_STEP_SUMMARY"
+          echo "Build $(grep -m1 MARKETING_VERSION project.yml | cut -d'"' -f2) ($BUILD_NUMBER) uploaded. App Store Connect processes it next (10-30 minutes), then TestFlight offers it." >> "$GITHUB_STEP_SUMMARY"
