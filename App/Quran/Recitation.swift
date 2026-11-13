@@ -87,7 +87,7 @@ final class Recitation {
         commands.togglePlayPauseCommand.addTarget { [weak self] _ in
             Task { @MainActor in
                 guard let self else { return }
-                if isPlaying { pause() } else { resume() }
+                if self.isPlaying { self.pause() } else { self.resume() }
             }
             return .success
         }

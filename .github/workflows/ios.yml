@@ -67,6 +67,10 @@ jobs:
             -destination "id=$UDID" -derivedDataPath build CODE_SIGNING_ALLOWED=NO 2>&1 | tee build.log | tail -150 \
             || { echo "::group::All errors"; grep -E ": error:|✘" build.log | sort -u; echo "::endgroup::"; exit 1; }
 
+      - name: Accessibility audit
+        if: always()
+        run: grep -E "AUDIT" build.log || echo "No audit output"
+
       - name: Check the app bundle
         run: |
           ls -d "$APP"/*.lproj

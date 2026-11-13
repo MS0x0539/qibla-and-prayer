@@ -291,6 +291,7 @@ private struct RamadanSoon: View {
 
 struct MonthView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.dynamicTypeSize) private var typeSize
     @State private var anchor = Date()
 
     var body: some View {
@@ -298,43 +299,76 @@ struct MonthView: View {
             if let place = model.place {
                 let calendar = place.calendar
                 ScrollView {
-                    Grid(horizontalSpacing: 6, verticalSpacing: 0) {
-                        GridRow {
-                            Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
-                            ForEach(PrayerKind.allCases) { kind in
-                                Group {
-                                    if kind == .sunrise {
-                                        Image(systemName: "sunrise").accessibilityLabel(Text(kind.title))
-                                    } else {
-                                        Text(kind.title)
+                    if typeSize.isAccessibilitySize {
+                        // Seven columns don't fit at the largest text sizes: each day lists its times instead.
+                        LazyVStack(alignment: .leading, spacing: 22) {
+                            ForEach(model.month(containing: anchor, at: place)) { day in
+                                let today = calendar.isDateInToday(day.day)
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(verbatim: Formats.weekdayDate(day.day, in: place.timeZone))
+                                        .font(.headline)
+                                        // Today in bold as well as gold: not by colour alone.
+                                        .foregroundStyle(today ? Theme.gold : Theme.ink)
+                                        .accessibilityAddTraits(.isHeader)
+                                    ForEach(day.times) { item in
+                                        ViewThatFits(in: .horizontal) {
+                                            HStack(alignment: .firstTextBaseline) {
+                                                Text(item.kind.title)
+                                                Spacer(minLength: 12)
+                                                Text(Formats.gridTime(item.time, in: place.timeZone))
+                                            }
+                                            VStack(alignment: .leading) {
+                                                Text(item.kind.title)
+                                                Text(Formats.gridTime(item.time, in: place.timeZone))
+                                            }
+                                        }
+                                        .accessibilityElement(children: .combine)
                                     }
                                 }
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
+                                .fontWeight(today ? .bold : .regular)
+                                .foregroundStyle(Theme.ink)
                             }
                         }
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(Theme.gold)
-                        .padding(.vertical, 10)
-                        ForEach(model.month(containing: anchor, at: place)) { day in
-                            Divider().overlay(Theme.line)
+                        .padding(16)
+                    } else {
+                        Grid(horizontalSpacing: 6, verticalSpacing: 0) {
                             GridRow {
-                                Text(verbatim: Formats.dayOfMonth(day.day, in: place.timeZone))
-                                    .gridColumnAlignment(.leading)
-                                ForEach(day.times) { item in
-                                    Text(Formats.gridTime(item.time, in: place.timeZone))
+                                Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
+                                ForEach(PrayerKind.allCases) { kind in
+                                    Group {
+                                        if kind == .sunrise {
+                                            Image(systemName: "sunrise").accessibilityLabel(Text(kind.title))
+                                        } else {
+                                            Text(kind.title)
+                                        }
+                                    }
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.7)
                                 }
                             }
-                            .font(.footnote.monospacedDigit())
-                            // Today in bold as well as gold: not by colour alone.
-                            .fontWeight(calendar.isDateInToday(day.day) ? .bold : .regular)
-                            .foregroundStyle(calendar.isDateInToday(day.day) ? Theme.gold : Theme.ink)
-                            .padding(.vertical, 8)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Theme.gold)
+                            .padding(.vertical, 10)
+                            ForEach(model.month(containing: anchor, at: place)) { day in
+                                Divider().overlay(Theme.line)
+                                GridRow {
+                                    Text(verbatim: Formats.dayOfMonth(day.day, in: place.timeZone))
+                                        .gridColumnAlignment(.leading)
+                                    ForEach(day.times) { item in
+                                        Text(Formats.gridTime(item.time, in: place.timeZone))
+                                    }
+                                }
+                                .font(.footnote.monospacedDigit())
+                                // Today in bold as well as gold: not by colour alone.
+                                .fontWeight(calendar.isDateInToday(day.day) ? .bold : .regular)
+                                .foregroundStyle(calendar.isDateInToday(day.day) ? Theme.gold : Theme.ink)
+                                .padding(.vertical, 8)
+                            }
                         }
+                        .padding(.horizontal, 16)
+                        // Seven columns fit up to this text size; at the accessibility sizes the list above takes over.
+                        .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                     }
-                    .padding(.horizontal, 16)
-                    // Seven columns: beyond this text size a row no longer fits on an iPhone.
-                    .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 }
                 .navigationTitle(Formats.monthTitle(anchor, in: place.timeZone))
             } else {

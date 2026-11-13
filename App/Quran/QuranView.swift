@@ -145,8 +145,10 @@ struct QuranView: View {
 struct MushafStyle {
     let paper: Color
     let ink: Color
-    /// The gold of the frames and the verse-end signs.
+    /// The gold of the frames.
     let ornament: Color
+    /// The verse-end signs and their numbers: text, so at least 4.5:1 against the paper (WCAG), also when marked.
+    let number: Color
     /// The green of the inner frame lines and the margin notes.
     let accent: Color
     let muted: Color
@@ -155,10 +157,10 @@ struct MushafStyle {
 
     static let printed = MushafStyle(
         paper: Color(hex: 0xFBF6E8), ink: Color(hex: 0x1E1912), ornament: Color(hex: 0xB0893C),
-        accent: Color(hex: 0x2B5A43), muted: Color(hex: 0x7B6B50), fold: 0.16)
+        number: Color(hex: 0x735418), accent: Color(hex: 0x2B5A43), muted: Color(hex: 0x65573F), fold: 0.16)
     static let dark = MushafStyle(
         paper: Theme.background, ink: Theme.ink, ornament: Theme.gold,
-        accent: Color(hex: 0x7FA88E), muted: Theme.muted, fold: 0.5)
+        number: Theme.gold, accent: Color(hex: 0x7FA88E), muted: Theme.muted, fold: 0.5)
 }
 
 /// One page of the mushaf, laid out like the printed one: the surah and juz in the top margin, the framed text,
@@ -169,6 +171,7 @@ struct MushafPage: View {
     let marked: Int?
     let style: MushafStyle
     var onTapVerse: (Int) -> Void = { _ in }
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
 
     private static let smallest = 16.0
 
@@ -201,6 +204,8 @@ struct MushafPage: View {
                 .frame(minWidth: 36, minHeight: 36)
                 .background(Circle().strokeBorder(style.ornament, lineWidth: 1.5))
                 .overlay(Circle().strokeBorder(style.accent.opacity(0.6), lineWidth: 0.8).padding(3))
+                // The page itself is labelled "Page 42".
+                .accessibilityHidden(true)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
@@ -266,6 +271,7 @@ struct MushafPage: View {
         paragraphStyle.lineHeightMultiple = 1.3
         let ink = UIColor(style.ink)
         let ornament = UIColor(style.ornament)
+        let number = UIColor(style.number)
         for verse in verses {
             var text = verse.text
             if verse.number == 1 && verse.surah != 1 {
@@ -287,11 +293,15 @@ struct MushafPage: View {
                 .font: font, .foregroundColor: ink, .paragraphStyle: paragraphStyle, .quranVerse: verse.index,
             ])
             run.append(NSAttributedString(string: "\u{06DD}" + Quran.arabicDigits(verse.number) + " ", attributes: [
-                .font: font, .foregroundColor: ornament, .paragraphStyle: paragraphStyle, .quranVerse: verse.index,
+                .font: font, .foregroundColor: number, .paragraphStyle: paragraphStyle, .quranVerse: verse.index,
             ]))
             if verse.index == marked {
-                run.addAttribute(.backgroundColor, value: ornament.withAlphaComponent(0.25),
-                                 range: NSRange(location: 0, length: run.length))
+                let whole = NSRange(location: 0, length: run.length)
+                run.addAttribute(.backgroundColor, value: ornament.withAlphaComponent(0.2), range: whole)
+                // Differentiate Without Color: underlined as well.
+                if differentiateWithoutColor {
+                    run.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: whole)
+                }
             }
             paragraph.append(run)
         }
@@ -371,12 +381,30 @@ struct ArabicParagraph: UIViewRepresentable {
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tapped(_:))))
+        // VoiceOver reads it with an Arabic voice.
+        label.accessibilityLanguage = "ar"
         return label
     }
 
     func updateUIView(_ label: UILabel, context: Context) {
         context.coordinator.onTapVerse = onTapVerse
-        if label.attributedText?.isEqual(to: text) != true { label.attributedText = text }
+        guard label.attributedText?.isEqual(to: text) != true else { return }
+        label.attributedText = text
+        // VoiceOver and Voice Control can't aim at one verse in the text, so each verse is also an action that
+        // opens it, as a tap does.
+        var verses: [Int] = []
+        text.enumerateAttribute(.quranVerse, in: NSRange(location: 0, length: text.length)) { value, _, _ in
+            if let verse = value as? Int, verses.last != verse { verses.append(verse) }
+        }
+        let coordinator = context.coordinator
+        label.accessibilityCustomActions = verses.map { index in
+            let verse = Quran.shared.verses[index]
+            let reference = "\(Quran.title(of: Quran.shared.surahs[verse.surah - 1])) \(verse.surah):\(verse.number)"
+            return UIAccessibilityCustomAction(name: String(localized: "Verse \(reference)", bundle: .app)) { _ in
+                coordinator.onTapVerse(index)
+                return true
+            }
+        }
     }
 
     /// Finds the verse under the finger: the text laid out as the label lays it out, then the verse it carries.

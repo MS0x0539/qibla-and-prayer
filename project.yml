@@ -27,6 +27,7 @@ targets:
     scheme:
       testTargets:
         - QiblaAndPrayerTests
+        - QiblaAndPrayerUITests
     settings:
       base:
         # Registered as an explicit App ID in the developer account; it can't change after the first upload.
@@ -86,3 +87,16 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: "YES"
         PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer.tests
+  # Apple's accessibility audit on each screen (UITests/AccessibilityAuditTests.swift).
+  QiblaAndPrayerUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - UITests
+    dependencies:
+      - target: QiblaAndPrayer
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: "YES"
+        PRODUCT_BUNDLE_IDENTIFIER: org.psbv.qiblaandprayer.uitests
+        TARGETED_DEVICE_FAMILY: "1"
