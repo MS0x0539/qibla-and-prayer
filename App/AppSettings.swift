@@ -20,11 +20,12 @@ enum PrayerKind: String, CaseIterable, Codable, Identifiable, Sendable {
         }
     }
 
-    /// On Fridays the noon prayer is called Jumu'ah (each mosque sets its own time; Dhuhr's is shown).
+    /// On Fridays the noon prayer is called Jumu'ah (each mosque sets its own time; Dhuhr's is shown). Not in
+    /// Turkish: there it stays Öğle, as Diyanet names it every day; the Friday prayer is prayed at Öğle time.
     func title(on date: Date, in zone: TimeZone) -> String {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = zone
-        if self == .dhuhr && calendar.component(.weekday, from: date) == 6 {
+        if self == .dhuhr && calendar.component(.weekday, from: date) == 6 && AppLanguage.code != "tr" {
             return String(localized: "Jumu'ah", bundle: .app)
         }
         return title
@@ -267,6 +268,11 @@ enum AppLanguage: String, CaseIterable, Codable, Identifiable {
 
     /// The language shown now; kept in step with the settings by AppModel.
     static var current = AppLanguage.system
+
+    /// The code of the language shown now ("tr"), also when it follows the iPhone.
+    static var code: String {
+        current == .system ? Bundle.main.preferredLocalizations.first ?? "en" : current.rawValue
+    }
 
     /// Each language in its own words, so people find theirs whatever the app shows now.
     var nativeName: String {

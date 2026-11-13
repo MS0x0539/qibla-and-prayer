@@ -128,6 +128,17 @@ struct PrayerTimeTests {
         #expect(Dhikr.afterPrayerCounts.reduce(0, +) == 100)
     }
 
+    @Test @MainActor func fridayNoonIsJumuahExceptInTurkish() {
+        let friday = date(2026, 11, 13)
+        let chosen = AppLanguage.current
+        defer { AppLanguage.current = chosen }
+        AppLanguage.current = .tr
+        #expect(PrayerKind.dhuhr.title(on: friday, in: amsterdam.timeZone) == PrayerKind.dhuhr.title)  // Öğle
+        AppLanguage.current = .en
+        #expect(PrayerKind.dhuhr.title(on: friday, in: amsterdam.timeZone) != PrayerKind.dhuhr.title)  // Jumu'ah
+        #expect(PrayerKind.dhuhr.title(on: date(2026, 11, 12), in: amsterdam.timeZone) == PrayerKind.dhuhr.title)
+    }
+
     @Test func adjustmentsMoveOnlyThatPrayer() throws {
         var settings = AppSettings(method: .muslimWorldLeague, asr: .standard)
         let before = try #require(Prayers.compute(on: date(2026, 11, 12), place: amsterdam, settings: settings))

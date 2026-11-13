@@ -229,9 +229,7 @@ final class Quran {
     }
 
     /// The app's language: the one picked in the app, or the one iOS chose for it.
-    static var languageCode: String {
-        AppLanguage.current == .system ? Bundle.main.preferredLocalizations.first ?? "en" : AppLanguage.current.rawValue
-    }
+    static var languageCode: String { AppLanguage.code }
 
     /// The surah's name as people know it in the app's language: Diyanet's spelling in Turkish, the Arabic name in
     /// Arabic, Tanzil's transliteration otherwise.
