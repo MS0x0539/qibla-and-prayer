@@ -4,15 +4,15 @@
 #   message. They appear under the run as the "screenshots" artifact.
 # - TestFlight upload when started by hand with "testflight" ticked, or with [testflight] in the commit
 #   message (main only, after the tests pass). Needs the ASC_* secrets; see docs/PLAN.md.
-# Only runs when the app changes: macOS minutes are scarce on a private repository.
+# Only runs when the app or its tests change.
 name: iOS
 
 on:
   push:
     branches: [main]
-    paths: ['App/**', 'Widgets/**', 'Tests/**', 'project.yml', '.github/workflows/ios.yml']
+    paths: ['App/**', 'Widgets/**', 'Tests/**', 'UITests/**', 'project.yml', '.github/workflows/ios.yml']
   pull_request:
-    paths: ['App/**', 'Widgets/**', 'Tests/**', 'project.yml', '.github/workflows/ios.yml']
+    paths: ['App/**', 'Widgets/**', 'Tests/**', 'UITests/**', 'project.yml', '.github/workflows/ios.yml']
   workflow_dispatch:
     inputs:
       screenshots:
