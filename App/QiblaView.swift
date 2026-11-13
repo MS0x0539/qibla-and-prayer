@@ -138,7 +138,8 @@ struct QiblaView: View {
 
         HStack(spacing: 6) {
             Text("Qibla \(Formats.bearing(qibla))")
-            Text(verbatim: "·").foregroundStyle(Theme.gold)
+            // A dot drawn, not typed: decoration, not text.
+            Circle().fill(Theme.gold).frame(width: 3, height: 3)
                 .accessibilityHidden(true)
             Text("Mecca \(Formats.distance(place.kilometresToMecca))")
         }

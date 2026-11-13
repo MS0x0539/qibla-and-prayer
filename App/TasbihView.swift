@@ -168,6 +168,8 @@ struct TasbihView: View {
                 .font(.footnote)
                 .foregroundStyle(Theme.muted)
                 .multilineTextAlignment(.center)
+                // Never squeezed short; the screen scrolls instead.
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, 22)
         .padding(.bottom, 16)

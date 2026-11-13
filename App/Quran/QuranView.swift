@@ -262,7 +262,7 @@ struct MushafPage: View {
                 case .text(let text):
                     // The notes go in the middle of the outer margin, outside the frame.
                     ArabicParagraph(text: text, notesOnRight: number % 2 == 1, notesOffset: Self.inset + Self.outer / 2,
-                                    noteColor: UIColor(style.number), onTapVerse: onTapVerse)
+                                    notesWidth: Self.outer - 4, noteColor: UIColor(style.number), onTapVerse: onTapVerse)
                 }
             }
         }
@@ -429,8 +429,9 @@ struct SurahHeader: View {
 struct ArabicParagraph: UIViewRepresentable {
     let text: NSAttributedString
     var notesOnRight = true
-    /// From the edge of the text to the middle of the margin the notes are in.
+    /// From the edge of the text to the middle of the margin the notes are in, and how wide they may be.
     var notesOffset = 0.0
+    var notesWidth = 24.0
     var noteColor = UIColor.label
     var onTapVerse: (Int) -> Void = { _ in }
 
@@ -451,9 +452,11 @@ struct ArabicParagraph: UIViewRepresentable {
 
     func updateUIView(_ label: MushafLabel, context: Context) {
         context.coordinator.onTapVerse = onTapVerse
-        if label.notesOnRight != notesOnRight || label.notesOffset != notesOffset || label.noteColor != noteColor {
+        if label.notesOnRight != notesOnRight || label.notesOffset != notesOffset || label.notesWidth != notesWidth
+            || label.noteColor != noteColor {
             label.notesOnRight = notesOnRight
             label.notesOffset = notesOffset
+            label.notesWidth = notesWidth
             label.noteColor = noteColor
             label.setNeedsLayout()
         }
@@ -518,6 +521,7 @@ extension NSAttributedString.Key {
 final class MushafLabel: UILabel {
     var notesOnRight = true
     var notesOffset = 0.0
+    var notesWidth = 24.0
     var noteColor = UIColor.label
     private var notes: [UILabel] = []
 
@@ -544,10 +548,19 @@ final class MushafLabel: UILabel {
                                                effectiveRange: nil)
             let label = UILabel()
             label.numberOfLines = 0
+            let fit = CGSize(width: 80, height: CGFloat.greatestFiniteMagnitude)
             label.attributedText = NSAttributedString(string: note, attributes: [
                 .font: font, .foregroundColor: noteColor, .paragraphStyle: style,
             ])
-            let size = label.sizeThatFits(CGSize(width: 44, height: CGFloat.greatestFiniteMagnitude))
+            var size = label.sizeThatFits(fit)
+            // Within the margin: a smaller size when the longest word is wider than it.
+            if size.width > notesWidth {
+                let smaller = font.withSize(max(7, font.pointSize * notesWidth / size.width))
+                label.attributedText = NSAttributedString(string: note, attributes: [
+                    .font: smaller, .foregroundColor: noteColor, .paragraphStyle: style,
+                ])
+                size = label.sizeThatFits(fit)
+            }
             // Beside its line; below the note before if two lines are close.
             let y = max(line.midY - size.height / 2, bottom + 4)
             let middle = notesOnRight ? bounds.maxX + notesOffset : bounds.minX - notesOffset
