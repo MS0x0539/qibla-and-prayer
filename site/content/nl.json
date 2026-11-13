@@ -42,13 +42,13 @@
         "heading": "Wat op je iPhone blijft",
         "paragraphs": [
           "De app bewaart je instellingen (waaronder je school en berekeningsmethode), de laatste plaats die hij heeft gevonden of de stad die je hebt gekozen (naam en coördinaten), de tasbih-teller, wat je bijhoudt (de dagen die je als vastendag hebt gemarkeerd, de in te halen vastendagen en de gemiste gebeden), en je bladwijzers en leesvoortgang in de Koran. Ze staan op je iPhone, niet op een server, en worden niet via iCloud gesynchroniseerd. Net als andere appgegevens zitten ze in de back-ups van je iPhone (een iCloud-back-up of een back-up op je computer), als je die maakt. Als je de app verwijdert, worden ze van je iPhone gewist.",
-          "Herinneringen worden op je iPhone zelf ingepland; er is geen server die ze verstuurt. Ook de iftar-aftelling op het toegangsscherm draait op je iPhone."
+          "Herinneringen worden op je iPhone zelf ingepland; er is geen server die ze verstuurt. Ook de iftar-aftelling en het volgende gebed op het toegangsscherm draaien op je iPhone."
         ]
       },
       {
         "heading": "Recitaties van de Koran",
         "paragraphs": [
-          "Als je in het tabblad Koran een recitatie afspeelt, downloadt je iPhone de audio van elk vers van de audiodienst van Islamic Network (cdn.islamic.network) en bewaart die, zodat geen vers twee keer wordt gedownload; iOS kan deze bestanden verwijderen als er ruimte nodig is. Zoals elke website ontvangt de dienst je IP-adres en welk vers en welke reciteur je iPhone opvraagt; de app stuurt verder niets. Volgens Islamic Network worden logbestanden niet langer dan 29 dagen bewaard (alquran.cloud/terms-and-conditions)."
+          "Als je in het tabblad Koran een recitatie afspeelt, downloadt je iPhone de audio van elk vers van de audiodienst van Islamic Network (cdn.islamic.network) en bewaart die, zodat geen vers twee keer wordt gedownload; iOS kan deze bestanden verwijderen als er ruimte nodig is. Zoals elke website ontvangt de dienst je IP-adres en welk vers en welke reciteur je iPhone opvraagt; de app stuurt verder niets. Volgens Islamic Network worden logbestanden niet langer dan 29 dagen bewaard (alquran.cloud/terms-and-conditions). Een soera, juz of de hele Koran die je downloadt om offline te luisteren, blijft op je iPhone tot je hem in de app verwijdert."
         ]
       },
       {

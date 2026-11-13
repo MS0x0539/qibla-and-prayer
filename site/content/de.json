@@ -42,13 +42,13 @@
         "heading": "Was auf deinem iPhone bleibt",
         "paragraphs": [
           "Die App speichert deine Einstellungen (darunter deine Rechtsschule und deine Berechnungsmethode), den zuletzt ermittelten Ort oder die Stadt, die du gewählt hast (Name und Koordinaten), den Tasbih-Zähler, den Tracker (die Tage, die du als Fastentage markiert hast, die nachzuholenden Fastentage und die verpassten Gebete) sowie deine Lesezeichen und deinen Lesefortschritt im Koran. Diese Daten liegen auf deinem iPhone, auf keinem Server, und werden nicht über iCloud synchronisiert. Wie andere App-Daten sind sie in den Backups deines iPhone enthalten (iCloud-Backup oder ein Backup auf deinem Computer), falls du welche erstellst. Wenn du die App löschst, werden sie von deinem iPhone entfernt.",
-          "Erinnerungen werden direkt auf deinem iPhone geplant; kein Server verschickt sie. Auch der Iftar-Countdown auf dem Sperrbildschirm läuft auf deinem iPhone."
+          "Erinnerungen werden direkt auf deinem iPhone geplant; kein Server verschickt sie. Auch der Iftar-Countdown und das nächste Gebet auf dem Sperrbildschirm laufen auf deinem iPhone."
         ]
       },
       {
         "heading": "Koranrezitationen",
         "paragraphs": [
-          "Wenn du im Tab „Koran“ eine Rezitation abspielst, lädt dein iPhone die Audiodatei jedes Verses vom Audiodienst von Islamic Network (cdn.islamic.network) und behält sie, damit kein Vers zweimal geladen wird; iOS kann diese Dateien löschen, wenn es Platz braucht. Wie jede Website erhält der Dienst deine IP-Adresse und welchen Vers und welchen Rezitator dein iPhone anfragt; die App sendet sonst nichts. Laut Islamic Network werden Logs höchstens 29 Tage aufbewahrt (alquran.cloud/terms-and-conditions)."
+          "Wenn du im Tab „Koran“ eine Rezitation abspielst, lädt dein iPhone die Audiodatei jedes Verses vom Audiodienst von Islamic Network (cdn.islamic.network) und behält sie, damit kein Vers zweimal geladen wird; iOS kann diese Dateien löschen, wenn es Platz braucht. Wie jede Website erhält der Dienst deine IP-Adresse und welchen Vers und welchen Rezitator dein iPhone anfragt; die App sendet sonst nichts. Laut Islamic Network werden Logs höchstens 29 Tage aufbewahrt (alquran.cloud/terms-and-conditions). Eine Sure, ein Dschuz oder der ganze Koran, den du zum Offline-Hören lädst, bleibt auf deinem iPhone, bis du ihn in der App entfernst."
         ]
       },
       {

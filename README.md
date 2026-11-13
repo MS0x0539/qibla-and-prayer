@@ -16,7 +16,9 @@ On the App Store as "Wajh: Qibla & Prayer Times".
   surah name (Arabic, Latin, Turkish, Dutch, German, French), du'a name or Arabic words. Bookmarks, a khatm
   (pages read, out of 604), and a tap on a verse to copy or share it. Recitation verse by verse by ten reciters,
   streamed from Islamic Network (cdn.islamic.network, free for personal use) and cached on the phone; it keeps
-  playing with the screen locked, turns the pages and marks the verse being recited.
+  playing with the screen locked, turns the pages and marks the verse being recited. Hizb, quarter and sajda
+  notes in the margin as in print, a sleep timer, and offline recitation (a surah, a juz or the whole Qur'an
+  downloaded into the app). A "Continue reading" card on Prayer times opens the last page read.
 - **Reminders:** optionally 5-30 minutes before each prayer, an hour before Jumu'ah, and before suhoor
   ends and at iftar in Ramadan.
 - **Islamic calendar:** the year's special days and nights, and a Ramadan timetable (suhoor/iftar);
@@ -27,7 +29,10 @@ On the App Store as "Wajh: Qibla & Prayer Times".
 - **Ibadah:** the tasbih (a tap counter with haptics; free counting, the tasbihat after prayer 33/33/34, or one of
   eight phrases shown in Arabic) and the tracker (Qur'an reading, fasts and missed prayers, kept on the phone).
 - **Controls:** Qibla and Tasbih buttons for Control Center, the Lock Screen and the Action button.
-- **Icon:** light, dark and tinted versions of the app icon.
+- **Next prayer on the Lock Screen:** a Live Activity with a countdown (Settings → Lock Screen), moved on to the
+  next prayer whenever the app runs.
+- **Icon:** light, dark and tinted versions; Paper and Green alternatives in Settings.
+- **Sky:** the top of the Prayer times screen takes the colour of the sky at that hour.
 - **Siri:** "When is Maghrib in Qibla & Prayer?" without opening the app.
 - **Iftar countdown:** on the Lock Screen and in the Dynamic Island (a Live Activity, from the Ramadan
   card or the Tracker). The Next prayer widgets are built but off until the App Group is registered in

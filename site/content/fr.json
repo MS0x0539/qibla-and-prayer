@@ -42,13 +42,13 @@
         "heading": "Ce qui reste sur votre iPhone",
         "paragraphs": [
           "L’app enregistre vos réglages (dont votre école et votre méthode de calcul), le dernier lieu qu’elle a trouvé ou la ville que vous avez choisie (nom et coordonnées), le compteur du tasbih, le suivi (les jours que vous avez marqués comme jours de jeûne, les jeûnes à rattraper et les prières manquées), ainsi que vos signets et votre progression de lecture du Coran. Ces données sont conservées sur votre iPhone, et non sur un serveur. Elles ne sont pas synchronisées via iCloud. Comme les autres données d’apps, elles sont incluses dans les sauvegardes de votre iPhone (Sauvegarde iCloud ou sauvegarde sur votre ordinateur), si vous en faites. Si vous supprimez l’app, elles sont effacées de votre iPhone.",
-          "Les rappels sont programmés directement sur votre iPhone ; aucun serveur ne les envoie. Le compte à rebours de l’iftar sur l’écran verrouillé fonctionne lui aussi sur votre iPhone."
+          "Les rappels sont programmés directement sur votre iPhone ; aucun serveur ne les envoie. Le compte à rebours de l’iftar et la prochaine prière sur l’écran verrouillé fonctionnent eux aussi sur votre iPhone."
         ]
       },
       {
         "heading": "Récitations du Coran",
         "paragraphs": [
-          "Quand vous écoutez une récitation dans l’onglet Coran, votre iPhone télécharge l’audio de chaque verset depuis le service audio d’Islamic Network (cdn.islamic.network) et le conserve, pour qu’aucun verset ne soit téléchargé deux fois ; iOS peut supprimer ces fichiers s’il a besoin de place. Comme tout site web, le service reçoit votre adresse IP ainsi que le verset et le récitateur demandés par votre iPhone ; l’app n’envoie rien d’autre. Islamic Network indique ne conserver aucun journal plus de 29 jours (alquran.cloud/terms-and-conditions)."
+          "Quand vous écoutez une récitation dans l’onglet Coran, votre iPhone télécharge l’audio de chaque verset depuis le service audio d’Islamic Network (cdn.islamic.network) et le conserve, pour qu’aucun verset ne soit téléchargé deux fois ; iOS peut supprimer ces fichiers s’il a besoin de place. Comme tout site web, le service reçoit votre adresse IP ainsi que le verset et le récitateur demandés par votre iPhone ; l’app n’envoie rien d’autre. Islamic Network indique ne conserver aucun journal plus de 29 jours (alquran.cloud/terms-and-conditions). Une sourate, un juz ou le Coran entier que vous téléchargez pour l’écouter hors ligne reste sur votre iPhone jusqu’à ce que vous le supprimiez dans l’app."
         ]
       },
       {
