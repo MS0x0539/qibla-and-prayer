@@ -4,7 +4,7 @@ import SwiftUI
 /// pause, and stop. A tap on the verse opens the Qur'an at its page.
 struct MiniPlayer: View {
     @AppStorage(OpenScreenIntent.key) private var openScreen = ""
-    @AppStorage("quranPage") private var quranPage = 1
+    @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var quranPage = 1
 
     var body: some View {
         let recitation = Recitation.shared

@@ -92,13 +92,7 @@ enum TasbihStore {
         defaults.set(next.step, forKey: stepKey)
     }
 
-    /// Versions before the widget kept the count in the app's own defaults: carried over once.
-    static func moveFromAppDefaults() {
-        guard defaults != UserDefaults.standard else { return }
-        for key in [countKey, totalKey, targetKey, dhikrKey, stepKey] where defaults.object(forKey: key) == nil {
-            if let value = UserDefaults.standard.object(forKey: key) { defaults.set(value, forKey: key) }
-        }
-    }
+    static let keys = [countKey, totalKey, targetKey, dhikrKey, stepKey]
 }
 
 /// A tap on the tasbih widget: counts one without opening the app.

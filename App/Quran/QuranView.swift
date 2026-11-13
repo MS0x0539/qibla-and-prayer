@@ -5,7 +5,7 @@ import UIKit
 /// and search.
 struct QuranView: View {
     // `-quranPage 42` opens another page first (used for CI screenshots); afterwards the last page read.
-    @AppStorage("quranPage") private var page = 1
+    @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var page = 1
     /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
     // `-quranNight YES -quranAutoNight NO` for CI screenshots of the night page.
@@ -15,8 +15,10 @@ struct QuranView: View {
     @State private var nightNow = false
     @State private var pager = PagerHandle()
     @Environment(AppModel.self) private var model
-    @AppStorage(QuranProgress.bookmarksKey) private var bookmarks = ""
+    @AppStorage(QuranProgress.bookmarksKey, store: SharedStore.defaults) private var bookmarks = ""
     @AppStorage("reciter") private var reciterID = Reciter.all[0].id
+    /// A verse to open, from the Verse of the day widget.
+    @AppStorage("openVerse") private var openVerse = -1
     @State private var showingIndex = false
     /// A verse found through the index or search, marked on its page until another page is shown.
     @State private var marked: Int?
@@ -157,6 +159,12 @@ struct QuranView: View {
             }
             .task(id: autoNight) {
                 if autoNight { await followTheNight() }
+            }
+            .onChange(of: openVerse, initial: true) {
+                guard Quran.shared.verses.indices.contains(openVerse) else { return }
+                marked = openVerse
+                page = Quran.shared.page(ofVerse: openVerse)
+                openVerse = -1
             }
             // The page turns with the recitation.
             .onChange(of: recitation.verse) { old, new in
@@ -752,7 +760,7 @@ struct QuranIndexView: View {
     let open: (Int) -> Void
     let openPage: (Int) -> Void
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(QuranProgress.bookmarksKey) private var bookmarks = ""
+    @AppStorage(QuranProgress.bookmarksKey, store: SharedStore.defaults) private var bookmarks = ""
     @State private var query = ""
     @AppStorage("quranIndexPart") private var part = Part.surahs
 

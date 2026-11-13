@@ -7,6 +7,8 @@ struct PrayerWidgets: WidgetBundle {
     var body: some Widget {
         NextPrayerWidget()
         TasbihWidget()
+        VerseOfTheDayWidget()
+        ContinueReadingWidget()
         IftarLiveActivity()
         NextPrayerLiveActivity()
         QiblaControl()
@@ -23,6 +25,8 @@ struct PrayerEntry: TimelineEntry {
     let placeName: String
     let zone: TimeZone
     let locale: Locale
+    /// The day's times, for the medium size.
+    var today: [PrayerTime] = []
 }
 
 struct PrayerProvider: TimelineProvider {
@@ -56,7 +60,8 @@ struct PrayerProvider: TimelineProvider {
         while entries.count < 6, let next = Prayers.next(after: date, place: place, settings: saved.settings) {
             entries.append(PrayerEntry(
                 date: date, next: next, placeName: place.displayName, zone: place.timeZone,
-                locale: saved.settings.language.locale))
+                locale: saved.settings.language.locale,
+                today: Prayers.compute(on: date, place: place, settings: saved.settings) ?? []))
             date = next.time
         }
         if entries.isEmpty {
@@ -72,8 +77,8 @@ struct NextPrayerWidget: Widget {
             NextPrayerView(entry: entry)
         }
         .configurationDisplayName("Next prayer")
-        .description("The next prayer, its time and a countdown.")
-        .supportedFamilies([.systemSmall, .accessoryRectangular, .accessoryInline])
+        .description("The next prayer, its time and a countdown; the medium size lists all of today's times.")
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular, .accessoryInline])
     }
 }
 
@@ -101,6 +106,12 @@ struct NextPrayerView: View {
                             .foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                case .systemMedium:
+                    HStack(spacing: 16) {
+                        small(title: title, time: time, next: next)
+                        Theme.line.frame(width: 1)
+                        day(next: next)
+                    }
                 default:
                     small(title: title, time: time, next: next)
                 }
@@ -112,6 +123,29 @@ struct NextPrayerView: View {
         }
         .environment(\.locale, entry.locale)
         .containerBackground(for: .widget) { Theme.background }
+    }
+
+    /// The day's times, the next one in gold and bold with a diamond in front (not by colour alone).
+    private func day(next: PrayerTime) -> some View {
+        VStack(spacing: 2) {
+            ForEach(entry.today) { item in
+                let isNext = item.time == next.time
+                HStack(spacing: 5) {
+                    Image(systemName: "diamond.fill")
+                        .font(.system(size: 6))
+                        .opacity(isNext ? 1 : 0)
+                    Text(verbatim: item.kind.title(on: item.time, in: entry.zone))
+                        .font(.system(.subheadline, design: .serif))
+                        .lineLimit(1)
+                    Spacer(minLength: 4)
+                    Text(verbatim: Formats.time(item.time, in: entry.zone))
+                        .font(.subheadline.monospacedDigit())
+                }
+                .fontWeight(isNext ? .semibold : .regular)
+                .foregroundStyle(isNext ? Theme.gold : item.kind == .sunrise ? Theme.muted : Theme.ink)
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private func small(title: String, time: String, next: PrayerTime) -> some View {

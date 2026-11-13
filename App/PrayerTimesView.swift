@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PrayerTimesView: View {
     @Environment(AppModel.self) private var model
-    @AppStorage("quranPage") private var quranPage = 1
+    @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var quranPage = 1
     var openSettings: () -> Void = {}
     @ScaledMetric(relativeTo: .largeTitle) private var nameSize: CGFloat = 64
 
@@ -77,6 +77,7 @@ struct PrayerTimesView: View {
                     ForEach(today) { item in
                         row(item, isNext: item.time == next?.time, zone: place.timeZone)
                     }
+                    nightRows(today: today, place: place)
                 }
                 .overlay(alignment: .top) { Theme.line.frame(height: 1) }
                 .padding(.top, 28)
@@ -150,6 +151,34 @@ struct PrayerTimesView: View {
         .multilineTextAlignment(.center)
         .frame(maxWidth: .infinity)
         .padding(.top, 8)
+    }
+
+    /// Midnight and the last third of the night (for tahajjud), counting the night from Maghrib to tomorrow's Fajr.
+    @ViewBuilder
+    private func nightRows(today: [PrayerTime], place: Place) -> some View {
+        if let maghrib = today.first(where: { $0.kind == .maghrib })?.time,
+           let tomorrow = place.calendar.date(byAdding: .day, value: 1, to: maghrib),
+           let fajr = model.times(on: tomorrow, at: place)?.first(where: { $0.kind == .fajr })?.time, fajr > maghrib {
+            let night = fajr.timeIntervalSince(maghrib)
+            nightRow("Midnight", maghrib.addingTimeInterval(night / 2), zone: place.timeZone)
+            nightRow("Last third of the night", maghrib.addingTimeInterval(night * 2 / 3), zone: place.timeZone)
+        }
+    }
+
+    private func nightRow(_ title: LocalizedStringKey, _ time: Date, zone: TimeZone) -> some View {
+        HStack(spacing: 12) {
+            Color.clear.frame(width: 8, height: 8)
+            Text(title)
+                .font(.system(.body, design: .serif))
+            Spacer()
+            Text(Formats.time(time, in: zone))
+                .font(.subheadline.monospacedDigit())
+            Color.clear.frame(width: 44, height: 1)
+        }
+        .foregroundStyle(Theme.muted)
+        .frame(minHeight: 40)
+        .overlay(alignment: .bottom) { Theme.line.frame(height: 1) }
+        .accessibilityElement(children: .combine)
     }
 
     private func row(_ item: PrayerTime, isNext: Bool, zone: TimeZone) -> some View {

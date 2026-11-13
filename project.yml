@@ -67,6 +67,13 @@ targets:
       - App/IftarActivity.swift
       - App/NextPrayerActivity.swift
       - App/Tasbih.swift
+      # The Qur'an, for the Verse of the day and Continue reading widgets.
+      - App/Quran/Quran.swift
+      - App/Quran/QuranProgress.swift
+      - App/Quran/VerseOfTheDay.swift
+      - App/Quran/quran-uthmani.txt
+      - App/Quran/quran-meta.json
+      - App/Quran/AmiriQuran.ttf
       - App/OpenScreenIntent.swift
       - App/Localizable.xcstrings
     dependencies:

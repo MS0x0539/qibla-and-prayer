@@ -6,6 +6,17 @@
 	<array>
 		<string>org.psbv.qiblaandprayer.refresh</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>org.psbv.qiblaandprayer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wajh</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

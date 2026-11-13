@@ -6,9 +6,9 @@ struct TrackerView: View {
     /// The days fasted, as "2026-11-12" separated by commas.
     @AppStorage("fastingDays") private var fastingDays = ""
     @AppStorage("fastsToMakeUp") private var fastsToMakeUp = 0
-    @AppStorage(QuranProgress.khatmPagesKey) private var khatmPages = ""
-    @AppStorage(QuranProgress.khatmCountKey) private var khatmCount = 0
-    @AppStorage(QuranProgress.todayKey) private var quranToday = ""
+    @AppStorage(QuranProgress.khatmPagesKey, store: SharedStore.defaults) private var khatmPages = ""
+    @AppStorage(QuranProgress.khatmCountKey, store: SharedStore.defaults) private var khatmCount = 0
+    @AppStorage(QuranProgress.todayKey, store: SharedStore.defaults) private var quranToday = ""
     @State private var confirmingNewKhatm = false
 
     var body: some View {

@@ -307,6 +307,40 @@
         }
       }
     },
+    "A verse of the Qur'an each day; a tap opens it on its page.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل يوم آية من القرآن؛ ولمسة تفتحها في صفحتها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden Tag ein Vers aus dem Koran; ein Tippen öffnet ihn auf seiner Seite."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour un verset du Coran ; un toucher l’ouvre sur sa page."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elke dag een vers uit de Koran; een tik opent het op zijn pagina."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her gün Kur'an'dan bir ayet; dokununca kendi sayfasında açılır."
+          }
+        }
+      }
+    },
     "About": {
       "localizations": {
         "ar": {
@@ -4625,6 +4659,40 @@
         }
       }
     },
+    "Last third of the night": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الثلث الأخير من الليل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Letztes Drittel der Nacht"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dernier tiers de la nuit"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laatste derde van de nacht"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gecenin son üçte biri"
+          }
+        }
+      }
+    },
     "Laylat al-Bara'ah": {
       "localizations": {
         "ar": {
@@ -5169,6 +5237,40 @@
         }
       }
     },
+    "Midnight": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "منتصف الليل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mitternacht"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minuit"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Middernacht"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gece yarısı"
+          }
+        }
+      }
+    },
     "Minutes added to the calculated time, to match the timetable of your mosque.": {
       "localizations": {
         "ar": {
@@ -5641,6 +5743,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "KB"
+          }
+        }
+      }
+    },
+    "New in this version": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الجديد في هذا الإصدار"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neu in dieser Version"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveautés de cette version"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuw in deze versie"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu sürümdeki yenilikler"
           }
         }
       }
@@ -9827,6 +9963,40 @@
         }
       }
     },
+    "The Qur'an": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القرآن"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Koran"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Coran"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De Koran"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an"
+          }
+        }
+      }
+    },
     "The Qur'an is shown in the Amiri Quran font by the Amiri Project, under the SIL Open Font License.": {
       "localizations": {
         "ar": {
@@ -9997,6 +10167,40 @@
         }
       }
     },
+    "The next prayer and today's times, a tasbih, the verse of the day and the page you were reading.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة ومواقيت اليوم، ومسبحة، وآية اليوم، والصفحة التي توقفت عندها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das nächste Gebet und die heutigen Zeiten, eine Tasbih, der Vers des Tages und die Seite, bei der du warst."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine prière et les horaires du jour, un tasbih, le verset du jour et la page où vous en étiez."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het volgende gebed en de tijden van vandaag, een tasbih, het vers van de dag en de pagina waar je was."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki vakit ve bugünün vakitleri, bir tesbih, günün ayeti ve kaldığınız sayfa."
+          }
+        }
+      }
+    },
     "The next prayer is %@, at %@.": {
       "localizations": {
         "ar": {
@@ -10031,36 +10235,104 @@
         }
       }
     },
-    "The next prayer, its time and a countdown.": {
+    "The next prayer with a countdown, and Qibla and Tasbih in Control Center.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "الصلاة القادمة ووقتها وعدّ تنازلي."
+            "value": "الصلاة القادمة مع عدّ تنازلي، والقبلة والتسبيح في مركز التحكم."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Das nächste Gebet, seine Zeit und ein Countdown."
+            "value": "Das nächste Gebet mit Countdown sowie Qibla und Tasbih im Kontrollzentrum."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La prochaine prière, son heure et un compte à rebours."
+            "value": "La prochaine prière avec un compte à rebours, et Qibla et Tasbih dans le centre de contrôle."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Het volgende gebed, de tijd en een aftelling."
+            "value": "Het volgende gebed met aftelling, en Qibla en Tasbih in het bedieningspaneel."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sıradaki vakit, saati ve geri sayım."
+            "value": "Geri sayımla sıradaki vakit; Denetim Merkezi'nde Kıble ve Tesbih."
+          }
+        }
+      }
+    },
+    "The next prayer, its time and a countdown; the medium size lists all of today's times.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة ووقتها وعدّ تنازلي؛ ويعرض الحجم المتوسط كل مواقيت اليوم."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das nächste Gebet, seine Zeit und ein Countdown; die mittlere Größe zeigt alle heutigen Zeiten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine prière, son heure et un compte à rebours ; la taille moyenne montre tous les horaires du jour."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het volgende gebed, de tijd en een aftelling; het middelgrote formaat toont alle tijden van vandaag."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki vakit, saati ve geri sayım; orta boy bugünün tüm vakitlerini gösterir."
+          }
+        }
+      }
+    },
+    "The page you were reading and your khatm; a tap opens the Qur'an there.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحة التي توقفت عندها وختمتك؛ ولمسة تفتح القرآن هناك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Seite, bei der du warst, und dein Khatm; ein Tippen öffnet den Koran dort."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La page où vous en étiez et votre khatm ; un toucher y ouvre le Coran."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De pagina waar je was en je khatm; een tik opent de Koran daar."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaldığınız sayfa ve hatminiz; dokununca Kur'an orada açılır."
           }
         }
       }
@@ -10167,6 +10439,40 @@
         }
       }
     },
+    "The tasbih with the tasbihat after prayer, and the tracker with your khatm.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التسبيح مع تسبيحات ما بعد الصلاة، والمتابعة مع ختمتك."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Tasbih mit den Tasbihat nach dem Gebet und der Tracker mit deinem Khatm."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le tasbih avec les tasbihat après la prière, et le suivi avec votre khatm."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De tasbih met de tasbihat na het gebed, en de tracker met je khatm."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Namazdan sonraki tesbihatla tesbih ve hatminizle takip."
+          }
+        }
+      }
+    },
     "The whole Qur'an": {
       "localizations": {
         "ar": {
@@ -10197,6 +10503,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kur'an'ın tamamı"
+          }
+        }
+      }
+    },
+    "The whole mushaf, turned like paper, with recitation by ten reciters you can also download.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المصحف كاملًا، تُقلَب صفحاته كالورق، مع تلاوة عشرة قرّاء يمكنك تنزيلها أيضًا."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der ganze Mushaf, umgeblättert wie Papier, mit Rezitation von zehn Rezitatoren, die du auch laden kannst."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le mushaf entier, qui se tourne comme du papier, avec la récitation de dix récitateurs, téléchargeable aussi."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De hele mushaf, die je omslaat als papier, met recitatie door tien reciteurs die je ook kunt downloaden."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kâğıt gibi çevrilen mushafın tamamı; indirebileceğiniz on kariden tilavetle."
           }
         }
       }
@@ -10367,6 +10707,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "İftar vakti."
+          }
+        }
+      }
+    },
+    "Times as the mosques in your country calculate them, also when you travel.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مواقيت كما تحسبها مساجد بلدك، حتى عند السفر."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeiten, wie die Moscheen in deinem Land sie berechnen, auch auf Reisen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les horaires comme les calculent les mosquées de votre pays, même en voyage."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tijden zoals de moskeeën in jouw land ze berekenen, ook als je reist."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vakitler, bulunduğunuz ülkenin camilerinin hesapladığı gibi; seyahatte de."
           }
         }
       }
@@ -11357,6 +11731,40 @@
         }
       }
     },
+    "Verse of the day": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آية اليوم"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vers des Tages"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verset du jour"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vers van de dag"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Günün ayeti"
+          }
+        }
+      }
+    },
     "Verses": {
       "localizations": {
         "ar": {
@@ -11523,6 +11931,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hangi dil?"
+          }
+        }
+      }
+    },
+    "Widgets": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأدوات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget'lar"
           }
         }
       }

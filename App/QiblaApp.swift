@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 import UIKit
 
 @main
@@ -31,6 +32,7 @@ enum AppTab: String, Hashable {
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.scenePhase) private var scenePhase
+    @AppStorage(WhatsNewView.seenKey) private var whatsNewSeen = ""
     // `-startTab qibla` opens another tab first (used for CI screenshots).
     @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .times
     /// Left by a control (Control Center, the Lock Screen, the Action button) that opened the app.
@@ -62,6 +64,16 @@ struct RootView: View {
         }
         // Rebuilt when the language changes, so every screen picks up the new text.
         .id(model.settings.language)
+        // From the widgets: wajh://page/42 opens a page, wajh://verse/261 a verse.
+        .onOpenURL { url in
+            guard url.scheme == "wajh", let number = Int(url.lastPathComponent) else { return }
+            switch url.host() {
+            case "page": SharedStore.defaults.set(number, forKey: QuranProgress.pageKey)
+            case "verse": UserDefaults.standard.set(number, forKey: "openVerse")
+            default: return
+            }
+            tab = .quran
+        }
         .onChange(of: openScreen, initial: true) {
             guard let screen = AppScreen(rawValue: openScreen) else { return }
             openScreen = ""
@@ -78,8 +90,17 @@ struct RootView: View {
         .fullScreenCover(isPresented: .constant(!model.onboarded)) {
             SetupView {
                 tab = .times
+                // New in this version is new to everyone after the setup.
+                whatsNewSeen = WhatsNewView.version
                 model.finishSetup()
             }
+        }
+        // Once after updating, for people who used the app before (not in CI runs, which skip the setup).
+        .sheet(isPresented: Binding(
+            get: { model.onboarded && whatsNewSeen != WhatsNewView.version
+                && !UserDefaults.standard.bool(forKey: "skipOnboarding") },
+            set: { if !$0 { whatsNewSeen = WhatsNewView.version } })) {
+            WhatsNewView { whatsNewSeen = WhatsNewView.version }
         }
         .alert("Notifications are off", isPresented: $model.showNotificationsOff) {
             Button("Open Settings") { openAppSettings() }
@@ -92,7 +113,11 @@ struct RootView: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active && model.onboarded { model.refresh() }
-            if phase == .background { model.scheduleBackgroundRefresh() }
+            if phase == .background {
+                model.scheduleBackgroundRefresh()
+                // The page read and the khatm, for the Continue reading widget.
+                WidgetCenter.shared.reloadTimelines(ofKind: "ContinueReading")
+            }
         }
         // Midnight, a new time zone or a clock change: recalculate and reschedule.
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in

@@ -123,6 +123,14 @@ enum Prayers {
 enum SharedStore {
     static let defaults = UserDefaults(suiteName: "group.org.psbv.qiblaandprayer") ?? .standard
 
+    /// Keys earlier versions kept in the app's own defaults: carried over once, for the widgets to read.
+    static func moveFromAppDefaults(_ keys: [String]) {
+        guard defaults != UserDefaults.standard else { return }
+        for key in keys where defaults.object(forKey: key) == nil {
+            if let value = UserDefaults.standard.object(forKey: key) { defaults.set(value, forKey: key) }
+        }
+    }
+
     static func save<Value: Encodable>(_ value: Value?, as key: String) {
         defaults.set(value.flatMap { try? JSONEncoder().encode($0) }, forKey: key)
     }

@@ -81,7 +81,7 @@ final class AppModel {
         // to the App Group now (setting them above doesn't run didSet), so the widgets find them.
         SharedStore.save(settings, as: "settings")
         SharedStore.save(currentPlace, as: "currentPlace")
-        TasbihStore.moveFromAppDefaults()
+        SharedStore.moveFromAppDefaults(TasbihStore.keys + QuranProgress.keys)
         WidgetCenter.shared.reloadAllTimelines()
     }
 
