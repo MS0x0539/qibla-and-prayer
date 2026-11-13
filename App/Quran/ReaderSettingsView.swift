@@ -258,7 +258,7 @@ struct GoToPageView: View {
                     .frame(maxWidth: 220)
                     .accessibilityIdentifier("pageField")
                     .onChange(of: typed) {
-                        if let number = Int(typed), (1...Quran.pageCount).contains(number) { target = number }
+                        if let number = Self.page(from: typed) { target = number }
                     }
             }
             .padding(24)
@@ -282,5 +282,13 @@ struct GoToPageView: View {
     private func change(to page: Int) {
         target = min(max(page, 1), Quran.pageCount)
         typed = ""
+    }
+
+    /// The page typed, in any script's digits (an Arabic keypad types ١٢٣, which Int() can't read), if there is one.
+    static func page(from typed: String) -> Int? {
+        let digits = typed.compactMap(\.wholeNumberValue)
+        guard (1...3).contains(digits.count) else { return nil }
+        let number = digits.reduce(0) { $0 * 10 + $1 }
+        return (1...Quran.pageCount).contains(number) ? number : nil
     }
 }

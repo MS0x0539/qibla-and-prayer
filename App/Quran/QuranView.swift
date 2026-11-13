@@ -47,6 +47,8 @@ struct QuranView: View {
                     // A mushaf is read right to left.
                     .environment(\.layoutDirection, .rightToLeft))
             }
+            // The pager's own direction (see MushafPager), whatever the iPhone's language.
+            .environment(\.layoutDirection, reduceMotion ? .rightToLeft : .leftToRight)
             .id(reduceMotion)
             .background(style.paper.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)

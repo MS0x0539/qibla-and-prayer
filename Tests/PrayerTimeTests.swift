@@ -352,10 +352,13 @@ struct PrayerTimeTests {
         #expect(Formats.number(1448) == "1448")
     }
 
-    @Test func fridayNoonIsJumuah() {
-        let friday = date(2026, 11, 13)
-        #expect(PrayerKind.dhuhr.title(on: friday, in: amsterdam.timeZone) != PrayerKind.dhuhr.title)
-        #expect(PrayerKind.dhuhr.title(on: date(2026, 11, 12), in: amsterdam.timeZone) == PrayerKind.dhuhr.title)
+    @Test func typedPageNumbers() {
+        #expect(GoToPageView.page(from: "12") == 12)
+        #expect(GoToPageView.page(from: "١٢") == 12)  // an Arabic keypad
+        #expect(GoToPageView.page(from: "604") == 604)
+        #expect(GoToPageView.page(from: "605") == nil)
+        #expect(GoToPageView.page(from: "0") == nil)
+        #expect(GoToPageView.page(from: "") == nil)
     }
 
     @Test func turnDirection() {

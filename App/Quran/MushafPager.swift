@@ -23,9 +23,9 @@ struct MushafPager: UIViewControllerRepresentable {
         controller.delegate = context.coordinator
         controller.view.backgroundColor = .clear
         handle?.controller = controller
-        // Right to left, as a mushaf is read. A curl gets that from its spine on the right; in a right-to-left layout
-        // UIKit would mirror the spine again (a right swipe then turned back), so its layout stays left to right
-        // whatever the iPhone's language. A slide needs the right-to-left layout itself.
+        // Right to left, as a mushaf is read. A slide takes that from a right-to-left layout. A curl ignores the layout
+        // (in CI a right swipe asked for the page "before" with either one forced), so its data source swaps before and
+        // after instead (Coordinator.neighbour); its layout stays fixed so that no language can change that.
         controller.view.semanticContentAttribute = curl ? .forceLeftToRight : .forceRightToLeft
         // A stored page out of range (an old or damaged value) opens the nearest real one.
         let first = min(max(page, 1), Quran.pageCount)
@@ -46,8 +46,9 @@ struct MushafPager: UIViewControllerRepresentable {
         }
         guard let current = (controller.viewControllers?.first as? PageController)?.number, current != page,
               (1...Quran.pageCount).contains(page) else { return }
+        // A curl turns to a later page the way a right swipe does, which UIKit calls "reverse".
         controller.setViewControllers([coordinator.controller(for: page)],
-                                      direction: page > current ? .forward : .reverse, animated: curl)
+                                      direction: (page > current) != curl ? .forward : .reverse, animated: curl)
     }
 
     /// One page of the mushaf.
@@ -77,17 +78,22 @@ struct MushafPager: UIViewControllerRepresentable {
             PageController(number: number, page: parent.makePage(number))
         }
 
-        /// The page before in reading order: the one with the lower number.
         func pageViewController(_ pageViewController: UIPageViewController,
                                 viewControllerBefore viewController: UIViewController) -> UIViewController? {
-            guard let number = (viewController as? PageController)?.number, number > 1 else { return nil }
-            return controller(for: number - 1)
+            neighbour(of: viewController, after: false)
         }
 
         func pageViewController(_ pageViewController: UIPageViewController,
                                 viewControllerAfter viewController: UIViewController) -> UIViewController? {
-            guard let number = (viewController as? PageController)?.number, number < Quran.pageCount else { return nil }
-            return controller(for: number + 1)
+            neighbour(of: viewController, after: true)
+        }
+
+        /// The next page (one higher) is UIKit's "after" in a slide but its "before" in a curl: with the spine on the
+        /// right, UIKit asks for the page "before" when the reader swipes right.
+        private func neighbour(of viewController: UIViewController, after: Bool) -> UIViewController? {
+            guard let number = (viewController as? PageController)?.number else { return nil }
+            let other = number + (after != parent.curl ? 1 : -1)
+            return (1...Quran.pageCount).contains(other) ? controller(for: other) : nil
         }
 
         func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool,
