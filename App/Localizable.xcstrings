@@ -9657,40 +9657,6 @@
         }
       }
     },
-    "Swipe right or tap ‹ for the next page, as in a mushaf.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "للصفحة التالية اسحب إلى اليمين أو المس ‹، كما في المصحف."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Wische nach rechts oder tippe auf ‹ für die nächste Seite, wie in einem Mushaf."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Balayez vers la droite ou touchez ‹ pour la page suivante, comme dans un mushaf."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Veeg naar rechts of tik op ‹ voor de volgende pagina, zoals in een mushaf."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sonraki sayfa için, mushafta olduğu gibi sağa kaydırın ya da ‹ işaretine dokunun."
-          }
-        }
-      }
-    },
     "Takes about a minute.": {
       "localizations": {
         "ar": {
@@ -12645,6 +12611,278 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bu iPhone'a indirilen tüm tilavetler, tüm karilerden, kaldırılır. Dilediğiniz zaman yeniden indirebilirsiniz."
+          }
+        }
+      }
+    },
+    "Turning the pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تقليب الصفحات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seiten umblättern"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tourner les pages"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pagina's omslaan"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayfa çevirme"
+          }
+        }
+      }
+    },
+    "Swipe right for the next page, as in a mushaf, or use the arrows below.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "للصفحة التالية اسحب إلى اليمين، كما في المصحف، أو استخدم الأسهم في الأسفل."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wische nach rechts für die nächste Seite, wie in einem Mushaf, oder nutze die Pfeile unten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Balayez vers la droite pour la page suivante, comme dans un mushaf, ou utilisez les flèches ci-dessous."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veeg naar rechts voor de volgende pagina, zoals in een mushaf, of gebruik de pijlen hieronder."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonraki sayfa için, mushafta olduğu gibi sağa kaydırın ya da aşağıdaki okları kullanın."
+          }
+        }
+      }
+    },
+    "Prefer a white page?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفضّل صفحة بيضاء؟"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lieber eine weiße Seite?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous préférez une page blanche ?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liever een witte pagina?"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beyaz sayfa mı tercih edersiniz?"
+          }
+        }
+      }
+    },
+    "Choose Paper here, or Automatic for paper by day and night from Isha.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر «ورقي» من هنا، أو «تلقائي» لتكون الصفحة ورقية نهارًا وليلية من العشاء."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle hier Papier, oder Automatisch für Papier am Tag und Nacht ab Isha."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez Papier ici, ou Automatique pour une page papier le jour et de nuit dès Isha."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies hier Papier, of Automatisch voor papier overdag en nacht vanaf Isha."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Burada Kâğıt'ı seçin; Otomatik'te sayfa gündüz kâğıt, yatsıdan itibaren gece olur."
+          }
+        }
+      }
+    },
+    "The next prayer on your Lock Screen?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلاة القادمة على شاشة القفل؟"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das nächste Gebet auf deinem Sperrbildschirm?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine prière sur l’écran verrouillé ?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het volgende gebed op je toegangsscherm?"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki vakit kilit ekranında olsun mu?"
+          }
+        }
+      }
+    },
+    "A countdown to the next prayer on the Lock Screen and in the Dynamic Island.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عدّ تنازلي للصلاة القادمة على شاشة القفل وفي Dynamic Island."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Countdown bis zum nächsten Gebet auf dem Sperrbildschirm und in der Dynamic Island."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un compte à rebours jusqu’à la prochaine prière sur l’écran verrouillé et dans la Dynamic Island."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een aftelling naar het volgende gebed op het toegangsscherm en in het Dynamic Island."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranında ve Dynamic Island'da sıradaki vakte geri sayım."
+          }
+        }
+      }
+    },
+    "iOS keeps it for up to 8 hours; opening the app brings it back. For a widget that stays, touch and hold the Lock Screen and tap Customize.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُبقيها iOS حتى ٨ ساعات؛ وعند فتح التطبيق تعود. ولأداة تبقى دائمًا، المس شاشة القفل مطولًا ثم اضغط «تخصيص»."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS zeigt das bis zu 8 Stunden; öffnest du die App, kommt es zurück. Für ein Widget, das bleibt, halte den Sperrbildschirm gedrückt und tippe auf „Anpassen“."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS l’affiche jusqu’à 8 heures ; ouvrir l’app le fait revenir. Pour un widget qui reste, maintenez le doigt sur l’écran verrouillé et touchez « Personnaliser »."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS bewaart dit tot 8 uur; als je de app opent, komt het terug. Voor een widget die blijft: houd het toegangsscherm ingedrukt en tik op ‘Pas aan’."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS bunu en fazla 8 saat gösterir; uygulamayı açınca geri gelir. Kalıcı bir widget için kilit ekranını basılı tutun ve Özelleştir'e dokunun."
+          }
+        }
+      }
+    },
+    "Show on Lock Screen": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعرضها على شاشة القفل"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf dem Sperrbildschirm zeigen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher sur l’écran verrouillé"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonen op toegangsscherm"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kilit ekranında göster"
           }
         }
       }

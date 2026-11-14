@@ -1,4 +1,5 @@
 import SwiftUI
+import TipKit
 import UIKit
 
 /// The Qur'an tab: the Madinah mushaf's 604 pages, turned right to left, with an index of surahs, juz and du'as,
@@ -8,10 +9,10 @@ struct QuranView: View {
     @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var page = 1
     /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
-    // `-quranNight YES -quranAutoNight NO` for CI screenshots of the night page.
-    @AppStorage("quranNight") private var night = false
-    /// The page turns to night after Isha and back to paper at sunrise, unless paper or night was picked by hand.
-    @AppStorage("quranAutoNight") private var autoNight = true
+    // Night, like the rest of the app; `-quranNight NO` for CI screenshots of the paper page.
+    @AppStorage("quranNight") private var night = true
+    /// Automatic in the settings: the page turns to night after Isha and back to paper at sunrise.
+    @AppStorage("quranAutoNight") private var autoNight = false
     @State private var nightNow = false
     @State private var pager = PagerHandle()
     @Environment(AppModel.self) private var model
@@ -29,8 +30,11 @@ struct QuranView: View {
     @State private var showingGoTo = UserDefaults.standard.string(forKey: "quranSheet") == "goto"
     @State private var showingReciters = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    /// Until the first page turn, a line says which way the pages go.
-    @AppStorage("quranTurnHintSeen") private var turnHintSeen = false
+    /// On the first visit: which way the pages turn, then where to choose a paper page.
+    @State private var tips = TipGroup(.ordered) {
+        TurnPageTip()
+        PaperPageTip()
+    }
 
     var body: some View {
         let isNight = autoNight ? nightNow : night
@@ -110,20 +114,22 @@ struct QuranView: View {
                     .sensoryFeedback(.selection, trigger: bookmarked)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { showingSettings = true } label: {
+                    Button {
+                        showingSettings = true
+                        PaperPageTip().invalidate(reason: .actionPerformed)
+                    } label: {
                         Image(systemName: "slider.horizontal.3")
                     }
                     .accessibilityLabel(Text("Page and recitation"))
+                    .popoverTip(tips.currentTip as? PaperPageTip)
                 }
             }
             // Under the page: the next page on the left, the previous on the right, the page number between.
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 VStack(spacing: 0) {
-                    if !turnHintSeen {
-                        TurnHint(style: style) { turnHintSeen = true }
-                    }
                     RecitationBar(style: style) { showingReciters = true }
                     PageBar(page: page, style: style, turn: turn) { showingGoTo = true }
+                        .popoverTip(tips.currentTip as? TurnPageTip, arrowEdge: .bottom)
                 }
             }
             .sheet(isPresented: $showingReciters) {
@@ -161,7 +167,7 @@ struct QuranView: View {
             }
             .onChange(of: page) {
                 if let marked, Quran.shared.page(ofVerse: marked) != page { self.marked = nil }
-                turnHintSeen = true
+                TurnPageTip().invalidate(reason: .actionPerformed)
             }
             .task(id: autoNight) {
                 if autoNight { await followTheNight() }
@@ -304,31 +310,18 @@ private struct RecitationBar: View {
     }
 }
 
-/// Shown until the first page turn: which way the pages of a mushaf go.
-private struct TurnHint: View {
-    let style: MushafStyle
-    let close: () -> Void
+/// On the first visit, over the page bar: which way the pages turn. Turning one puts it away.
+struct TurnPageTip: Tip {
+    var title: Text { Text("Turning the pages") }
+    var message: Text? { Text("Swipe right for the next page, as in a mushaf, or use the arrows below.") }
+    var image: Image? { Image(systemName: "hand.draw") }
+}
 
-    var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "hand.draw")
-                .accessibilityHidden(true)
-            Text("Swipe right or tap ‹ for the next page, as in a mushaf.")
-                .font(.footnote)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
-            Button(action: close) {
-                Image(systemName: "xmark")
-                    .frame(width: 44, height: 44)
-            }
-            .accessibilityLabel(Text("Close"))
-        }
-        .foregroundStyle(style.accent)
-        .padding(.leading, 16)
-        .padding(.trailing, 4)
-        .background(style.paper)
-        .overlay(alignment: .top) { style.ornament.opacity(0.5).frame(height: 1) }
-    }
+/// After it, at the settings button: the page can be paper instead of night.
+struct PaperPageTip: Tip {
+    var title: Text { Text("Prefer a white page?") }
+    var message: Text? { Text("Choose Paper here, or Automatic for paper by day and night from Isha.") }
+    var image: Image? { Image(systemName: "sun.max") }
 }
 
 /// Under the page: the next page on the left and the previous one on the right, as a mushaf turns, with the page
@@ -389,7 +382,7 @@ private struct PageBar: View {
     }
 }
 
-/// How a mushaf page looks: printed paper (the default) or dark for reading at night.
+/// How a mushaf page looks: dark (the default, like the rest of the app) or printed paper.
 struct MushafStyle {
     let paper: Color
     let ink: Color

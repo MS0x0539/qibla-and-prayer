@@ -1,10 +1,21 @@
 import SwiftUI
+import TipKit
 import WidgetKit
 import UIKit
 
 @main
 struct QiblaApp: App {
     @State private var model = AppModel()
+
+    init() {
+        // CI screenshots and UI tests: `-tips hide` shows no tips, `-tips reset` shows them as on a first visit,
+        // `-tips day` goes straight to the Qur'an's second tip (the paper page).
+        let testing = UserDefaults.standard.string(forKey: "tips")
+        if testing == "hide" { Tips.hideAllTipsForTesting() }
+        if testing == "reset" || testing == "day" { try? Tips.resetDatastore() }
+        try? Tips.configure()
+        if testing == "day" { TurnPageTip().invalidate(reason: .actionPerformed) }
+    }
 
     var body: some Scene {
         let model = model

@@ -15,7 +15,7 @@ final class QuranReaderTests: XCTestCase {
     private func turnPages(language: String, locale: String, typing first: String) {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(\(language))", "-AppleLocale", locale, "-skipOnboarding", "YES",
-                               "-startTab", "quran"]
+                               "-startTab", "quran", "-tips", "hide"]
         app.launch()
         // The location question, if it comes (in the simulator's own language, English, whatever the app's).
         let allow = XCUIApplication(bundleIdentifier: "com.apple.springboard").buttons["Allow While Using App"]

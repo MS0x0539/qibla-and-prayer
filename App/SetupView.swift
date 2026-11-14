@@ -9,12 +9,13 @@ struct SetupView: View {
     var done: () -> Void
 
     private enum Step: Int, CaseIterable {
-        case welcome, language, location, method, reminders, ready
+        case welcome, language, location, method, reminders, lockScreen, ready
     }
 
     // `-setupStep 3` opens a later page first (used for CI screenshots).
     @State private var step = Step(rawValue: UserDefaults.standard.integer(forKey: "setupStep")) ?? .welcome
     @State private var searchingCity = false
+    @AppStorage(AppModel.nextPrayerActivityKey) private var nextPrayerActivity = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -74,6 +75,7 @@ struct SetupView: View {
         case .location: locationPage
         case .method: methodPage
         case .reminders: remindersPage
+        case .lockScreen: lockScreenPage
         case .ready: readyPage
         }
     }
@@ -278,6 +280,37 @@ struct SetupView: View {
                 }
                 .buttonStyle(SecondaryButtonStyle())
             }
+        }
+    }
+
+    private var lockScreenPage: some View {
+        SetupPage(
+            title: "The next prayer on your Lock Screen?",
+            text: "A countdown to the next prayer on the Lock Screen and in the Dynamic Island."
+        ) {
+            VStack(alignment: .leading, spacing: 14) {
+                LockScreenPreview(model: model)
+                Text("iOS keeps it for up to 8 hours; opening the app brings it back. For a widget that stays, touch and hold the Lock Screen and tap Customize.")
+                    .font(.footnote)
+                    .foregroundStyle(Theme.muted)
+                if !model.liveActivitiesEnabled {
+                    Button("Allow Live Activities in Settings") { openAppSettings() }
+                        .foregroundStyle(Theme.gold)
+                }
+            }
+        } buttons: {
+            Button("Show on Lock Screen") {
+                nextPrayerActivity = true
+                model.scheduleNotifications()  // also starts the Live Activity
+                go(1)
+            }
+            .buttonStyle(PrimaryButtonStyle())
+            Button("Not now") {
+                nextPrayerActivity = false
+                model.scheduleNotifications()
+                go(1)
+            }
+            .buttonStyle(SecondaryButtonStyle())
         }
     }
 
@@ -587,6 +620,39 @@ private struct Feature: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// The Live Activity as it shows on the Lock Screen, with the real next prayer, counting down.
+private struct LockScreenPreview: View {
+    let model: AppModel
+
+    var body: some View {
+        let now = Date.now
+        if let place = model.place, let next = model.next(after: now, at: place), next.time > now {
+            HStack(spacing: 14) {
+                Image(systemName: "clock")
+                    .font(.title2)
+                    .foregroundStyle(Theme.gold)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(verbatim: next.kind.title(on: next.time, in: place.timeZone))
+                        .font(.headline)
+                    Text(verbatim: "\(place.displayName) · \(Formats.time(next.time, in: place.timeZone))")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                }
+                Spacer(minLength: 8)
+                Text(timerInterval: now...next.time, countsDown: true)
+                    .font(.system(.title, design: .serif).monospacedDigit())
+                    .foregroundStyle(Theme.gold)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+            }
+            .padding(16)
+            .background(Theme.card, in: RoundedRectangle(cornerRadius: 22))
+            .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(Theme.line, lineWidth: 1))
+        }
     }
 }
 

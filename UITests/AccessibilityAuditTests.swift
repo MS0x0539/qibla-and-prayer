@@ -10,10 +10,11 @@ final class AccessibilityAuditTests: XCTestCase {
     private static let screens: [(name: String, arguments: [String])] = [
         ("setup-location", ["-setupStep", "2"]),
         ("setup-method", ["-setupStep", "3"]),
+        ("setup-lock-screen", ["-setupStep", "5"]),
         ("times", ["-skipOnboarding", "YES", "-startTab", "times"]),
         ("qibla", ["-skipOnboarding", "YES", "-startTab", "qibla", "-demoHeading", "100"]),
-        ("quran", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranNight", "NO", "-quranPage", "42"]),
-        ("quran-night", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranPage", "42", "-quranNight", "YES"]),
+        ("quran", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranNight", "NO", "-quranPage", "42", "-tips", "hide"]),
+        ("quran-night", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranPage", "42", "-quranNight", "YES", "-tips", "hide"]),
         ("tasbih", ["-skipOnboarding", "YES", "-startTab", "ibadah", "-ibadahPart", "tasbih"]),
         ("tracker", ["-skipOnboarding", "YES", "-startTab", "ibadah", "-ibadahPart", "tracker"]),
         ("settings", ["-skipOnboarding", "YES", "-startTab", "settings"]),

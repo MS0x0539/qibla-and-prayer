@@ -12,6 +12,8 @@ struct QiblaView: View {
     @State private var showingCamera = false
     // `-showLive YES` opens Makkah live first (used for CI screenshots).
     @State private var showingLive = UserDefaults.standard.bool(forKey: "showLive")
+    /// The compass's size: 300 points, or as much less (down to 200) as the page needs to fit the screen unscrolled.
+    @State private var dial: CGFloat = 300
 
     /// The turn from the phone's heading to the Qibla: negative is left, positive is right.
     private var offset: Double? {
@@ -41,6 +43,14 @@ struct QiblaView: View {
                 .frame(maxWidth: .infinity)
             }
             .scrollBounceBehavior(.basedOnSize)
+            // The compass gives up as much as the page reaches past the screen, or takes back room left over (up to
+            // 300); with large text the page still scrolls, the compass at 200.
+            .onScrollGeometryChange(for: CGFloat.self) { geometry in
+                geometry.contentSize.height + geometry.contentInsets.top + geometry.contentInsets.bottom
+                    - geometry.containerSize.height
+            } action: { _, overflow in
+                dial = min(300, max(200, (dial - overflow).rounded(.down)))
+            }
             .foregroundStyle(Theme.ink)
             .background(Theme.background.ignoresSafeArea())
             .toolbar {
@@ -91,6 +101,9 @@ struct QiblaView: View {
                     .frame(width: 84, height: 84)
             }
             .frame(width: 300, height: 300)
+            // Drawn at 300 points, shown at the size that fits.
+            .scaleEffect(dial / 300)
+            .frame(width: dial, height: dial)
             .animation(reduceMotion ? nil : .easeOut(duration: 0.25), value: location.continuousHeading)
             // A compass shows physical directions: it must never be mirrored for right-to-left languages.
             .environment(\.layoutDirection, .leftToRight)
