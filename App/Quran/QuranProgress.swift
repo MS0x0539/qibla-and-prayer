@@ -1,10 +1,8 @@
 import Foundation
 
-/// Bookmarks and reading progress, kept on the iPhone (UserDefaults, read with @AppStorage by the views).
+/// Reading progress, kept on the iPhone (UserDefaults, read with @AppStorage by the views).
 /// A page counts as read once it has been open for 10 seconds; a khatm is complete when all 604 pages are read.
 enum QuranProgress {
-    /// Bookmarked pages, "42,293".
-    static let bookmarksKey = "quranBookmarks"
     /// Pages read in the current khatm, "1,2,3".
     static let khatmPagesKey = "khatmPages"
     /// Khatms completed.
@@ -25,14 +23,7 @@ enum QuranProgress {
     /// The page open in the reader.
     static let pageKey = "quranPage"
     /// All of them, in the App Group with the Continue reading widget.
-    static let keys = [pageKey, bookmarksKey, khatmPagesKey, khatmCountKey, todayKey]
-
-    static func toggleBookmark(_ page: Int, defaults: UserDefaults = SharedStore.defaults) {
-        guard (1...Quran.pageCount).contains(page) else { return }
-        var bookmarks = pages(defaults.string(forKey: bookmarksKey) ?? "")
-        if bookmarks.contains(page) { bookmarks.remove(page) } else { bookmarks.insert(page) }
-        defaults.set(text(bookmarks), forKey: bookmarksKey)
-    }
+    static let keys = [pageKey, khatmPagesKey, khatmCountKey, todayKey]
 
     /// Counts a page as read today and in the current khatm; the 604th page completes the khatm and starts a new one.
     static func markRead(_ page: Int, on date: Date = .now, defaults: UserDefaults = SharedStore.defaults) {

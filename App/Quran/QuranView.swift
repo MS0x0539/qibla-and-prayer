@@ -16,7 +16,6 @@ struct QuranView: View {
     @State private var nightNow = false
     @State private var pager = PagerHandle()
     @Environment(AppModel.self) private var model
-    @AppStorage(QuranProgress.bookmarksKey, store: SharedStore.defaults) private var bookmarks = ""
     @AppStorage("reciter") private var reciterID = Reciter.all[0].id
     /// A verse to open, from the Verse of the day widget.
     @AppStorage("openVerse") private var openVerse = -1
@@ -106,14 +105,6 @@ struct QuranView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    let bookmarked = QuranProgress.pages(bookmarks).contains(page)
-                    Button { QuranProgress.toggleBookmark(page) } label: {
-                        Image(systemName: bookmarked ? "bookmark.fill" : "bookmark")
-                    }
-                    .accessibilityLabel(bookmarked ? Text("Remove bookmark") : Text("Bookmark"))
-                    .sensoryFeedback(.selection, trigger: bookmarked)
-                }
-                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingSettings = true
                         PaperPageTip().invalidate(reason: .actionPerformed)
@@ -140,9 +131,6 @@ struct QuranView: View {
                 QuranIndexView { verse in
                     marked = verse
                     page = Quran.shared.page(ofVerse: verse)
-                    showingIndex = false
-                } openPage: { number in
-                    page = number
                     showingIndex = false
                 }
             }
@@ -852,12 +840,10 @@ struct VerseSheet: View {
     }
 }
 
-/// The index: bookmarks, surahs, juz and du'as, and a search across them and the verses.
+/// The index: surahs, juz and du'as, and a search across them and the verses.
 struct QuranIndexView: View {
     let open: (Int) -> Void
-    let openPage: (Int) -> Void
     @Environment(\.dismiss) private var dismiss
-    @AppStorage(QuranProgress.bookmarksKey, store: SharedStore.defaults) private var bookmarks = ""
     @State private var query = ""
     @AppStorage("quranIndexPart") private var part = Part.surahs
 
@@ -870,17 +856,6 @@ struct QuranIndexView: View {
         NavigationStack {
             List {
                 if query.trimmingCharacters(in: .whitespaces).isEmpty {
-                    let bookmarked = QuranProgress.pages(bookmarks).sorted()
-                    if !bookmarked.isEmpty {
-                        Section("Bookmarks") {
-                            ForEach(bookmarked, id: \.self) { number in
-                                Button { openPage(number) } label: { BookmarkRow(page: number) }
-                            }
-                            .onDelete { offsets in
-                                for offset in offsets { QuranProgress.toggleBookmark(bookmarked[offset]) }
-                            }
-                        }
-                    }
                     Picker("Index", selection: $part) {
                         Text("Surahs").tag(Part.surahs)
                         Text("Juz").tag(Part.juz)
@@ -945,32 +920,6 @@ struct QuranIndexView: View {
                 }
             }
         }
-    }
-}
-
-private struct BookmarkRow: View {
-    let page: Int
-
-    var body: some View {
-        let quran = Quran.shared
-        let first = quran.verses(onPage: page).first
-        HStack(spacing: 14) {
-            Image(systemName: "bookmark.fill")
-                .foregroundStyle(Theme.gold)
-                .frame(minWidth: 28)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Page \(page)")
-                    .font(.headline)
-                    .foregroundStyle(Theme.ink)
-                if let first {
-                    Text(verbatim: "\(Quran.title(of: quran.surahs[first.surah - 1])) \(first.surah):\(first.number)")
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
-                }
-            }
-            Spacer()
-        }
-        .contentShape(Rectangle())
     }
 }
 
