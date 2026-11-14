@@ -400,6 +400,30 @@ final class AppModel {
 
     // MARK: - Next prayer (Live Activity)
 
+    /// What the next prayer's Live Activity shows, in the app's language (also setup's preview of it): the day's
+    /// times around it, and the time before it, where the line that fills up towards it starts.
+    func nextPrayerState(after now: Date, at place: Place) -> NextPrayerAttributes.ContentState? {
+        guard let next = next(after: now, at: place) else { return nil }
+        let zone = place.timeZone
+        let name = next.kind.title(on: next.time, in: zone)
+        let after = self.next(after: next.time.addingTimeInterval(1), at: place)
+        // Far north in summer Isha can fall after midnight, in the day before's list: take the list that holds it.
+        let days = (-2...1).compactMap { offset in
+            place.calendar.date(byAdding: .day, value: offset, to: now).flatMap { times(on: $0, at: place) }
+        }
+        let day = days.first { $0.contains { $0.time == next.time } } ?? []
+        return NextPrayerAttributes.ContentState(
+            time: next.time, name: name, timeText: Formats.time(next.time, in: zone),
+            arrived: String(localized: "Time for \(name).", bundle: .app),
+            following: after.map { "\($0.kind.title(on: $0.time, in: zone)) · \(Formats.time($0.time, in: zone))" } ?? "",
+            day: day.map {
+                NextPrayerAttributes.Row(name: $0.kind.title(on: $0.time, in: zone), time: Formats.time($0.time, in: zone),
+                                         date: $0.time)
+            },
+            since: days.joined().map(\.time).filter { $0 < next.time }.max(),
+            until: String(localized: "until \(name)", bundle: .app))
+    }
+
     static let nextPrayerActivityKey = "nextPrayerActivity"
 
     /// The next prayer on the Lock Screen and in the Dynamic Island while the setting is on. iOS lets only the open
@@ -411,18 +435,11 @@ final class AppModel {
             $0.activityState == .active || $0.activityState == .stale
         }
         guard UserDefaults.standard.bool(forKey: Self.nextPrayerActivityKey), liveActivitiesEnabled,
-              let place, let next = next(after: .now, at: place) else {
+              let place, let state = nextPrayerState(after: .now, at: place) else {
             for activity in running { await activity.end(nil, dismissalPolicy: .immediate) }
             return
         }
-        let zone = place.timeZone
-        let name = next.kind.title(on: next.time, in: zone)
-        let after = self.next(after: next.time.addingTimeInterval(1), at: place)
-        let state = NextPrayerAttributes.ContentState(
-            time: next.time, name: name, timeText: Formats.time(next.time, in: zone),
-            arrived: String(localized: "Time for \(name).", bundle: .app),
-            following: after.map { "\($0.kind.title(on: $0.time, in: zone)) · \(Formats.time($0.time, in: zone))" } ?? "")
-        let content = ActivityContent(state: state, staleDate: next.time)
+        let content = ActivityContent(state: state, staleDate: state.time)
         if let activity = running.first(where: { $0.attributes.place == place.displayName }) {
             await activity.update(content)
             for other in running where other.id != activity.id { await other.end(nil, dismissalPolicy: .immediate) }

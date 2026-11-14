@@ -630,35 +630,15 @@ private struct Feature: View {
     }
 }
 
-/// The Live Activity as it shows on the Lock Screen, with the real next prayer, counting down.
+/// The Live Activity as it shows on the Lock Screen (the same card), with the real next prayer, counting down.
 private struct LockScreenPreview: View {
     let model: AppModel
 
     var body: some View {
-        let now = Date.now
-        if let place = model.place, let next = model.next(after: now, at: place), next.time > now {
-            HStack(spacing: 14) {
-                Image(systemName: "clock")
-                    .font(.title2)
-                    .foregroundStyle(Theme.gold)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(verbatim: next.kind.title(on: next.time, in: place.timeZone))
-                        .font(.headline)
-                    Text(verbatim: "\(place.displayName) · \(Formats.time(next.time, in: place.timeZone))")
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
-                }
-                Spacer(minLength: 8)
-                Text(timerInterval: now...next.time, countsDown: true)
-                    .font(.system(.title, design: .serif).monospacedDigit())
-                    .foregroundStyle(Theme.gold)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-            }
-            .padding(16)
-            .background(Theme.card, in: RoundedRectangle(cornerRadius: 22))
-            .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(Theme.line, lineWidth: 1))
+        if let place = model.place, let state = model.nextPrayerState(after: .now, at: place) {
+            NextPrayerCard(place: place.displayName, state: state, arrived: false)
+                .background(Theme.background, in: RoundedRectangle(cornerRadius: 22))
+                .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(Theme.line, lineWidth: 1))
         }
     }
 }

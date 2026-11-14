@@ -3,11 +3,13 @@ import SwiftUI
 import WidgetKit
 
 /// The next prayer on the Lock Screen and in the Dynamic Island, counting down; once its time has come (the activity
-/// goes stale then), it says so and shows the prayer after it until the app moves it on.
+/// goes stale then), it says so and shows the prayer after it until the app moves it on. On the Lock Screen with the
+/// day's times beside it (NextPrayerCard, shared with setup's preview).
 struct NextPrayerLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: NextPrayerAttributes.self) { context in
-            NextPrayerLockScreen(context: context)
+            NextPrayerCard(place: context.attributes.place, state: context.state,
+                           arrived: NextPrayerLockScreen.arrived(context))
                 .activityBackgroundTint(Theme.background)
                 .activitySystemActionForegroundColor(Theme.gold)
         } dynamicIsland: { context in
@@ -43,9 +45,8 @@ struct NextPrayerLiveActivity: Widget {
     }
 }
 
-private struct NextPrayerLockScreen: View {
-    let context: ActivityViewContext<NextPrayerAttributes>
-
+/// What the Dynamic Island says under the countdown.
+private enum NextPrayerLockScreen {
     /// "Amsterdam · 17:02" while counting down, the prayer after it once the time has come.
     static func detail(_ context: ActivityViewContext<NextPrayerAttributes>) -> String {
         arrived(context) ? context.state.following : "\(context.attributes.place) · \(context.state.timeText)"
@@ -53,29 +54,6 @@ private struct NextPrayerLockScreen: View {
 
     static func arrived(_ context: ActivityViewContext<NextPrayerAttributes>) -> Bool {
         context.isStale || context.state.time <= .now
-    }
-
-    var body: some View {
-        HStack(spacing: 14) {
-            Image(systemName: "clock")
-                .font(.title2)
-                .foregroundStyle(Theme.gold)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: Self.arrived(context) ? context.state.arrived : context.state.name)
-                    .font(.headline)
-                    .foregroundStyle(Theme.ink)
-                Text(verbatim: Self.detail(context))
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.muted)
-            }
-            Spacer()
-            if !Self.arrived(context) {
-                NextPrayerCountdown(context: context)
-                    .font(.system(.title, design: .serif).monospacedDigit())
-                    .foregroundStyle(Theme.gold)
-            }
-        }
-        .padding(16)
     }
 }
 
