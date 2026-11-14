@@ -50,7 +50,7 @@
       {
         "heading": "Kur'an tilavetleri",
         "paragraphs": [
-          "Kur'an sekmesinde bir tilavet dinlediğinizde iPhone'unuz her ayetin sesini uygulamanın kendi ses sunucusundan (audio.qibla.dev) indirir ve hiçbir ayet iki kez indirilmesin diye saklar; iOS yer gerektiğinde bu dosyaları silebilir. Her web sitesi gibi bu sunucu da IP adresinizi ve iPhone'unuzun hangi ayeti ve hangi kariyi istediğini görür; uygulama başka bir şey göndermez. Sunucu Cloudflare'de çalışır; Cloudflare bu istekleri benim adıma, kendi veri işleme koşullarına göre işler. Kimin dinlediğini kaydetmiyorum. Tilavetlerin kendisi Islamic Network'ten (alquran.cloud) gelir; Islamic Network'ün koşulları bu kullanıma izin verir. Çevrimdışı dinlemek için indirdiğiniz bir sure, cüz ya da Kur'an'ın tamamı, siz uygulamada silene kadar iPhone'unuzda kalır."
+          "Kur'an sekmesinde bir tilavet dinlediğinizde iPhone'unuz her ayetin sesini uygulamanın kendi ses sunucusundan (audio.qibla.dev) indirir ve hiçbir ayet iki kez indirilmesin diye saklar; iOS yer gerektiğinde bu dosyaları silebilir. Her web sitesi gibi bu sunucu da IP adresinizi ve iPhone'unuzun hangi ayeti ve hangi kariyi istediğini görür; uygulama başka bir şey göndermez. Sunucu Cloudflare'de çalışır; Cloudflare bu istekleri benim adıma, kendi veri işleme koşullarına göre işler. Kimin dinlediğini kaydetmiyorum. Çevrimdışı dinlemek için indirdiğiniz bir sure, cüz ya da Kur'an'ın tamamı, siz uygulamada silene kadar iPhone'unuzda kalır."
         ]
       },
       {

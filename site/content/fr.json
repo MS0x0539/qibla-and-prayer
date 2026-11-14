@@ -50,7 +50,7 @@
       {
         "heading": "Récitations du Coran",
         "paragraphs": [
-          "Quand vous écoutez une récitation dans l’onglet Coran, votre iPhone télécharge l’audio de chaque verset depuis le serveur audio de l’app (audio.qibla.dev) et le conserve, pour qu’aucun verset ne soit téléchargé deux fois ; iOS peut supprimer ces fichiers s’il a besoin de place. Comme tout site web, le serveur reçoit votre adresse IP ainsi que le verset et le récitateur demandés par votre iPhone ; l’app n’envoie rien d’autre. Le serveur fonctionne chez Cloudflare, qui traite ces demandes pour moi selon ses conditions de sous-traitance. Je ne garde aucune trace de qui écoute. Les récitations elles-mêmes proviennent d’Islamic Network (alquran.cloud), dont les conditions permettent cet usage. Une sourate, un juz ou le Coran entier que vous téléchargez pour l’écouter hors ligne reste sur votre iPhone jusqu’à ce que vous le supprimiez dans l’app."
+          "Quand vous écoutez une récitation dans l’onglet Coran, votre iPhone télécharge l’audio de chaque verset depuis le serveur audio de l’app (audio.qibla.dev) et le conserve, pour qu’aucun verset ne soit téléchargé deux fois ; iOS peut supprimer ces fichiers s’il a besoin de place. Comme tout site web, le serveur reçoit votre adresse IP ainsi que le verset et le récitateur demandés par votre iPhone ; l’app n’envoie rien d’autre. Le serveur fonctionne chez Cloudflare, qui traite ces demandes pour moi selon ses conditions de sous-traitance. Je ne garde aucune trace de qui écoute. Une sourate, un juz ou le Coran entier que vous téléchargez pour l’écouter hors ligne reste sur votre iPhone jusqu’à ce que vous le supprimiez dans l’app."
         ]
       },
       {

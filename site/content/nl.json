@@ -50,7 +50,7 @@
       {
         "heading": "Recitaties van de Koran",
         "paragraphs": [
-          "Als je in het tabblad Koran een recitatie afspeelt, downloadt je iPhone de audio van elk vers van de eigen audioserver van de app (audio.qibla.dev) en bewaart die, zodat geen vers twee keer wordt gedownload; iOS kan deze bestanden verwijderen als er ruimte nodig is. Zoals elke website ontvangt de server je IP-adres en welk vers en welke reciteur je iPhone opvraagt; de app stuurt verder niets. De server draait bij Cloudflare, dat deze verzoeken voor mij afhandelt onder zijn verwerkersvoorwaarden. Ik houd niet bij wie er luistert. De recitaties zelf komen van Islamic Network (alquran.cloud), waarvan de voorwaarden dit gebruik toestaan. Een soera, juz of de hele Koran die je downloadt om offline te luisteren, blijft op je iPhone tot je hem in de app verwijdert."
+          "Als je in het tabblad Koran een recitatie afspeelt, downloadt je iPhone de audio van elk vers van de eigen audioserver van de app (audio.qibla.dev) en bewaart die, zodat geen vers twee keer wordt gedownload; iOS kan deze bestanden verwijderen als er ruimte nodig is. Zoals elke website ontvangt de server je IP-adres en welk vers en welke reciteur je iPhone opvraagt; de app stuurt verder niets. De server draait bij Cloudflare, dat deze verzoeken voor mij afhandelt onder zijn verwerkersvoorwaarden. Ik houd niet bij wie er luistert. Een soera, juz of de hele Koran die je downloadt om offline te luisteren, blijft op je iPhone tot je hem in de app verwijdert."
         ]
       },
       {

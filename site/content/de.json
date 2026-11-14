@@ -50,7 +50,7 @@
       {
         "heading": "Koranrezitationen",
         "paragraphs": [
-          "Wenn du im Tab „Koran“ eine Rezitation abspielst, lädt dein iPhone die Audiodatei jedes Verses vom eigenen Audioserver der App (audio.qibla.dev) und behält sie, damit kein Vers zweimal geladen wird; iOS kann diese Dateien löschen, wenn es Platz braucht. Wie jede Website erhält der Server deine IP-Adresse und welchen Vers und welchen Rezitator dein iPhone anfragt; die App sendet sonst nichts. Der Server läuft bei Cloudflare, das diese Anfragen für mich nach seinen Bedingungen zur Auftragsverarbeitung bearbeitet. Ich halte nicht fest, wer zuhört. Die Rezitationen selbst stammen von Islamic Network (alquran.cloud), dessen Bedingungen diese Nutzung erlauben. Eine Sure, ein Dschuz oder der ganze Koran, den du zum Offline-Hören lädst, bleibt auf deinem iPhone, bis du ihn in der App entfernst."
+          "Wenn du im Tab „Koran“ eine Rezitation abspielst, lädt dein iPhone die Audiodatei jedes Verses vom eigenen Audioserver der App (audio.qibla.dev) und behält sie, damit kein Vers zweimal geladen wird; iOS kann diese Dateien löschen, wenn es Platz braucht. Wie jede Website erhält der Server deine IP-Adresse und welchen Vers und welchen Rezitator dein iPhone anfragt; die App sendet sonst nichts. Der Server läuft bei Cloudflare, das diese Anfragen für mich nach seinen Bedingungen zur Auftragsverarbeitung bearbeitet. Ich halte nicht fest, wer zuhört. Eine Sure, ein Dschuz oder der ganze Koran, den du zum Offline-Hören lädst, bleibt auf deinem iPhone, bis du ihn in der App entfernst."
         ]
       },
       {

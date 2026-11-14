@@ -50,7 +50,7 @@
       {
         "heading": "Recitations of the Qur'an",
         "paragraphs": [
-          "When you play a recitation in the Qur'an tab, your iPhone downloads the audio of each verse from the app's own audio server (audio.qibla.dev) and keeps it, so that no verse is downloaded twice; iOS may remove these files when it needs space. Like any website, the server receives your IP address and which verse and reciter your iPhone asks for; the app sends nothing else. The server runs on Cloudflare, which handles these requests for me under its data processing terms. I keep no record of who listens. The recitations themselves come from Islamic Network (alquran.cloud), whose terms allow this use. A surah, juz or the whole Qur'an you download to listen offline stays on your iPhone until you remove it in the app."
+          "When you play a recitation in the Qur'an tab, your iPhone downloads the audio of each verse from the app's own audio server (audio.qibla.dev) and keeps it, so that no verse is downloaded twice; iOS may remove these files when it needs space. Like any website, the server receives your IP address and which verse and reciter your iPhone asks for; the app sends nothing else. The server runs on Cloudflare, which handles these requests for me under its data processing terms. I keep no record of who listens. A surah, juz or the whole Qur'an you download to listen offline stays on your iPhone until you remove it in the app."
         ]
       },
       {
