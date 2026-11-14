@@ -163,9 +163,16 @@ struct RecitationDownloadRow: View {
             }
             Spacer()
             if downloaded {
-                Label("Downloaded", systemImage: "checkmark.circle.fill")
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.gold)
+                // A tap on the check mark offers to remove it (and a swipe does, below).
+                Menu {
+                    Button(role: .destructive) { downloads.remove(part.verses, by: reciter) } label: {
+                        Label("Remove", systemImage: "trash")
+                    }
+                } label: {
+                    Label("Downloaded", systemImage: "checkmark.circle.fill")
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.gold)
+                }
             } else if let current = downloads.current, current.title == part.title {
                 ProgressView(value: current.progress)
                     .frame(width: 80)
