@@ -62,6 +62,12 @@ details { background: var(--surface); border-radius: var(--radius); padding: 16p
 summary { cursor: pointer; font-weight: 600; }
 details p { margin: .7em 0 .2em; }
 
+/* The maintenance page: one calm statement until the new site is here. */
+.maintenance .page > header nav { display: none; }
+.maintenance .page main { min-height: 56svh; display: grid; align-content: center; justify-items: start; gap: 24px; }
+.maintenance .page main h1 { font-size: var(--display); color: var(--gold); max-width: 14ch; margin: 0; }
+.maintenance .page main p { margin: 0; max-width: 40ch; }
+
 /* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
 .reading { display: grid; gap: var(--gap); padding-bottom: var(--gap); min-width: 0; }
@@ -195,6 +201,7 @@ details p { margin: .7em 0 .2em; }
   .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
     max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
   .line nav, .line .languages { justify-content: flex-start; }
+  .page { padding-inline: calc(var(--margin) + 8px); }
   .page > header { padding-bottom: 36px; }
 }
 </style>
@@ -206,7 +213,6 @@ details p { margin: .7em 0 .2em; }
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/privacy" aria-current="page">Privacy policy</a>
 <a href="/accessibility">Accessibility</a>
-<a href="/releases">What's new</a>
 <a href="/support">Support</a>
 </nav></header>
 <main>
@@ -250,7 +256,6 @@ details p { margin: .7em 0 .2em; }
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/privacy" aria-current="page">Privacy policy</a>
 <a href="/accessibility">Accessibility</a>
-<a href="/releases">What's new</a>
 <a href="/support">Support</a>
 </nav>
 <nav class="languages" aria-label="English">

@@ -31,6 +31,11 @@ const prefix = (code) => (code === 'en' ? '/' : `/${code}/`);
 // In menu order.
 const PAGES = { home: '', privacy: 'privacy', accessibility: 'accessibility', releases: 'releases', support: 'support' };
 const url = (code, page) => prefix(code) + PAGES[page];
+// While the new site is being made, the home page and "What's new" show one short maintenance page. Privacy,
+// accessibility and support stay (Apple and the app link to them), as do live.json and security.txt. false brings
+// the full site back.
+const MAINTENANCE = true;
+const MENU = ['privacy', 'accessibility', ...(MAINTENANCE ? [] : ['releases']), 'support'];
 
 const STAR = (size) => `<svg width="${size}" height="${size}" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
 <rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg>`;
@@ -81,6 +86,12 @@ img { max-width: 100%; display: block; }
 details { background: var(--surface); border-radius: var(--radius); padding: 16px 22px; margin: 10px 0; }
 summary { cursor: pointer; font-weight: 600; }
 details p { margin: .7em 0 .2em; }
+
+/* The maintenance page: one calm statement until the new site is here. */
+.maintenance .page > header nav { display: none; }
+.maintenance .page main { min-height: 56svh; display: grid; align-content: center; justify-items: start; gap: 24px; }
+.maintenance .page main h1 { font-size: var(--display); color: var(--gold); max-width: 14ch; margin: 0; }
+.maintenance .page main p { margin: 0; max-width: 40ch; }
 
 /* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
@@ -215,6 +226,7 @@ details p { margin: .7em 0 .2em; }
   .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
     max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
   .line nav, .line .languages { justify-content: flex-start; }
+  .page { padding-inline: calc(var(--margin) + 8px); }
   .page > header { padding-bottom: 36px; }
 }
 `;
@@ -246,7 +258,7 @@ ${body}
 
 // The quiet line that closes every page: what this is, the pages, the languages.
 function footer(lang, kind) {
-  const pages = ['privacy', 'accessibility', 'releases', 'support']
+  const pages = MENU
     .map((p) => `<a href="${url(lang.code, p)}"${p === kind ? ' aria-current="page"' : ''}>${escape(lang.nav[p])}</a>`).join('\n');
   const switcher = languages
     .map((l) => `<a href="${url(l.code, kind)}" lang="${l.code}"${l.code === lang.code ? ' aria-current="page"' : ''}>${escape(l.language)}</a>`).join('\n');
@@ -261,8 +273,8 @@ ${switcher}
 </footer>`;
 }
 
-function page(lang, kind, title, body) {
-  const nav = Object.keys(PAGES).filter((p) => p !== 'home')
+function page(lang, kind, title, body, bodyClass = 'reading-page') {
+  const nav = MENU
     .map((p) => `<a href="${url(lang.code, p)}"${p === kind ? ' aria-current="page"' : ''}>${escape(lang.nav[p])}</a>`).join('\n');
   return document(lang, kind, title, `<div class="page">
 <header><a class="mark" href="${url(lang.code, 'home')}">${STAR(30)}<span>${escape(lang.appName)}</span></a>
@@ -273,7 +285,7 @@ ${nav}
 ${body}
 </main>
 </div>
-${footer(lang, kind)}`, 'reading-page');
+${footer(lang, kind)}`, bodyClass);
 }
 
 // A group of radio buttons that shows one of several pictures, with CSS alone: the page runs no scripts.
@@ -435,14 +447,22 @@ function support(lang) {
 ${s.faq.map((item) => `<details>\n<summary>${escape(item.q)}</summary>\n<p>${linked(item.a)}</p>\n</details>`).join('\n')}`);
 }
 
+// Shown at the home page and "What's new" while MAINTENANCE is on.
+function maintenance(lang, kind) {
+  const m = lang.maintenance;
+  return page(lang, kind, lang.appName, `<h1>${escape(m.headline)}</h1>
+<p>${escape(m.text)}</p>
+${badge(lang)}`, 'reading-page maintenance');
+}
+
 for (const lang of languages) {
   const folder = join(here, 'public', lang.code === 'en' ? '' : lang.code);
   mkdirSync(folder, { recursive: true });
-  writeFileSync(join(folder, 'index.html'), home(lang));
+  writeFileSync(join(folder, 'index.html'), MAINTENANCE ? maintenance(lang, 'home') : home(lang));
   writeFileSync(join(folder, 'privacy.html'), privacy(lang));
   writeFileSync(join(folder, 'support.html'), support(lang));
   writeFileSync(join(folder, 'accessibility.html'), accessibility(lang));
-  writeFileSync(join(folder, 'releases.html'), releases(lang));
+  writeFileSync(join(folder, 'releases.html'), MAINTENANCE ? maintenance(lang, 'releases') : releases(lang));
 }
 // Icons: favicon.svg is drawn by hand; favicon.ico and apple-touch-icon.png are rendered from it and the app icon.
 // screens/ holds the app's own screenshots (from CI), as WebP.

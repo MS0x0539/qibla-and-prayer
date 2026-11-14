@@ -62,6 +62,12 @@ details { background: var(--surface); border-radius: var(--radius); padding: 16p
 summary { cursor: pointer; font-weight: 600; }
 details p { margin: .7em 0 .2em; }
 
+/* The maintenance page: one calm statement until the new site is here. */
+.maintenance .page > header nav { display: none; }
+.maintenance .page main { min-height: 56svh; display: grid; align-content: center; justify-items: start; gap: 24px; }
+.maintenance .page main h1 { font-size: var(--display); color: var(--gold); max-width: 14ch; margin: 0; }
+.maintenance .page main p { margin: 0; max-width: 40ch; }
+
 /* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
 .reading { display: grid; gap: var(--gap); padding-bottom: var(--gap); min-width: 0; }
@@ -195,153 +201,31 @@ details p { margin: .7em 0 .2em; }
   .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
     max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
   .line nav, .line .languages { justify-content: flex-start; }
+  .page { padding-inline: calc(var(--margin) + 8px); }
   .page > header { padding-bottom: 36px; }
 }
-@supports selector(:has(a)) {
-#times:has(.options input:checked) .screens > * { visibility: hidden; opacity: 0; }
-#times:has(#times-tr:checked) .screens .times-tr,
-#times:has(#times-en:checked) .screens .times-en,
-#times:has(#times-nl:checked) .screens .times-nl,
-#times:has(#times-de:checked) .screens .times-de,
-#times:has(#times-fr:checked) .screens .times-fr,
-#times:has(#times-ar:checked) .screens .times-ar { visibility: visible; opacity: 1; transition: opacity .2s; }
-}
-@supports selector(:has(a)) {
-#quran:has(.options input:checked) .screens > * { visibility: hidden; opacity: 0; }
-#quran:has(#look-night:checked) .screens .look-night,
-#quran:has(#look-paper:checked) .screens .look-paper { visibility: visible; opacity: 1; transition: opacity .2s; }
-}
-@supports selector(:has(a)) {
-#more:has(.names input:checked) .stage > *, #more:has(.names input:checked) .notes > * { visibility: hidden; opacity: 0; }
-#more:has(#more-tasbih:checked) .more-tasbih,
-#more:has(#more-tracker:checked) .more-tracker,
-#more:has(#more-map:checked) .more-map,
-#more:has(#more-lock-screen:checked) .more-lock-screen { visibility: visible; opacity: 1; transition: opacity .2s; }
-}</style>
+</style>
 </head>
-<body class="home">
-<main>
-<div class="split">
-<div class="reading">
-<header class="sheet">
-<nav class="top" aria-label="Wajh: Qibla &amp; Prayer Times">
+<body class="reading-page maintenance">
+<div class="page">
+<header><a class="mark" href="/tr/"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
+<rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh: Qibla &amp; Prayer Times</span></a>
+<nav aria-label="Wajh: Qibla &amp; Prayer Times">
+<a href="/tr/privacy">Gizlilik politikası</a>
+<a href="/tr/accessibility">Erişilebilirlik</a>
 <a href="/tr/support">Destek</a>
-<a class="mark" href="/tr/" aria-current="page"><svg width="34" height="34" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
-<rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh</span></a>
-<a href="/tr/releases">Yenilikler</a>
-</nav>
-<div class="hero-text">
-<h1>Yüzünüzü kıbleye çevirin</h1>
-<p class="lede">Namaz vakitleri, kıble ve Kur'an'ın tamamı için bir iPhone uygulaması. Ücretsiz, reklamsız; hakkınızda hiçbir veri toplanmaz.</p>
+</nav></header>
+<main>
+<h1>Yeni site yolda</h1>
+<p>Uygulama her zamanki gibi çalışıyor. Yeni site hazır olana kadar gizlilik politikası, erişilebilirlik ve destek aşağıda.</p>
 <p class="badge"><a href="https://apps.apple.com/app/id6833713106"><img src="/app-store-tr.svg" alt="App Store'dan indirin" width="182" height="48"></a></p>
-</div>
-</header>
-<section class="block" id="times">
-<h2 class="rise">Camiinizin vakitleri</h2>
-<p class="rise later">Wajh namazları ülkenizdeki camilerin hesapladığı gibi hesaplar, seyahatte de; uygulama Türkçeyken Diyanet'i izler. Her vakti camiinize tam uyması için birkaç dakika kaydırabilirsiniz; gece de yarısını ve son üçte birini gösterir.</p>
-<fieldset class="choice">
-<legend>Uygulamanın dili</legend>
-<div class="options">
-<input type="radio" name="times" id="times-tr" value="tr" checked><label for="times-tr" lang="tr">Türkçe</label>
-<input type="radio" name="times" id="times-en" value="en"><label for="times-en" lang="en">English</label>
-<input type="radio" name="times" id="times-nl" value="nl"><label for="times-nl" lang="nl">Nederlands</label>
-<input type="radio" name="times" id="times-de" value="de"><label for="times-de" lang="de">Deutsch</label>
-<input type="radio" name="times" id="times-fr" value="fr"><label for="times-fr" lang="fr">Français</label>
-<input type="radio" name="times" id="times-ar" value="ar"><label for="times-ar" lang="ar">العربية</label>
-</div>
-</fieldset>
-<div class="screens rise last">
-<img class="times-tr" src="/screens/times-tr.webp" width="720" height="1565" alt="Namaz vakitleri ekranı · Türkçe">
-<img class="times-en" src="/screens/times-en.webp" width="720" height="1565" loading="lazy" alt="Namaz vakitleri ekranı · English">
-<img class="times-nl" src="/screens/times-nl.webp" width="720" height="1565" loading="lazy" alt="Namaz vakitleri ekranı · Nederlands">
-<img class="times-de" src="/screens/times-de.webp" width="720" height="1565" loading="lazy" alt="Namaz vakitleri ekranı · Deutsch">
-<img class="times-fr" src="/screens/times-fr.webp" width="720" height="1565" loading="lazy" alt="Namaz vakitleri ekranı · Français">
-<img class="times-ar" src="/screens/times-ar.webp" width="720" height="1565" loading="lazy" alt="Namaz vakitleri ekranı · العربية">
-</div>
-</section>
-<section class="block" id="quran">
-<h2 class="rise">Mushaf, sayfa sayfa</h2>
-<p class="rise later">Medine mushafının 604 sayfası, kâğıt gibi çevrilir. On kurra ayet ayet okur ve sayfa onları izler, ekran kilitliyken bile; her bölümü çevrimdışı dinlemek için indirebilirsiniz.</p>
-<fieldset class="choice">
-<legend>Sayfa</legend>
-<div class="options">
-<input type="radio" name="look" id="look-night" value="night" checked><label for="look-night">Gece</label>
-<input type="radio" name="look" id="look-paper" value="paper"><label for="look-paper">Kâğıt</label>
-</div>
-</fieldset>
-<div class="screens rise last">
-<img class="look-night" src="/screens/quran-night.webp" width="720" height="1565" alt="Mushafın 42. sayfası, gece">
-<img class="look-paper" src="/screens/quran-paper.webp" width="720" height="1565" loading="lazy" alt="Mushafın 42. sayfası, kâğıt">
-</div>
-</section>
-<section class="block statement" id="private">
-<h2 class="rise">Hakkınızda veri toplanmaz</h2>
-<p class="rise later">Hesap yok, reklam yok, takip yok. Ayarlarınız, tesbihiniz ve takibiniz iPhone'unuzda kalır. Yer adları ve harita Apple Haritalar'dan, tilavetler uygulamanın kendi ses sunucusundan, Mekke canlı yayını da YouTube'dan gelir.</p>
-<p class="rise last"><a href="/tr/privacy">Gizlilik politikası</a></p>
-</section>
-</div>
-<aside class="still" aria-label="Wajh: Qibla &amp; Prayer Times">
-<div class="frames">
-<img src="/screens/qibla-tr-30.webp" width="1100" height="1293" alt="">
-<img src="/screens/qibla-tr-75.webp" width="1100" height="1293" alt="">
-<img src="/screens/qibla-tr-105.webp" width="1100" height="1293" alt="">
-<img src="/screens/qibla-tr-126.webp" width="1100" height="1293" alt="">
-</div>
-<p class="bar"><span>Ücretsiz · Reklamsız · Veri toplanmaz</span><span>iPhone için, altı dilde</span></p>
-</aside>
-</div>
-<section class="index" id="more">
-<div class="index-list">
-<h2 class="rise">Namazların etrafında</h2>
-<fieldset class="names-set">
-<legend class="visually-hidden">Namazların etrafında</legend>
-<div class="names options">
-<input type="radio" name="more" id="more-tasbih" value="tasbih" checked><label for="more-tasbih">Tesbih</label>
-<input type="radio" name="more" id="more-tracker" value="tracker"><label for="more-tracker">Takip</label>
-<input type="radio" name="more" id="more-map" value="map"><label for="more-map">Harita</label>
-<input type="radio" name="more" id="more-lock-screen" value="lock-screen"><label for="more-lock-screen">Kilit ekranı</label>
-</div>
-</fieldset>
-<div class="notes">
-<p class="more-tasbih">Namazdan sonraki tesbihat, 33 · 33 · 34, ve Arapça sekiz zikir daha.</p>
-<p class="more-tracker">Oruçlar, kaza namazları ve Kur'an hatminiz.</p>
-<p class="more-map">Haritada Mekke'ye giden çizgi ve yakınınızdaki camiler.</p>
-<p class="more-lock-screen">Sıradaki vakte geri sayım, uygulamayı açmadan.</p>
-</div>
-</div>
-<div class="stage">
-<img class="more-tasbih" src="/screens/tasbih.webp" width="720" height="1565" alt="Namazdan sonraki tesbih">
-<img class="more-tracker" src="/screens/tracker.webp" width="720" height="1565" loading="lazy" alt="Devam eden bir hatimle takip">
-<img class="more-map" src="/screens/map.webp" width="720" height="1565" loading="lazy" alt="Yakındaki camilerle Amsterdam haritası">
-<img class="more-lock-screen" src="/screens/lock-screen.webp" width="720" height="1565" loading="lazy" alt="Kurulumda kilit ekranı sorusu">
-</div>
-</section>
-<section class="faq" id="faq">
-<h2 class="rise">Sorular</h2>
-<div class="answers rise later">
-<p><strong>Ücretsiz mi?</strong> Evet, tamamı: reklam yok, abonelik yok, satın alınacak bir şey yok.</p>
-<p><strong>Hangi iPhone'lar?</strong> iOS 18 veya sonrası olan her iPhone.</p>
-<p><strong>İnternetsiz çalışır mı?</strong> Vakitler, kıble ve Kur'an metni çevrimdışı çalışır. Tilavet için internet gerekir; önceden indirdiyseniz gerekmez.</p>
-<p><strong>Vakitler gittiğim caminin takviminden farklı.</strong> Camiler, özellikle imsak ve yatsı için farklı hesaplama yöntemleri kullanır. Ayarlar'da camiinizin kullandığı hesaplama yöntemini seçin. Her yöntem bugünkü imsak ve yatsı vaktini gösterir; böylece bunları camiinizin takvimiyle karşılaştırabilirsiniz. İkindi hesabı ayarını da kontrol edin. Bir vakit hâlâ birkaç dakika farklıysa onu Vakitleri ayarla bölümünden kaydırın.</p>
-<p><strong>Pusula yanlış yönü gösteriyor.</strong> iPhone'unuzu metal, mıknatıs ve diğer elektronik cihazlardan uzakta, düz tutun. Pusulayı kalibre etmek için telefonunuzu havada sekiz çizerek hareket ettirin. Pusulanın manyetik kuzey yerine coğrafi kuzeyi kullanabilmesi için konum erişimine izin verin.</p>
-<p><strong>Bildirim almıyorum.</strong> iPhone'unuzun Ayarlar'ında bu uygulamanın bildirimlerine izin verildiğini, vaktin yanındaki zilin açık olduğunu ve hiçbir Odak modunun bildirimleri engellemediğini kontrol edin. Uygulamayı arada bir açın: iOS bekleyen hatırlatma sayısını sınırlar. Uygulama, sonraki günlerin hatırlatmalarını her açtığınızda planlar; bu uygulama için Arka Planda Uygulama Yenileme açıksa arada bir arka planda da planlar.</p>
-</div>
-</section>
-<section class="close" id="get">
-<div class="close-text">
-<h2>Wajh, yüz demek</h2>
-<p>Ayetteki gibi: “Yüzünü Mescid-i Harâm'a doğru çevir” (Bakara 2:144). App Store'da ücretsiz, iPhone için.</p>
-<p class="badge"><a href="https://apps.apple.com/app/id6833713106"><img src="/app-store-tr.svg" alt="App Store'dan indirin" width="182" height="48"></a></p>
-</div>
-<img src="/screens/welcome.webp" width="720" height="1565" loading="lazy" alt="Kurulumun ilk ekranı">
-</section>
 </main>
+</div>
 <footer class="line">
 <span>Wajh, iPhone için · 2026</span>
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/tr/privacy">Gizlilik politikası</a>
 <a href="/tr/accessibility">Erişilebilirlik</a>
-<a href="/tr/releases">Yenilikler</a>
 <a href="/tr/support">Destek</a>
 </nav>
 <nav class="languages" aria-label="Türkçe">

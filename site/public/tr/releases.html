@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Yenilikler · Wajh: Qibla &amp; Prayer Times</title>
+<title>Wajh: Qibla &amp; Prayer Times</title>
 <meta name="description" content="Reklamsız ve takipsiz namaz vakitleri, kıble ve Kur'an.">
 <meta name="theme-color" content="#0E1613">
 <meta name="apple-itunes-app" content="app-id=6833713106">
@@ -61,6 +61,12 @@ img { max-width: 100%; display: block; }
 details { background: var(--surface); border-radius: var(--radius); padding: 16px 22px; margin: 10px 0; }
 summary { cursor: pointer; font-weight: 600; }
 details p { margin: .7em 0 .2em; }
+
+/* The maintenance page: one calm statement until the new site is here. */
+.maintenance .page > header nav { display: none; }
+.maintenance .page main { min-height: 56svh; display: grid; align-content: center; justify-items: start; gap: 24px; }
+.maintenance .page main h1 { font-size: var(--display); color: var(--gold); max-width: 14ch; margin: 0; }
+.maintenance .page main p { margin: 0; max-width: 40ch; }
 
 /* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
@@ -195,48 +201,24 @@ details p { margin: .7em 0 .2em; }
   .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
     max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
   .line nav, .line .languages { justify-content: flex-start; }
+  .page { padding-inline: calc(var(--margin) + 8px); }
   .page > header { padding-bottom: 36px; }
 }
 </style>
 </head>
-<body class="reading-page">
+<body class="reading-page maintenance">
 <div class="page">
 <header><a class="mark" href="/tr/"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
 <rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh: Qibla &amp; Prayer Times</span></a>
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/tr/privacy">Gizlilik politikası</a>
 <a href="/tr/accessibility">Erişilebilirlik</a>
-<a href="/tr/releases" aria-current="page">Yenilikler</a>
 <a href="/tr/support">Destek</a>
 </nav></header>
 <main>
-<h1>Yenilikler</h1>
-<p>Uygulamanın her sürümünde gelenler.</p>
-<h2>Sürüm 1.1</h2>
-<p class="muted">Yakında</p>
-<ul>
-<li>Kur'an: Mushafın tamamı sayfa sayfa, karanlıkta okumak için gece sayfasıyla.</li>
-<li>On kariden ayet ayet tilavet, istediğiniz hızda; ekran kilitliyken ya da çevrimdışıyken de.</li>
-<li>Kıbleyi kameranızdan görün, Mekke'yi canlı izleyin.</li>
-<li>Namaz vakitlerinde gece yarısı ve gecenin son üçte biri.</li>
-<li>Bugünün vakitleri, günün ayeti, okuduğunuz sayfa ve tesbihiniz için widget'lar.</li>
-<li>Kilit ekranında geri sayımla sıradaki vakit.</li>
-<li>Bir sayfayı, bir ayeti ya da bugünün vakitlerini görsel olarak paylaşın.</li>
-<li>Cuma günleri de öğle vakti &quot;Öğle&quot; olarak gösterilir.</li>
-<li>Daha sade bir Ayarlar ekranı; VoiceOver ve daha büyük metinle daha kolay kullanım.</li>
-</ul>
-<h2>Sürüm 1.0</h2>
-<p class="muted">13 Kasım 2026</p>
-<ul>
-<li>Caminizin yöntemine göre namaz vakitleri; aylık vakitler ve hicri tarihle.</li>
-<li>Kıble pusulası ve yakındaki camileri gösteren harita.</li>
-<li>Ramazan'da sahur ve iftar vakitleri; kilit ekranında iftara geri sayım.</li>
-<li>Hicri yılın mübarek gün ve geceleri.</li>
-<li>Her vakit, Cuma, sahur ve iftar için hatırlatmalar.</li>
-<li>Sıradaki vakti Siri'ye sorun.</li>
-<li>Tesbih ile oruç ve kaza namazı takibi.</li>
-<li>İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça.</li>
-</ul>
+<h1>Yeni site yolda</h1>
+<p>Uygulama her zamanki gibi çalışıyor. Yeni site hazır olana kadar gizlilik politikası, erişilebilirlik ve destek aşağıda.</p>
+<p class="badge"><a href="https://apps.apple.com/app/id6833713106"><img src="/app-store-tr.svg" alt="App Store'dan indirin" width="182" height="48"></a></p>
 </main>
 </div>
 <footer class="line">
@@ -244,7 +226,6 @@ details p { margin: .7em 0 .2em; }
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/tr/privacy">Gizlilik politikası</a>
 <a href="/tr/accessibility">Erişilebilirlik</a>
-<a href="/tr/releases" aria-current="page">Yenilikler</a>
 <a href="/tr/support">Destek</a>
 </nav>
 <nav class="languages" aria-label="Türkçe">

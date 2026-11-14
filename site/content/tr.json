@@ -84,6 +84,10 @@
     "footerLine": "Wajh, iPhone için",
     "badge": "App Store'dan indirin"
   },
+  "maintenance": {
+    "headline": "Yeni site yolda",
+    "text": "Uygulama her zamanki gibi çalışıyor. Yeni site hazır olana kadar gizlilik politikası, erişilebilirlik ve destek aşağıda."
+  },
   "privacy": {
     "title": "Gizlilik politikası",
     "updated": "Son güncelleme: 14 Kasım 2026",

@@ -84,6 +84,10 @@
     "footerLine": "Wajh, für iPhone",
     "badge": "Laden im App Store"
   },
+  "maintenance": {
+    "headline": "Eine neue Website ist unterwegs",
+    "text": "Die App funktioniert wie immer. Bis die neue Website fertig ist, findest du Datenschutz, Barrierefreiheit und Support hier unten."
+  },
   "privacy": {
     "title": "Datenschutzerklärung",
     "updated": "Stand: 14. November 2026",

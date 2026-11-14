@@ -62,6 +62,12 @@ details { background: var(--surface); border-radius: var(--radius); padding: 16p
 summary { cursor: pointer; font-weight: 600; }
 details p { margin: .7em 0 .2em; }
 
+/* The maintenance page: one calm statement until the new site is here. */
+.maintenance .page > header nav { display: none; }
+.maintenance .page main { min-height: 56svh; display: grid; align-content: center; justify-items: start; gap: 24px; }
+.maintenance .page main h1 { font-size: var(--display); color: var(--gold); max-width: 14ch; margin: 0; }
+.maintenance .page main p { margin: 0; max-width: 40ch; }
+
 /* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
 .reading { display: grid; gap: var(--gap); padding-bottom: var(--gap); min-width: 0; }
@@ -195,153 +201,31 @@ details p { margin: .7em 0 .2em; }
   .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
     max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
   .line nav, .line .languages { justify-content: flex-start; }
+  .page { padding-inline: calc(var(--margin) + 8px); }
   .page > header { padding-bottom: 36px; }
 }
-@supports selector(:has(a)) {
-#times:has(.options input:checked) .screens > * { visibility: hidden; opacity: 0; }
-#times:has(#times-en:checked) .screens .times-en,
-#times:has(#times-nl:checked) .screens .times-nl,
-#times:has(#times-de:checked) .screens .times-de,
-#times:has(#times-fr:checked) .screens .times-fr,
-#times:has(#times-tr:checked) .screens .times-tr,
-#times:has(#times-ar:checked) .screens .times-ar { visibility: visible; opacity: 1; transition: opacity .2s; }
-}
-@supports selector(:has(a)) {
-#quran:has(.options input:checked) .screens > * { visibility: hidden; opacity: 0; }
-#quran:has(#look-night:checked) .screens .look-night,
-#quran:has(#look-paper:checked) .screens .look-paper { visibility: visible; opacity: 1; transition: opacity .2s; }
-}
-@supports selector(:has(a)) {
-#more:has(.names input:checked) .stage > *, #more:has(.names input:checked) .notes > * { visibility: hidden; opacity: 0; }
-#more:has(#more-tasbih:checked) .more-tasbih,
-#more:has(#more-tracker:checked) .more-tracker,
-#more:has(#more-map:checked) .more-map,
-#more:has(#more-lock-screen:checked) .more-lock-screen { visibility: visible; opacity: 1; transition: opacity .2s; }
-}</style>
+</style>
 </head>
-<body class="home">
-<main>
-<div class="split">
-<div class="reading">
-<header class="sheet">
-<nav class="top" aria-label="Wajh: Qibla &amp; Prayer Times">
+<body class="reading-page maintenance">
+<div class="page">
+<header><a class="mark" href="/"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
+<rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh: Qibla &amp; Prayer Times</span></a>
+<nav aria-label="Wajh: Qibla &amp; Prayer Times">
+<a href="/privacy">Privacy policy</a>
+<a href="/accessibility">Accessibility</a>
 <a href="/support">Support</a>
-<a class="mark" href="/" aria-current="page"><svg width="34" height="34" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
-<rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh</span></a>
-<a href="/releases">What's new</a>
-</nav>
-<div class="hero-text">
-<h1>Turn your face to the Qibla</h1>
-<p class="lede">An iPhone app for prayer times, the Qibla and the whole Qur'an. Free, without ads, and nothing about you is collected.</p>
+</nav></header>
+<main>
+<h1>A new site is on its way</h1>
+<p>The app works as always. Until the new site is ready, you'll find the privacy policy, accessibility and support below.</p>
 <p class="badge"><a href="https://apps.apple.com/app/id6833713106"><img src="/app-store-en.svg" alt="Download on the App Store" width="144" height="48"></a></p>
-</div>
-</header>
-<section class="block" id="times">
-<h2 class="rise">Times as your mosque keeps them</h2>
-<p class="rise later">Wajh calculates the prayers the way the mosques in your country do, also when you travel, and follows Diyanet when the app is in Turkish. Each time can move a few minutes to match your mosque exactly, and the night shows its middle and its last third.</p>
-<fieldset class="choice">
-<legend>See the app in</legend>
-<div class="options">
-<input type="radio" name="times" id="times-en" value="en" checked><label for="times-en" lang="en">English</label>
-<input type="radio" name="times" id="times-nl" value="nl"><label for="times-nl" lang="nl">Nederlands</label>
-<input type="radio" name="times" id="times-de" value="de"><label for="times-de" lang="de">Deutsch</label>
-<input type="radio" name="times" id="times-fr" value="fr"><label for="times-fr" lang="fr">Français</label>
-<input type="radio" name="times" id="times-tr" value="tr"><label for="times-tr" lang="tr">Türkçe</label>
-<input type="radio" name="times" id="times-ar" value="ar"><label for="times-ar" lang="ar">العربية</label>
-</div>
-</fieldset>
-<div class="screens rise last">
-<img class="times-en" src="/screens/times-en.webp" width="720" height="1565" alt="The Prayer times screen · English">
-<img class="times-nl" src="/screens/times-nl.webp" width="720" height="1565" loading="lazy" alt="The Prayer times screen · Nederlands">
-<img class="times-de" src="/screens/times-de.webp" width="720" height="1565" loading="lazy" alt="The Prayer times screen · Deutsch">
-<img class="times-fr" src="/screens/times-fr.webp" width="720" height="1565" loading="lazy" alt="The Prayer times screen · Français">
-<img class="times-tr" src="/screens/times-tr.webp" width="720" height="1565" loading="lazy" alt="The Prayer times screen · Türkçe">
-<img class="times-ar" src="/screens/times-ar.webp" width="720" height="1565" loading="lazy" alt="The Prayer times screen · العربية">
-</div>
-</section>
-<section class="block" id="quran">
-<h2 class="rise">The mushaf, page by page</h2>
-<p class="rise later">All 604 pages of the Madinah mushaf, turned like paper. Ten reciters read verse by verse while the page follows them, also with the screen locked, and any part can be downloaded to listen offline.</p>
-<fieldset class="choice">
-<legend>Page</legend>
-<div class="options">
-<input type="radio" name="look" id="look-night" value="night" checked><label for="look-night">Night</label>
-<input type="radio" name="look" id="look-paper" value="paper"><label for="look-paper">Paper</label>
-</div>
-</fieldset>
-<div class="screens rise last">
-<img class="look-night" src="/screens/quran-night.webp" width="720" height="1565" alt="Page 42 of the mushaf, at night">
-<img class="look-paper" src="/screens/quran-paper.webp" width="720" height="1565" loading="lazy" alt="Page 42 of the mushaf, on paper">
-</div>
-</section>
-<section class="block statement" id="private">
-<h2 class="rise">Nothing about you is collected</h2>
-<p class="rise later">No account, no ads and no tracking. Your settings, tasbih and tracker stay on your iPhone. Place names and the map come from Apple Maps, the recitations from the app's own audio server, and Makkah live from YouTube.</p>
-<p class="rise last"><a href="/privacy">Privacy policy</a></p>
-</section>
-</div>
-<aside class="still" aria-label="Wajh: Qibla &amp; Prayer Times">
-<div class="frames">
-<img src="/screens/qibla-en-30.webp" width="1100" height="1293" alt="">
-<img src="/screens/qibla-en-75.webp" width="1100" height="1293" alt="">
-<img src="/screens/qibla-en-105.webp" width="1100" height="1293" alt="">
-<img src="/screens/qibla-en-126.webp" width="1100" height="1293" alt="">
-</div>
-<p class="bar"><span>Free · No ads · Nothing collected</span><span>For iPhone, in six languages</span></p>
-</aside>
-</div>
-<section class="index" id="more">
-<div class="index-list">
-<h2 class="rise">Around the prayers</h2>
-<fieldset class="names-set">
-<legend class="visually-hidden">Around the prayers</legend>
-<div class="names options">
-<input type="radio" name="more" id="more-tasbih" value="tasbih" checked><label for="more-tasbih">Tasbih</label>
-<input type="radio" name="more" id="more-tracker" value="tracker"><label for="more-tracker">Tracker</label>
-<input type="radio" name="more" id="more-map" value="map"><label for="more-map">Map</label>
-<input type="radio" name="more" id="more-lock-screen" value="lock-screen"><label for="more-lock-screen">Lock Screen</label>
-</div>
-</fieldset>
-<div class="notes">
-<p class="more-tasbih">The tasbihat after prayer, 33 · 33 · 34, and eight more phrases in Arabic.</p>
-<p class="more-tracker">Fasts, missed prayers to make up, and your khatm of the Qur'an.</p>
-<p class="more-map">The line to Mecca over the map, and the mosques around you.</p>
-<p class="more-lock-screen">The next prayer counting down, without opening the app.</p>
-</div>
-</div>
-<div class="stage">
-<img class="more-tasbih" src="/screens/tasbih.webp" width="720" height="1565" alt="The tasbih after prayer">
-<img class="more-tracker" src="/screens/tracker.webp" width="720" height="1565" loading="lazy" alt="The tracker with a khatm under way">
-<img class="more-map" src="/screens/map.webp" width="720" height="1565" loading="lazy" alt="The map of Amsterdam with mosques nearby">
-<img class="more-lock-screen" src="/screens/lock-screen.webp" width="720" height="1565" loading="lazy" alt="Setup asking about the Lock Screen">
-</div>
-</section>
-<section class="faq" id="faq">
-<h2 class="rise">Questions</h2>
-<div class="answers rise later">
-<p><strong>Is it free?</strong> Yes, all of it: no ads, no subscription, nothing to buy.</p>
-<p><strong>Which iPhones?</strong> Any iPhone with iOS 18 or later.</p>
-<p><strong>Does it work without internet?</strong> The times, the Qibla and the text of the Qur'an all work offline. A recitation needs internet, unless you downloaded it first.</p>
-<p><strong>The times differ from my mosque's timetable.</strong> Mosques use different calculation methods, mostly for Fajr and Isha. In Settings, choose the method your mosque uses: each one shows today's Fajr and Isha, so you can compare them with your mosque's timetable. Check the Asr setting too, and if a time is still a few minutes off, move it under Adjust times.</p>
-<p><strong>The compass points the wrong way.</strong> Hold your iPhone flat, away from metal, magnets and other electronics, and move it in a figure eight to calibrate the compass. Allow location access, so the compass can use true north instead of magnetic north.</p>
-<p><strong>I don't get notifications.</strong> Check that notifications are allowed for the app in your iPhone's Settings, that the bell next to the prayer is on, and that no Focus mode is holding them back. Open the app now and then: iOS keeps a limited number of reminders waiting. The app schedules the next days each time you open it, and now and then in the background if Background App Refresh is on for it.</p>
-</div>
-</section>
-<section class="close" id="get">
-<div class="close-text">
-<h2>Wajh means face</h2>
-<p>As in the verse “So turn your face towards the Sacred Mosque” (al-Baqarah 2:144). Free on the App Store, for iPhone.</p>
-<p class="badge"><a href="https://apps.apple.com/app/id6833713106"><img src="/app-store-en.svg" alt="Download on the App Store" width="144" height="48"></a></p>
-</div>
-<img src="/screens/welcome.webp" width="720" height="1565" loading="lazy" alt="The first screen of setup">
-</section>
 </main>
+</div>
 <footer class="line">
 <span>Wajh, for iPhone · 2026</span>
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/privacy">Privacy policy</a>
 <a href="/accessibility">Accessibility</a>
-<a href="/releases">What's new</a>
 <a href="/support">Support</a>
 </nav>
 <nav class="languages" aria-label="English">

@@ -84,6 +84,10 @@
     "footerLine": "Wajh, voor iPhone",
     "badge": "Download in de App Store"
   },
+  "maintenance": {
+    "headline": "Er komt een nieuwe site",
+    "text": "De app werkt zoals altijd. Tot de nieuwe site klaar is, vind je het privacybeleid, toegankelijkheid en hulp hieronder."
+  },
   "privacy": {
     "title": "Privacybeleid",
     "updated": "Laatst bijgewerkt: 14 november 2026",

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Nouveautés · Wajh: Qibla &amp; Prayer Times</title>
+<title>Wajh: Qibla &amp; Prayer Times</title>
 <meta name="description" content="Horaires de prière, qibla et Coran, sans publicité ni pistage.">
 <meta name="theme-color" content="#0E1613">
 <meta name="apple-itunes-app" content="app-id=6833713106">
@@ -61,6 +61,12 @@ img { max-width: 100%; display: block; }
 details { background: var(--surface); border-radius: var(--radius); padding: 16px 22px; margin: 10px 0; }
 summary { cursor: pointer; font-weight: 600; }
 details p { margin: .7em 0 .2em; }
+
+/* The maintenance page: one calm statement until the new site is here. */
+.maintenance .page > header nav { display: none; }
+.maintenance .page main { min-height: 56svh; display: grid; align-content: center; justify-items: start; gap: 24px; }
+.maintenance .page main h1 { font-size: var(--display); color: var(--gold); max-width: 14ch; margin: 0; }
+.maintenance .page main p { margin: 0; max-width: 40ch; }
 
 /* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
@@ -195,47 +201,24 @@ details p { margin: .7em 0 .2em; }
   .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
     max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
   .line nav, .line .languages { justify-content: flex-start; }
+  .page { padding-inline: calc(var(--margin) + 8px); }
   .page > header { padding-bottom: 36px; }
 }
 </style>
 </head>
-<body class="reading-page">
+<body class="reading-page maintenance">
 <div class="page">
 <header><a class="mark" href="/fr/"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
 <rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh: Qibla &amp; Prayer Times</span></a>
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/fr/privacy">Politique de confidentialité</a>
 <a href="/fr/accessibility">Accessibilité</a>
-<a href="/fr/releases" aria-current="page">Nouveautés</a>
 <a href="/fr/support">Assistance</a>
 </nav></header>
 <main>
-<h1>Nouveautés</h1>
-<p>Ce qu’apporte chaque version de l’app.</p>
-<h2>Version 1.1</h2>
-<p class="muted">Bientôt</p>
-<ul>
-<li>Le Coran, le mushaf entier page par page, avec une page de nuit pour lire dans le noir.</li>
-<li>Dix récitateurs, verset par verset, à la vitesse de votre choix, même écran verrouillé ou hors ligne.</li>
-<li>Voyez la qibla à travers l’appareil photo, et regardez La Mecque en direct.</li>
-<li>Minuit et le dernier tiers de la nuit avec les horaires de prière.</li>
-<li>Des widgets pour les horaires du jour, un verset du jour, votre lecture et votre tasbih.</li>
-<li>La prochaine prière avec un compte à rebours sur l’écran verrouillé.</li>
-<li>Partagez une page, un verset ou les horaires du jour en image.</li>
-<li>Des réglages plus simples, et plus facile à utiliser avec VoiceOver et le texte plus grand.</li>
-</ul>
-<h2>Version 1.0</h2>
-<p class="muted">13 novembre 2026</p>
-<ul>
-<li>Des horaires de prière selon la méthode de votre mosquée, avec les horaires du mois et la date hégirienne.</li>
-<li>Une boussole de la qibla, et une carte des mosquées à proximité.</li>
-<li>Les horaires du sahour et de l’iftar pendant le ramadan, avec un compte à rebours de l’iftar sur l’écran verrouillé.</li>
-<li>Les jours et les nuits particuliers de l’année islamique.</li>
-<li>Des rappels pour chaque prière, la prière du vendredi, le sahour et l’iftar.</li>
-<li>Demandez à Siri l’heure de la prochaine prière.</li>
-<li>Un tasbih, et un suivi des jeûnes et des prières manquées.</li>
-<li>En anglais, néerlandais, allemand, français, turc et arabe.</li>
-</ul>
+<h1>Un nouveau site arrive</h1>
+<p>L'app fonctionne comme toujours. En attendant le nouveau site, vous trouverez ci-dessous la politique de confidentialité, l'accessibilité et l'assistance.</p>
+<p class="badge"><a href="https://apps.apple.com/app/id6833713106"><img src="/app-store-fr.svg" alt="Télécharger dans l’App Store" width="152" height="48"></a></p>
 </main>
 </div>
 <footer class="line">
@@ -243,7 +226,6 @@ details p { margin: .7em 0 .2em; }
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
 <a href="/fr/privacy">Politique de confidentialité</a>
 <a href="/fr/accessibility">Accessibilité</a>
-<a href="/fr/releases" aria-current="page">Nouveautés</a>
 <a href="/fr/support">Assistance</a>
 </nav>
 <nav class="languages" aria-label="Français">

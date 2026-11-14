@@ -84,6 +84,10 @@
     "footerLine": "Wajh, for iPhone",
     "badge": "Download on the App Store"
   },
+  "maintenance": {
+    "headline": "A new site is on its way",
+    "text": "The app works as always. Until the new site is ready, you'll find the privacy policy, accessibility and support below."
+  },
   "privacy": {
     "title": "Privacy policy",
     "updated": "Last updated: 14 November 2026",
