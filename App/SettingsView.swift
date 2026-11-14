@@ -403,9 +403,6 @@ struct AcknowledgementsView: View {
                 Divider().overlay(Theme.line)
                 credit(Text(verbatim: "Tanzil Project"), Text("The Qur'an text."), site: "tanzil.net")
                 Divider().overlay(Theme.line)
-                // The recordings are the reciters' own; the service they were copied from asks for no credit.
-                credit(Text("The reciters"), Text("Each recitation remains its reciter's own."))
-                Divider().overlay(Theme.line)
                 credit(Text(verbatim: "Amiri Project"), Text("The Amiri Quran font."), site: "github.com/aliftype/amiri")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -416,17 +413,15 @@ struct AcknowledgementsView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    private func credit(_ name: Text, _ reason: Text, site: String? = nil) -> some View {
+    private func credit(_ name: Text, _ reason: Text, site: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             name
                 .font(.headline)
                 .foregroundStyle(Theme.ink)
             reason
                 .foregroundStyle(Theme.muted)
-            if let site {
-                Link(destination: URL(string: "https://\(site)")!) {
-                    Text(verbatim: site)
-                }
+            Link(destination: URL(string: "https://\(site)")!) {
+                Text(verbatim: site)
             }
         }
     }
