@@ -13,7 +13,7 @@
     "intro": "Prayer times for 17 calculation methods, a Qibla compass and map, Ramadan times, a tasbih and a tracker for fasts and missed prayers. In English, Dutch, German, French, Turkish and Arabic.",
     "points": [
       "No ads, no subscriptions, no account.",
-      "Nothing is collected about you, and nothing is sent to me. Your settings, tasbih and tracker stay on your iPhone; place names, city search and the map come from Apple Maps, recitations of the Qur'an from Islamic Network, and Makkah live from YouTube.",
+      "Nothing is collected about you. Your settings, tasbih and tracker stay on your iPhone; place names, city search and the map come from Apple Maps, recitations of the Qur'an from the app's own audio server, where I keep no record of who listens, and Makkah live from YouTube.",
       "Times follow the method of your mosque or authority and were checked against the timetables authorities publish. You can move each time by a few minutes to match your mosque."
     ]
   },
@@ -21,13 +21,13 @@
     "title": "Privacy policy",
     "updated": "Last updated: 14 November 2026",
     "intro": "Wajh (called “Qibla & Prayer” on the Home Screen) is made by Melih Sivrikaya. This policy explains what happens to your data when you use the app.",
-    "summary": "In short: the app sends nothing to me, and I don't collect data about you. There is no account, no advertising, no analytics code and no tracking. To name your place, search for a city and show the map and mosques nearby, your iPhone asks Apple Maps. To play a recitation of the Qur'an, it downloads the audio from Islamic Network; Makkah live plays a stream from YouTube. See below.",
+    "summary": "In short: I don't collect data about you. There is no account, no advertising, no analytics code and no tracking. To name your place, search for a city and show the map and mosques nearby, your iPhone asks Apple Maps. To play a recitation of the Qur'an, it downloads the audio from the app's own audio server, where I keep no record of who listens; Makkah live plays a stream from YouTube. See below.",
     "sections": [
       {
         "heading": "Who is responsible",
         "paragraphs": [
-          "I, Melih Sivrikaya (ms@psbv.org), am responsible for this app and for the personal data described in this policy (the “controller” under the GDPR). Apple is responsible for its own services that the app uses: Apple Maps, Siri, crash reporting and iCloud Backup. Islamic Network is responsible for its audio service, which the recitations come from, and Google for YouTube.",
-          "The app asks Apple Maps and Islamic Network only for what the features you use need. I answer emails and use the reports Apple passes on because of my legitimate interest in supporting and improving the app (Article 6(1)(f) GDPR)."
+          "I, Melih Sivrikaya (ms@psbv.org), am responsible for this app and for the personal data described in this policy (the “controller” under the GDPR). Apple is responsible for its own services that the app uses: Apple Maps, Siri, crash reporting and iCloud Backup. Cloudflare runs the app's audio server for me, as my processor, and Google is responsible for YouTube.",
+          "The app asks Apple Maps and the audio server only for what the features you use need. I run the audio server, answer emails and use the reports Apple passes on because of my legitimate interest in offering, supporting and improving the app (Article 6(1)(f) GDPR)."
         ]
       },
       {
@@ -48,7 +48,7 @@
       {
         "heading": "Recitations of the Qur'an",
         "paragraphs": [
-          "When you play a recitation in the Qur'an tab, your iPhone downloads the audio of each verse from Islamic Network's audio service (cdn.islamic.network) and keeps it, so that no verse is downloaded twice; iOS may remove these files when it needs space. Like any website, the service receives your IP address and which verse and reciter your iPhone asks for; the app sends nothing else. Islamic Network says it keeps no logs for longer than 29 days (alquran.cloud/terms-and-conditions). A surah, juz or the whole Qur'an you download to listen offline stays on your iPhone until you remove it in the app."
+          "When you play a recitation in the Qur'an tab, your iPhone downloads the audio of each verse from the app's own audio server (audio.qibla.dev) and keeps it, so that no verse is downloaded twice; iOS may remove these files when it needs space. Like any website, the server receives your IP address and which verse and reciter your iPhone asks for; the app sends nothing else. The server runs on Cloudflare, which handles these requests for me under its data processing terms. I keep no record of who listens. The recitations themselves come from Islamic Network (alquran.cloud), whose terms allow this use. A surah, juz or the whole Qur'an you download to listen offline stays on your iPhone until you remove it in the app."
         ]
       },
       {
@@ -78,7 +78,7 @@
       {
         "heading": "No advertising or tracking",
         "paragraphs": [
-          "The app contains no advertising, analytics or tracking code. Besides Apple's own frameworks it uses only Adhan, an open-source library that calculates prayer times on your iPhone and sends nothing anywhere. Apart from the requests to Apple Maps, Islamic Network and YouTube described above, the app shares nothing with anyone. I don't collect personal data from anyone, including children."
+          "The app contains no advertising, analytics or tracking code. Besides Apple's own frameworks it uses only Adhan, an open-source library that calculates prayer times on your iPhone and sends nothing anywhere. Apart from the requests to Apple Maps, the audio server and YouTube described above, the app shares nothing with anyone. I don't collect personal data from anyone, including children."
         ]
       },
       {
@@ -129,7 +129,7 @@
       },
       {
         "q": "Does the app collect my data?",
-        "a": "No. Nothing is sent to me. Place names, city search and the map use Apple Maps, and recitations come from Islamic Network; the privacy policy has the details."
+        "a": "No. Nothing about you is collected. Place names, city search and the map use Apple Maps, and recitations come from the app's own audio server, where I keep no record of who listens; the privacy policy has the details."
       }
     ]
   },

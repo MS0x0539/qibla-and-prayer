@@ -3,10 +3,11 @@ import MediaPlayer
 import Observation
 import SwiftUI
 
-/// A reciter whose recitation comes verse by verse from Islamic Network's audio service (cdn.islamic.network).
-/// Its terms allow streaming for personal use; the recitations remain the reciters' copyright.
+/// A reciter whose recitation comes verse by verse from the app's own copy (audio.qibla.dev, an R2 bucket) of Islamic
+/// Network's audio service (cdn.islamic.network), whose terms allow downloading it for personal and educational use.
+/// The recitations remain the reciters' copyright.
 struct Reciter: Identifiable, Hashable {
-    /// The service's name for the recitation.
+    /// Islamic Network's name for the recitation; also its folder in the copy.
     let id: String
     let name: String
     let arabicName: String
@@ -17,7 +18,7 @@ struct Reciter: Identifiable, Hashable {
 
     /// The audio of a verse, numbered 1 to 6236 through the whole Qur'an.
     func url(ofVerse number: Int) -> URL {
-        URL(string: "https://cdn.islamic.network/quran/audio/\(bitrate)/\(id)/\(number).mp3")!
+        URL(string: "https://audio.qibla.dev/\(id)/\(number).mp3")!
     }
 
     static let all = [

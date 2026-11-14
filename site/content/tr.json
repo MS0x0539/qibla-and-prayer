@@ -13,7 +13,7 @@
     "intro": "17 hesaplama yöntemiyle namaz vakitleri, kıble pusulası ve haritası, Ramazan vakitleri, tesbih, oruç ve kaza namazı takibi. Uygulamayı İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça kullanabilirsiniz.",
     "points": [
       "Reklam yok, abonelik yok, hesap yok.",
-      "Hakkınızda hiçbir veri toplanmaz ve bana hiçbir şey gönderilmez. Ayarlarınız, tesbih sayacınız ve Takip sekmesindeki kayıtlarınız iPhone'unuzda kalır; yer adları, şehir araması ve harita Apple Haritalar'dan, Kur'an tilavetleri Islamic Network'ten, Mekke canlı yayını ise YouTube'dan gelir.",
+      "Hakkınızda hiçbir veri toplanmaz. Ayarlarınız, tesbih sayacınız ve Takip sekmesindeki kayıtlarınız iPhone'unuzda kalır; yer adları, şehir araması ve harita Apple Haritalar'dan, Kur'an tilavetleri uygulamanın kendi ses sunucusundan (kimin dinlediğini kaydetmiyorum), Mekke canlı yayını ise YouTube'dan gelir.",
       "Vakitler, camiinizin ya da bağlı olduğunuz kurumun yöntemine göredir ve kurumların yayımladığı takvimlerle karşılaştırılarak kontrol edilmiştir. Her vakti camiinize uyması için birkaç dakika kaydırabilirsiniz."
     ]
   },
@@ -21,13 +21,13 @@
     "title": "Gizlilik politikası",
     "updated": "Son güncelleme: 14 Kasım 2026",
     "intro": "Wajh (ana ekrandaki adı “Qibla & Prayer”) Melih Sivrikaya tarafından geliştirildi. Bu politika, uygulamayı kullandığınızda verilerinize ne olduğunu açıklar.",
-    "summary": "Kısacası: Uygulama bana hiçbir şey göndermez; ben de hakkınızda veri toplamıyorum. Hesap, reklam, analiz kodu ve takip yok. Bulunduğunuz yerin adını bulmak, şehir aramak, haritayı ve yakındaki camileri göstermek için iPhone'unuz Apple Haritalar'a başvurur. Bir Kur'an tilaveti dinlediğinizde sesi Islamic Network'ten indirir; Mekke canlı, YouTube'dan bir yayın oynatır. Ayrıntılar aşağıda.",
+    "summary": "Kısacası: Hakkınızda veri toplamıyorum. Hesap, reklam, analiz kodu ve takip yok. Bulunduğunuz yerin adını bulmak, şehir aramak, haritayı ve yakındaki camileri göstermek için iPhone'unuz Apple Haritalar'a başvurur. Bir Kur'an tilaveti dinlediğinizde sesi uygulamanın kendi ses sunucusundan indirir (kimin dinlediğini kaydetmiyorum); Mekke canlı, YouTube'dan bir yayın oynatır. Ayrıntılar aşağıda.",
     "sections": [
       {
         "heading": "Kim sorumlu",
         "paragraphs": [
-          "Ben, Melih Sivrikaya (ms@psbv.org), bu uygulamadan ve bu politikada açıklanan kişisel verilerden sorumluyum (GDPR kapsamında “veri sorumlusu”). Apple ise uygulamanın kullandığı kendi hizmetlerinden sorumludur: Apple Haritalar, Siri, çökme raporlama ve iCloud Yedekleme. Islamic Network ise tilavetlerin geldiği ses hizmetinden, Google ise YouTube'dan sorumludur.",
-          "Uygulama, Apple Haritalar'dan ve Islamic Network'ten yalnızca kullandığınız özelliklerin gerektirdiği bilgileri ister. E-postaları yanıtlamamın ve Apple'ın ilettiği raporları kullanmamın nedeni, uygulama için destek sağlama ve uygulamayı iyileştirme konusundaki meşru menfaatimdir (GDPR madde 6/1-f)."
+          "Ben, Melih Sivrikaya (ms@psbv.org), bu uygulamadan ve bu politikada açıklanan kişisel verilerden sorumluyum (GDPR kapsamında “veri sorumlusu”). Apple ise uygulamanın kullandığı kendi hizmetlerinden sorumludur: Apple Haritalar, Siri, çökme raporlama ve iCloud Yedekleme. Uygulamanın ses sunucusunu benim adıma, veri işleyenim olarak Cloudflare işletir; Google ise YouTube'dan sorumludur.",
+          "Uygulama, Apple Haritalar'dan ve ses sunucusundan yalnızca kullandığınız özelliklerin gerektirdiği bilgileri ister. Ses sunucusunu işletmemin, e-postaları yanıtlamamın ve Apple'ın ilettiği raporları kullanmamın nedeni, uygulamayı sunma, uygulama için destek sağlama ve uygulamayı iyileştirme konusundaki meşru menfaatimdir (GDPR madde 6/1-f)."
         ]
       },
       {
@@ -48,7 +48,7 @@
       {
         "heading": "Kur'an tilavetleri",
         "paragraphs": [
-          "Kur'an sekmesinde bir tilavet dinlediğinizde iPhone'unuz her ayetin sesini Islamic Network'ün ses hizmetinden (cdn.islamic.network) indirir ve hiçbir ayet iki kez indirilmesin diye saklar; iOS yer gerektiğinde bu dosyaları silebilir. Her web sitesi gibi bu hizmet de IP adresinizi ve iPhone'unuzun hangi ayeti ve hangi kariyi istediğini görür; uygulama başka bir şey göndermez. Islamic Network, kayıtları 29 günden uzun tutmadığını belirtir (alquran.cloud/terms-and-conditions). Çevrimdışı dinlemek için indirdiğiniz bir sure, cüz ya da Kur'an'ın tamamı, siz uygulamada silene kadar iPhone'unuzda kalır."
+          "Kur'an sekmesinde bir tilavet dinlediğinizde iPhone'unuz her ayetin sesini uygulamanın kendi ses sunucusundan (audio.qibla.dev) indirir ve hiçbir ayet iki kez indirilmesin diye saklar; iOS yer gerektiğinde bu dosyaları silebilir. Her web sitesi gibi bu sunucu da IP adresinizi ve iPhone'unuzun hangi ayeti ve hangi kariyi istediğini görür; uygulama başka bir şey göndermez. Sunucu Cloudflare'de çalışır; Cloudflare bu istekleri benim adıma, kendi veri işleme koşullarına göre işler. Kimin dinlediğini kaydetmiyorum. Tilavetlerin kendisi Islamic Network'ten (alquran.cloud) gelir; Islamic Network'ün koşulları bu kullanıma izin verir. Çevrimdışı dinlemek için indirdiğiniz bir sure, cüz ya da Kur'an'ın tamamı, siz uygulamada silene kadar iPhone'unuzda kalır."
         ]
       },
       {
@@ -78,7 +78,7 @@
       {
         "heading": "Reklam ve takip yok",
         "paragraphs": [
-          "Uygulama reklam, analiz ya da takip kodu içermez. Apple'ın kendi yazılım çerçeveleri dışında yalnızca Adhan adlı açık kaynaklı kütüphaneyi kullanır; bu kütüphane namaz vakitlerini iPhone'unuzda hesaplar ve hiçbir yere hiçbir şey göndermez. Yukarıda açıklanan Apple Haritalar, Islamic Network ve YouTube istekleri dışında uygulama hiç kimseyle hiçbir şey paylaşmaz. Çocuklar dahil hiç kimseden kişisel veri toplamıyorum."
+          "Uygulama reklam, analiz ya da takip kodu içermez. Apple'ın kendi yazılım çerçeveleri dışında yalnızca Adhan adlı açık kaynaklı kütüphaneyi kullanır; bu kütüphane namaz vakitlerini iPhone'unuzda hesaplar ve hiçbir yere hiçbir şey göndermez. Yukarıda açıklanan Apple Haritalar, ses sunucusu ve YouTube istekleri dışında uygulama hiç kimseyle hiçbir şey paylaşmaz. Çocuklar dahil hiç kimseden kişisel veri toplamıyorum."
         ]
       },
       {
@@ -129,7 +129,7 @@
       },
       {
         "q": "Uygulama verilerimi topluyor mu?",
-        "a": "Hayır. Bana hiçbir şey gönderilmez. Yer adları, şehir araması ve harita Apple Haritalar'ı kullanır, tilavetler Islamic Network'ten gelir; ayrıntıları gizlilik politikasında bulabilirsiniz."
+        "a": "Hayır. Hakkınızda hiçbir veri toplanmaz. Yer adları, şehir araması ve harita Apple Haritalar'ı kullanır, tilavetler uygulamanın kendi ses sunucusundan gelir (kimin dinlediğini kaydetmiyorum); ayrıntıları gizlilik politikasında bulabilirsiniz."
       }
     ]
   },

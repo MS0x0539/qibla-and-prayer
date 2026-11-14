@@ -7855,36 +7855,36 @@
         }
       }
     },
-    "Recitations stream verse by verse from Islamic Network (alquran.cloud) and remain the copyright of their reciters.": {
+    "The recitations come from Islamic Network (alquran.cloud); the app plays them from its own copy. They remain the copyright of their reciters.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تأتي التلاوات آيةً آيةً من Islamic Network ‏(alquran.cloud)، وتبقى حقوقها لقرّائها."
+            "value": "مصدر التلاوات Islamic Network ‏(alquran.cloud)، ويشغّلها التطبيق من نسخته الخاصة. وتبقى حقوقها لقرّائها."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die Rezitationen kommen Vers für Vers von Islamic Network (alquran.cloud); das Urheberrecht bleibt bei den Rezitatoren."
+            "value": "Die Rezitationen stammen von Islamic Network (alquran.cloud); die App spielt sie aus einer eigenen Kopie ab. Das Urheberrecht bleibt bei den Rezitatoren."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les récitations sont diffusées verset par verset depuis Islamic Network (alquran.cloud) et restent la propriété de leurs récitateurs."
+            "value": "Les récitations proviennent d’Islamic Network (alquran.cloud) ; l’app les lit depuis sa propre copie. Elles restent la propriété de leurs récitateurs."
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "De recitaties komen vers voor vers van Islamic Network (alquran.cloud); het auteursrecht blijft bij de reciteurs."
+            "value": "De recitaties komen van Islamic Network (alquran.cloud); de app speelt ze af vanaf een eigen kopie. Het auteursrecht blijft bij de reciteurs."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tilavetler ayet ayet Islamic Network'ten (alquran.cloud) gelir; telif hakları karilerine aittir."
+            "value": "Tilavetler Islamic Network'ten (alquran.cloud) gelir; uygulama bunları kendi kopyasından çalar. Telif hakları karilerine aittir."
           }
         }
       }

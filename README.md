@@ -15,7 +15,8 @@ On the App Store as "Wajh: Qibla & Prayer Times".
   turned right to left, in the Amiri Quran font; an index of surahs, juz and the Qur'an's du'as, and search by
   surah name (Arabic, Latin, Turkish, Dutch, German, French), du'a name or Arabic words. Bookmarks, a khatm
   (pages read, out of 604), and a tap on a verse to copy or share it. Recitation verse by verse by ten reciters,
-  streamed from Islamic Network (cdn.islamic.network, free for personal use) and cached on the phone; it keeps
+  streamed from the app's own copy at audio.qibla.dev (an R2 bucket filled from Islamic Network's cdn.islamic.network,
+  whose terms allow downloading for personal and educational use) and cached on the phone; it keeps
   playing with the screen locked, turns the pages and marks the verse being recited. Hizb, quarter and sajda
   notes in the margin as in print, a sleep timer, and offline recitation (a surah, a juz or the whole Qur'an
   downloaded into the app). A "Continue reading" card on Prayer times opens the last page read.

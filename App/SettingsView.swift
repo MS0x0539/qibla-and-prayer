@@ -319,7 +319,7 @@ struct AcknowledgementsView: View {
                     Text(verbatim: "tanzil.net")
                 }
                 Divider().overlay(Theme.line)
-                Text("Recitations stream verse by verse from Islamic Network (alquran.cloud) and remain the copyright of their reciters.")
+                Text("The recitations come from Islamic Network (alquran.cloud); the app plays them from its own copy. They remain the copyright of their reciters.")
                     .foregroundStyle(Theme.muted)
                 Link(destination: URL(string: "https://alquran.cloud")!) {
                     Text(verbatim: "alquran.cloud")
