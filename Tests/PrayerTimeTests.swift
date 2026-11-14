@@ -9,6 +9,19 @@ struct PrayerTimeTests {
         amsterdam.calendar.date(from: DateComponents(year: year, month: month, day: day, hour: hour, minute: minute))!
     }
 
+    @Test func prayedTicksRoundTrip() {
+        var text = Prayed.setting([.fajr, .asr], on: "2026-11-14", to: true, in: "")
+        text = Prayed.setting([.dhuhr], on: "2026-11-13", to: true, in: text)
+        #expect(text == "2026-11-13:dhuhr;2026-11-14:fajr,asr")
+        text = Prayed.setting([.fajr], on: "2026-11-14", to: false, in: text)
+        #expect(Prayed.parse(text)["2026-11-14"] == [.asr])
+        // Sunrise is no prayer, and a day with nothing ticked is left out.
+        text = Prayed.setting([.sunrise], on: "2026-11-15", to: true, in: text)
+        text = Prayed.setting([.dhuhr], on: "2026-11-13", to: false, in: text)
+        #expect(text == "2026-11-14:asr")
+        #expect(Prayed.parse("junk;2026-11-16:isha,nonsense") == ["2026-11-16": [.isha]])
+    }
+
     @Test func qiblaDirectionAndDistance() {
         let newYork = Place(name: "New York", latitude: 40.7128, longitude: -74.0059, timeZoneID: "America/New_York")
         #expect(abs(newYork.qibla - 58.48) < 0.05)

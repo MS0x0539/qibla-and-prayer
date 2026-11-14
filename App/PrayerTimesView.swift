@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PrayerTimesView: View {
     @Environment(AppModel.self) private var model
-    @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var quranPage = 1
+    @AppStorage(Prayed.key, store: SharedStore.defaults) private var prayed = ""
     var openSettings: () -> Void = {}
     @ScaledMetric(relativeTo: .largeTitle) private var nameSize: CGFloat = 64
 
@@ -73,9 +73,13 @@ struct PrayerTimesView: View {
                         now: now, zone: place.timeZone)
                         .padding(.top, 24)
                 }
+                // The same ticks as on Home, for this calendar day (Home's day runs from Fajr to Fajr).
+                let dayKey = Prayed.dayKey(now, in: place.calendar)
+                let ticked = Prayed.parse(prayed)[dayKey] ?? []
                 VStack(spacing: 0) {
                     ForEach(today) { item in
-                        row(item, isNext: item.time == next?.time, zone: place.timeZone)
+                        row(item, isNext: item.time == next?.time, zone: place.timeZone, started: item.time <= now,
+                            ticked: ticked.contains(item.kind), dayKey: dayKey)
                     }
                     nightRows(today: today, place: place)
                 }
@@ -84,11 +88,6 @@ struct PrayerTimesView: View {
                 if hijri.month != 9, let start = ramadanStart {
                     RamadanSoon(start: start, now: now, place: place)
                         .padding(.top, 20)
-                }
-                // Once the Qur'an has been opened past its first page.
-                if quranPage > 1 {
-                    ContinueReading(page: quranPage)
-                        .padding(.top, hijri.month != 9 && ramadanStart != nil ? 12 : 20)
                 }
                 Button(action: openSettings) {
                     Text(verbatim: "\(model.settings.method.title) · \(model.settings.asr.shortTitle)")
@@ -183,18 +182,29 @@ struct PrayerTimesView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private func row(_ item: PrayerTime, isNext: Bool, zone: TimeZone) -> some View {
+    private func row(_ item: PrayerTime, isNext: Bool, zone: TimeZone, started: Bool, ticked: Bool, dayKey: String) -> some View {
         let color = item.kind.isPrayer ? (isNext ? Theme.gold : Theme.ink) : Theme.muted
         // Blocked in iPhone Settings: no bell shows as on, and tapping one explains why.
         let blocked = model.notificationStatus == .denied
         let notifying = model.settings.notify.contains(item.kind) && !blocked
         let title = item.kind.title(on: item.time, in: zone)
         return HStack(spacing: 12) {
-            Rectangle()
-                .fill(isNext ? Theme.gold : Color.clear)
-                .frame(width: 8, height: 8)
-                .rotationEffect(.degrees(45))
-                .accessibilityHidden(true)
+            if item.kind.isPrayer {
+                // Ticked once prayed, from the moment its time begins.
+                Button {
+                    prayed = Prayed.setting([item.kind], on: dayKey, to: !ticked, in: prayed)
+                } label: {
+                    Image(systemName: ticked ? "checkmark.circle.fill" : "circle")
+                        .font(.title3)
+                        .foregroundStyle(ticked ? Theme.gold : started ? Theme.ink.opacity(0.6) : Theme.muted.opacity(0.4))
+                        .frame(width: 44, height: 44)
+                }
+                .disabled(!started)
+                .accessibilityLabel(Text(verbatim: title))
+                .accessibilityValue(ticked ? Text("Prayed") : Text("Not prayed"))
+            } else {
+                Color.clear.frame(width: 44, height: 44)
+            }
             Text(title)
                 .font(.system(.title3, design: .serif).weight(isNext ? .semibold : .medium))
             Spacer()
@@ -331,44 +341,6 @@ private struct SkyBackground: View {
         if now >= asr && now < maghrib { return Color(hex: 0x221D0E) }  // afternoon
         if now >= maghrib && now < isha { return Color(hex: 0x2A1826) }  // dusk
         return Theme.background  // night
-    }
-}
-
-/// Back to the page last read in the Qur'an tab.
-private struct ContinueReading: View {
-    let page: Int
-    @AppStorage(OpenScreenIntent.key) private var openScreen = ""
-
-    var body: some View {
-        let quran = Quran.shared
-        let surah = quran.verses(onPage: page).first.map { quran.surahs[$0.surah - 1] }
-        Button {
-            openScreen = AppScreen.quran.rawValue
-        } label: {
-            HStack(spacing: 12) {
-                Image(systemName: "book")
-                    .font(.title3)
-                    .foregroundStyle(Theme.gold)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Continue reading")
-                        .foregroundStyle(Theme.ink)
-                    HStack(spacing: 0) {
-                        if let surah { Text(verbatim: Quran.title(of: surah) + " · ") }
-                        Text("Page \(page)")
-                    }
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.muted)
-                }
-                Spacer()
-                Image(systemName: "chevron.forward")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(Theme.muted)
-            }
-            .padding(16)
-            .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
-        }
-        .buttonStyle(.plain)
     }
 }
 

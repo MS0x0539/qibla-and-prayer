@@ -92,5 +92,6 @@ hand from the Actions tab.
 
 Launch arguments used for screenshots: `-skipOnboarding YES`, `-startTab home|times|qibla|quran|menu`,
 `-menuPage tasbih|tracker|missed|khatm|downloads|settings`,
+`-prayedDays "2026-11-14:fajr,dhuhr;2026-11-15:fajr"` (prayers ticked),
 `-showMap YES`,
 `-demoHeading <degrees>` (the Simulator has no compass).

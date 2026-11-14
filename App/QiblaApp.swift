@@ -55,7 +55,7 @@ struct RootView: View {
         @Bindable var model = model
         TabView(selection: $tab) {
             Tab("Home", systemImage: "house", value: AppTab.home) {
-                HomeView()
+                HomeView { open($0) }
                     .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
             Tab("Prayer times", systemImage: "clock", value: AppTab.times) {

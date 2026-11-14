@@ -1,10 +1,12 @@
 import SwiftUI
 
-/// Today's fast and iftar, kept only on this iPhone. (Menu → Prayer tracker)
+/// The prayers ticked this week, and today's fast and iftar, kept only on this iPhone. (Menu → Prayer tracker)
 struct PrayerTrackerView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.dynamicTypeSize) private var typeSize
     /// The days fasted, as "2026-11-12" separated by commas.
     @AppStorage("fastingDays") private var fastingDays = ""
+    @AppStorage(Prayed.key, store: SharedStore.defaults) private var prayed = ""
 
     var body: some View {
         // Redrawn every minute, so iftar and midnight ("today") arrive while the page is open.
@@ -18,6 +20,9 @@ struct PrayerTrackerView: View {
     private func form(now: Date) -> some View {
         let today = dayKey(now)
         return Form {
+            if let place = model.place {
+                week(place: place, now: now)
+            }
             Section {
                 Toggle("I'm fasting today", isOn: fasting(on: today))
                 if days.contains(today), let place = model.place, let maghrib = model.times(on: now, at: place)?[4].time {
@@ -49,6 +54,77 @@ struct PrayerTrackerView: View {
             }
             .listRowBackground(Theme.card)
         }
+    }
+
+    /// The last seven prayer days, today first, with a circle for each prayer: ticked on Home or Prayer times, or
+    /// here afterwards. At the largest text sizes, each day's count instead.
+    private func week(place: Place, now: Date) -> some View {
+        let calendar = place.calendar
+        let today = model.prayerDay(at: now, place: place)
+        let days = (0..<7).compactMap { calendar.date(byAdding: .day, value: -$0, to: today) }
+        let log = Prayed.parse(prayed)
+        let todayTimes = model.times(on: today, at: place) ?? []
+        let month = String(Prayed.dayKey(today, in: calendar).prefix(7))
+        let thisMonth = log.filter { $0.key.hasPrefix(month) }.values.reduce(0) { $0 + $1.count }
+        var style = Date.FormatStyle.dateTime.weekday(.abbreviated).day()
+        style.timeZone = place.timeZone
+        style.locale = .app
+        return Section {
+            if !typeSize.isAccessibilitySize {
+                HStack(spacing: 0) {
+                    Spacer(minLength: 0)
+                    ForEach(Prayed.prayers) { kind in
+                        Text(verbatim: Self.prayerName(kind))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                            .frame(width: 44)
+                    }
+                }
+                .font(.caption2)
+                .foregroundStyle(Theme.muted)
+                .accessibilityHidden(true)
+            }
+            ForEach(days, id: \.self) { day in
+                let key = Prayed.dayKey(day, in: calendar)
+                let ticked = log[key] ?? []
+                let label = day == today ? String(localized: "Today", bundle: .app) : day.formatted(style)
+                if typeSize.isAccessibilitySize {
+                    LabeledContent(label, value: String(localized: "\(Formats.number(ticked.count)) of \(Formats.number(5))", bundle: .app))
+                } else {
+                    HStack(spacing: 0) {
+                        Text(verbatim: label)
+                        Spacer(minLength: 4)
+                        ForEach(Prayed.prayers) { kind in
+                            // Today's prayers from the moment their time begins.
+                            let started = day != today || (todayTimes.first { $0.kind == kind }?.time ?? .distantFuture) <= now
+                            Button {
+                                prayed = Prayed.setting([kind], on: key, to: !ticked.contains(kind), in: prayed)
+                            } label: {
+                                Image(systemName: ticked.contains(kind) ? "checkmark.circle.fill" : "circle")
+                                    .font(.title3)
+                                    .foregroundStyle(ticked.contains(kind) ? Theme.gold
+                                        : started ? Theme.ink.opacity(0.6) : Theme.muted.opacity(0.4))
+                                    .frame(width: 44, height: 44)
+                            }
+                            .buttonStyle(.plain)
+                            .disabled(!started)
+                            .accessibilityLabel(Text(verbatim: "\(label), \(Self.prayerName(kind))"))
+                            .accessibilityValue(ticked.contains(kind) ? Text("Prayed") : Text("Not prayed"))
+                        }
+                    }
+                }
+            }
+        } header: {
+            Text("Prayed")
+        } footer: {
+            Text("Ticked this month: \(Formats.number(thisMonth))")
+        }
+        .listRowBackground(Theme.card)
+    }
+
+    /// The prayer, not the time: Turkish calls Fajr's time İmsak and the prayer Sabah.
+    static func prayerName(_ kind: PrayerKind) -> String {
+        kind == .fajr ? String(localized: "qada.fajr", defaultValue: "Fajr", bundle: .app) : kind.title
     }
 
     /// The day in the place the times are for, as stored in `fastingDays` ("2026-11-12").
@@ -91,8 +167,6 @@ struct MissedPrayersView: View {
                 if model.settings.school == .hanafi {
                     QadaRow(key: "witr", title: String(localized: "Witr", bundle: .app))
                 }
-            } header: {
-                Text("Missed prayers (qada)")
             } footer: {
                 Text("Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.")
             }

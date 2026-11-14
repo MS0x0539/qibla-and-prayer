@@ -128,6 +128,11 @@ jobs:
           shot "tr-missed" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab menu -menuPage missed
           shot "ar-menu" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab menu
           shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab menu -menuPage tasbih
+          # Prayers ticked: Home today, with yesterday's unticked ones to settle, and the tracker's week.
+          today=$(date +%Y-%m-%d); yesterday=$(date -v-1d +%Y-%m-%d); before=$(date -v-2d +%Y-%m-%d)
+          shot "en-home-prayed" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab home -prayedDays "$yesterday:fajr,dhuhr;$today:fajr,dhuhr"
+          shot "tr-home-prayed" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab home -prayedDays "$yesterday:fajr,dhuhr;$today:fajr,dhuhr"
+          shot "en-tracker-week" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab menu -menuPage tracker -prayedDays "$before:fajr,dhuhr,asr,maghrib,isha;$yesterday:fajr,dhuhr;$today:fajr"
           # The Qur'an as it opens, on the night page: Al-Fatiha, Al-Baqarah's first page and Ayat al-Kursi's page;
           # and Ayat al-Kursi's on paper.
           for page in 1 2 42; do
