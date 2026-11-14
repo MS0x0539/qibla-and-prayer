@@ -111,9 +111,12 @@ jobs:
           done
           shot "de-times" -AppleLanguages "(de)" -AppleLocale de_DE -skipOnboarding YES -startTab times
           shot "fr-times" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab times
-          # For qibla.dev: the compass turning until it faces the Qibla (126° from Amsterdam).
-          for heading in 30 75 105 126; do
-            shot "en-qibla-heading-$heading" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -demoHeading "$heading"
+          # For qibla.dev: the compass turning until it faces the Qibla (126° from Amsterdam), in each language.
+          for lang in en nl de fr tr ar; do
+            case $lang in en) locale=en_US ;; nl) locale=nl_NL ;; de) locale=de_DE ;; fr) locale=fr_FR ;; tr) locale=tr_TR ;; ar) locale=ar_SA ;; esac
+            for heading in 30 75 105 126; do
+              shot "$lang-qibla-heading-$heading" -AppleLanguages "($lang)" -AppleLocale "$locale" -skipOnboarding YES -startTab qibla -demoHeading "$heading"
+            done
           done
           # A poor heading: the calibration hint takes the advice's place, and the compass keeps its size.
           shot "en-qibla-low-accuracy" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -demoHeading 100 -demoAccuracy 30
