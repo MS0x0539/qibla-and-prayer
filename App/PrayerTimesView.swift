@@ -141,7 +141,9 @@ struct PrayerTimesView: View {
                     .minimumScaleFactor(0.5)
                 HStack(spacing: 8) {
                     Text(Formats.time(next.time, in: place.timeZone))
+                    // Decoration between the two: not read out, nor measured as text.
                     Text(verbatim: "·")
+                        .accessibilityHidden(true)
                     Text(timerInterval: now...next.time, countsDown: true)
                 }
                 .font(.body.monospacedDigit())
