@@ -123,11 +123,14 @@ enum Prayers {
 enum SharedStore {
     static let defaults = UserDefaults(suiteName: "group.org.psbv.qiblaandprayer") ?? .standard
 
-    /// Keys earlier versions kept in the app's own defaults: carried over once, for the widgets to read.
+    /// Keys earlier versions kept in the app's own defaults: carried over once, for the widgets to read. Only what
+    /// the app saved: not a launch argument (`-quranNight NO` for a CI screenshot), which would stay for good.
     static func moveFromAppDefaults(_ keys: [String]) {
-        guard defaults != UserDefaults.standard else { return }
+        guard defaults != UserDefaults.standard,
+              let saved = Bundle.main.bundleIdentifier.flatMap(UserDefaults.standard.persistentDomain(forName:))
+        else { return }
         for key in keys where defaults.object(forKey: key) == nil {
-            if let value = UserDefaults.standard.object(forKey: key) { defaults.set(value, forKey: key) }
+            if let value = saved[key] { defaults.set(value, forKey: key) }
         }
     }
 
