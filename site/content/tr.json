@@ -172,7 +172,7 @@
   },
   "accessibility": {
     "title": "Erişilebilirlik",
-    "updated": "Son güncelleme: 13 Kasım 2026",
+    "updated": "Son güncelleme: 14 Kasım 2026",
     "intro": "“Qibla & Prayer” herkes için çalışmalı. Bu sayfada uygulamanın bugün erişilebilirlik için neler yaptığını ve sizin için çalışmayan bir şeyi bana nasıl bildirebileceğinizi bulabilirsiniz.",
     "sections": [
       {
@@ -181,10 +181,10 @@
           "VoiceOver: Her düğmenin, simgenin ve denetimin sesli bir etiketi vardır; kıble ekranı da size hangi yöne dönmeniz gerektiğini söyler. Kur'an Arapça bir sesle okunur ve sayfadaki her ayet, onu kopyalamak, paylaşmak ya da dinlemek için açan bir eylemdir (rotorda).",
           "Sesle Denetim: Her denetimin, ekranda gördüğünüze uyan ve söyleyebileceğiniz bir adı vardır. Bir Kur'an sayfasının eylemleriyle ayetlerinden birini açabilirsiniz.",
           "Daha büyük metin: Yazılar, iPhone'unuzda seçtiğiniz metin boyutuyla birlikte en büyük erişilebilirlik boyutlarına kadar büyür. Bu boyutlarda aylık vakitler tablosu yedi sütun yerine her günün vakitlerini liste olarak gösterir. Kur'an sayfasının menüsünde ayrıca kendi metin boyutu vardır. Tesbih sayacı, dairesini dolduruncaya kadar büyür.",
-          "Koyu arayüz: Uygulama koyu renklidir ve açık renk yazı kullanır. Kur'an açık renkli bir kâğıt sayfada açılır; menüsünden Gece'yi seçerseniz koyu kalır.",
+          "Koyu arayüz: Uygulama koyu renklidir ve açık renk yazı kullanır. Kur'an açık renkli bir kâğıt sayfada açılır; ayarlarından Gece'yi seçerseniz koyu kalır.",
           "Kontrast: Tüm yazıların arka plana göre kontrastı en az 6,3’e 1’dir. Web İçeriği Erişilebilirlik Yönergeleri (WCAG) 4,5’e 1 ister.",
           "Yalnızca renkle değil: Sıradaki vaktin ve dini günler takvimindeki sıradaki günün önünde bir baklava işareti vardır, tablolarda bugünün satırı kalın yazılır ve seçili seçeneğin yanında bir onay işareti bulunur. Kapalı bir zil üstü çizili gösterilir. Kur'an'da okunan ya da aranan ayet vurgulanır; erişilebilirlik ayarlarında renk olmadan ayırt etme açıksa ayrıca altı çizilir.",
-          "Hareketi Azalt: iPhone’unuzun erişilebilirlik ayarlarında bu açıksa pusula, kurulum ekranları ve tesbih sayacı artık hareket etmez.",
+          "Hareketi Azalt: iPhone’unuzun erişilebilirlik ayarlarında bu açıksa pusula, kurulum ekranları ve tesbih sayacı artık hareket etmez; Kur'an sayfaları da kıvrılmak yerine kayar.",
           "Altyazı: Kur'an okunurken sayfa, okunan Arapça metni gösterir ve ayeti işaretler. Tilavet, sayfadaki metnin aynısıdır.",
           "Dokunsal geri bildirim: Kıbleye döndüğünüzde, tesbihin her sayımında ve bir tur bittiğinde iPhone’unuz hafifçe titrer.",
           "Diller: İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça. Arapça sağdan sola okunur."
@@ -193,7 +193,7 @@
       {
         "heading": "Bilmekte fayda var",
         "paragraphs": [
-          "Uygulamada video bulunmadığından sesli betimleme gerekmez.",
+          "Mekke canlı, YouTube'un Mescid-i Haram'dan canlı yayınıdır ve YouTube'un kendi oynatıcısında gösterilir: YouTube sağladığında altyazı vardır, sesli betimleme yoktur. Uygulamada başka video yoktur.",
           "Her derlemede Apple'ın otomatik erişilebilirlik denetimi her ekranı normal ve en büyük metin boyutunda kontrol eder. Böyle bir denetim her şeyi bulamaz; bir şey sizin için çalışmıyorsa lütfen bana bildirin."
         ]
       },
