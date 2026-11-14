@@ -16,6 +16,17 @@ const linked = (text) => escape(text)
   .replace(/ms@psbv\.org/g, '<a href="mailto:ms@psbv.org">ms@psbv.org</a>')
   .replace(/apple\.com\/legal\/privacy/g, '<a href="https://www.apple.com/legal/privacy/">apple.com/legal/privacy</a>');
 
+// The app on the App Store; this link opens the store in the visitor's own country.
+const APP_ID = '6833713106';
+const APP_STORE = `https://apps.apple.com/app/id${APP_ID}`;
+// Apple's official "Download on the App Store" badge for a language (static/app-store-<code>.svg, unchanged, as
+// Apple's guidelines ask), 48 px high: above Apple's 40 px minimum.
+const badge = (lang) => {
+  const file = `app-store-${lang.code}.svg`;
+  const [, w, h] = readFileSync(join(here, 'static', file), 'utf8').match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+  return `<p class="badge"><a href="${APP_STORE}"><img src="/${file}" alt="${escape(lang.home.badge)}" width="${Math.round(48 * w / h)}" height="48"></a></p>`;
+};
+
 const prefix = (code) => (code === 'en' ? '/' : `/${code}/`);
 // In menu order.
 const PAGES = { home: '', privacy: 'privacy', accessibility: 'accessibility', releases: 'releases', support: 'support' };
@@ -50,6 +61,9 @@ details p { color: var(--ink); margin: .6em 0 .2em; }
 footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .92rem; }
 .languages { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 10px; }
 .languages a[aria-current="page"] { color: var(--ink); text-decoration: none; }
+.badge { margin: 1.4em 0; }
+.badge a { display: inline-block; padding: 0; }
+.badge img { display: block; height: 48px; width: auto; }
 `;
 
 function page(lang, kind, title, body) {
@@ -65,6 +79,7 @@ function page(lang, kind, title, body) {
 <title>${escape(title)}</title>
 <meta name="description" content="${escape(lang.tagline)}">
 <meta name="theme-color" content="#0E1613">
+<meta name="apple-itunes-app" content="app-id=${APP_ID}">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -97,6 +112,7 @@ function home(lang) {
   return page(lang, 'home', lang.appName, `<h1>${escape(lang.appName)}</h1>
 <p class="muted">${escape(lang.tagline)}</p>
 <p>${escape(h.intro)}</p>
+${badge(lang)}
 <ul>
 ${h.points.map((point) => `<li>${linked(point)}</li>`).join('\n')}
 </ul>

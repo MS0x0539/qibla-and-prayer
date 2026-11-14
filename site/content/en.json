@@ -16,7 +16,8 @@
       "No ads, no subscriptions, no account.",
       "Nothing about you is collected: your settings, tasbih and tracker stay on your iPhone. Place names and the map come from Apple Maps, recitations from the app's own audio server, and Makkah live from YouTube.",
       "Times follow the method of your mosque or authority and were checked against the timetables authorities publish. You can move each time by a few minutes to match your mosque."
-    ]
+    ],
+    "badge": "Download on the App Store"
   },
   "privacy": {
     "title": "Privacy policy",
