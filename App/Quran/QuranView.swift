@@ -8,10 +8,10 @@ struct QuranView: View {
     @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var page = 1
     /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
-    // Night unless Paper or Automatic is picked; `-quranNight NO` for CI screenshots of the paper page.
-    @AppStorage("quranNight") private var night = true
-    /// Automatic: the page turns to night after Isha and back to paper at sunrise.
-    @AppStorage("quranAutoNight") private var autoNight = false
+    // `-quranNight YES -quranAutoNight NO` for CI screenshots of the night page.
+    @AppStorage("quranNight") private var night = false
+    /// The page turns to night after Isha and back to paper at sunrise, unless paper or night was picked by hand.
+    @AppStorage("quranAutoNight") private var autoNight = true
     @State private var nightNow = false
     @State private var pager = PagerHandle()
     @Environment(AppModel.self) private var model
@@ -389,7 +389,7 @@ private struct PageBar: View {
     }
 }
 
-/// How a mushaf page looks: printed paper, or dark for reading at night (the default).
+/// How a mushaf page looks: printed paper (the default) or dark for reading at night.
 struct MushafStyle {
     let paper: Color
     let ink: Color
