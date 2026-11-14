@@ -12,6 +12,8 @@ struct QiblaView: View {
     @State private var showingCamera = false
     // `-showLive YES` opens Makkah live first (used for CI screenshots).
     @State private var showingLive = UserDefaults.standard.bool(forKey: "showLive")
+    /// The page's height without the compass, as last laid out (at first about what it is at the usual text size).
+    @State private var rest: CGFloat = 370
 
     /// The turn from the phone's heading to the Qibla: negative is left, positive is right.
     private var offset: Double? {
@@ -21,16 +23,14 @@ struct QiblaView: View {
 
     var body: some View {
         NavigationStack {
-            // The page with the largest compass that lets it fit the screen unscrolled (300 points from a 6.3-inch
-            // iPhone up); with large text, or on an iPhone SE, it scrolls with the smallest.
-            ViewThatFits(in: .vertical) {
-                ForEach([300, 280, 260, 240, 220, 200], id: \.self) { size in
-                    page(dial: CGFloat(size))
+            // One page, never swapped for another (VoiceOver keeps its place), in a scroll view that only scrolls
+            // when the page can't fit: with large text, or on an iPhone SE.
+            GeometryReader { proxy in
+                ScrollView {
+                    page(room: proxy.size.height)
                 }
-                ScrollView { page(dial: 200) }
-                    .scrollBounceBehavior(.basedOnSize)
+                .scrollBounceBehavior(.basedOnSize)
             }
-            .frame(maxHeight: .infinity, alignment: .top)
             .foregroundStyle(Theme.ink)
             .background(Theme.background.ignoresSafeArea())
             .toolbar {
@@ -60,15 +60,29 @@ struct QiblaView: View {
         .sensoryFeedback(.success, trigger: aligned) { _, isAligned in isAligned }
     }
 
-    private func page(dial: CGFloat) -> some View {
-        VStack(spacing: 0) {
+    /// The compass takes the room the rest of the page leaves between the bars, from 300 points down to 200.
+    private func page(room: CGFloat) -> some View {
+        let dial = min(300, max(200, (room - rest).rounded(.down)))
+        let location = model.location
+        let lowAccuracy = location.heading != nil && (location.headingAccuracy < 0 || location.headingAccuracy > 20)
+        return VStack(spacing: 0) {
             Text("Qibla")
                 .font(.system(.largeTitle, design: .serif).weight(.semibold))
-            Text("Hold your phone flat, away from magnets.")
-                .font(.subheadline)
-                .foregroundStyle(Theme.muted)
-                .multilineTextAlignment(.center)
-                .padding(.top, 2)
+            // While the heading is inaccurate, how to calibrate takes the place of the usual advice: in a space as
+            // tall as the longer of the two, so nothing on the page moves.
+            ZStack {
+                Text("Hold your phone flat, away from magnets.")
+                    .foregroundStyle(Theme.muted)
+                    .opacity(lowAccuracy ? 0 : 1)
+                    .accessibilityHidden(lowAccuracy)
+                Text("Low accuracy: move your phone in a figure eight.")
+                    .foregroundStyle(Theme.gold)
+                    .opacity(lowAccuracy ? 1 : 0)
+                    .accessibilityHidden(!lowAccuracy)
+            }
+            .font(.subheadline)
+            .multilineTextAlignment(.center)
+            .padding(.top, 2)
             if let place = model.qiblaPlace {
                 compass(place, dial: dial)
             } else {
@@ -78,6 +92,10 @@ struct QiblaView: View {
         .padding(.horizontal, 22)
         .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
+        // Measured with the compass at this size, so what's left doesn't depend on it: no back and forth.
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+            if model.qiblaPlace != nil { rest = height - dial }
+        }
     }
 
     @ViewBuilder
@@ -101,10 +119,11 @@ struct QiblaView: View {
                     .frame(width: 84, height: 84)
             }
             .frame(width: 300, height: 300)
+            // Only the turning is animated, not a change of size.
+            .animation(reduceMotion ? nil : .easeOut(duration: 0.25), value: location.continuousHeading)
             // Drawn at 300 points, shown at the size that fits.
             .scaleEffect(dial / 300)
             .frame(width: dial, height: dial)
-            .animation(reduceMotion ? nil : .easeOut(duration: 0.25), value: location.continuousHeading)
             // A compass shows physical directions: it must never be mirrored for right-to-left languages.
             .environment(\.layoutDirection, .leftToRight)
             .accessibilityHidden(true)
@@ -129,13 +148,6 @@ struct QiblaView: View {
             .font(.headline)
             .foregroundStyle(aligned ? Theme.gold : Theme.ink)
             .accessibilityAddTraits(.updatesFrequently)
-            if location.headingAccuracy < 0 || location.headingAccuracy > 20 {
-                Text("Low accuracy: move your phone in a figure eight.")
-                    .font(.footnote)
-                    .foregroundStyle(Theme.muted)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 4)
-            }
             if !location.isAuthorized {
                 Text("Without location access the compass uses magnetic north, which can be a few degrees off.")
                     .font(.footnote)
