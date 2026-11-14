@@ -122,6 +122,8 @@ jobs:
           # A first visit, as it opens: the night page and the tip on turning pages; then the tip on the paper page.
           shot "en-quran-hint" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips reset -quranPage 3
           shot "en-quran-tip-paper" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips day -quranPage 3
+          # With Paper already picked, no tip about the paper page.
+          shot "en-quran-tip-on-paper" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips day -quranAutoNight NO -quranNight NO -quranPage 3
           shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage 2
           shot "en-quran-42-night" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -tips hide -quranPage 42 -quranNight YES
           shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage 2 -quranSheet settings

@@ -172,6 +172,11 @@ struct QuranView: View {
             .task(id: autoNight) {
                 if autoNight { await followTheNight() }
             }
+            // The paper tip is for the night page the reader opens on: with Paper or Automatic picked (by hand, or
+            // kept from before Night was the default), there's nothing to tell.
+            .onChange(of: autoNight || !night, initial: true) { _, picked in
+                if picked { PaperPageTip().invalidate(reason: .actionPerformed) }
+            }
             .onChange(of: openVerse, initial: true) {
                 guard Quran.shared.verses.indices.contains(openVerse) else { return }
                 marked = openVerse
