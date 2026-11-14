@@ -5,6 +5,18 @@ import Testing
 struct QuranTests {
     let quran = Quran.shared
 
+    /// Night unless Paper is picked; Automatic needs a saved place, so it is checked in the app.
+    @Test func lookIsNightByDefault() {
+        let defaults = UserDefaults(suiteName: "QuranLookTests")!
+        defaults.removePersistentDomain(forName: "QuranLookTests")
+        #expect(QuranLook.isNight(at: .now, defaults: defaults))
+        defaults.set(false, forKey: QuranLook.nightKey)
+        #expect(!QuranLook.isNight(at: .now, defaults: defaults))
+        defaults.set(true, forKey: QuranLook.nightKey)
+        #expect(QuranLook.isNight(at: .now, defaults: defaults))
+        #expect(QuranLook.changes(after: .now, before: .distantFuture, defaults: defaults).isEmpty)
+    }
+
     @Test func wholeTextLoads() {
         #expect(quran.surahs.count == 114)
         #expect(quran.verses.count == 6236)

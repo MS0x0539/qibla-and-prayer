@@ -3,9 +3,11 @@ import WidgetKit
 
 // The Qur'an on the Home Screen and the Lock Screen: a verse each day, and the page you were reading.
 
+// The reader's paper and night pages (MushafStyle in the app).
 private let paper = Color(hex: 0xFBF6E8)
 private let ink = Color(hex: 0x1E1912)
 private let green = Color(hex: 0x2B5A43)
+private let nightGreen = Color(hex: 0x7FA88E)
 
 /// Read in the app's language (the surah names), as the app saved it.
 private func useAppLanguage() {
@@ -20,7 +22,7 @@ struct VerseOfTheDayWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "VerseOfTheDay", provider: VerseProvider()) { entry in
             VerseWidgetView(entry: entry)
-                .containerBackground(paper, for: .widget)
+                .containerBackground(entry.night ? Theme.background : paper, for: .widget)
                 .widgetURL(URL(string: "wajh://verse/\(entry.verse)"))
         }
         .configurationDisplayName("Verse of the day")
@@ -33,6 +35,8 @@ struct VerseEntry: TimelineEntry {
     let date: Date
     /// Its index in the whole Qur'an.
     let verse: Int
+    /// Dark like the reader's night page, or on paper.
+    var night = QuranLook.isNight(at: .now)
 }
 
 struct VerseProvider: TimelineProvider {
@@ -45,14 +49,17 @@ struct VerseProvider: TimelineProvider {
         completion(placeholder(in: context))
     }
 
-    /// Today's verse, and the next one just after midnight.
+    /// Today's verse in the reader's look (on Automatic again at sunrise and Isha), and the next one just after
+    /// midnight.
     func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> Void) {
         useAppLanguage()
         let now = Date.now
         let calendar = Calendar.current
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: now)) ?? now.addingTimeInterval(86_400)
-        completion(Timeline(entries: [VerseEntry(date: now, verse: VerseOfTheDay.index(on: now))],
-                            policy: .after(tomorrow.addingTimeInterval(60))))
+        let entries = ([now] + QuranLook.changes(after: now, before: tomorrow)).map {
+            VerseEntry(date: $0, verse: VerseOfTheDay.index(on: $0), night: QuranLook.isNight(at: $0))
+        }
+        completion(Timeline(entries: entries, policy: .after(tomorrow.addingTimeInterval(60))))
     }
 }
 
@@ -66,13 +73,13 @@ struct VerseWidgetView: View {
             VStack(spacing: 8) {
                 Text(verbatim: verse.text + " \u{06DD}" + Quran.arabicDigits(verse.number))
                     .font(Quran.font(size: 22))
-                    .foregroundStyle(ink)
+                    .foregroundStyle(entry.night ? Theme.ink : ink)
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.4)
                     .environment(\.layoutDirection, .rightToLeft)
                 Text(verbatim: "\(Quran.title(of: quran.surahs[verse.surah - 1])) \(verse.surah):\(verse.number)")
                     .font(.caption.weight(.medium))
-                    .foregroundStyle(green)
+                    .foregroundStyle(entry.night ? nightGreen : green)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }

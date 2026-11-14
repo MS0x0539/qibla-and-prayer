@@ -1,6 +1,7 @@
 import SwiftUI
 import TipKit
 import UIKit
+import WidgetKit
 
 /// The Qur'an tab: the Madinah mushaf's 604 pages, turned right to left, with an index of surahs, juz and du'as,
 /// and search.
@@ -9,10 +10,11 @@ struct QuranView: View {
     @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var page = 1
     /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
-    // Night, like the rest of the app; `-quranNight NO` for CI screenshots of the paper page.
-    @AppStorage("quranNight") private var night = true
+    // Night, like the rest of the app; `-quranNight NO` for CI screenshots of the paper page. In the App Group, for
+    // the Verse of the day widget (see QuranLook).
+    @AppStorage(QuranLook.nightKey, store: SharedStore.defaults) private var night = true
     /// Automatic in the settings: the page turns to night after Isha and back to paper at sunrise.
-    @AppStorage("quranAutoNight") private var autoNight = false
+    @AppStorage(QuranLook.automaticKey, store: SharedStore.defaults) private var autoNight = false
     @State private var nightNow = false
     @State private var pager = PagerHandle()
     @Environment(AppModel.self) private var model
@@ -165,6 +167,8 @@ struct QuranView: View {
             .onChange(of: autoNight || !night, initial: true) { _, picked in
                 if picked { PaperPageTip().invalidate(reason: .actionPerformed) }
             }
+            // The Verse of the day widget follows the look.
+            .onChange(of: [night, autoNight]) { WidgetCenter.shared.reloadTimelines(ofKind: "VerseOfTheDay") }
             .onChange(of: openVerse, initial: true) {
                 guard Quran.shared.verses.indices.contains(openVerse) else { return }
                 marked = openVerse
@@ -196,9 +200,9 @@ struct QuranView: View {
     private func followTheNight() async {
         while !Task.isCancelled {
             let now = Date.now
-            guard let place = model.place, let today = model.times(on: now, at: place),
-                  let sunrise = today.first(where: { $0.kind == .sunrise })?.time,
-                  let isha = today.first(where: { $0.kind == .isha })?.time else { return }
+            guard let place = model.place,
+                  let day = QuranLook.dayAndNight(on: now, place: place, settings: model.settings) else { return }
+            let (sunrise, isha) = day
             nightNow = now >= isha || now < sunrise
             let next = [sunrise, isha].filter { $0 > now }.min() ?? now.addingTimeInterval(900)
             try? await Task.sleep(for: .seconds(min(900, max(30, next.timeIntervalSince(now)))))
