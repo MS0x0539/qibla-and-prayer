@@ -131,8 +131,6 @@ jobs:
           shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -tips hide -quranPage 2
           shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage 2 -quranSheet settings
           shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage 42 -quranSheet goto
-          # The tips in the language picked in the app (Turkish), not the iPhone's (Dutch).
-          shot "in-app-tr-quran-tip-on-dutch-iphone" -AppleLanguages "(nl)" -AppleLocale nl_NL -skipOnboarding YES -appLanguage tr -startTab quran -tips reset -quranPage 3
           shot "en-tasbih-after-prayer" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tasbih -tasbihDhikr afterPrayer -tasbihStep 1 -tasbihCount 21 -tasbihTotal 54
           shot "en-tracker-khatm" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tracker -khatmPages "$(seq -s, 1 42)" -quranToday "$(date +%Y-%m-%d):40,41,42"
           # The map loads tiles and mosques over the network: give it longer.
@@ -149,6 +147,9 @@ jobs:
           # The language picked inside the app, different from the iPhone's.
           shot "in-app-en-on-dutch-iphone" -AppleLanguages "(nl)" -AppleLocale nl_NL -skipOnboarding YES -appLanguage en
           shot "in-app-ar-on-english-iphone" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -appLanguage ar
+          # The tips in the language picked in the app (Turkish), not the iPhone's (Dutch). Last:
+          # a language picked in the app is saved, and would stay for the shots after it.
+          shot "in-app-tr-quran-tip-on-dutch-iphone" -AppleLanguages "(nl)" -AppleLocale nl_NL -skipOnboarding YES -appLanguage tr -startTab quran -tips reset -quranPage 3
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()

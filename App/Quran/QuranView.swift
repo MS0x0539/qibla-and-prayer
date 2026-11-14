@@ -307,17 +307,24 @@ private struct RecitationBar: View {
     }
 }
 
+// The tips' text is looked up in the app's language here: iOS draws them outside the app's views, in the iPhone's
+// language otherwise (a Dutch tip in a Turkish app on a Dutch iPhone).
+
 /// On the first visit, over the page bar: which way the pages turn. Turning one puts it away.
 struct TurnPageTip: Tip {
-    var title: Text { Text("Turning the pages") }
-    var message: Text? { Text("Swipe right for the next page, as in a mushaf, or use the arrows below.") }
+    var title: Text { Text(String(localized: "Turning the pages", bundle: .app)) }
+    var message: Text? {
+        Text(String(localized: "Swipe right for the next page, as in a mushaf, or use the arrows below.", bundle: .app))
+    }
     var image: Image? { Image(systemName: "hand.draw") }
 }
 
 /// After it, at the settings button: the page can be paper instead of night.
 struct PaperPageTip: Tip {
-    var title: Text { Text("Prefer a white page?") }
-    var message: Text? { Text("Choose Paper here, or Automatic for paper by day and night from Isha.") }
+    var title: Text { Text(String(localized: "Prefer a white page?", bundle: .app)) }
+    var message: Text? {
+        Text(String(localized: "Choose Paper here, or Automatic for paper by day and night from Isha.", bundle: .app))
+    }
     var image: Image? { Image(systemName: "sun.max") }
 }
 
