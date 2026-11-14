@@ -28,7 +28,7 @@
       {
         "heading": "Kim sorumlu",
         "paragraphs": [
-          "Ben, Melih Sivrikaya (ms@psbv.org), bu uygulamadan ve bu politikada açıklanan kişisel verilerden sorumluyum (GDPR kapsamında “veri sorumlusu”). Apple ise uygulamanın kullandığı kendi hizmetlerinden sorumludur: Apple Haritalar, Siri, çökme raporlama ve iCloud Yedekleme. Uygulamanın ses sunucusunu benim adıma, veri işleyenim olarak Cloudflare işletir; Google ise YouTube'dan sorumludur.",
+          "Ben, Melih Sivrikaya (support@qibla.dev), bu uygulamadan ve bu politikada açıklanan kişisel verilerden sorumluyum (GDPR kapsamında “veri sorumlusu”). Apple ise uygulamanın kullandığı kendi hizmetlerinden sorumludur: Apple Haritalar, Siri, çökme raporlama ve iCloud Yedekleme. Uygulamanın ses sunucusunu benim adıma, veri işleyenim olarak Cloudflare işletir; Google ise YouTube'dan sorumludur.",
           "Uygulama, Apple Haritalar'dan ve ses sunucusundan yalnızca kullandığınız özelliklerin gerektirdiği bilgileri ister. Ses sunucusunu işletmemin, e-postaları yanıtlamamın ve Apple'ın ilettiği raporları kullanmamın nedeni, uygulamayı sunma, uygulama için destek sağlama ve uygulamayı iyileştirme konusundaki meşru menfaatimdir (GDPR madde 6/1-f)."
         ]
       },
@@ -43,7 +43,7 @@
       {
         "heading": "iPhone'unuzda kalan veriler",
         "paragraphs": [
-          "Uygulama ayarlarınızı (mezhebiniz ve hesaplama yönteminiz dahil), bulduğu son yeri ya da seçtiğiniz şehri (adı ve koordinatları), tesbih sayacını, Takip sekmesindeki kayıtlarınızı (oruçlu olarak işaretlediğiniz günler, kaza oruçları ve kaza namazları) ve Kur'an'daki yer imlerinizle okuma ilerlemenizi saklar. Bunlar herhangi bir sunucuda değil, iPhone'unuzda tutulur ve iCloud üzerinden eşzamanlanmaz. Diğer uygulama verileri gibi bunlar da, yedek alıyorsanız iPhone'unuzun yedeklerine (iCloud Yedekleme ya da bilgisayarınızdaki bir yedek) dahil edilir. Uygulamayı sildiğinizde bunlar iPhone'unuzdan kaldırılır.",
+          "Uygulama ayarlarınızı (mezhebiniz ve hesaplama yönteminiz dahil), bulduğu son yeri ya da seçtiğiniz şehri (adı ve koordinatları), tesbih sayacını, Takip sekmesindeki kayıtlarınızı (oruçlu olarak işaretlediğiniz günler, kaza oruçları ve kaza namazları) ve Kur'an'daki okuma ilerlemenizi saklar. Bunlar herhangi bir sunucuda değil, iPhone'unuzda tutulur ve iCloud üzerinden eşzamanlanmaz. Diğer uygulama verileri gibi bunlar da, yedek alıyorsanız iPhone'unuzun yedeklerine (iCloud Yedekleme ya da bilgisayarınızdaki bir yedek) dahil edilir. Uygulamayı sildiğinizde bunlar iPhone'unuzdan kaldırılır.",
           "Hatırlatmalar doğrudan iPhone'unuzda planlanır; onları hiçbir sunucu göndermez. Kilit ekranındaki iftar sayacı ve sıradaki vakit de iPhone'unuzda çalışır."
         ]
       },
@@ -141,7 +141,7 @@
   },
   "support": {
     "title": "Destek",
-    "intro": "Bir soru, bir sorun ya da camiinizin takvimine uymayan bir vakit mi var? ms@psbv.org adresine e-posta gönderin.",
+    "intro": "Bir soru, bir sorun ya da camiinizin takvimine uymayan bir vakit mi var? support@qibla.dev adresine e-posta gönderin.",
     "faqHeading": "Sık sorulan sorular",
     "faq": [
       {
@@ -181,7 +181,7 @@
           "VoiceOver: Her düğmenin, simgenin ve denetimin sesli bir etiketi vardır; kıble ekranı da size hangi yöne dönmeniz gerektiğini söyler. Kur'an Arapça bir sesle okunur ve sayfadaki her ayet, onu kopyalamak, paylaşmak ya da dinlemek için açan bir eylemdir (rotorda).",
           "Sesle Denetim: Her denetimin, ekranda gördüğünüze uyan ve söyleyebileceğiniz bir adı vardır. Bir Kur'an sayfasının eylemleriyle ayetlerinden birini açabilirsiniz.",
           "Daha büyük metin: Yazılar, iPhone'unuzda seçtiğiniz metin boyutuyla birlikte en büyük erişilebilirlik boyutlarına kadar büyür. Bu boyutlarda aylık vakitler tablosu yedi sütun yerine her günün vakitlerini liste olarak gösterir. Kur'an sayfasının menüsünde ayrıca kendi metin boyutu vardır. Tesbih sayacı, dairesini dolduruncaya kadar büyür.",
-          "Koyu arayüz: Uygulama koyu renklidir ve açık renk yazı kullanır. Kur'an açık renkli bir kâğıt sayfada açılır; ayarlarından Gece'yi seçerseniz koyu kalır.",
+          "Koyu arayüz: Uygulama koyu renklidir ve açık renk yazı kullanır; Kur'an da öyle. Açık renkli bir kâğıt sayfa için ayarlarından Kâğıt'ı seçin.",
           "Kontrast: Tüm yazıların arka plana göre kontrastı en az 6,3’e 1’dir. Web İçeriği Erişilebilirlik Yönergeleri (WCAG) 4,5’e 1 ister.",
           "Yalnızca renkle değil: Sıradaki vaktin ve dini günler takvimindeki sıradaki günün önünde bir baklava işareti vardır, tablolarda bugünün satırı kalın yazılır ve seçili seçeneğin yanında bir onay işareti bulunur. Kapalı bir zil üstü çizili gösterilir. Kur'an'da okunan ya da aranan ayet vurgulanır; erişilebilirlik ayarlarında renk olmadan ayırt etme açıksa ayrıca altı çizilir.",
           "Hareketi Azalt: iPhone’unuzun erişilebilirlik ayarlarında bu açıksa pusula, kurulum ekranları ve tesbih sayacı artık hareket etmez; Kur'an sayfaları da kıvrılmak yerine kayar.",
@@ -206,7 +206,7 @@
       {
         "heading": "Çalışmayan bir şey varsa bana yazın",
         "paragraphs": [
-          "Uygulamada görmesi, duyması, ulaşması ya da anlaması zor bir şey varsa lütfen ms@psbv.org adresine yazın. iPhone modelinizi, iOS sürümünüzü ve kullandığınız erişilebilirlik ayarlarını belirtirseniz yardımcı olur."
+          "Uygulamada görmesi, duyması, ulaşması ya da anlaması zor bir şey varsa lütfen support@qibla.dev adresine yazın. iPhone modelinizi, iOS sürümünüzü ve kullandığınız erişilebilirlik ayarlarını belirtirseniz yardımcı olur."
         ]
       }
     ]

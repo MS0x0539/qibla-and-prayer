@@ -28,7 +28,7 @@
       {
         "heading": "Wie verantwoordelijk is",
         "paragraphs": [
-          "Ik, Melih Sivrikaya (ms@psbv.org), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up. Cloudflare beheert de audioserver van de app voor mij, als mijn verwerker, en Google is verantwoordelijk voor YouTube.",
+          "Ik, Melih Sivrikaya (support@qibla.dev), ben verantwoordelijk voor deze app en voor de persoonsgegevens die in dit privacybeleid worden beschreven. Volgens de Algemene verordening gegevensbescherming (AVG) ben ik daarmee de “verwerkingsverantwoordelijke”. Apple is verantwoordelijk voor zijn eigen diensten die de app gebruikt: Apple Kaarten, Siri, crashrapportage en iCloud-back-up. Cloudflare beheert de audioserver van de app voor mij, als mijn verwerker, en Google is verantwoordelijk voor YouTube.",
           "De app vraagt bij Apple Kaarten en de audioserver alleen op wat nodig is voor de functies die je gebruikt. Ik laat de audioserver draaien, beantwoord e-mails en gebruik de rapporten die Apple aan mij doorgeeft. Dat doe ik omdat ik een gerechtvaardigd belang heb bij het aanbieden, ondersteunen en verbeteren van de app (artikel 6 lid 1 sub f AVG)."
         ]
       },
@@ -43,7 +43,7 @@
       {
         "heading": "Wat op je iPhone blijft",
         "paragraphs": [
-          "De app bewaart je instellingen (waaronder je school en berekeningsmethode), de laatste plaats die hij heeft gevonden of de stad die je hebt gekozen (naam en coördinaten), de tasbih-teller, wat je bijhoudt (de dagen die je als vastendag hebt gemarkeerd, de in te halen vastendagen en de gemiste gebeden), en je bladwijzers en leesvoortgang in de Koran. Ze staan op je iPhone, niet op een server, en worden niet via iCloud gesynchroniseerd. Net als andere appgegevens zitten ze in de back-ups van je iPhone (een iCloud-back-up of een back-up op je computer), als je die maakt. Als je de app verwijdert, worden ze van je iPhone gewist.",
+          "De app bewaart je instellingen (waaronder je school en berekeningsmethode), de laatste plaats die hij heeft gevonden of de stad die je hebt gekozen (naam en coördinaten), de tasbih-teller, wat je bijhoudt (de dagen die je als vastendag hebt gemarkeerd, de in te halen vastendagen en de gemiste gebeden), en je leesvoortgang in de Koran. Ze staan op je iPhone, niet op een server, en worden niet via iCloud gesynchroniseerd. Net als andere appgegevens zitten ze in de back-ups van je iPhone (een iCloud-back-up of een back-up op je computer), als je die maakt. Als je de app verwijdert, worden ze van je iPhone gewist.",
           "Herinneringen worden op je iPhone zelf ingepland; er is geen server die ze verstuurt. Ook de iftar-aftelling en het volgende gebed op het toegangsscherm draaien op je iPhone."
         ]
       },
@@ -140,7 +140,7 @@
   },
   "support": {
     "title": "Hulp",
-    "intro": "Een vraag, een probleem of een tijd die niet overeenkomt met die van je moskee? Mail naar ms@psbv.org.",
+    "intro": "Een vraag, een probleem of een tijd die niet overeenkomt met die van je moskee? Mail naar support@qibla.dev.",
     "faqHeading": "Veelgestelde vragen",
     "faq": [
       {
@@ -180,7 +180,7 @@
           "VoiceOver: elke knop, elk pictogram en elk bedieningselement heeft een gesproken label, en het qiblascherm zegt welke kant je op moet draaien. De Koran wordt met een Arabische stem gelezen, en elk vers op een pagina is een actie (in de rotor) die het vers opent om te kopiëren, te delen of af te spelen.",
           "Stembediening: elk bedieningselement heeft een naam die je kunt uitspreken en die past bij wat je ziet. Met de acties van een Koranpagina open je een van haar verzen.",
           "Grotere tekst: tekst wordt groter met de tekstgrootte van je iPhone, tot en met de grootste toegankelijkheidsgroottes. Bij die groottes toont het maandoverzicht per dag een lijst met tijden in plaats van zeven kolommen. De Koranpagina heeft in haar menu ook een eigen tekstgrootte. De teller van de tasbih groeit mee tot hij zijn cirkel vult.",
-          "Donkere weergave: de app is donker, met lichte tekst. De Koran opent op een lichte papieren pagina; kies Nacht in de instellingen en hij blijft donker.",
+          "Donkere weergave: de app is donker, met lichte tekst, en de Koran ook. Voor een lichte papieren pagina kies je Papier in de instellingen.",
           "Contrast: alle tekst heeft een contrast van minstens 6,3 op 1 met de achtergrond. De Richtlijnen voor Toegankelijkheid van Webcontent (WCAG) vragen 4,5 op 1.",
           "Niet alleen met kleur: het volgende gebed en de volgende dag in de islamitische kalender hebben een ruitje ervoor, de rij van vandaag is vet in de tabellen en een gekozen optie heeft een vinkje. Een bel die uit staat, is doorgestreept. In de Koran is het vers dat wordt voorgedragen of dat je hebt gezocht gemarkeerd, en ook onderstreept als Onderscheid zonder kleur aan staat.",
           "Verminder beweging: als dit aan staat in de toegankelijkheidsinstellingen van je iPhone, bewegen het kompas, de stappen bij het instellen en de tasbih-teller niet meer, en schuiven de pagina's van de Koran in plaats van om te slaan.",
@@ -205,7 +205,7 @@
       {
         "heading": "Laat me weten wat niet werkt",
         "paragraphs": [
-          "Is iets in de app moeilijk te zien, te horen, te bereiken of te begrijpen? Mail dan naar ms@psbv.org. Het helpt als je je iPhone-model, je iOS-versie en de toegankelijkheidsinstellingen die je gebruikt erbij zet."
+          "Is iets in de app moeilijk te zien, te horen, te bereiken of te begrijpen? Mail dan naar support@qibla.dev. Het helpt als je je iPhone-model, je iOS-versie en de toegankelijkheidsinstellingen die je gebruikt erbij zet."
         ]
       }
     ]

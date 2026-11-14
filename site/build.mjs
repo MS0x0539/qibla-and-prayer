@@ -13,7 +13,7 @@ const languages = ORDER.filter((code) => readdirSync(join(here, 'content')).incl
 const escape = (text) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 // The email address and Apple's policy become links; everything else is plain text.
 const linked = (text) => escape(text)
-  .replace(/ms@psbv\.org/g, '<a href="mailto:ms@psbv.org">ms@psbv.org</a>')
+  .replace(/support@qibla\.dev/g, '<a href="mailto:support@qibla.dev">support@qibla.dev</a>')
   .replace(/apple\.com\/legal\/privacy/g, '<a href="https://www.apple.com/legal/privacy/">apple.com/legal/privacy</a>');
 
 // The app on the App Store; this link opens the store in the visitor's own country.
@@ -211,7 +211,7 @@ Disallow: /
 
 // RFC 9116: where to report a security problem. Expires must stay within a year: rebuild before 11 November 2027.
 mkdirSync(join(here, 'public', '.well-known'), { recursive: true });
-writeFileSync(join(here, 'public', '.well-known', 'security.txt'), `Contact: mailto:ms@psbv.org
+writeFileSync(join(here, 'public', '.well-known', 'security.txt'), `Contact: mailto:support@qibla.dev
 Expires: 2027-11-11T23:00:00Z
 Preferred-Languages: en
 Canonical: https://qibla.dev/.well-known/security.txt

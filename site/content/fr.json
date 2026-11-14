@@ -28,7 +28,7 @@
       {
         "heading": "Qui est responsable",
         "paragraphs": [
-          "Moi, Melih Sivrikaya (ms@psbv.org), je suis responsable de cette app et des données personnelles décrites dans cette politique. Au sens du règlement général sur la protection des données (RGPD), je suis le « responsable du traitement ». Apple est responsable de ses propres services utilisés par l’app : Plans d’Apple, Siri, les rapports de plantage et Sauvegarde iCloud. Cloudflare fait fonctionner le serveur audio de l’app pour moi, en tant que sous-traitant, et Google est responsable de YouTube.",
+          "Moi, Melih Sivrikaya (support@qibla.dev), je suis responsable de cette app et des données personnelles décrites dans cette politique. Au sens du règlement général sur la protection des données (RGPD), je suis le « responsable du traitement ». Apple est responsable de ses propres services utilisés par l’app : Plans d’Apple, Siri, les rapports de plantage et Sauvegarde iCloud. Cloudflare fait fonctionner le serveur audio de l’app pour moi, en tant que sous-traitant, et Google est responsable de YouTube.",
           "L’app ne demande à Plans d’Apple et au serveur audio que ce qui est nécessaire aux fonctions que vous utilisez. Je fais fonctionner le serveur audio, je réponds aux e-mails et j’utilise les rapports qu’Apple me transmet sur la base de mon intérêt légitime à proposer l’app, à fournir une assistance pour elle et à l’améliorer (article 6, paragraphe 1, point f), du RGPD)."
         ]
       },
@@ -43,7 +43,7 @@
       {
         "heading": "Ce qui reste sur votre iPhone",
         "paragraphs": [
-          "L’app enregistre vos réglages (dont votre école et votre méthode de calcul), le dernier lieu qu’elle a trouvé ou la ville que vous avez choisie (nom et coordonnées), le compteur du tasbih, le suivi (les jours que vous avez marqués comme jours de jeûne, les jeûnes à rattraper et les prières manquées), ainsi que vos signets et votre progression de lecture du Coran. Ces données sont conservées sur votre iPhone, et non sur un serveur. Elles ne sont pas synchronisées via iCloud. Comme les autres données d’apps, elles sont incluses dans les sauvegardes de votre iPhone (Sauvegarde iCloud ou sauvegarde sur votre ordinateur), si vous en faites. Si vous supprimez l’app, elles sont effacées de votre iPhone.",
+          "L’app enregistre vos réglages (dont votre école et votre méthode de calcul), le dernier lieu qu’elle a trouvé ou la ville que vous avez choisie (nom et coordonnées), le compteur du tasbih, le suivi (les jours que vous avez marqués comme jours de jeûne, les jeûnes à rattraper et les prières manquées), ainsi que votre progression de lecture du Coran. Ces données sont conservées sur votre iPhone, et non sur un serveur. Elles ne sont pas synchronisées via iCloud. Comme les autres données d’apps, elles sont incluses dans les sauvegardes de votre iPhone (Sauvegarde iCloud ou sauvegarde sur votre ordinateur), si vous en faites. Si vous supprimez l’app, elles sont effacées de votre iPhone.",
           "Les rappels sont programmés directement sur votre iPhone ; aucun serveur ne les envoie. Le compte à rebours de l’iftar et la prochaine prière sur l’écran verrouillé fonctionnent eux aussi sur votre iPhone."
         ]
       },
@@ -140,7 +140,7 @@
   },
   "support": {
     "title": "Assistance",
-    "intro": "Une question, un problème ou un horaire qui ne correspond pas à celui de votre mosquée ? Écrivez à ms@psbv.org.",
+    "intro": "Une question, un problème ou un horaire qui ne correspond pas à celui de votre mosquée ? Écrivez à support@qibla.dev.",
     "faqHeading": "Questions fréquentes",
     "faq": [
       {
@@ -180,7 +180,7 @@
           "VoiceOver : chaque bouton, icône et commande a une étiquette parlée, et l’écran de la Qibla vous indique de quel côté vous tourner. Le Coran est lu avec une voix arabe, et chaque verset d’une page est une action (dans le rotor) qui l’ouvre pour le copier, le partager ou l’écouter.",
           "Commande vocale : chaque commande a un nom que vous pouvez prononcer, conforme à ce que vous voyez. Les actions d’une page du Coran permettent d’ouvrir chacun de ses versets.",
           "Texte plus grand : le texte s’agrandit avec la taille de texte de votre iPhone, jusqu’aux plus grandes tailles d’accessibilité. À ces tailles, le calendrier du mois présente les horaires de chaque jour en liste plutôt qu’en sept colonnes. La page du Coran a aussi sa propre taille de texte dans son menu. Le compteur du tasbih grandit jusqu’à remplir son cercle.",
-          "Interface sombre : l’app est sombre, avec du texte clair. Le Coran s’ouvre sur une page claire couleur papier ; choisissez Nuit dans ses réglages et il reste sombre.",
+          "Interface sombre : l’app est sombre, avec du texte clair, et le Coran aussi. Pour une page claire couleur papier, choisissez Papier dans ses réglages.",
           "Contraste : tout le texte a un contraste d’au moins 6,3 pour 1 avec son arrière-plan. Les Règles pour l’accessibilité des contenus Web (WCAG) demandent 4,5 pour 1.",
           "Pas seulement par la couleur : la prochaine prière et la prochaine date du calendrier hégirien sont précédées d’un losange, la ligne d’aujourd’hui est en gras dans les tableaux, et un choix sélectionné porte une coche. Une cloche désactivée est barrée. Dans le Coran, le verset récité ou recherché est surligné, et aussi souligné lorsque « Différencier sans couleur » est activé.",
           "Réduire les animations : lorsque ce réglage est activé dans les réglages d’accessibilité de votre iPhone, la boussole, la configuration et le compteur de tasbih ne s’animent plus, et les pages du Coran glissent au lieu de tourner.",
@@ -205,7 +205,7 @@
       {
         "heading": "Dites-moi ce qui ne fonctionne pas",
         "paragraphs": [
-          "Si quelque chose dans l’app est difficile à voir, à entendre, à atteindre ou à comprendre, écrivez-moi à ms@psbv.org. Indiquez si possible votre modèle d’iPhone, votre version d’iOS et les réglages d’accessibilité que vous utilisez."
+          "Si quelque chose dans l’app est difficile à voir, à entendre, à atteindre ou à comprendre, écrivez-moi à support@qibla.dev. Indiquez si possible votre modèle d’iPhone, votre version d’iOS et les réglages d’accessibilité que vous utilisez."
         ]
       }
     ]
