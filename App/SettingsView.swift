@@ -10,91 +10,89 @@ struct SettingsView: View {
 
     var body: some View {
         @Bindable var model = model
-        NavigationStack {
-            Form {
-                Section {
-                    Picker(selection: $model.settings.language) {
-                        ForEach(AppLanguage.allCases) { language in
-                            Text(verbatim: language.nativeName).tag(language)
-                        }
+        Form {
+            Section {
+                Picker(selection: $model.settings.language) {
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(verbatim: language.nativeName).tag(language)
+                    }
+                } label: {
+                    Label("Language", systemImage: "globe")
+                }
+                .pickerStyle(.navigationLink)
+            } footer: {
+                Text("Changes the language of this app only. Messages from iOS itself, such as permission requests, follow the language of your iPhone.")
+            }
+            .listRowBackground(Theme.card)
+
+            Section {
+                NavigationLink { LocationSettingsPage() } label: {
+                    LabeledContent {
+                        Text(verbatim: placeName)
                     } label: {
-                        Label("Language", systemImage: "globe")
+                        Label("Location", systemImage: "location")
                     }
-                    .pickerStyle(.navigationLink)
-                } footer: {
-                    Text("Changes the language of this app only. Messages from iOS itself, such as permission requests, follow the language of your iPhone.")
                 }
-                .listRowBackground(Theme.card)
+                NavigationLink { PrayerTimesSettingsPage() } label: {
+                    LabeledContent {
+                        Text(verbatim: model.settings.methodSummary)
+                    } label: {
+                        Label("Prayer times", systemImage: "clock")
+                    }
+                }
+                NavigationLink { NotificationSettingsPage() } label: {
+                    Label("Notifications", systemImage: "bell")
+                }
+                NavigationLink { LockScreenSettingsPage() } label: {
+                    Label("Lock Screen", systemImage: "lock.iphone")
+                }
+                NavigationLink { AppIconSettingsPage() } label: {
+                    Label("App icon", systemImage: "app")
+                }
+                NavigationLink { SiriSettingsPage() } label: {
+                    Label("Siri", systemImage: "mic")
+                }
+            }
+            .listRowBackground(Theme.card)
 
-                Section {
-                    NavigationLink { LocationSettingsPage() } label: {
-                        LabeledContent {
-                            Text(verbatim: placeName)
-                        } label: {
-                            Label("Location", systemImage: "location")
-                        }
-                    }
-                    NavigationLink { PrayerTimesSettingsPage() } label: {
-                        LabeledContent {
-                            Text(verbatim: model.settings.methodSummary)
-                        } label: {
-                            Label("Prayer times", systemImage: "clock")
-                        }
-                    }
-                    NavigationLink { NotificationSettingsPage() } label: {
-                        Label("Notifications", systemImage: "bell")
-                    }
-                    NavigationLink { LockScreenSettingsPage() } label: {
-                        Label("Lock Screen", systemImage: "lock.iphone")
-                    }
-                    NavigationLink { AppIconSettingsPage() } label: {
-                        Label("App icon", systemImage: "app")
-                    }
-                    NavigationLink { SiriSettingsPage() } label: {
-                        Label("Siri", systemImage: "mic")
-                    }
+            Section {
+                Button("Run setup again") { confirmingReset = true }
+            } footer: {
+                Text("Choose your location, calculation method and reminders again, step by step.")
+            }
+            .listRowBackground(Theme.card)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Theme.background.ignoresSafeArea())
+        .navigationTitle("Settings")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink { AboutPage() } label: {
+                    Image(systemName: "questionmark.circle")
                 }
-                .listRowBackground(Theme.card)
-
-                Section {
-                    Button("Run setup again") { confirmingReset = true }
-                } footer: {
-                    Text("Choose your location, calculation method and reminders again, step by step.")
-                }
-                .listRowBackground(Theme.card)
+                .accessibilityLabel(Text("About"))
             }
-            .scrollContentBackground(.hidden)
-            .background(Theme.background.ignoresSafeArea())
-            .navigationTitle("Settings")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink { AboutPage() } label: {
-                        Image(systemName: "questionmark.circle")
-                    }
-                    .accessibilityLabel(Text("About"))
-                }
-            }
-            // Here, not on the pages: this view stays alive under them, so it sees every change.
-            .onChange(of: model.settings.useCurrentLocation) { _, isOn in
-                if isOn { model.location.start() }
-                model.applyAutomaticChoices()
-            }
-            .onChange(of: model.settings.language) { model.applyAutomaticChoices() }
-            .onChange(of: model.settings.reminderMinutes) { _, minutes in
-                if minutes > 0 { model.notificationsWanted() }
-            }
-            .onChange(of: model.settings.jumuahReminder) { _, isOn in
-                if isOn { model.notificationsWanted() }
-            }
-            .onChange(of: model.settings.ramadanReminders) { _, isOn in
-                if isOn { model.notificationsWanted() }
-            }
-            .confirmationDialog("Run setup again?", isPresented: $confirmingReset, titleVisibility: .visible) {
-                Button("Start setup", role: .destructive) { model.resetSetup() }
-                Button("Cancel", role: .cancel) {}
-            } message: {
-                Text("Your settings go back to the suggestions for your region, and the setup starts again.")
-            }
+        }
+        // Here, not on the pages: this view stays alive under them, so it sees every change.
+        .onChange(of: model.settings.useCurrentLocation) { _, isOn in
+            if isOn { model.location.start() }
+            model.applyAutomaticChoices()
+        }
+        .onChange(of: model.settings.language) { model.applyAutomaticChoices() }
+        .onChange(of: model.settings.reminderMinutes) { _, minutes in
+            if minutes > 0 { model.notificationsWanted() }
+        }
+        .onChange(of: model.settings.jumuahReminder) { _, isOn in
+            if isOn { model.notificationsWanted() }
+        }
+        .onChange(of: model.settings.ramadanReminders) { _, isOn in
+            if isOn { model.notificationsWanted() }
+        }
+        .confirmationDialog("Run setup again?", isPresented: $confirmingReset, titleVisibility: .visible) {
+            Button("Start setup", role: .destructive) { model.resetSetup() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Your settings go back to the suggestions for your region, and the setup starts again.")
         }
     }
 

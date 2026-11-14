@@ -2517,6 +2517,40 @@
         }
       }
     },
+    "Downloads": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التنزيلات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Téléchargements"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloads"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirilenler"
+          }
+        }
+      }
+    },
     "Downloads stay in the app until you remove them, and play without internet.": {
       "localizations": {
         "ar": {
@@ -3027,6 +3061,40 @@
         }
       }
     },
+    "Feedback": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملاحظات"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avis"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geri bildirim"
+          }
+        }
+      }
+    },
     "Finding your location": {
       "localizations": {
         "ar": {
@@ -3533,6 +3601,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Telefonunuzu dik tutun ve yıldız ortaya gelene kadar dönün."
+          }
+        }
+      }
+    },
+    "Home": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرئيسية"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accueil"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana sayfa"
           }
         }
       }
@@ -5033,6 +5135,40 @@
         }
       }
     },
+    "Mail isn't set up on this iPhone. Copy the address to write from another app.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البريد غير مُعدّ على هذا الـ iPhone. انسخ العنوان لتكتب من تطبيق آخر."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mail ist auf diesem iPhone nicht eingerichtet. Kopiere die Adresse, um aus einer anderen App zu schreiben."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mail n’est pas configuré sur cet iPhone. Copiez l’adresse pour écrire depuis une autre app."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mail is niet ingesteld op deze iPhone. Kopieer het adres om vanuit een andere app te schrijven."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu iPhone’da Mail ayarlı değil. Başka bir uygulamadan yazmak için adresi kopyalayın."
+          }
+        }
+      }
+    },
     "Makkah live": {
       "localizations": {
         "ar": {
@@ -5305,6 +5441,40 @@
         }
       }
     },
+    "Menu": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القائمة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menü"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menü"
+          }
+        }
+      }
+    },
     "Midnight": {
       "localizations": {
         "ar": {
@@ -5369,6 +5539,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Camiinizin takvimine uyması için hesaplanan vakte eklenen dakikalar."
+          }
+        }
+      }
+    },
+    "Missed prayers": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصلوات الفائتة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verpasste Gebete"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prières manquées"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemiste gebeden"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaza namazları"
           }
         }
       }
@@ -5471,6 +5675,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Moonsighting Committee"
+          }
+        }
+      }
+    },
+    "More": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المزيد"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mehr"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meer"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha fazla"
           }
         }
       }
@@ -7273,6 +7511,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Namaz vakitleri bulunduğunuz yere göre değişir ve pusulanın kıbleyi gösterebilmesi için konumunuz gerekir. Uygulama konumunuzu, yerin adını bulan, haritayı gösteren ve yakındaki camileri arayan Apple Haritalar dışında kimseyle paylaşmaz."
+          }
+        }
+      }
+    },
+    "Prayer tracker": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متابعة الصلاة"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebets-Tracker"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivi des prières"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebeden bijhouden"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Namaz takibi"
           }
         }
       }
@@ -10741,40 +11013,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Toplam %@"
-          }
-        }
-      }
-    },
-    "Tracker": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "المتابعة"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tracker"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Suivi"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bijhouden"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Takip"
           }
         }
       }

@@ -149,7 +149,7 @@ struct QuranView: View {
                 ReaderSettingsView(page: page, night: $night, autoNight: $autoNight, textSize: $textSize,
                                    pageImage: pager.snapshot())
             }
-            // A page open for 10 seconds counts as read, for the khatm in Ibadah; leafing through doesn't.
+            // A page open for 10 seconds counts as read, for the khatm (Menu → Khatm); leafing through doesn't.
             .task(id: page) {
                 try? await Task.sleep(for: .seconds(QuranProgress.readingSeconds))
                 guard !Task.isCancelled else { return }

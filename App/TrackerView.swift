@@ -1,23 +1,18 @@
 import SwiftUI
 
-/// Fasts and missed (qada) prayers, kept only on this iPhone.
-struct TrackerView: View {
+/// Today's fast and iftar, kept only on this iPhone. (Menu → Prayer tracker)
+struct PrayerTrackerView: View {
     @Environment(AppModel.self) private var model
     /// The days fasted, as "2026-11-12" separated by commas.
     @AppStorage("fastingDays") private var fastingDays = ""
-    @AppStorage("fastsToMakeUp") private var fastsToMakeUp = 0
-    @AppStorage(QuranProgress.khatmPagesKey, store: SharedStore.defaults) private var khatmPages = ""
-    @AppStorage(QuranProgress.khatmCountKey, store: SharedStore.defaults) private var khatmCount = 0
-    @AppStorage(QuranProgress.todayKey, store: SharedStore.defaults) private var quranToday = ""
-    @State private var confirmingNewKhatm = false
 
     var body: some View {
-        Group {
-            // Redrawn every minute, so iftar and midnight ("today") arrive while the tab is open.
-            TimelineView(.everyMinute) { context in
-                form(now: context.date)
-            }
+        // Redrawn every minute, so iftar and midnight ("today") arrive while the page is open.
+        TimelineView(.everyMinute) { context in
+            form(now: context.date)
         }
+        .trackerPage("Prayer tracker")
+        .sensoryFeedback(.success, trigger: model.countdownIftar) { _, new in new != nil }
     }
 
     private func form(now: Date) -> some View {
@@ -53,64 +48,7 @@ struct TrackerView: View {
                 Text("Days fasted this year: \(Formats.number(days.filter { $0.hasPrefix(today.prefix(4)) }.count))")
             }
             .listRowBackground(Theme.card)
-
-            Section {
-                let read = QuranProgress.pages(khatmPages).count
-                LabeledContent("Pages read today", value: Formats.number(QuranProgress.pagesRead(on: now, in: quranToday).count))
-                VStack(alignment: .leading, spacing: 8) {
-                    LabeledContent("Khatm", value: "\(Formats.number(read)) / \(Formats.number(Quran.pageCount))")
-                    ProgressView(value: Double(read), total: Double(Quran.pageCount))
-                        .tint(Theme.gold)
-                        .accessibilityHidden(true)
-                }
-                if khatmCount > 0 {
-                    LabeledContent("Khatms completed", value: Formats.number(khatmCount))
-                }
-                Button("Start a new khatm") { confirmingNewKhatm = true }
-                    .disabled(read == 0)
-            } header: {
-                Text("Qur'an")
-            } footer: {
-                Text("A page counts as read once it has been open for 10 seconds. All 604 pages complete a khatm.")
-            }
-            .listRowBackground(Theme.card)
-
-            Section {
-                Stepper(value: $fastsToMakeUp, in: 0...999) {
-                    LabeledContent("Fasts to make up", value: Formats.number(fastsToMakeUp))
-                }
-            } footer: {
-                Text("Days of Ramadan you missed and still have to make up.")
-            }
-            .listRowBackground(Theme.card)
-
-            Section {
-                ForEach(PrayerKind.allCases.filter(\.isPrayer)) { kind in
-                    // The prayer, not the time: Turkish calls the time İmsak and the prayer Sabah.
-                    QadaRow(key: kind.rawValue, title: kind == .fajr
-                        ? String(localized: "qada.fajr", defaultValue: "Fajr", bundle: .app) : kind.title)
-                }
-                // Witr is wajib for Hanafis, so it is made up too.
-                if model.settings.school == .hanafi {
-                    QadaRow(key: "witr", title: String(localized: "Witr", bundle: .app))
-                }
-            } header: {
-                Text("Missed prayers (qada)")
-            } footer: {
-                Text("Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.")
-            }
-            .listRowBackground(Theme.card)
         }
-        .scrollContentBackground(.hidden)
-        .background(Theme.background.ignoresSafeArea())
-        .confirmationDialog("Start a new khatm?", isPresented: $confirmingNewKhatm, titleVisibility: .visible) {
-            Button("Start a new khatm", role: .destructive) { khatmPages = "" }
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("The pages read so far in this khatm are cleared.")
-        }
-        .navigationTitle("Tracker")
-        .sensoryFeedback(.success, trigger: model.countdownIftar) { _, new in new != nil }
     }
 
     /// The day in the place the times are for, as stored in `fastingDays` ("2026-11-12").
@@ -133,6 +71,94 @@ struct TrackerView: View {
             if on { updated.insert(day) } else { updated.remove(day) }
             fastingDays = updated.sorted().joined(separator: ",")
         }
+    }
+}
+
+/// Prayers and fasts still to make up, kept only on this iPhone. (Menu → Missed prayers)
+struct MissedPrayersView: View {
+    @Environment(AppModel.self) private var model
+    @AppStorage("fastsToMakeUp") private var fastsToMakeUp = 0
+
+    var body: some View {
+        Form {
+            Section {
+                ForEach(PrayerKind.allCases.filter(\.isPrayer)) { kind in
+                    // The prayer, not the time: Turkish calls the time İmsak and the prayer Sabah.
+                    QadaRow(key: kind.rawValue, title: kind == .fajr
+                        ? String(localized: "qada.fajr", defaultValue: "Fajr", bundle: .app) : kind.title)
+                }
+                // Witr is wajib for Hanafis, so it is made up too.
+                if model.settings.school == .hanafi {
+                    QadaRow(key: "witr", title: String(localized: "Witr", bundle: .app))
+                }
+            } header: {
+                Text("Missed prayers (qada)")
+            } footer: {
+                Text("Add a prayer you missed, and take it off once you have made it up. All of this stays on your iPhone.")
+            }
+            .listRowBackground(Theme.card)
+
+            Section {
+                Stepper(value: $fastsToMakeUp, in: 0...999) {
+                    LabeledContent("Fasts to make up", value: Formats.number(fastsToMakeUp))
+                }
+            } footer: {
+                Text("Days of Ramadan you missed and still have to make up.")
+            }
+            .listRowBackground(Theme.card)
+        }
+        .trackerPage("Missed prayers")
+    }
+}
+
+/// The Qur'an read: today's pages and the khatm. (Menu → Khatm)
+struct KhatmView: View {
+    @AppStorage(QuranProgress.khatmPagesKey, store: SharedStore.defaults) private var khatmPages = ""
+    @AppStorage(QuranProgress.khatmCountKey, store: SharedStore.defaults) private var khatmCount = 0
+    @AppStorage(QuranProgress.todayKey, store: SharedStore.defaults) private var quranToday = ""
+    @State private var confirmingNewKhatm = false
+
+    var body: some View {
+        // Redrawn every minute, so midnight starts a new "today".
+        TimelineView(.everyMinute) { context in
+            Form {
+                Section {
+                    let read = QuranProgress.pages(khatmPages).count
+                    LabeledContent("Pages read today",
+                                   value: Formats.number(QuranProgress.pagesRead(on: context.date, in: quranToday).count))
+                    VStack(alignment: .leading, spacing: 8) {
+                        LabeledContent("Khatm", value: "\(Formats.number(read)) / \(Formats.number(Quran.pageCount))")
+                        ProgressView(value: Double(read), total: Double(Quran.pageCount))
+                            .tint(Theme.gold)
+                            .accessibilityHidden(true)
+                    }
+                    if khatmCount > 0 {
+                        LabeledContent("Khatms completed", value: Formats.number(khatmCount))
+                    }
+                    Button("Start a new khatm") { confirmingNewKhatm = true }
+                        .disabled(read == 0)
+                } footer: {
+                    Text("A page counts as read once it has been open for 10 seconds. All 604 pages complete a khatm.")
+                }
+                .listRowBackground(Theme.card)
+            }
+        }
+        .trackerPage("Khatm")
+        .confirmationDialog("Start a new khatm?", isPresented: $confirmingNewKhatm, titleVisibility: .visible) {
+            Button("Start a new khatm", role: .destructive) { khatmPages = "" }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("The pages read so far in this khatm are cleared.")
+        }
+    }
+}
+
+private extension View {
+    /// One of the tracker's pages: the app's background and its title.
+    func trackerPage(_ title: LocalizedStringKey) -> some View {
+        scrollContentBackground(.hidden)
+            .background(Theme.background.ignoresSafeArea())
+            .navigationTitle(title)
     }
 }
 

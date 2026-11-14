@@ -11,13 +11,18 @@ final class AccessibilityAuditTests: XCTestCase {
         ("setup-location", ["-setupStep", "2"]),
         ("setup-method", ["-setupStep", "3"]),
         ("setup-lock-screen", ["-setupStep", "5"]),
+        ("home", ["-skipOnboarding", "YES", "-startTab", "home"]),
         ("times", ["-skipOnboarding", "YES", "-startTab", "times"]),
         ("qibla", ["-skipOnboarding", "YES", "-startTab", "qibla", "-demoHeading", "100"]),
         ("quran", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranNight", "NO", "-quranPage", "42", "-tips", "hide"]),
         ("quran-night", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranPage", "42", "-quranNight", "YES", "-tips", "hide"]),
-        ("tasbih", ["-skipOnboarding", "YES", "-startTab", "ibadah", "-ibadahPart", "tasbih"]),
-        ("tracker", ["-skipOnboarding", "YES", "-startTab", "ibadah", "-ibadahPart", "tracker"]),
-        ("settings", ["-skipOnboarding", "YES", "-startTab", "settings"]),
+        ("menu", ["-skipOnboarding", "YES", "-startTab", "menu"]),
+        ("tasbih", ["-skipOnboarding", "YES", "-startTab", "menu", "-menuPage", "tasbih"]),
+        ("tracker", ["-skipOnboarding", "YES", "-startTab", "menu", "-menuPage", "tracker"]),
+        ("missed", ["-skipOnboarding", "YES", "-startTab", "menu", "-menuPage", "missed"]),
+        ("khatm", ["-skipOnboarding", "YES", "-startTab", "menu", "-menuPage", "khatm"]),
+        ("downloads", ["-skipOnboarding", "YES", "-startTab", "menu", "-menuPage", "downloads"]),
+        ("settings", ["-skipOnboarding", "YES", "-startTab", "menu", "-menuPage", "settings"]),
     ]
 
     private static let passes: [(size: String, types: XCUIAccessibilityAuditType)] = [

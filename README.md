@@ -27,8 +27,10 @@ On the App Store as "Wajh: Qibla & Prayer Times".
 - **Qibla:** a compass dial with the Kaaba marker on the rim; it turns gold with a haptic tap when
   the phone faces the Qibla.
 - **Map:** the Qibla as a line to the Kaaba, and mosques nearby.
-- **Ibadah:** the tasbih (a tap counter with haptics; free counting, the tasbihat after prayer 33/33/34, or one of
-  eight phrases shown in Arabic) and the tracker (Qur'an reading, fasts and missed prayers, kept on the phone).
+- **Home and Menu:** Home opens on the next prayer as the Lock Screen shows it. Menu holds the rest as tiles: the
+  tasbih (a tap counter with haptics; free counting, the tasbihat after prayer 33/33/34, or one of eight phrases shown
+  in Arabic), the prayer tracker (today's fast), missed prayers and fasts, the khatm, the Islamic calendar, mosques
+  nearby, Makkah live and the recitation downloads; feedback and Settings below. All kept on the phone.
 - **Controls:** Qibla and Tasbih buttons for Control Center, the Lock Screen and the Action button.
 - **Next prayer on the Lock Screen:** a Live Activity with a countdown (Settings → Lock Screen), moved on to the
   next prayer whenever the app runs.
@@ -36,7 +38,7 @@ On the App Store as "Wajh: Qibla & Prayer Times".
 - **Sky:** the top of the Prayer times screen takes the colour of the sky at that hour.
 - **Siri:** "When is Maghrib in Qibla & Prayer?" without opening the app.
 - **Iftar countdown:** on the Lock Screen and in the Dynamic Island (a Live Activity, from the Ramadan
-  card or the Tracker). The Next prayer widgets are built but off until the App Group is registered in
+  card or the Prayer tracker). The Next prayer widgets are built but off until the App Group is registered in
   the developer portal (see `Widgets/PrayerWidgets.swift`).
 - **Location:** the phone's location, or a city picked with Apple Maps search.
 
@@ -76,7 +78,9 @@ hand from the Actions tab.
 | `App/TasbihView.swift` | Tasbih counter and its dhikr presets |
 | `App/Quran/` | Qur'an text, reader, index, bookmarks and khatm (`QuranProgress`), recitation (`Recitation`) |
 | `App/OpenScreenIntent.swift` | Opens the app on a screen; used by the controls in `Widgets/Controls.swift` |
-| `App/TrackerView.swift` | Fasting and missed-prayer tracker |
+| `App/HomeView.swift` | Home tab |
+| `App/MenuView.swift` | Menu tab: the tiles, feedback, the recitation downloads |
+| `App/TrackerView.swift` | Prayer tracker, missed prayers and the khatm (pages of Menu) |
 | `App/PrayerIntents.swift` | Siri and Shortcuts (phrases in `App/*.lproj/AppShortcuts.strings`) |
 | `Widgets/PrayerWidgets.swift` | Widget extension: next-prayer widgets and the iftar Live Activity |
 | `App/IftarActivity.swift` | The Live Activity's data, shared by the app and the widgets |
@@ -86,6 +90,7 @@ hand from the Actions tab.
 | `App/IslamicCalendar.swift` | Islamic calendar and Ramadan timetable |
 | `App/Localizable.xcstrings` | All text in English, Dutch, German, French, Turkish and Arabic |
 
-Launch arguments used for screenshots: `-skipOnboarding YES`, `-startTab times|qibla|tasbih|tracker|settings`,
+Launch arguments used for screenshots: `-skipOnboarding YES`, `-startTab home|times|qibla|quran|menu`,
+`-menuPage tasbih|tracker|missed|khatm|downloads|settings`,
 `-showMap YES`,
 `-demoHeading <degrees>` (the Simulator has no compass).

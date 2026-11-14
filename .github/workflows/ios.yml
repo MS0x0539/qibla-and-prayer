@@ -105,9 +105,10 @@ jobs:
           }
           for lang in en nl tr ar; do
             case $lang in en) locale=en_US ;; nl) locale=nl_NL ;; tr) locale=tr_TR ;; ar) locale=ar_SA ;; esac
-            for tab in times qibla settings; do
+            for tab in home times qibla menu; do
               shot "$lang-$tab" -AppleLanguages "($lang)" -AppleLocale "$locale" -skipOnboarding YES -startTab "$tab" -demoHeading 100
             done
+            shot "$lang-settings" -AppleLanguages "($lang)" -AppleLocale "$locale" -skipOnboarding YES -startTab menu -menuPage settings
           done
           shot "de-times" -AppleLanguages "(de)" -AppleLocale de_DE -skipOnboarding YES -startTab times
           shot "fr-times" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab times
@@ -120,11 +121,13 @@ jobs:
           done
           # A poor heading: the calibration hint takes the advice's place, and the compass keeps its size.
           shot "en-qibla-low-accuracy" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -demoHeading 100 -demoAccuracy 30
-          for part in tasbih tracker; do
-            shot "en-$part" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart "$part"
+          # Menu's pages.
+          for page in tasbih tracker missed khatm downloads; do
+            shot "en-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab menu -menuPage "$page"
           done
-          shot "tr-tracker" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab ibadah -ibadahPart tracker
-          shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab ibadah -ibadahPart tasbih
+          shot "tr-missed" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab menu -menuPage missed
+          shot "ar-menu" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab menu
+          shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab menu -menuPage tasbih
           # The Qur'an as it opens, on the night page: Al-Fatiha, Al-Baqarah's first page and Ayat al-Kursi's page;
           # and Ayat al-Kursi's on paper.
           for page in 1 2 42; do
@@ -139,15 +142,15 @@ jobs:
           shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -tips hide -quranPage 2
           shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage 2 -quranSheet settings
           shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage 42 -quranSheet goto
-          shot "en-tasbih-after-prayer" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tasbih -tasbihDhikr afterPrayer -tasbihStep 1 -tasbihCount 21 -tasbihTotal 54
-          shot "en-tracker-khatm" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tracker -khatmPages "$(seq -s, 1 42)" -quranToday "$(date +%Y-%m-%d):40,41,42"
+          shot "en-tasbih-after-prayer" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab menu -menuPage tasbih -tasbihDhikr afterPrayer -tasbihStep 1 -tasbihCount 21 -tasbihTotal 54
+          shot "en-khatm-42" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab menu -menuPage khatm -khatmPages "$(seq -s, 1 42)" -quranToday "$(date +%Y-%m-%d):40,41,42"
           # The map loads tiles and mosques over the network: give it longer.
           xcrun simctl terminate "$UDID" "$BID" 2>/dev/null || true
           xcrun simctl launch "$UDID" "$BID" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showMap YES
           sleep 15
           xcrun simctl io "$UDID" screenshot "screenshots/en-map.png"
           shot "en-makkah-live" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -showLive YES
-          shot "fr-settings" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab settings
+          shot "fr-settings" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab menu -menuPage settings
           for step in 0 1 2 3 4 5 6; do
             shot "setup-$step-en" -AppleLanguages "(en)" -AppleLocale en_US -setupStep "$step"
           done

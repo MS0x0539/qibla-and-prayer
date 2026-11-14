@@ -37,24 +37,29 @@ struct QiblaApp: App {
 }
 
 enum AppTab: String, Hashable {
-    case times, qibla, quran, ibadah, settings
+    case home, times, qibla, quran, menu
 }
 
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage(WhatsNewView.seenKey) private var whatsNewSeen = ""
-    // `-startTab qibla` opens another tab first (used for CI screenshots).
-    @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .times
+    // `-startTab qibla` opens another tab first, `-menuPage tasbih` a page of Menu (used for CI screenshots).
+    @State private var tab = AppTab(rawValue: UserDefaults.standard.string(forKey: "startTab") ?? "") ?? .home
+    @State private var menuPath: [MenuPage] = UserDefaults.standard.string(forKey: "menuPage")
+        .flatMap { MenuPage(rawValue: $0) }.map { [$0] } ?? []
     /// Left by a control (Control Center, the Lock Screen, the Action button) that opened the app.
     @AppStorage(OpenScreenIntent.key) private var openScreen = ""
-    @AppStorage("ibadahPart") private var ibadahPart = IbadahPart.tasbih
 
     var body: some View {
         @Bindable var model = model
         TabView(selection: $tab) {
+            Tab("Home", systemImage: "house", value: AppTab.home) {
+                HomeView()
+                    .safeAreaInset(edge: .bottom) { MiniPlayer() }
+            }
             Tab("Prayer times", systemImage: "clock", value: AppTab.times) {
-                PrayerTimesView { tab = .settings }
+                PrayerTimesView { open(.settings) }
                     .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
             Tab("Qibla", systemImage: "safari", value: AppTab.qibla) {
@@ -64,12 +69,8 @@ struct RootView: View {
             Tab("Qur'an", systemImage: "book", value: AppTab.quran) {
                 QuranView()
             }
-            Tab("Ibadah", systemImage: "circle.dotted", value: AppTab.ibadah) {
-                IbadahView()
-                    .safeAreaInset(edge: .bottom) { MiniPlayer() }
-            }
-            Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {
-                SettingsView()
+            Tab("Menu", systemImage: "square.grid.2x2", value: AppTab.menu) {
+                MenuView(path: $menuPath)
                     .safeAreaInset(edge: .bottom) { MiniPlayer() }
             }
         }
@@ -96,15 +97,15 @@ struct RootView: View {
             case .qibla:
                 tab = .qibla
             case .tasbih:
-                ibadahPart = .tasbih
-                tab = .ibadah
+                open(.tasbih)
             case .quran:
                 tab = .quran
             }
         }
         .fullScreenCover(isPresented: .constant(!model.onboarded)) {
             SetupView {
-                tab = .times
+                tab = .home
+                menuPath = []
                 // New in this version is new to everyone after the setup.
                 whatsNewSeen = WhatsNewView.version
                 model.finishSetup()
@@ -138,6 +139,12 @@ struct RootView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
             if model.onboarded { model.refresh() }
         }
+    }
+
+    /// Menu, opened on one of its pages.
+    private func open(_ page: MenuPage) {
+        menuPath = [page]
+        tab = .menu
     }
 }
 
