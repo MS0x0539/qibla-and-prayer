@@ -11,12 +11,77 @@
     "support": "Support"
   },
   "home": {
-    "intro": "Prayer times that follow the mosques in your country, a Qibla compass, the whole Qur'an with ten reciters, Makkah live, widgets, a tasbih and a tracker for fasts and missed prayers. In English, Dutch, German, French, Turkish and Arabic.",
-    "points": [
-      "No ads, no subscriptions, no account.",
-      "Nothing about you is collected: your settings, tasbih and tracker stay on your iPhone. Place names and the map come from Apple Maps, recitations from the app's own audio server, and Makkah live from YouTube.",
-      "Times follow the method of your mosque or authority and were checked against the timetables authorities publish. You can move each time by a few minutes to match your mosque."
-    ],
+    "headline": "Turn your face to the Qibla",
+    "sentence": "An iPhone app for prayer times, the Qibla and the whole Qur'an. Free, without ads, and nothing about you is collected.",
+    "barStart": "Free · No ads · Nothing collected",
+    "barEnd": "For iPhone, in six languages",
+    "times": {
+      "heading": "Times as your mosque keeps them",
+      "text": "Wajh calculates the prayers the way the mosques in your country do, also when you travel, and follows Diyanet when the app is in Turkish. Each time can move a few minutes to match your mosque exactly, and the night shows its middle and its last third.",
+      "legend": "See the app in",
+      "alt": "The Prayer times screen"
+    },
+    "quran": {
+      "heading": "The mushaf, page by page",
+      "text": "All 604 pages of the Madinah mushaf, turned like paper. Ten reciters read verse by verse while the page follows them, also with the screen locked, and any part can be downloaded to listen offline.",
+      "legend": "Page",
+      "night": "Night",
+      "paper": "Paper",
+      "altNight": "Page 42 of the mushaf, at night",
+      "altPaper": "Page 42 of the mushaf, on paper"
+    },
+    "more": {
+      "heading": "Around the prayers",
+      "items": [
+        {
+          "title": "Tasbih",
+          "text": "The tasbihat after prayer, 33 · 33 · 34, and eight more phrases in Arabic.",
+          "alt": "The tasbih after prayer"
+        },
+        {
+          "title": "Tracker",
+          "text": "Fasts, missed prayers to make up, and your khatm of the Qur'an.",
+          "alt": "The tracker with a khatm under way"
+        },
+        {
+          "title": "Map",
+          "text": "The line to Mecca over the map, and the mosques around you.",
+          "alt": "The map of Amsterdam with mosques nearby"
+        },
+        {
+          "title": "Lock Screen",
+          "text": "The next prayer counting down, without opening the app.",
+          "alt": "Setup asking about the Lock Screen"
+        }
+      ]
+    },
+    "private": {
+      "heading": "Nothing about you is collected",
+      "text": "No account, no ads and no tracking. Your settings, tasbih and tracker stay on your iPhone. Place names and the map come from Apple Maps, the recitations from the app's own audio server, and Makkah live from YouTube."
+    },
+    "faq": {
+      "heading": "Questions",
+      "items": [
+        {
+          "q": "Is it free?",
+          "a": "Yes, all of it: no ads, no subscription, nothing to buy."
+        },
+        {
+          "q": "Which iPhones?",
+          "a": "Any iPhone with iOS 18 or later."
+        },
+        {
+          "q": "Does it work without internet?",
+          "a": "The times, the Qibla and the text of the Qur'an all work offline. A recitation needs internet, unless you downloaded it first."
+        }
+      ]
+    },
+    "close": {
+      "line": "Wajh means face",
+      "text": "As in the verse “So turn your face towards the Sacred Mosque” (al-Baqarah 2:144). Free on the App Store, for iPhone.",
+      "alt": "The first screen of setup"
+    },
+    "footerLine": "Wajh, for iPhone",
     "badge": "Download on the App Store"
   },
   "privacy": {

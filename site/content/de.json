@@ -11,12 +11,77 @@
     "support": "Support"
   },
   "home": {
-    "intro": "Gebetszeiten, die den Moscheen in deinem Land folgen, ein Qibla-Kompass, der ganze Koran mit zehn Rezitatoren, Mekka live, Widgets, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
-    "points": [
-      "Keine Werbung, keine Abos, kein Konto.",
-      "Über dich wird nichts gesammelt: Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone. Ortsnamen und die Karte kommen von Apple Karten, Rezitationen vom eigenen Audioserver der App und Mekka live von YouTube.",
-      "Die Zeiten folgen der Methode deiner Moschee oder Institution und wurden mit den Gebetsplänen abgeglichen, die Institutionen veröffentlichen. Du kannst jede Zeit um ein paar Minuten verschieben, damit sie zu deiner Moschee passt."
-    ],
+    "headline": "Wende dein Gesicht zur Qibla",
+    "sentence": "Eine iPhone-App für Gebetszeiten, die Qibla und den ganzen Koran. Kostenlos, ohne Werbung, und nichts über dich wird gesammelt.",
+    "barStart": "Kostenlos · Keine Werbung · Nichts gesammelt",
+    "barEnd": "Für iPhone, in sechs Sprachen",
+    "times": {
+      "heading": "Zeiten wie in deiner Moschee",
+      "text": "Wajh berechnet die Gebete so, wie die Moscheen in deinem Land es tun, auch auf Reisen, und folgt Diyanet, wenn die App auf Türkisch ist. Jede Zeit lässt sich um ein paar Minuten verschieben, bis sie genau zu deiner Moschee passt, und die Nacht zeigt ihre Mitte und ihr letztes Drittel.",
+      "legend": "Die App auf",
+      "alt": "Der Bildschirm Gebetszeiten"
+    },
+    "quran": {
+      "heading": "Der Mushaf, Seite für Seite",
+      "text": "Alle 604 Seiten des Medina-Mushafs, umgeblättert wie Papier. Zehn Rezitatoren lesen Vers für Vers, während die Seite mitgeht, auch bei gesperrtem Bildschirm, und jeder Teil lässt sich zum Offline-Hören laden.",
+      "legend": "Seite",
+      "night": "Nacht",
+      "paper": "Papier",
+      "altNight": "Seite 42 des Mushafs, bei Nacht",
+      "altPaper": "Seite 42 des Mushafs, auf Papier"
+    },
+    "more": {
+      "heading": "Rund um die Gebete",
+      "items": [
+        {
+          "title": "Tasbih",
+          "text": "Die Tasbihat nach dem Gebet, 33 · 33 · 34, und acht weitere Sätze auf Arabisch.",
+          "alt": "Das Tasbih nach dem Gebet"
+        },
+        {
+          "title": "Tracker",
+          "text": "Fastentage, nachzuholende Gebete und dein Khatm des Korans.",
+          "alt": "Der Tracker mit einem laufenden Khatm"
+        },
+        {
+          "title": "Karte",
+          "text": "Die Linie nach Mekka auf der Karte und die Moscheen in deiner Nähe.",
+          "alt": "Die Karte von Amsterdam mit Moscheen in der Nähe"
+        },
+        {
+          "title": "Sperrbildschirm",
+          "text": "Das nächste Gebet zählt herunter, ohne die App zu öffnen.",
+          "alt": "Die Einrichtung fragt nach dem Sperrbildschirm"
+        }
+      ]
+    },
+    "private": {
+      "heading": "Nichts über dich wird gesammelt",
+      "text": "Kein Konto, keine Werbung und kein Tracking. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone. Ortsnamen und die Karte kommen von Apple Karten, die Rezitationen vom eigenen Audioserver der App und Mekka live von YouTube."
+    },
+    "faq": {
+      "heading": "Fragen",
+      "items": [
+        {
+          "q": "Ist es kostenlos?",
+          "a": "Ja, alles: keine Werbung, kein Abo, nichts zu kaufen."
+        },
+        {
+          "q": "Welche iPhones?",
+          "a": "Jedes iPhone mit iOS 18 oder neuer."
+        },
+        {
+          "q": "Geht es ohne Internet?",
+          "a": "Die Zeiten, die Qibla und der Text des Korans gehen alle offline. Eine Rezitation braucht Internet, außer du hast sie vorher geladen."
+        }
+      ]
+    },
+    "close": {
+      "line": "Wajh heißt Gesicht",
+      "text": "Wie im Vers „So wende dein Gesicht zur Heiligen Moschee“ (al-Baqara 2:144). Kostenlos im App Store, für iPhone.",
+      "alt": "Der erste Bildschirm der Einrichtung"
+    },
+    "footerLine": "Wajh, für iPhone",
     "badge": "Laden im App Store"
   },
   "privacy": {

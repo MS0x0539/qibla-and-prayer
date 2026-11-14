@@ -4,3 +4,6 @@ build/
 DerivedData/
 .DS_Store
 .claude/settings.local.json
+
+# Output of the design inspector (screenshots, reports)
+.taste-skill/

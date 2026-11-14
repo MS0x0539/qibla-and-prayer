@@ -11,12 +11,77 @@
     "support": "Assistance"
   },
   "home": {
-    "intro": "Des horaires de prière qui suivent les mosquées de votre pays, une boussole de la qibla, le Coran entier avec dix récitateurs, La Mecque en direct, des widgets, un tasbih et un suivi des jeûnes et des prières manquées. En anglais, néerlandais, allemand, français, turc et arabe.",
-    "points": [
-      "Sans publicité, sans abonnement, sans compte.",
-      "Rien n’est collecté à votre sujet : vos réglages, votre tasbih et votre suivi restent sur votre iPhone. Les noms de lieux et la carte proviennent de Plans d’Apple, les récitations du serveur audio de l’app, et La Mecque en direct de YouTube.",
-      "Les horaires suivent la méthode de votre mosquée ou de votre autorité de référence, et ont été vérifiés à l’aide des calendriers publiés par les autorités. Vous pouvez décaler chaque horaire de quelques minutes pour qu’il corresponde à celui de votre mosquée."
-    ],
+    "headline": "Tournez-vous vers la qibla",
+    "sentence": "Une app iPhone pour les horaires de prière, la qibla et le Coran entier. Gratuite, sans publicité, et rien sur vous n’est collecté.",
+    "barStart": "Gratuite · Sans publicité · Rien de collecté",
+    "barEnd": "Pour iPhone, en six langues",
+    "times": {
+      "heading": "Les horaires de votre mosquée",
+      "text": "Wajh calcule les prières comme les mosquées de votre pays, en voyage aussi, et suit la Diyanet quand l’app est en turc. Chaque horaire peut être décalé de quelques minutes pour correspondre exactement à votre mosquée, et la nuit montre son milieu et son dernier tiers.",
+      "legend": "Voir l’app en",
+      "alt": "L’écran Horaires de prière"
+    },
+    "quran": {
+      "heading": "Le mushaf, page par page",
+      "text": "Les 604 pages du mushaf de Médine, tournées comme du papier. Dix récitateurs lisent verset par verset pendant que la page suit, même écran verrouillé, et chaque partie se télécharge pour écouter hors ligne.",
+      "legend": "Page",
+      "night": "Nuit",
+      "paper": "Papier",
+      "altNight": "La page 42 du mushaf, de nuit",
+      "altPaper": "La page 42 du mushaf, sur papier"
+    },
+    "more": {
+      "heading": "Autour des prières",
+      "items": [
+        {
+          "title": "Tasbih",
+          "text": "Les tasbihat après la prière, 33 · 33 · 34, et huit autres formules en arabe.",
+          "alt": "Le tasbih après la prière"
+        },
+        {
+          "title": "Suivi",
+          "text": "Les jeûnes, les prières à rattraper et votre khatm du Coran.",
+          "alt": "Le suivi, avec un khatm en cours"
+        },
+        {
+          "title": "Carte",
+          "text": "La ligne vers La Mecque sur la carte, et les mosquées autour de vous.",
+          "alt": "La carte d’Amsterdam avec les mosquées proches"
+        },
+        {
+          "title": "Écran verrouillé",
+          "text": "La prochaine prière en compte à rebours, sans ouvrir l’app.",
+          "alt": "La configuration propose l’écran verrouillé"
+        }
+      ]
+    },
+    "private": {
+      "heading": "Rien sur vous n’est collecté",
+      "text": "Pas de compte, pas de publicité, pas de pistage. Vos réglages, votre tasbih et votre suivi restent sur votre iPhone. Les noms de lieux et la carte viennent d’Apple Plans, les récitations du serveur audio de l’app, et La Mecque en direct de YouTube."
+    },
+    "faq": {
+      "heading": "Questions",
+      "items": [
+        {
+          "q": "Est-ce gratuit ?",
+          "a": "Oui, tout : pas de publicité, pas d’abonnement, rien à acheter."
+        },
+        {
+          "q": "Quels iPhone ?",
+          "a": "Tout iPhone sous iOS 18 ou plus récent."
+        },
+        {
+          "q": "Ça marche sans internet ?",
+          "a": "Les horaires, la qibla et le texte du Coran fonctionnent hors ligne. Une récitation demande internet, sauf si vous l’avez téléchargée avant."
+        }
+      ]
+    },
+    "close": {
+      "line": "Wajh veut dire visage",
+      "text": "Comme dans le verset « Tourne donc ton visage vers la Mosquée sacrée » (al-Baqara 2:144). Gratuite sur l’App Store, pour iPhone.",
+      "alt": "Le premier écran de la configuration"
+    },
+    "footerLine": "Wajh, pour iPhone",
     "badge": "Télécharger dans l’App Store"
   },
   "privacy": {

@@ -18,47 +18,197 @@
 <link rel="alternate" hreflang="tr" href="/tr/accessibility">
 <link rel="alternate" hreflang="ar" href="/ar/accessibility">
 <style>
-:root { color-scheme: dark; --bg: #0E1613; --card: #16221D; --ink: #EFE7D6; --muted: #A8A08C; --gold: #C9A45C; --line: rgba(201, 164, 92, .22); }
+:root { color-scheme: dark; --bg: #0E1613; --surface: #16221D; --raised: #1F2D27; --ink: #EFE7D6; --muted: #A8A08C;
+  --gold: #C9A45C; --on-gold: #0E1613;
+  --serif: ui-serif, "New York", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Arabic", Tahoma, sans-serif;
+  --display: clamp(2.6rem, 4.6vw, 4.75rem); --heading: clamp(1.75rem, 2.5vw, 2.5rem); --large: clamp(1.2rem, 1.5vw, 1.5rem);
+  --text: 1.125rem; --small: .9375rem;
+  --margin: clamp(12px, 1.6vw, 24px); --inset: clamp(20px, 4vw, 56px); --radius: 20px; --gap: clamp(96px, 14vw, 200px); }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font: 1.0625rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Arabic", Tahoma, sans-serif; }
-.wrap { max-width: 680px; margin: 0 auto; padding: 28px 18px 40px; }
-header a { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-weight: 600; }
-nav { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 14px 0 28px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-nav a { color: var(--gold); text-decoration: none; }
-nav a[aria-current="page"] { color: var(--ink); }
-h1, h2 { font-family: ui-serif, "New York", Georgia, "Times New Roman", serif; font-weight: 600; }
-h1 { font-size: 2rem; line-height: 1.2; margin: .2em 0 .4em; }
-h2 { font-size: 1.2rem; color: var(--gold); margin: 1.8em 0 .4em; }
-p { margin: .6em 0; }
-a { color: var(--gold); text-underline-offset: 2px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 var(--text)/1.55 var(--sans); }
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h1 { font-size: var(--display); line-height: 1.02; }
+h2 { font-size: var(--heading); line-height: 1.08; }
+h3 { font-size: var(--large); line-height: 1.2; }
+p { margin: 0; }
+a { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--gold); }
+a:focus-visible, input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+img { max-width: 100%; display: block; }
+.badge a { display: inline-block; transition: transform .2s; }
+.badge a:hover { transform: translateY(-2px); }
+.badge a:active { transform: scale(.97); }
+.badge img { height: 48px; width: auto; }
 .muted { color: var(--muted); }
-.summary { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; margin: 1.2em 0; }
-ul { padding-inline-start: 1.2em; }
-li { margin: .4em 0; }
-details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Reading pages: privacy, accessibility, releases, support. */
+.page { max-width: 760px; margin: 0 auto; padding: var(--margin) var(--margin) 0; }
+.page > header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding: 12px 0 56px; }
+.mark { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font: 600 var(--text)/1 var(--sans); }
+.page nav { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: var(--small); }
+.page nav a { text-decoration: none; color: var(--muted); }
+.page nav a[aria-current="page"], .page nav a:hover { color: var(--ink); }
+.page main { max-width: 64ch; }
+.page main h1 { font-size: var(--heading); margin-bottom: 16px; }
+.page main h2 { font-size: var(--large); margin: 2.2em 0 .5em; color: var(--gold); }
+.page main p { margin: .7em 0; }
+.page main ul { padding-inline-start: 1.2em; }
+.page main li { margin: .45em 0; }
+.summary { background: var(--surface); border-radius: var(--radius); padding: 18px 22px; margin: 1.4em 0; }
+details { background: var(--surface); border-radius: var(--radius); padding: 16px 22px; margin: 10px 0; }
 summary { cursor: pointer; font-weight: 600; }
-details p { color: var(--ink); margin: .6em 0 .2em; }
-footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .92rem; }
-.languages { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 10px; }
-.languages a[aria-current="page"] { color: var(--ink); text-decoration: none; }
-.badge { margin: 1.4em 0; }
-.badge a { display: inline-block; padding: 0; }
-.badge img { display: block; height: 48px; width: auto; }
+details p { margin: .7em 0 .2em; }
+
+/* Home: the split stage. The compass on the fixed half never moves, as the Qibla doesn't. */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--margin); padding: var(--margin); align-items: start; }
+.reading { display: grid; gap: var(--gap); padding-bottom: var(--gap); min-width: 0; }
+.sheet { background: var(--surface); border-radius: var(--radius); min-height: calc(100svh - 2 * var(--margin));
+  display: grid; grid-template-rows: auto 1fr; padding: 22px var(--inset) 0; text-align: center; }
+.top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; font-size: var(--small); }
+.top a { text-decoration: none; color: var(--muted); }
+.top a:hover { color: var(--ink); }
+.top a:first-child { justify-self: start; } .top a:last-child { justify-self: end; }
+.top .mark { color: var(--ink); font-size: var(--large); font-family: var(--serif); font-weight: 500; }
+.hero-text { align-self: start; margin-top: 26svh; display: grid; justify-items: center; gap: 28px; padding-bottom: 12svh; }
+.hero-text h1 { color: var(--gold); max-width: 15ch; }
+.hero-text .lede { max-width: 40ch; color: var(--ink); }
+.block { padding: 0 var(--inset); max-width: 46rem; }
+.block h2 { margin-bottom: 20px; max-width: 18ch; }
+.block > p { max-width: 46ch; }
+.statement h2 { color: var(--ink); }
+.statement p + p { margin-top: 20px; }
+.still { position: sticky; top: var(--margin); height: calc(100svh - 2 * var(--margin)); border-radius: var(--radius);
+  overflow: hidden; background: var(--bg); }
+.frames { position: absolute; inset: 0 0 56px; }
+.frames img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; opacity: 0; }
+.frames img:first-child { opacity: 1; }
+.bar { position: absolute; inset: auto 0 0; height: 56px; background: var(--surface); display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; padding: 0 var(--inset); font-size: var(--small); color: var(--muted); }
+
+/* Choices made with radio buttons and CSS alone (the site runs no scripts). */
+.choice { border: 0; margin: 28px 0 0; padding: 0; min-width: 0; }
+.choice legend { padding: 0; margin-bottom: 12px; font-size: var(--small); color: var(--muted); }
+.options { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.choice label { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px;
+  background: var(--surface); cursor: pointer; transition: background .2s, color .2s, transform .15s; font-size: var(--small); }
+.choice label:hover { background: var(--raised); }
+.choice label:active { transform: scale(.97); }
+.choice input:checked + label { background: var(--gold); color: var(--on-gold); }
+.screens { display: grid; margin-top: 28px; width: min(340px, 100%); }
+.screens img { grid-area: 1 / 1; width: 100%; height: auto; border-radius: var(--radius); visibility: hidden; opacity: 0;
+  transition: opacity .2s, visibility 0s .2s; }
+.screens img:first-child { visibility: visible; opacity: 1; }
+
+/* Around the prayers: the names on one side, the chosen screen on the other, cropped by the stage. */
+.index { display: grid; grid-template-columns: 5fr 1fr 6fr; padding: 0 var(--margin); margin-top: var(--gap); }
+.index-list { grid-column: 1; padding-inline-start: var(--inset); }
+.index-list h2 { margin-bottom: 36px; }
+.names-set { border: 0; margin: 0; padding: 0; min-width: 0; }
+.names { display: grid; gap: 4px; }
+.names label { font: 500 clamp(2rem, 3.6vw, 3.6rem)/1.1 var(--serif); letter-spacing: -.02em; color: var(--muted);
+  cursor: pointer; transition: color .2s; display: inline-block; }
+.names label:hover, .names input:checked + label { color: var(--ink); }
+.names input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.names input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
+.notes { display: grid; margin-top: 28px; max-width: 34ch; }
+.notes p { grid-area: 1 / 1; visibility: hidden; }
+.notes p:first-child { visibility: visible; }
+.stage { grid-column: 3; background: var(--surface); border-radius: var(--radius); height: 88svh; overflow: hidden;
+  position: relative; display: grid; }
+.stage img { grid-area: 1 / 1; width: min(400px, 78%); margin: 72px auto 0; border-radius: var(--radius); visibility: hidden;
+  opacity: 0; transition: opacity .2s, visibility 0s .2s; }
+.stage img:first-child { visibility: visible; opacity: 1; }
+
+/* Questions, as reading text. */
+.faq { display: grid; grid-template-columns: 3fr 1fr 8fr; padding: 0 calc(var(--margin) + var(--inset)); margin-top: var(--gap); }
+.faq h2 { grid-column: 1; }
+.answers { grid-column: 3; columns: 2 34ch; column-gap: 56px; }
+.answers p { break-inside: avoid; margin: 0 0 20px; }
+.answers strong { font-weight: 600; }
+
+/* The close: the app's first screen, already open, on a field of gold. */
+.close { margin: var(--gap) var(--margin) 0; background: var(--gold); color: var(--on-gold); border-radius: var(--radius);
+  min-height: 90svh; display: grid; grid-template-columns: 6fr 5fr; align-items: end; gap: 24px; overflow: hidden;
+  padding: 40px var(--inset) 0; }
+.close-text { padding-bottom: 48px; display: grid; gap: 22px; }
+.close h2 { font-size: clamp(3.2rem, 7vw, 7rem); line-height: .92; max-width: 9ch; }
+.close p { max-width: 40ch; }
+.close a { color: var(--on-gold); }
+.close img { width: min(400px, 100%); justify-self: center; border-radius: var(--radius) var(--radius) 0 0; }
+
+/* A single quiet line. */
+.line { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px 24px; align-items: baseline; font-size: var(--small);
+  color: var(--muted); padding: 30svh calc(var(--margin) + var(--inset)) 30px; }
+.page + .line, .page .line { padding-top: 96px; }
+.line nav { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: center; }
+.line .languages { justify-content: flex-end; }
+.line a { text-decoration: none; }
+.line a[aria-current="page"] { color: var(--gold); }
+
+/* Motion: the compass slowly turns to the Qibla; parts of each section rise into place. Transform and opacity only. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Each frame 6 s, fading over 1.6 s; the first already in view when the page opens. */
+  .frames img { animation: frame 24s -1.6s infinite; }
+  .frames img:nth-child(2) { animation-delay: 4.4s; } .frames img:nth-child(3) { animation-delay: 10.4s; }
+  .frames img:nth-child(4) { animation-delay: 16.4s; }
+  .frames { animation: drift 24s ease-in-out infinite alternate; }
+  .hero-text > * { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; }
+  .hero-text > :nth-child(2) { animation-delay: .08s; } .hero-text > :nth-child(3) { animation-delay: .16s; }
+  @supports (animation-timeline: view()) {
+    .rise { animation: rise linear both; animation-timeline: view(); animation-range: entry 5% entry 55%; }
+    .rise.later { animation-range: entry 15% entry 65%; } .rise.last { animation-range: entry 25% entry 75%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .frames img, .frames img:first-child { opacity: 0; } .frames img:last-child { opacity: 1; }
+}
+@keyframes frame { 0% { opacity: 0; } 6.7% { opacity: 1; } 25% { opacity: 1; } 31.7% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes drift { from { transform: scale(1); } to { transform: scale(1.04); } }
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* A phone: the compass first, the sheet sliding up over it. */
+@media (max-width: 900px) {
+  :root { --inset: 8px; }
+  .split { display: flex; flex-direction: column; align-items: stretch; }
+  .still { order: -1; height: 56svh; z-index: 0; }
+  .reading { position: relative; z-index: 1; margin-top: -10svh; gap: 96px; padding-bottom: 96px; background: var(--bg);
+    border-radius: var(--radius) var(--radius) 0 0; }
+  .sheet { min-height: 0; padding-bottom: 48px; }
+  .hero-text { margin-top: 48px; padding-bottom: 0; gap: 22px; }
+  .block, .statement { padding: 0 8px; margin-inline: auto; width: 100%; max-width: 38rem; }
+  .index { display: block; padding: 0 var(--margin); }
+  .index-list { padding: 0 8px; max-width: 38rem; margin-inline: auto; }
+  .names { display: flex; overflow-x: auto; gap: 18px; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+  .names label { font-size: 1.5rem; white-space: nowrap; scroll-snap-align: start; }
+  .stage { height: 70svh; margin: 24px auto 0; max-width: 38rem; }
+  .stage img { width: min(340px, 82%); margin: 24px auto 0; }
+  .faq { display: block; padding: 0 calc(var(--margin) + 8px); max-width: calc(38rem + 2 * var(--margin)); margin-inline: auto; }
+  .faq h2 { margin-bottom: 20px; }
+  .answers { columns: 1; }
+  .close { grid-template-columns: 1fr; align-items: start; min-height: 84svh; padding: 32px var(--inset) 0; }
+  .close-text { padding-bottom: 8px; width: 100%; max-width: 38rem; margin-inline: auto; }
+  .close h2 { font-size: 13vw; }
+  .line { grid-template-columns: 1fr; padding: 20svh calc(var(--margin) + 8px) 24px; gap: 8px;
+    max-width: calc(38rem + 2 * var(--margin) + 16px); margin-inline: auto; }
+  .line nav, .line .languages { justify-content: flex-start; }
+  .page > header { padding-bottom: 36px; }
+}
 </style>
 </head>
-<body>
-<div class="wrap">
-<header><a href="/fr/"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
-<rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh: Qibla &amp; Prayer Times</span></a></header>
+<body class="reading-page">
+<div class="page">
+<header><a class="mark" href="/fr/"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
+<rect x="7.5" y="7.5" width="15" height="15"/><rect x="7.5" y="7.5" width="15" height="15" transform="rotate(45 15 15)"/></g></svg><span>Wajh: Qibla &amp; Prayer Times</span></a>
 <nav aria-label="Wajh: Qibla &amp; Prayer Times">
-<a href="/fr/">Accueil</a>
 <a href="/fr/privacy">Politique de confidentialité</a>
 <a href="/fr/accessibility" aria-current="page">Accessibilité</a>
 <a href="/fr/releases">Nouveautés</a>
 <a href="/fr/support">Assistance</a>
-</nav>
+</nav></header>
 <main>
 <h1>Accessibilité</h1>
 <p class="muted">Dernière mise à jour : 14 novembre 2026</p>
@@ -82,17 +232,23 @@ footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
 <h2>Dites-moi ce qui ne fonctionne pas</h2>
 <p>Si quelque chose dans l’app est difficile à voir, à entendre, à atteindre ou à comprendre, écrivez-moi à <a href="mailto:support@qibla.dev">support@qibla.dev</a>. Indiquez si possible votre modèle d’iPhone, votre version d’iOS et les réglages d’accessibilité que vous utilisez.</p>
 </main>
-<footer>
-<div class="languages">
+</div>
+<footer class="line">
+<span>Wajh, pour iPhone · 2026</span>
+<nav aria-label="Wajh: Qibla &amp; Prayer Times">
+<a href="/fr/privacy">Politique de confidentialité</a>
+<a href="/fr/accessibility" aria-current="page">Accessibilité</a>
+<a href="/fr/releases">Nouveautés</a>
+<a href="/fr/support">Assistance</a>
+</nav>
+<nav class="languages" aria-label="Français">
 <a href="/accessibility" lang="en">English</a>
 <a href="/nl/accessibility" lang="nl">Nederlands</a>
 <a href="/de/accessibility" lang="de">Deutsch</a>
 <a href="/fr/accessibility" lang="fr" aria-current="page">Français</a>
 <a href="/tr/accessibility" lang="tr">Türkçe</a>
 <a href="/ar/accessibility" lang="ar">العربية</a>
-</div>
-<div class="muted">Réalisé par Melih Sivrikaya</div>
+</nav>
 </footer>
-</div>
 </body>
 </html>

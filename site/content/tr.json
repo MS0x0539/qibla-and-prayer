@@ -11,12 +11,77 @@
     "support": "Destek"
   },
   "home": {
-    "intro": "Ülkenizdeki camileri izleyen namaz vakitleri, kıble pusulası, on kariyle Kur'an'ın tamamı, Mekke canlı yayını, widget'lar, tesbih, oruç ve kaza namazı takibi. Uygulamayı İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça kullanabilirsiniz.",
-    "points": [
-      "Reklam yok, abonelik yok, hesap yok.",
-      "Hakkınızda hiçbir veri toplanmaz: Ayarlarınız, tesbihiniz ve kayıtlarınız iPhone'unuzda kalır. Yer adları ve harita Apple Haritalar'dan, tilavetler uygulamanın kendi ses sunucusundan, Mekke canlı yayını ise YouTube'dan gelir.",
-      "Vakitler, camiinizin ya da bağlı olduğunuz kurumun yöntemine göredir ve kurumların yayımladığı takvimlerle karşılaştırılarak kontrol edilmiştir. Her vakti camiinize uyması için birkaç dakika kaydırabilirsiniz."
-    ],
+    "headline": "Yüzünüzü kıbleye çevirin",
+    "sentence": "Namaz vakitleri, kıble ve Kur'an'ın tamamı için bir iPhone uygulaması. Ücretsiz, reklamsız; hakkınızda hiçbir veri toplanmaz.",
+    "barStart": "Ücretsiz · Reklamsız · Veri toplanmaz",
+    "barEnd": "iPhone için, altı dilde",
+    "times": {
+      "heading": "Camiinizin vakitleri",
+      "text": "Wajh namazları ülkenizdeki camilerin hesapladığı gibi hesaplar, seyahatte de; uygulama Türkçeyken Diyanet'i izler. Her vakti camiinize tam uyması için birkaç dakika kaydırabilirsiniz; gece de yarısını ve son üçte birini gösterir.",
+      "legend": "Uygulamanın dili",
+      "alt": "Namaz vakitleri ekranı"
+    },
+    "quran": {
+      "heading": "Mushaf, sayfa sayfa",
+      "text": "Medine mushafının 604 sayfası, kâğıt gibi çevrilir. On kurra ayet ayet okur ve sayfa onları izler, ekran kilitliyken bile; her bölümü çevrimdışı dinlemek için indirebilirsiniz.",
+      "legend": "Sayfa",
+      "night": "Gece",
+      "paper": "Kâğıt",
+      "altNight": "Mushafın 42. sayfası, gece",
+      "altPaper": "Mushafın 42. sayfası, kâğıt"
+    },
+    "more": {
+      "heading": "Namazların etrafında",
+      "items": [
+        {
+          "title": "Tesbih",
+          "text": "Namazdan sonraki tesbihat, 33 · 33 · 34, ve Arapça sekiz zikir daha.",
+          "alt": "Namazdan sonraki tesbih"
+        },
+        {
+          "title": "Takip",
+          "text": "Oruçlar, kaza namazları ve Kur'an hatminiz.",
+          "alt": "Devam eden bir hatimle takip"
+        },
+        {
+          "title": "Harita",
+          "text": "Haritada Mekke'ye giden çizgi ve yakınınızdaki camiler.",
+          "alt": "Yakındaki camilerle Amsterdam haritası"
+        },
+        {
+          "title": "Kilit ekranı",
+          "text": "Sıradaki vakte geri sayım, uygulamayı açmadan.",
+          "alt": "Kurulumda kilit ekranı sorusu"
+        }
+      ]
+    },
+    "private": {
+      "heading": "Hakkınızda veri toplanmaz",
+      "text": "Hesap yok, reklam yok, takip yok. Ayarlarınız, tesbihiniz ve takibiniz iPhone'unuzda kalır. Yer adları ve harita Apple Haritalar'dan, tilavetler uygulamanın kendi ses sunucusundan, Mekke canlı yayını da YouTube'dan gelir."
+    },
+    "faq": {
+      "heading": "Sorular",
+      "items": [
+        {
+          "q": "Ücretsiz mi?",
+          "a": "Evet, tamamı: reklam yok, abonelik yok, satın alınacak bir şey yok."
+        },
+        {
+          "q": "Hangi iPhone'lar?",
+          "a": "iOS 18 veya sonrası olan her iPhone."
+        },
+        {
+          "q": "İnternetsiz çalışır mı?",
+          "a": "Vakitler, kıble ve Kur'an metni çevrimdışı çalışır. Tilavet için internet gerekir; önceden indirdiyseniz gerekmez."
+        }
+      ]
+    },
+    "close": {
+      "line": "Wajh, yüz demek",
+      "text": "Ayetteki gibi: “Yüzünü Mescid-i Harâm'a doğru çevir” (Bakara 2:144). App Store'da ücretsiz, iPhone için.",
+      "alt": "Kurulumun ilk ekranı"
+    },
+    "footerLine": "Wajh, iPhone için",
     "badge": "App Store'dan indirin"
   },
   "privacy": {

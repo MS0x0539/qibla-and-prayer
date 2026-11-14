@@ -11,12 +11,77 @@
     "support": "Hulp"
   },
   "home": {
-    "intro": "Gebedstijden die de moskeeën in je land volgen, een qibla-kompas, de hele Koran met tien reciteurs, Makkah live, widgets, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
-    "points": [
-      "Geen advertenties, geen abonnementen, geen account.",
-      "Er wordt niets over jou verzameld: je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen en de kaart komen van Apple Kaarten, recitaties van de eigen audioserver van de app, en Makkah live van YouTube.",
-      "De tijden volgen de methode van je moskee of instantie. Ze zijn gecontroleerd aan de hand van de roosters die instanties publiceren. Je kunt elke tijd een paar minuten verschuiven, zodat die met de tijd van je moskee overeenkomt."
-    ],
+    "headline": "Wend je gezicht naar de qibla",
+    "sentence": "Een iPhone-app voor gebedstijden, de qibla en de hele Koran. Gratis, zonder reclame, en er wordt niets over je verzameld.",
+    "barStart": "Gratis · Geen reclame · Niets verzameld",
+    "barEnd": "Voor iPhone, in zes talen",
+    "times": {
+      "heading": "Tijden zoals je moskee ze houdt",
+      "text": "Wajh berekent de gebeden zoals de moskeeën in je land dat doen, ook als je op reis bent, en volgt Diyanet als de app in het Turks staat. Elke tijd kun je een paar minuten verschuiven tot hij precies klopt met je moskee, en de nacht toont zijn midden en zijn laatste derde.",
+      "legend": "Bekijk de app in",
+      "alt": "Het scherm Gebedstijden"
+    },
+    "quran": {
+      "heading": "De mushaf, pagina voor pagina",
+      "text": "Alle 604 pagina's van de Medina-mushaf, omgeslagen als papier. Tien reciteurs lezen vers voor vers terwijl de pagina meegaat, ook met het scherm vergrendeld, en elk deel kun je downloaden om offline te luisteren.",
+      "legend": "Pagina",
+      "night": "Nacht",
+      "paper": "Papier",
+      "altNight": "Pagina 42 van de mushaf, 's nachts",
+      "altPaper": "Pagina 42 van de mushaf, op papier"
+    },
+    "more": {
+      "heading": "Rond de gebeden",
+      "items": [
+        {
+          "title": "Tasbih",
+          "text": "De tasbihat na het gebed, 33 · 33 · 34, en nog acht zinnen in het Arabisch.",
+          "alt": "De tasbih na het gebed"
+        },
+        {
+          "title": "Bijhouden",
+          "text": "Vastendagen, gemiste gebeden om in te halen, en je khatm van de Koran.",
+          "alt": "Bijhouden, met een khatm onderweg"
+        },
+        {
+          "title": "Kaart",
+          "text": "De lijn naar Mekka op de kaart, en de moskeeën om je heen.",
+          "alt": "De kaart van Amsterdam met moskeeën in de buurt"
+        },
+        {
+          "title": "Toegangsscherm",
+          "text": "Het volgende gebed telt af, zonder de app te openen.",
+          "alt": "De instelling vraagt naar het toegangsscherm"
+        }
+      ]
+    },
+    "private": {
+      "heading": "Er wordt niets over je verzameld",
+      "text": "Geen account, geen reclame en geen tracking. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen en de kaart komen van Apple Kaarten, de recitaties van de eigen audioserver van de app, en Makkah live van YouTube."
+    },
+    "faq": {
+      "heading": "Vragen",
+      "items": [
+        {
+          "q": "Is het gratis?",
+          "a": "Ja, alles: geen reclame, geen abonnement, niets te kopen."
+        },
+        {
+          "q": "Welke iPhones?",
+          "a": "Elke iPhone met iOS 18 of nieuwer."
+        },
+        {
+          "q": "Werkt het zonder internet?",
+          "a": "De tijden, de qibla en de tekst van de Koran werken allemaal offline. Een recitatie heeft internet nodig, tenzij je die eerst hebt gedownload."
+        }
+      ]
+    },
+    "close": {
+      "line": "Wajh betekent gezicht",
+      "text": "Zoals in het vers „Wend je gezicht dan naar de Heilige Moskee” (al-Baqara 2:144). Gratis in de App Store, voor iPhone.",
+      "alt": "Het eerste scherm van de instelling"
+    },
+    "footerLine": "Wajh, voor iPhone",
     "badge": "Download in de App Store"
   },
   "privacy": {
