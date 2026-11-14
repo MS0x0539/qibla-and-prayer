@@ -354,7 +354,12 @@ final class RecitationDownloads {
     private(set) var current: (title: String, progress: Double)?
     /// Verses that failed in the last download (no internet); downloading again fetches only those.
     private(set) var missing = 0
+    /// Goes up whenever downloaded files come or go, so the lists check again which parts are complete.
+    private(set) var changes = 0
     @ObservationIgnored private var task: Task<Void, Never>?
+
+    /// The playback cache: verses played before, which iOS may also clear when it needs space.
+    nonisolated static var cache: URL { URL.cachesDirectory.appending(path: "Recitation", directoryHint: .isDirectory) }
 
     /// The verse numbers (1...6236) that some verses need, with the basmala if a surah in them begins with it.
     nonisolated static func numbers(for verses: Range<Int>) -> [Int] {
@@ -372,11 +377,18 @@ final class RecitationDownloads {
         }
     }
 
-    /// The space the downloads of a reciter take.
-    nonisolated static func bytes(of reciter: Reciter) -> Int64 {
-        let folder = Reciter.downloads.appending(path: reciter.id, directoryHint: .isDirectory)
-        let files = (try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: [.fileSizeKey])) ?? []
-        return files.reduce(0) { $0 + Int64((try? $1.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) }
+    /// The space all recitation audio takes: the downloads of every reciter, and the playback cache.
+    nonisolated static func totalBytes() -> Int64 {
+        var total: Int64 = 0
+        for folder in [Reciter.downloads, cache] {
+            guard let files = FileManager.default.enumerator(at: folder, includingPropertiesForKeys: [.fileSizeKey]) else {
+                continue
+            }
+            for case let file as URL in files {
+                total += Int64((try? file.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0)
+            }
+        }
+        return total
     }
 
     func download(_ verses: Range<Int>, by reciter: Reciter, title: String) {
@@ -413,6 +425,7 @@ final class RecitationDownloads {
             missing = failed
             current = nil
             task = nil
+            changes += 1
         }
     }
 
@@ -422,9 +435,22 @@ final class RecitationDownloads {
         current = nil
     }
 
-    func remove(_ reciter: Reciter) {
+    /// A surah's or juz's own verses by one reciter. The basmala file (Al-Fatiha's first verse) goes only with a part
+    /// that holds Al-Fatiha: the other surahs that open with it still need it.
+    func remove(_ verses: Range<Int>, by reciter: Reciter) {
+        for index in verses {
+            try? FileManager.default.removeItem(at: reciter.downloaded(index + 1))
+        }
+        changes += 1
+    }
+
+    /// Every download by every reciter, and the playback cache: all the space recitations take.
+    func removeAll() {
         cancel()
-        try? FileManager.default.removeItem(at: Reciter.downloads.appending(path: reciter.id, directoryHint: .isDirectory))
+        try? FileManager.default.removeItem(at: Reciter.downloads)
+        try? FileManager.default.removeItem(at: Self.cache)
+        missing = 0
+        changes += 1
     }
 
     /// One verse, unless it is here already; one played before is copied from the cache.

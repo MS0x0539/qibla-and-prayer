@@ -361,6 +361,24 @@ struct PrayerTimeTests {
         }
     }
 
+    @Test @MainActor func removingASurahKeepsTheSharedBasmala() throws {
+        let reciter = Reciter.all[0]
+        let baqarah = Quran.shared.surahs[1]
+        let verses = baqarah.start..<(baqarah.start + baqarah.ayahs)
+        let manager = FileManager.default
+        // Al-Baqarah's files as a download leaves them: its verses and the basmala (verse 1).
+        for number in RecitationDownloads.numbers(for: verses) {
+            let file = reciter.downloaded(number)
+            try manager.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+            manager.createFile(atPath: file.path(percentEncoded: false), contents: Data([0xFF]))
+        }
+        defer { RecitationDownloads.shared.removeAll() }
+        #expect(RecitationDownloads.isDownloaded(verses, by: reciter))
+        RecitationDownloads.shared.remove(verses, by: reciter)
+        #expect(!RecitationDownloads.isDownloaded(verses, by: reciter))
+        #expect(manager.fileExists(atPath: reciter.downloaded(1).path(percentEncoded: false)))
+    }
+
     @Test func typedPageNumbers() {
         #expect(GoToPageView.page(from: "12") == 12)
         #expect(GoToPageView.page(from: "١٢") == 12)  // an Arabic keypad

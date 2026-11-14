@@ -59,7 +59,7 @@ struct ReaderSettingsView: View {
                 }
                 .listRowBackground(Theme.card)
 
-                OfflineRecitationSection(page: page)
+                OfflineRecitationSection()
             }
             .scrollContentBackground(.hidden)
             .background(Theme.background.ignoresSafeArea())
@@ -140,6 +140,8 @@ struct RecitationDownloadRow: View {
     let downloaded: Bool
     /// The surah's number, in the list of all surahs.
     var number: Int?
+    /// Shown instead of the part's title ("Download all" for the whole Qur'an in the lists).
+    var label: Text?
 
     var body: some View {
         let downloads = RecitationDownloads.shared
@@ -151,7 +153,7 @@ struct RecitationDownloadRow: View {
                     .frame(minWidth: 28, alignment: .leading)
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: part.title)
+                (label ?? Text(verbatim: part.title))
                     .foregroundStyle(Theme.ink)
                 if let bytes = part.bytes {
                     Text(verbatim: bytes.formatted(.byteCount(style: .file).locale(.app)))
@@ -181,6 +183,12 @@ struct RecitationDownloadRow: View {
                     .disabled(downloads.current != nil)
             }
         }
+        // A downloaded part can go on its own (VoiceOver offers it as an action).
+        .swipeActions {
+            if downloaded {
+                Button(role: .destructive) { downloads.remove(part.verses, by: reciter) } label: { Text("Remove") }
+            }
+        }
     }
 }
 
@@ -194,11 +202,23 @@ struct RecitationDownloadList: View {
         let reciter = Reciter.named(reciterID)
         let parts = juz ? (1...30).map { RecitationPart.juz($0, by: reciter) }
                         : (1...114).map { RecitationPart.surah($0, by: reciter) }
+        let whole = RecitationPart.whole(by: reciter)
         let downloads = RecitationDownloads.shared
         List {
-            ForEach(Array(parts.enumerated()), id: \.element.id) { offset, part in
-                RecitationDownloadRow(part: part, reciter: reciter, downloaded: downloaded.contains(part.id),
-                                      number: juz ? nil : offset + 1)
+            // Whose recitation the list downloads, and everything at once.
+            Section {
+                NavigationLink { ReciterList() } label: {
+                    LabeledContent("Reciter", value: reciter.displayName)
+                }
+                RecitationDownloadRow(part: whole, reciter: reciter, downloaded: downloaded.contains(whole.id),
+                                      label: Text("Download all"))
+            }
+            .listRowBackground(Theme.card)
+            Section {
+                ForEach(Array(parts.enumerated()), id: \.element.id) { offset, part in
+                    RecitationDownloadRow(part: part, reciter: reciter, downloaded: downloaded.contains(part.id),
+                                          number: juz ? nil : offset + 1)
+                }
             }
             .listRowBackground(Theme.card)
         }
@@ -206,29 +226,30 @@ struct RecitationDownloadList: View {
         .background(Theme.background.ignoresSafeArea())
         .navigationTitle(juz ? Text("All juz") : Text("All surahs"))
         .navigationBarTitleDisplayMode(.inline)
-        // On opening, after a download, and for another reciter.
-        .task(id: "\(reciterID) \(downloads.current == nil)") {
-            downloaded = Set(parts.filter { RecitationDownloads.isDownloaded($0.verses, by: reciter) }.map(\.id))
+        // On opening, when files come or go, and for another reciter.
+        .task(id: "\(reciterID) \(downloads.changes) \(downloads.current == nil)") {
+            downloaded = Set((parts + [whole]).filter { RecitationDownloads.isDownloaded($0.verses, by: reciter) }.map(\.id))
         }
     }
 }
 
-/// Downloads the recitation of the surah or juz on the page, the whole Qur'an, or any surah or juz from the lists, by
-/// the chosen reciter, to listen without internet. The files stay inside the app until they are removed here.
+/// Downloads the whole Qur'an, or any surah or juz from the lists, by the chosen reciter, to listen without internet.
+/// Each verse is one file shared by every part that holds it, so nothing downloads twice and a part shows as
+/// downloaded once all its verses are there. The files stay inside the app until they are removed here.
 struct OfflineRecitationSection: View {
-    let page: Int
     @AppStorage("reciter") private var reciterID = Reciter.all[0].id
-    /// Which parts are downloaded, and the space the downloads take; worked out on opening and after a download.
-    @State private var downloaded: Set<String> = []
+    /// Whether the whole Qur'an is downloaded, and the space all recitation audio takes; worked out on opening and
+    /// whenever files come or go.
+    @State private var wholeDownloaded = false
     @State private var bytes: Int64 = 0
+    @State private var confirmingRemoval = false
 
     var body: some View {
         let reciter = Reciter.named(reciterID)
+        let whole = RecitationPart.whole(by: reciter)
         let downloads = RecitationDownloads.shared
         Section {
-            ForEach(parts(by: reciter)) { part in
-                RecitationDownloadRow(part: part, reciter: reciter, downloaded: downloaded.contains(part.id))
-            }
+            RecitationDownloadRow(part: whole, reciter: reciter, downloaded: wholeDownloaded)
             NavigationLink { RecitationDownloadList(juz: false) } label: {
                 Text("All surahs")
                     .foregroundStyle(Theme.ink)
@@ -241,12 +262,18 @@ struct OfflineRecitationSection: View {
                 Text("Some verses couldn't be downloaded. Download again to finish.")
                     .foregroundStyle(Theme.muted)
             }
+            // Everything at once, every reciter: so nobody has to delete the app to get the space back.
             if bytes > 0 {
                 Button(role: .destructive) {
-                    downloads.remove(reciter)
-                    refresh(reciter)
+                    confirmingRemoval = true
                 } label: {
-                    Text("Remove downloads (\(bytes.formatted(.byteCount(style: .file).locale(.app))))")
+                    Text("Remove all downloads (\(bytes.formatted(.byteCount(style: .file).locale(.app))))")
+                }
+                .confirmationDialog("Remove all downloads?", isPresented: $confirmingRemoval, titleVisibility: .visible) {
+                    Button("Remove", role: .destructive) { downloads.removeAll() }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("Every recitation downloaded on this iPhone, by every reciter, is removed. You can download them again anytime.")
                 }
             }
         } header: {
@@ -255,20 +282,11 @@ struct OfflineRecitationSection: View {
             Text("Downloads stay in the app until you remove them, and play without internet.")
         }
         .listRowBackground(Theme.card)
-        // On opening, after a download, and for another reciter.
-        .task(id: "\(reciterID) \(downloads.current == nil)") { refresh(reciter) }
-    }
-
-    /// The surah and the juz the page begins with, and the whole Qur'an.
-    private func parts(by reciter: Reciter) -> [RecitationPart] {
-        let quran = Quran.shared
-        guard let first = quran.verses(onPage: page).first else { return [] }
-        return [.surah(first.surah, by: reciter), .juz(quran.juz(ofVerse: first.index), by: reciter), .whole(by: reciter)]
-    }
-
-    private func refresh(_ reciter: Reciter) {
-        downloaded = Set(parts(by: reciter).filter { RecitationDownloads.isDownloaded($0.verses, by: reciter) }.map(\.id))
-        bytes = RecitationDownloads.bytes(of: reciter)
+        // On opening, when files come or go, and for another reciter.
+        .task(id: "\(reciterID) \(downloads.changes) \(downloads.current == nil)") {
+            wholeDownloaded = RecitationDownloads.isDownloaded(whole.verses, by: reciter)
+            bytes = RecitationDownloads.totalBytes()
+        }
     }
 }
 
