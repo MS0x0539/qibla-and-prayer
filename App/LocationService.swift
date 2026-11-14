@@ -25,11 +25,11 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
         manager.headingFilter = 1
         authorization = manager.authorizationStatus
-        // For CI screenshots: the Simulator has no compass, so `-demoHeading 100` fakes one.
+        // For CI screenshots: the Simulator has no compass, so `-demoHeading 100` fakes one (`-demoAccuracy 30` a poor one).
         if let demo = UserDefaults.standard.string(forKey: "demoHeading").flatMap(Double.init) {
             heading = demo
             continuousHeading = demo
-            headingAccuracy = 5
+            headingAccuracy = UserDefaults.standard.string(forKey: "demoAccuracy").flatMap(Double.init) ?? 5
         }
     }
 

@@ -110,24 +110,29 @@ jobs:
             done
           done
           shot "de-times" -AppleLanguages "(de)" -AppleLocale de_DE -skipOnboarding YES -startTab times
+          # A poor heading: the calibration hint takes the advice's place, and the compass keeps its size.
+          shot "en-qibla-low-accuracy" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -demoHeading 100 -demoAccuracy 30
           for part in tasbih tracker; do
             shot "en-$part" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart "$part"
           done
           shot "tr-tracker" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab ibadah -ibadahPart tracker
           shot "ar-tasbih" -AppleLanguages "(ar)" -AppleLocale ar_SA -skipOnboarding YES -startTab ibadah -ibadahPart tasbih
-          # The Qur'an: Al-Fatiha, Al-Baqarah's first page and Ayat al-Kursi's page.
+          # The Qur'an as it opens, on the night page: Al-Fatiha, Al-Baqarah's first page and Ayat al-Kursi's page;
+          # and Ayat al-Kursi's on paper.
           for page in 1 2 42; do
-            shot "en-quran-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage "$page"
+            shot "en-quran-$page" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage "$page"
           done
+          shot "en-quran-42-paper" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage 42
           # A first visit, as it opens: the night page and the tip on turning pages; then the tip on the paper page.
           shot "en-quran-hint" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips reset -quranPage 3
           shot "en-quran-tip-paper" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips day -quranPage 3
           # With Paper already picked, no tip about the paper page.
           shot "en-quran-tip-on-paper" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips day -quranAutoNight NO -quranNight NO -quranPage 3
-          shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage 2
-          shot "en-quran-42-night" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -tips hide -quranPage 42 -quranNight YES
-          shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage 2 -quranSheet settings
-          shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -quranAutoNight NO -quranNight NO -tips hide -quranPage 42 -quranSheet goto
+          shot "tr-quran-2" -AppleLanguages "(tr)" -AppleLocale tr_TR -skipOnboarding YES -startTab quran -tips hide -quranPage 2
+          shot "en-quran-settings" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage 2 -quranSheet settings
+          shot "en-quran-goto" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab quran -tips hide -quranPage 42 -quranSheet goto
+          # The tips in the language picked in the app (Turkish), not the iPhone's (Dutch).
+          shot "in-app-tr-quran-tip-on-dutch-iphone" -AppleLanguages "(nl)" -AppleLocale nl_NL -skipOnboarding YES -appLanguage tr -startTab quran -tips reset -quranPage 3
           shot "en-tasbih-after-prayer" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tasbih -tasbihDhikr afterPrayer -tasbihStep 1 -tasbihCount 21 -tasbihTotal 54
           shot "en-tracker-khatm" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab ibadah -ibadahPart tracker -khatmPages "$(seq -s, 1 42)" -quranToday "$(date +%Y-%m-%d):40,41,42"
           # The map loads tiles and mosques over the network: give it longer.
