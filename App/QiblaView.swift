@@ -12,11 +12,6 @@ struct QiblaView: View {
     @State private var showingCamera = false
     // `-showLive YES` opens Makkah live first (used for CI screenshots).
     @State private var showingLive = UserDefaults.standard.bool(forKey: "showLive")
-    /// The compass's size: 300 points, or as much less (down to 200) as the page needs to fit the screen unscrolled.
-    @State private var dial: CGFloat = 300
-    /// The height of the page, and the room it has between the navigation bar and the tab bar.
-    @State private var pageHeight: CGFloat = 0
-    @State private var room: CGFloat = 0
 
     /// The turn from the phone's heading to the Qibla: negative is left, positive is right.
     private var offset: Double? {
@@ -26,37 +21,18 @@ struct QiblaView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 0) {
-                    Text("Qibla")
-                        .font(.system(.largeTitle, design: .serif).weight(.semibold))
-                    Text("Hold your phone flat, away from magnets.")
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 2)
-                    if let place = model.qiblaPlace {
-                        compass(place)
-                    } else {
-                        NoPlaceView()
-                    }
-                }
-                .padding(.horizontal, 22)
-                .padding(.bottom, 16)
-                .frame(maxWidth: .infinity)
-                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
-                    pageHeight = $0
-                    fitDial()
-                }
+            // The page with the largest compass that lets it fit the screen unscrolled; with large text, or on a
+            // small iPhone, it scrolls with the smallest.
+            ViewThatFits(in: .vertical) {
+                page(dial: 300)
+                page(dial: 275)
+                page(dial: 250)
+                page(dial: 225)
+                page(dial: 200)
+                ScrollView { page(dial: 200) }
+                    .scrollBounceBehavior(.basedOnSize)
             }
-            .scrollBounceBehavior(.basedOnSize)
-            // Whether or not the scroll view reaches under the bars, its size less the part under them.
-            .onGeometryChange(for: CGFloat.self) { proxy in
-                proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom
-            } action: {
-                room = $0
-                fitDial()
-            }
+            .frame(maxHeight: .infinity, alignment: .top)
             .foregroundStyle(Theme.ink)
             .background(Theme.background.ignoresSafeArea())
             .toolbar {
@@ -86,8 +62,28 @@ struct QiblaView: View {
         .sensoryFeedback(.success, trigger: aligned) { _, isAligned in isAligned }
     }
 
+    private func page(dial: CGFloat) -> some View {
+        VStack(spacing: 0) {
+            Text("Qibla")
+                .font(.system(.largeTitle, design: .serif).weight(.semibold))
+            Text("Hold your phone flat, away from magnets.")
+                .font(.subheadline)
+                .foregroundStyle(Theme.muted)
+                .multilineTextAlignment(.center)
+                .padding(.top, 2)
+            if let place = model.qiblaPlace {
+                compass(place, dial: dial)
+            } else {
+                NoPlaceView()
+            }
+        }
+        .padding(.horizontal, 22)
+        .padding(.bottom, 16)
+        .frame(maxWidth: .infinity)
+    }
+
     @ViewBuilder
-    private func compass(_ place: Place) -> some View {
+    private func compass(_ place: Place, dial: CGFloat) -> some View {
         let qibla = place.qibla
         let location = model.location
 
@@ -192,13 +188,6 @@ struct QiblaView: View {
         .controlSize(.large)
         .foregroundStyle(Theme.gold)
         .padding(.top, 10)
-    }
-
-    /// The compass gives up as much as the page reaches past the screen, or takes back room left over (up to 300);
-    /// with large text the page still scrolls, the compass at 200.
-    private func fitDial() {
-        guard pageHeight > 0, room > 0 else { return }
-        dial = min(300, max(200, (dial - (pageHeight - room)).rounded(.down)))
     }
 
     /// The turn from the current heading to the Qibla, between -180° (left) and 180° (right).
