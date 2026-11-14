@@ -1,5 +1,6 @@
 // Builds the app's small website (home, privacy policy, support) into public/, one folder per language,
 // from content/<language>.json. No scripts, cookies or outside requests in the pages: node build.mjs
+// Cloudflare Workers Builds runs this, then `npx cf deploy`, on every push to main that changes site/.
 import { cpSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
