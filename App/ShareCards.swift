@@ -41,8 +41,7 @@ struct VerseCard: View {
             Text(verbatim: "سورة \(surah.name) · \(Quran.title(of: surah)) \(verse.surah):\(verse.number)")
                 .font(.system(size: 14, weight: .medium, design: .serif))
                 .foregroundStyle(style.accent)
-            // Tanzil's terms: copies of its text name the source.
-            Text(verbatim: "Wajh: Qibla & Prayer Times · tanzil.net")
+            Text(verbatim: "Wajh: Qibla & Prayer Times")
                 .font(.system(size: 10))
                 .foregroundStyle(style.muted)
         }

@@ -797,8 +797,8 @@ struct VerseSheet: View {
     var body: some View {
         let surah = Quran.shared.surahs[verse.surah - 1]
         let reference = "\(Quran.title(of: surah)) \(verse.surah):\(verse.number)"
-        // Tanzil's terms: copies of its text name the source.
-        let shared = verse.text + "\n\n" + reference + " · tanzil.net"
+        // A verse isn't a substantial part of Tanzil's text, so it goes without the credit (Settings → About has it).
+        let shared = verse.text + "\n\n" + reference
         NavigationStack {
             ScrollView {
                 Text(verbatim: verse.text)
@@ -931,13 +931,6 @@ struct QuranIndexView: View {
                         }
                     }
                 }
-                Section {
-                    Link(destination: URL(string: "https://tanzil.net")!) {
-                        Text("Qur'an text: Tanzil Project (tanzil.net)")
-                            .font(.footnote)
-                    }
-                }
-                .listRowBackground(Color.clear)
             }
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)

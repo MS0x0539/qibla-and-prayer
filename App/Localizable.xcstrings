@@ -7685,40 +7685,6 @@
         }
       }
     },
-    "Qur'an text: Tanzil Project (tanzil.net)": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "نص القرآن: مشروع تنزيل (tanzil.net)"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Korantext: Tanzil Project (tanzil.net)"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Texte du Coran : Tanzil Project (tanzil.net)"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Korantekst: Tanzil Project (tanzil.net)"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kur'an metni: Tanzil Projesi (tanzil.net)"
-          }
-        }
-      }
-    },
     "Ramadan %@": {
       "localizations": {
         "ar": {
