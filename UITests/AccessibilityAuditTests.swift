@@ -12,7 +12,7 @@ final class AccessibilityAuditTests: XCTestCase {
         ("setup-method", ["-setupStep", "3"]),
         ("times", ["-skipOnboarding", "YES", "-startTab", "times"]),
         ("qibla", ["-skipOnboarding", "YES", "-startTab", "qibla", "-demoHeading", "100"]),
-        ("quran", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranPage", "42"]),
+        ("quran", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranNight", "NO", "-quranPage", "42"]),
         ("quran-night", ["-skipOnboarding", "YES", "-startTab", "quran", "-quranAutoNight", "NO", "-quranPage", "42", "-quranNight", "YES"]),
         ("tasbih", ["-skipOnboarding", "YES", "-startTab", "ibadah", "-ibadahPart", "tasbih"]),
         ("tracker", ["-skipOnboarding", "YES", "-startTab", "ibadah", "-ibadahPart", "tracker"]),

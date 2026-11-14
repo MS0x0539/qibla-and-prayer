@@ -8,10 +8,10 @@ struct QuranView: View {
     @AppStorage(QuranProgress.pageKey, store: SharedStore.defaults) private var page = 1
     /// The largest text size; each page uses the largest size up to it at which the page fits the screen.
     @AppStorage("quranTextSize") private var textSize = 26.0
-    // `-quranNight YES -quranAutoNight NO` for CI screenshots of the night page.
-    @AppStorage("quranNight") private var night = false
-    /// The page turns to night after Isha and back to paper at sunrise, unless paper or night was picked by hand.
-    @AppStorage("quranAutoNight") private var autoNight = true
+    // Night unless Paper or Automatic is picked; `-quranNight NO` for CI screenshots of the paper page.
+    @AppStorage("quranNight") private var night = true
+    /// Automatic: the page turns to night after Isha and back to paper at sunrise.
+    @AppStorage("quranAutoNight") private var autoNight = false
     @State private var nightNow = false
     @State private var pager = PagerHandle()
     @Environment(AppModel.self) private var model
@@ -51,11 +51,12 @@ struct QuranView: View {
             // The pager's own direction (see MushafPager), whatever the iPhone's language.
             .environment(\.layoutDirection, reduceMotion ? .rightToLeft : .leftToRight)
             .id(reduceMotion)
-            .background(style.paper.ignoresSafeArea())
+            // Paper is the page only: around it the app's own dark colours, so the status bar, the buttons and the
+            // tab bar keep theirs (on paper they turned white, pale gold and black).
+            .background(Theme.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(style.paper, for: .navigationBar)
+            .toolbarBackground(Theme.background, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(isNight ? .dark : .light, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showingIndex = true } label: {
@@ -70,16 +71,16 @@ struct QuranView: View {
                             if let surah {
                                 Text(verbatim: Quran.title(of: surah))
                                     .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(style.ink)
+                                    .foregroundStyle(Theme.ink)
                             }
                             Text("Page \(page)")
                                 .font(.caption.monospacedDigit())
-                                .foregroundStyle(style.muted)
+                                .foregroundStyle(Theme.muted)
                             // A recitation downloading for offline, from the settings sheet.
                             if let download = RecitationDownloads.shared.current {
                                 ProgressView(value: download.progress)
                                     .frame(width: 70)
-                                    .tint(style.ornament)
+                                    .tint(Theme.gold)
                                     .accessibilityLabel(Text(verbatim: download.title))
                             }
                         }
@@ -381,13 +382,14 @@ private struct PageBar: View {
         .font(.subheadline.weight(.semibold).monospacedDigit())
         .foregroundStyle(style.accent)
         .padding(.horizontal, 12)
-        .background(style.paper)
+        // Not under the tab bar, which stays on the app's dark background.
+        .background(style.paper, ignoresSafeAreaEdges: [])
         // The next page lies to the left, as in a mushaf, whatever the app's language.
         .environment(\.layoutDirection, .leftToRight)
     }
 }
 
-/// How a mushaf page looks: printed paper (the default) or dark for reading at night.
+/// How a mushaf page looks: printed paper, or dark for reading at night (the default).
 struct MushafStyle {
     let paper: Color
     let ink: Color
