@@ -1,5 +1,6 @@
 import AVFoundation
 import MediaPlayer
+import Network
 import Observation
 import SwiftUI
 
@@ -357,6 +358,17 @@ final class RecitationDownloads {
     /// Goes up whenever downloaded files come or go, so the lists check again which parts are complete.
     private(set) var changes = 0
     @ObservationIgnored private var task: Task<Void, Never>?
+    /// Whether the iPhone is on mobile data (or a personal hotspot) now: a large download asks first then.
+    private(set) var onMobileData = false
+    private let network = NWPathMonitor()
+
+    private init() {
+        network.pathUpdateHandler = { path in
+            let expensive = path.isExpensive
+            Task { @MainActor in RecitationDownloads.shared.onMobileData = expensive }
+        }
+        network.start(queue: DispatchQueue(label: "RecitationDownloads.network"))
+    }
 
     /// The playback cache: verses played before, which iOS may also clear when it needs space.
     nonisolated static var cache: URL { URL.cachesDirectory.appending(path: "Recitation", directoryHint: .isDirectory) }
@@ -396,6 +408,8 @@ final class RecitationDownloads {
         let numbers = Self.numbers(for: verses)
         current = (title, 0)
         missing = 0
+        // Only an open app downloads: the screen stays on until it's done (or cancelled).
+        UIApplication.shared.isIdleTimerDisabled = true
         task = Task {
             var folder = Reciter.downloads
             try? FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
@@ -426,6 +440,7 @@ final class RecitationDownloads {
             current = nil
             task = nil
             changes += 1
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 
@@ -433,6 +448,7 @@ final class RecitationDownloads {
         task?.cancel()
         task = nil
         current = nil
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
     /// A surah's or juz's own verses by one reciter. The basmala file (Al-Fatiha's first verse) goes only with a part

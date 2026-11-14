@@ -12784,6 +12784,108 @@
           }
         }
       }
+    },
+    "Use mobile data?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخدام البيانات الخلوية؟"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mobile Daten verwenden?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utiliser les données cellulaires ?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mobiele data gebruiken?"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mobil veri kullanılsın mı?"
+          }
+        }
+      }
+    },
+    "%@ is %@. You're not on Wi-Fi, so this download uses your mobile data.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حجم %@ هو %@. لست متصلًا بشبكة Wi-Fi، لذا يستخدم هذا التنزيل بياناتك الخلوية."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ist %@ groß. Du bist nicht im WLAN, daher nutzt dieser Download deine mobilen Daten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ fait %@. Vous n’êtes pas en Wi-Fi : ce téléchargement utilise vos données cellulaires."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ is %@. Je zit niet op wifi, dus deze download gebruikt je mobiele data."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %@ boyutunda. Wi-Fi'da değilsiniz; bu indirme mobil verinizi kullanır."
+          }
+        }
+      }
+    },
+    "Keep the app open while it downloads: the screen stays on until it's done.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أبقِ التطبيق مفتوحًا أثناء التنزيل؛ تبقى الشاشة مضاءة حتى ينتهي."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lass die App während des Downloads geöffnet: Der Bildschirm bleibt an, bis er fertig ist."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gardez l’app ouverte pendant le téléchargement : l’écran reste allumé jusqu’à la fin."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Houd de app open tijdens het downloaden: het scherm blijft aan tot het klaar is."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İndirme sürerken uygulamayı açık tutun; ekran bitene kadar açık kalır."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

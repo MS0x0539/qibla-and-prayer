@@ -142,6 +142,9 @@ struct RecitationDownloadRow: View {
     var number: Int?
     /// Shown instead of the part's title ("Download all" for the whole Qur'an in the lists).
     var label: Text?
+    @State private var askingMobileData = false
+    /// Above this, a download over mobile data asks first: the whole Qur'an, and the largest juz of some reciters.
+    private static let askAbove: Int64 = 100_000_000
 
     var body: some View {
         let downloads = RecitationDownloads.shared
@@ -185,10 +188,23 @@ struct RecitationDownloadRow: View {
                 .accessibilityLabel(Text("Cancel"))
                 .foregroundStyle(Theme.muted)
             } else {
-                Button("Download") { downloads.download(part.verses, by: reciter, title: part.title) }
-                    .buttonStyle(.bordered)
-                    .disabled(downloads.current != nil)
+                Button("Download") {
+                    if downloads.onMobileData && (part.bytes ?? 0) > Self.askAbove {
+                        askingMobileData = true
+                    } else {
+                        downloads.download(part.verses, by: reciter, title: part.title)
+                    }
+                }
+                .buttonStyle(.bordered)
+                .disabled(downloads.current != nil)
             }
+        }
+        .alert("Use mobile data?", isPresented: $askingMobileData) {
+            Button("Download") { downloads.download(part.verses, by: reciter, title: part.title) }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            let size = (part.bytes ?? 0).formatted(.byteCount(style: .file).locale(.app))
+            Text("\(part.title) is \(size). You're not on Wi-Fi, so this download uses your mobile data.")
         }
         // A downloaded part can go on its own (VoiceOver offers it as an action).
         .swipeActions {
@@ -219,6 +235,10 @@ struct RecitationDownloadList: View {
                 }
                 RecitationDownloadRow(part: whole, reciter: reciter, downloaded: downloaded.contains(whole.id),
                                       label: Text("Download all"))
+            } footer: {
+                if downloads.current != nil {
+                    Text("Keep the app open while it downloads: the screen stays on until it's done.")
+                }
             }
             .listRowBackground(Theme.card)
             Section {
@@ -286,7 +306,11 @@ struct OfflineRecitationSection: View {
         } header: {
             Text("Offline recitation")
         } footer: {
-            Text("Downloads stay in the app until you remove them, and play without internet.")
+            if downloads.current != nil {
+                Text("Keep the app open while it downloads: the screen stays on until it's done.")
+            } else {
+                Text("Downloads stay in the app until you remove them, and play without internet.")
+            }
         }
         .listRowBackground(Theme.card)
         // On opening, when files come or go, and for another reciter.
