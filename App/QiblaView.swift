@@ -21,14 +21,12 @@ struct QiblaView: View {
 
     var body: some View {
         NavigationStack {
-            // The page with the largest compass that lets it fit the screen unscrolled; with large text, or on a
-            // small iPhone, it scrolls with the smallest.
+            // The page with the largest compass that lets it fit the screen unscrolled (300 points from a 6.3-inch
+            // iPhone up); with large text, or on an iPhone SE, it scrolls with the smallest.
             ViewThatFits(in: .vertical) {
-                page(dial: 300)
-                page(dial: 275)
-                page(dial: 250)
-                page(dial: 225)
-                page(dial: 200)
+                ForEach([300, 280, 260, 240, 220, 200], id: \.self) { size in
+                    page(dial: CGFloat(size))
+                }
                 ScrollView { page(dial: 200) }
                     .scrollBounceBehavior(.basedOnSize)
             }
@@ -78,7 +76,7 @@ struct QiblaView: View {
             }
         }
         .padding(.horizontal, 22)
-        .padding(.bottom, 16)
+        .padding(.bottom, 8)
         .frame(maxWidth: .infinity)
     }
 
@@ -111,14 +109,14 @@ struct QiblaView: View {
             .environment(\.layoutDirection, .leftToRight)
             .accessibilityHidden(true)
         }
-        .padding(.top, 26)
+        .padding(.top, 14)
 
         if let heading = location.heading, let offset {
             Text(verbatim: Formats.bearing(heading))
                 .font(.system(size: readoutSize, weight: .medium, design: .serif).monospacedDigit())
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
-                .padding(.top, 24)
+                .padding(.top, 12)
             Group {
                 if aligned {
                     Text("Facing the Qibla")
@@ -148,12 +146,12 @@ struct QiblaView: View {
         } else if CLLocationManager.headingAvailable() {
             // The first heading takes a moment; don't claim there is no compass meanwhile.
             ProgressView()
-                .padding(.top, 24)
+                .padding(.top, 12)
         } else {
             Text("This device has no compass. The Qibla is at \(Int(qibla.rounded()))° from north.")
                 .font(.headline)
                 .multilineTextAlignment(.center)
-                .padding(.top, 24)
+                .padding(.top, 12)
         }
 
         HStack(spacing: 6) {
@@ -166,7 +164,7 @@ struct QiblaView: View {
         .accessibilityElement(children: .combine)
         .font(.subheadline)
         .foregroundStyle(Theme.muted)
-        .padding(.top, 22)
+        .padding(.top, 16)
 
         Button { showingMap = true } label: {
             Label("Map and mosques nearby", systemImage: "map")
@@ -174,7 +172,7 @@ struct QiblaView: View {
         .buttonStyle(.bordered)
         .controlSize(.large)
         .foregroundStyle(Theme.gold)
-        .padding(.top, 18)
+        .padding(.top, 14)
 
         HStack(spacing: 12) {
             Button { showingCamera = true } label: {
