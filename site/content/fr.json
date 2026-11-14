@@ -60,7 +60,7 @@
       {
         "heading": "La Mecque en direct",
         "paragraphs": [
-          "Quand vous ouvrez « La Mecque en direct » dans l’onglet Qibla, l’app affiche le lecteur de YouTube avec le direct de la chaîne Saudi Quran TV, dans le mode de confidentialité renforcée de YouTube (youtube-nocookie.com). YouTube (Google) reçoit alors votre adresse IP et ce dont son lecteur a besoin, et peut enregistrer ses propres cookies, selon la politique de confidentialité de Google (policies.google.com/privacy). L’app n’envoie rien d’autre à YouTube."
+          "Quand vous ouvrez « La Mecque en direct » dans l’onglet Qibla, l’app demande à ce site (qibla.dev) quel direct est en cours, puis affiche le lecteur de YouTube avec le direct de la chaîne Saudi Quran TV, dans le mode de confidentialité renforcée de YouTube (youtube-nocookie.com). YouTube (Google) reçoit alors votre adresse IP et ce dont son lecteur a besoin, et peut enregistrer ses propres cookies, selon la politique de confidentialité de Google (policies.google.com/privacy). L’app n’envoie rien d’autre à YouTube."
         ]
       },
       {
@@ -78,7 +78,7 @@
       {
         "heading": "Ni publicité ni pistage",
         "paragraphs": [
-          "L’app ne contient aucun code de publicité, d’analyse ou de pistage. En dehors des frameworks d’Apple, elle utilise uniquement Adhan, une bibliothèque open source qui calcule les horaires de prière sur votre iPhone et n’envoie rien nulle part. Hormis les demandes à Plans d’Apple, au serveur audio et à YouTube décrites ci-dessus, l’app ne partage rien avec personne. Je ne collecte de données personnelles auprès de personne, enfants compris."
+          "L’app ne contient aucun code de publicité, d’analyse ou de pistage. En dehors des frameworks d’Apple, elle utilise uniquement Adhan, une bibliothèque open source qui calcule les horaires de prière sur votre iPhone et n’envoie rien nulle part. Hormis les demandes décrites ci-dessus, l’app ne partage rien avec personne. Je ne collecte de données personnelles auprès de personne, enfants compris."
         ]
       },
       {

@@ -60,7 +60,7 @@
       {
         "heading": "Mekke canlı",
         "paragraphs": [
-          "Kıble sekmesinde Mekke canlı yayınını açtığınızda uygulama, YouTube'un kendi oynatıcısında Saudi Quran TV kanalının canlı yayınını, YouTube'un gizliliği geliştirilmiş modunda (youtube-nocookie.com) gösterir. YouTube (Google) bu durumda IP adresinizi ve oynatıcının ihtiyaç duyduklarını alır ve Google'ın gizlilik politikasına (policies.google.com/privacy) göre kendi çerezlerini saklayabilir. Uygulama YouTube'a başka bir şey göndermez."
+          "Kıble sekmesinde Mekke canlı yayınını açtığınızda uygulama önce bu siteye (qibla.dev) hangi yayının açık olduğunu sorar, ardından YouTube'un kendi oynatıcısında Saudi Quran TV kanalının canlı yayınını, YouTube'un gizliliği geliştirilmiş modunda (youtube-nocookie.com) gösterir. YouTube (Google) bu durumda IP adresinizi ve oynatıcının ihtiyaç duyduklarını alır ve Google'ın gizlilik politikasına (policies.google.com/privacy) göre kendi çerezlerini saklayabilir. Uygulama YouTube'a başka bir şey göndermez."
         ]
       },
       {
@@ -78,7 +78,7 @@
       {
         "heading": "Reklam ve takip yok",
         "paragraphs": [
-          "Uygulama reklam, analiz ya da takip kodu içermez. Apple'ın kendi yazılım çerçeveleri dışında yalnızca Adhan adlı açık kaynaklı kütüphaneyi kullanır; bu kütüphane namaz vakitlerini iPhone'unuzda hesaplar ve hiçbir yere hiçbir şey göndermez. Yukarıda açıklanan Apple Haritalar, ses sunucusu ve YouTube istekleri dışında uygulama hiç kimseyle hiçbir şey paylaşmaz. Çocuklar dahil hiç kimseden kişisel veri toplamıyorum."
+          "Uygulama reklam, analiz ya da takip kodu içermez. Apple'ın kendi yazılım çerçeveleri dışında yalnızca Adhan adlı açık kaynaklı kütüphaneyi kullanır; bu kütüphane namaz vakitlerini iPhone'unuzda hesaplar ve hiçbir yere hiçbir şey göndermez. Yukarıda açıklanan istekler dışında uygulama hiç kimseyle hiçbir şey paylaşmaz. Çocuklar dahil hiç kimseden kişisel veri toplamıyorum."
         ]
       },
       {

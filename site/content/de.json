@@ -60,7 +60,7 @@
       {
         "heading": "Mekka live",
         "paragraphs": [
-          "Wenn du im Tab Qibla „Mekka live“ öffnest, zeigt die App YouTubes eigenen Player mit dem Livestream des Kanals Saudi Quran TV, im erweiterten Datenschutzmodus von YouTube (youtube-nocookie.com). YouTube (Google) erhält dann deine IP-Adresse und was der Player braucht und kann eigene Cookies speichern, gemäß der Datenschutzerklärung von Google (policies.google.com/privacy). Die App sendet YouTube sonst nichts."
+          "Wenn du im Tab Qibla „Mekka live“ öffnest, fragt die App bei dieser Website (qibla.dev) nach, welcher Stream läuft, und zeigt dann YouTubes eigenen Player mit dem Livestream des Kanals Saudi Quran TV, im erweiterten Datenschutzmodus von YouTube (youtube-nocookie.com). YouTube (Google) erhält dann deine IP-Adresse und was der Player braucht und kann eigene Cookies speichern, gemäß der Datenschutzerklärung von Google (policies.google.com/privacy). Die App sendet YouTube sonst nichts."
         ]
       },
       {
@@ -78,7 +78,7 @@
       {
         "heading": "Keine Werbung, kein Tracking",
         "paragraphs": [
-          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen an Apple Karten, den Audioserver und YouTube teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
+          "Die App enthält keinen Code für Werbung, Nutzungsanalyse oder Tracking. Neben Apples eigenen Frameworks nutzt sie nur Adhan, eine Open-Source-Bibliothek, die Gebetszeiten auf deinem iPhone berechnet und nirgendwohin etwas sendet. Abgesehen von den oben beschriebenen Anfragen teilt die App mit niemandem etwas. Ich sammle von niemandem personenbezogene Daten, auch nicht von Kindern."
         ]
       },
       {

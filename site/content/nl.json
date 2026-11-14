@@ -60,7 +60,7 @@
       {
         "heading": "Makkah live",
         "paragraphs": [
-          "Als je in het tabblad Qibla Makkah live opent, toont de app de eigen speler van YouTube met de livestream van het kanaal Saudi Quran TV, in de privacyvriendelijke modus van YouTube (youtube-nocookie.com). YouTube (Google) ontvangt dan je IP-adres en wat de speler nodig heeft, en kan eigen cookies opslaan, onder het privacybeleid van Google (policies.google.com/privacy). De app stuurt YouTube verder niets."
+          "Als je in het tabblad Qibla Makkah live opent, vraagt de app aan deze website (qibla.dev) welke stream er loopt en toont hij de eigen speler van YouTube met de livestream van het kanaal Saudi Quran TV, in de privacyvriendelijke modus van YouTube (youtube-nocookie.com). YouTube (Google) ontvangt dan je IP-adres en wat de speler nodig heeft, en kan eigen cookies opslaan, onder het privacybeleid van Google (policies.google.com/privacy). De app stuurt YouTube verder niets."
         ]
       },
       {
@@ -78,7 +78,7 @@
       {
         "heading": "Geen advertenties of tracking",
         "paragraphs": [
-          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken aan Apple Kaarten, de audioserver en YouTube die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
+          "De app bevat geen code voor advertenties, analytics of tracking. Naast de eigen frameworks van Apple gebruikt de app alleen Adhan, een opensourcebibliotheek die gebedstijden op je iPhone berekent en nergens iets naartoe stuurt. Behalve de verzoeken die hierboven staan beschreven, deelt de app met niemand iets. Ik verzamel van niemand persoonsgegevens, ook niet van kinderen."
         ]
       },
       {
