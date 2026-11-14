@@ -77,7 +77,7 @@ struct PrayerTrackerView: View {
                         Text(verbatim: Self.prayerName(kind))
                             .lineLimit(1)
                             .minimumScaleFactor(0.6)
-                            .frame(width: 44)
+                            .frame(width: 48)
                     }
                 }
                 .font(.caption2)
@@ -104,7 +104,7 @@ struct PrayerTrackerView: View {
                                     .font(.title3)
                                     .foregroundStyle(ticked.contains(kind) ? Theme.gold
                                         : started ? Theme.ink.opacity(0.6) : Theme.muted.opacity(0.4))
-                                    .frame(width: 44, height: 44)
+                                    .frame(width: 48, height: 44)
                             }
                             .buttonStyle(.plain)
                             .disabled(!started)

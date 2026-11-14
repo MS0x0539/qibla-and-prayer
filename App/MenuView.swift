@@ -19,7 +19,21 @@ enum MenuPage: String, Hashable {
         }
     }
 
-    /// On the tile until its picture comes, and on the buttons at the top.
+    /// The tile's own icon, drawn for the app (Assets.xcassets/MenuIcons); nil for the buttons at the top.
+    var icon: String? {
+        switch self {
+        case .tasbih: "icon-tasbih"
+        case .tracker: "icon-tracker"
+        case .missed: "icon-missed"
+        case .khatm: "icon-khatm"
+        case .calendar: "icon-calendar"
+        case .mosques: "icon-mosques"
+        case .live: "icon-live"
+        case .downloads, .settings: nil
+        }
+    }
+
+    /// The system symbol on the buttons at the top, and on a tile without an icon of its own.
     var symbol: String {
         switch self {
         case .tasbih: "circle.dotted"
@@ -158,17 +172,28 @@ struct MenuView: View {
     }
 }
 
-/// A tile: a gold symbol over its name, until its picture comes.
+/// A tile: its gold icon over its name.
 private struct MenuTile: View {
     let page: MenuPage
+    /// The icon grows with the text size.
+    @ScaledMetric(relativeTo: .title) private var iconSize: CGFloat = 36
 
     var body: some View {
         VStack(spacing: 10) {
             Spacer(minLength: 0)
-            Image(systemName: page.symbol)
-                .font(.title)
-                .foregroundStyle(Theme.gold)
-                .accessibilityHidden(true)
+            Group {
+                if let icon = page.icon {
+                    Image(icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: iconSize, height: iconSize)
+                } else {
+                    Image(systemName: page.symbol)
+                        .font(.title)
+                }
+            }
+            .foregroundStyle(Theme.gold)
+            .accessibilityHidden(true)
             Spacer(minLength: 0)
             Text(page.title)
                 .font(.subheadline.weight(.semibold))

@@ -80,13 +80,13 @@ struct HomeView: View {
                 }
                 if let special {
                     Button { openMenu(.calendar) } label: {
-                        CardRow(symbol: "moon.stars", title: Text(verbatim: special.day.title(shia: model.settings.school == .jafari)),
+                        CardRow(icon: Image("icon-calendar"), title: Text(verbatim: special.day.title(shia: model.settings.school == .jafari)),
                                 detail: Text(verbatim: Self.relative(special.date, from: now, in: place.calendar)))
                     }
                     .buttonStyle(.plain)
                 }
                 Button { openMenu(.tasbih) } label: {
-                    CardRow(symbol: "circle.dotted", title: Text("Tasbih"),
+                    CardRow(icon: Image("icon-tasbih"), title: Text("Tasbih"),
                             detail: tasbihTotal > 0 ? Text("Total \(Formats.number(tasbihTotal))") : Text("Start counting"))
                 }
                 .buttonStyle(.plain)
@@ -157,11 +157,14 @@ private struct PrayerCard: View {
                 }
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Theme.ink)
-                .lineLimit(1)
+                .lineLimit(2)
+                .layoutPriority(1)
                 Spacer(minLength: 8)
                 Button("Change", action: changePlace)
                     .font(.subheadline)
                     .foregroundStyle(Theme.gold)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
             if let next {
                 ViewThatFits(in: .horizontal) {
@@ -347,16 +350,18 @@ private struct YesterdayCard: View {
 
 /// A row that opens another part of the app: a gold symbol, a title and a detail.
 struct CardRow: View {
-    let symbol: String
+    let icon: Image
     let title: Text
     let detail: Text
+    @ScaledMetric(relativeTo: .title3) private var iconSize: CGFloat = 26
 
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: symbol)
-                .font(.title3)
+            icon
+                .resizable()
+                .scaledToFit()
+                .frame(width: iconSize, height: iconSize)
                 .foregroundStyle(Theme.gold)
-                .frame(width: 28)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 title
@@ -389,7 +394,7 @@ struct ContinueReading: View {
         Button {
             openScreen = AppScreen.quran.rawValue
         } label: {
-            CardRow(symbol: "book", title: Text("Continue reading"),
+            CardRow(icon: Image(systemName: "book"), title: Text("Continue reading"),
                     detail: Text(verbatim: (surah.map { Quran.title(of: $0) + " · " } ?? ""))
                         + Text("Page \(page)"))
         }
