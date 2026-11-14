@@ -1,4 +1,4 @@
-# qibla.dev holds the privacy, accessibility and support pages of the Qibla & Prayer app.
+# qibla.dev holds the privacy, accessibility, release and support pages of the Qibla & Prayer app.
 # They are meant to be opened from the app, not found through search engines or AI tools.
 
 User-agent: *

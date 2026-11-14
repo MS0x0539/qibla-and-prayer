@@ -6,8 +6,9 @@
   "nav": {
     "home": "Home",
     "privacy": "Privacy policy",
-    "support": "Support",
-    "accessibility": "Accessibility"
+    "accessibility": "Accessibility",
+    "releases": "What's new",
+    "support": "Support"
   },
   "home": {
     "intro": "Prayer times that follow the mosques in your country, a Qibla compass, the whole Qur'an with ten reciters, Makkah live, widgets, a tasbih and a tracker for fasts and missed prayers. In English, Dutch, German, French, Turkish and Arabic.",
@@ -98,6 +99,40 @@
         "heading": "Changes",
         "paragraphs": [
           "If this policy changes, the new version will appear on this page with a new date."
+        ]
+      }
+    ]
+  },
+  "releases": {
+    "title": "What's new",
+    "intro": "What each version of the app brings.",
+    "versions": [
+      {
+        "name": "Version 1.1",
+        "when": "Coming soon",
+        "items": [
+          "The Qur'an: the whole mushaf, page by page, with a night page for reading in the dark.",
+          "Ten reciters, verse by verse, at the speed you like, also with your screen locked or offline.",
+          "See the Qibla through your camera, and watch Makkah live.",
+          "Midnight and the last third of the night with the prayer times.",
+          "Widgets for today's times, a verse of the day, your reading and your tasbih.",
+          "The next prayer with a countdown on your Lock Screen.",
+          "Share a page, a verse or today's times as an image.",
+          "A simpler Settings screen, and easier to use with VoiceOver and larger text."
+        ]
+      },
+      {
+        "name": "Version 1.0",
+        "when": "13 November 2026",
+        "items": [
+          "Prayer times that follow your mosque's method, with a monthly timetable and the Hijri date.",
+          "A Qibla compass, and a map with mosques nearby.",
+          "Suhoor and iftar times in Ramadan, with an iftar countdown on your Lock Screen.",
+          "The special days and nights of the Islamic year.",
+          "Reminders for every prayer, Jumu'ah, and suhoor and iftar.",
+          "Ask Siri when the next prayer is.",
+          "A tasbih counter, and a tracker for fasts and missed prayers.",
+          "In English, Dutch, German, French, Turkish and Arabic."
         ]
       }
     ]

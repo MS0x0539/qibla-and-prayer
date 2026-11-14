@@ -6,8 +6,9 @@
   "nav": {
     "home": "Ana sayfa",
     "privacy": "Gizlilik politikası",
-    "support": "Destek",
-    "accessibility": "Erişilebilirlik"
+    "accessibility": "Erişilebilirlik",
+    "releases": "Yenilikler",
+    "support": "Destek"
   },
   "home": {
     "intro": "Ülkenizdeki camileri izleyen namaz vakitleri, kıble pusulası, on kariyle Kur'an'ın tamamı, Mekke canlı yayını, widget'lar, tesbih, oruç ve kaza namazı takibi. Uygulamayı İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça kullanabilirsiniz.",
@@ -98,6 +99,41 @@
         "heading": "Değişiklikler",
         "paragraphs": [
           "Bu politika değişirse yeni sürüm, yeni bir tarihle bu sayfada yer alacak."
+        ]
+      }
+    ]
+  },
+  "releases": {
+    "title": "Yenilikler",
+    "intro": "Uygulamanın her sürümünde gelenler.",
+    "versions": [
+      {
+        "name": "Sürüm 1.1",
+        "when": "Yakında",
+        "items": [
+          "Kur'an: Mushafın tamamı sayfa sayfa, karanlıkta okumak için gece sayfasıyla.",
+          "On kariden ayet ayet tilavet, istediğiniz hızda; ekran kilitliyken ya da çevrimdışıyken de.",
+          "Kıbleyi kameranızdan görün, Mekke'yi canlı izleyin.",
+          "Namaz vakitlerinde gece yarısı ve gecenin son üçte biri.",
+          "Bugünün vakitleri, günün ayeti, okuduğunuz sayfa ve tesbihiniz için widget'lar.",
+          "Kilit ekranında geri sayımla sıradaki vakit.",
+          "Bir sayfayı, bir ayeti ya da bugünün vakitlerini görsel olarak paylaşın.",
+          "Cuma günleri de öğle vakti \"Öğle\" olarak gösterilir.",
+          "Daha sade bir Ayarlar ekranı; VoiceOver ve daha büyük metinle daha kolay kullanım."
+        ]
+      },
+      {
+        "name": "Sürüm 1.0",
+        "when": "13 Kasım 2026",
+        "items": [
+          "Caminizin yöntemine göre namaz vakitleri; aylık vakitler ve hicri tarihle.",
+          "Kıble pusulası ve yakındaki camileri gösteren harita.",
+          "Ramazan'da sahur ve iftar vakitleri; kilit ekranında iftara geri sayım.",
+          "Hicri yılın mübarek gün ve geceleri.",
+          "Her vakit, Cuma, sahur ve iftar için hatırlatmalar.",
+          "Sıradaki vakti Siri'ye sorun.",
+          "Tesbih ile oruç ve kaza namazı takibi.",
+          "İngilizce, Felemenkçe, Almanca, Fransızca, Türkçe ve Arapça."
         ]
       }
     ]

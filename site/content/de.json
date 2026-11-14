@@ -6,8 +6,9 @@
   "nav": {
     "home": "Startseite",
     "privacy": "Datenschutz",
-    "support": "Support",
-    "accessibility": "Barrierefreiheit"
+    "accessibility": "Barrierefreiheit",
+    "releases": "Neuigkeiten",
+    "support": "Support"
   },
   "home": {
     "intro": "Gebetszeiten, die den Moscheen in deinem Land folgen, ein Qibla-Kompass, der ganze Koran mit zehn Rezitatoren, Mekka live, Widgets, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
@@ -98,6 +99,40 @@
         "heading": "Änderungen",
         "paragraphs": [
           "Wenn sich diese Datenschutzerklärung ändert, erscheint die neue Version auf dieser Seite mit einem neuen Datum."
+        ]
+      }
+    ]
+  },
+  "releases": {
+    "title": "Neuigkeiten",
+    "intro": "Was jede Version der App bringt.",
+    "versions": [
+      {
+        "name": "Version 1.1",
+        "when": "Bald verfügbar",
+        "items": [
+          "Der Koran: der ganze Mushaf, Seite für Seite, mit einer Nachtseite zum Lesen im Dunkeln.",
+          "Zehn Rezitatoren, Vers für Vers, in deinem Tempo, auch bei gesperrtem Bildschirm oder offline.",
+          "Sieh die Qibla durch deine Kamera und schau Mekka live.",
+          "Mitternacht und das letzte Drittel der Nacht bei den Gebetszeiten.",
+          "Widgets für die heutigen Zeiten, einen Vers des Tages, deine Leseseite und dein Tasbih.",
+          "Das nächste Gebet mit Countdown auf dem Sperrbildschirm.",
+          "Teile eine Seite, einen Vers oder die heutigen Zeiten als Bild.",
+          "Einfachere Einstellungen, und besser bedienbar mit VoiceOver und größerem Text."
+        ]
+      },
+      {
+        "name": "Version 1.0",
+        "when": "13. November 2026",
+        "items": [
+          "Gebetszeiten nach der Methode deiner Moschee, mit Monatsübersicht und Hidschri-Datum.",
+          "Ein Qibla-Kompass und eine Karte mit Moscheen in der Nähe.",
+          "Suhur- und Iftar-Zeiten im Ramadan, mit Iftar-Countdown auf dem Sperrbildschirm.",
+          "Die besonderen Tage und Nächte des islamischen Jahres.",
+          "Erinnerungen an jedes Gebet, das Freitagsgebet sowie Suhur und Iftar.",
+          "Frag Siri, wann das nächste Gebet ist.",
+          "Ein Tasbih und ein Tracker für Fastentage und verpasste Gebete.",
+          "Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch."
         ]
       }
     ]

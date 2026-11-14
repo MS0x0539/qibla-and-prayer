@@ -6,8 +6,9 @@
   "nav": {
     "home": "Accueil",
     "privacy": "Politique de confidentialité",
-    "support": "Assistance",
-    "accessibility": "Accessibilité"
+    "accessibility": "Accessibilité",
+    "releases": "Nouveautés",
+    "support": "Assistance"
   },
   "home": {
     "intro": "Des horaires de prière qui suivent les mosquées de votre pays, une boussole de la qibla, le Coran entier avec dix récitateurs, La Mecque en direct, des widgets, un tasbih et un suivi des jeûnes et des prières manquées. En anglais, néerlandais, allemand, français, turc et arabe.",
@@ -98,6 +99,40 @@
         "heading": "Modifications",
         "paragraphs": [
           "Si cette politique change, la nouvelle version apparaîtra sur cette page, avec une nouvelle date."
+        ]
+      }
+    ]
+  },
+  "releases": {
+    "title": "Nouveautés",
+    "intro": "Ce qu’apporte chaque version de l’app.",
+    "versions": [
+      {
+        "name": "Version 1.1",
+        "when": "Bientôt",
+        "items": [
+          "Le Coran, le mushaf entier page par page, avec une page de nuit pour lire dans le noir.",
+          "Dix récitateurs, verset par verset, à la vitesse de votre choix, même écran verrouillé ou hors ligne.",
+          "Voyez la qibla à travers l’appareil photo, et regardez La Mecque en direct.",
+          "Minuit et le dernier tiers de la nuit avec les horaires de prière.",
+          "Des widgets pour les horaires du jour, un verset du jour, votre lecture et votre tasbih.",
+          "La prochaine prière avec un compte à rebours sur l’écran verrouillé.",
+          "Partagez une page, un verset ou les horaires du jour en image.",
+          "Des réglages plus simples, et plus facile à utiliser avec VoiceOver et le texte plus grand."
+        ]
+      },
+      {
+        "name": "Version 1.0",
+        "when": "13 novembre 2026",
+        "items": [
+          "Des horaires de prière selon la méthode de votre mosquée, avec les horaires du mois et la date hégirienne.",
+          "Une boussole de la qibla, et une carte des mosquées à proximité.",
+          "Les horaires du sahour et de l’iftar pendant le ramadan, avec un compte à rebours de l’iftar sur l’écran verrouillé.",
+          "Les jours et les nuits particuliers de l’année islamique.",
+          "Des rappels pour chaque prière, la prière du vendredi, le sahour et l’iftar.",
+          "Demandez à Siri l’heure de la prochaine prière.",
+          "Un tasbih, et un suivi des jeûnes et des prières manquées.",
+          "En anglais, néerlandais, allemand, français, turc et arabe."
         ]
       }
     ]

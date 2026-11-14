@@ -17,7 +17,8 @@ const linked = (text) => escape(text)
   .replace(/apple\.com\/legal\/privacy/g, '<a href="https://www.apple.com/legal/privacy/">apple.com/legal/privacy</a>');
 
 const prefix = (code) => (code === 'en' ? '/' : `/${code}/`);
-const PAGES = { home: '', privacy: 'privacy', accessibility: 'accessibility', support: 'support' };
+// In menu order.
+const PAGES = { home: '', privacy: 'privacy', accessibility: 'accessibility', releases: 'releases', support: 'support' };
 const url = (code, page) => prefix(code) + PAGES[page];
 
 const STAR = `<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><g fill="none" stroke="#C9A45C" stroke-width="1.5">
@@ -99,7 +100,15 @@ function home(lang) {
 <ul>
 ${h.points.map((point) => `<li>${linked(point)}</li>`).join('\n')}
 </ul>
-<p><a href="${url(lang.code, 'privacy')}">${escape(lang.nav.privacy)}</a> · <a href="${url(lang.code, 'accessibility')}">${escape(lang.nav.accessibility)}</a> · <a href="${url(lang.code, 'support')}">${escape(lang.nav.support)}</a></p>`);
+<p>${['privacy', 'accessibility', 'releases', 'support'].map((p) => `<a href="${url(lang.code, p)}">${escape(lang.nav[p])}</a>`).join(' · ')}</p>`);
+}
+
+// What each version brought, newest first, in plain words.
+function releases(lang) {
+  const r = lang.releases;
+  return page(lang, 'releases', `${r.title} · ${lang.appName}`, `<h1>${escape(r.title)}</h1>
+<p>${escape(r.intro)}</p>
+${r.versions.map((v) => `<h2>${escape(v.name)}</h2>\n<p class="muted">${escape(v.when)}</p>\n<ul>\n${v.items.map((item) => `<li>${escape(item)}</li>`).join('\n')}\n</ul>`).join('\n')}`);
 }
 
 function privacy(lang) {
@@ -135,6 +144,7 @@ for (const lang of languages) {
   writeFileSync(join(folder, 'privacy.html'), privacy(lang));
   writeFileSync(join(folder, 'support.html'), support(lang));
   writeFileSync(join(folder, 'accessibility.html'), accessibility(lang));
+  writeFileSync(join(folder, 'releases.html'), releases(lang));
 }
 // Icons: favicon.svg is drawn by hand; favicon.ico and apple-touch-icon.png are rendered from it and the app icon.
 cpSync(join(here, 'static'), join(here, 'public'), { recursive: true });
@@ -152,7 +162,7 @@ writeFileSync(join(here, 'public', '_headers'), `/*
 
 // Reached from the app, not through search engines or AI tools: search engines may read the pages only to see
 // their noindex (blocking them here would hide it); AI crawlers, AI search and AI assistants are kept out.
-writeFileSync(join(here, 'public', 'robots.txt'), `# qibla.dev holds the privacy, accessibility and support pages of the Qibla & Prayer app.
+writeFileSync(join(here, 'public', 'robots.txt'), `# qibla.dev holds the privacy, accessibility, release and support pages of the Qibla & Prayer app.
 # They are meant to be opened from the app, not found through search engines or AI tools.
 
 User-agent: *

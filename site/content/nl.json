@@ -6,8 +6,9 @@
   "nav": {
     "home": "Home",
     "privacy": "Privacybeleid",
-    "support": "Hulp",
-    "accessibility": "Toegankelijkheid"
+    "accessibility": "Toegankelijkheid",
+    "releases": "Wat is er nieuw",
+    "support": "Hulp"
   },
   "home": {
     "intro": "Gebedstijden die de moskeeën in je land volgen, een qibla-kompas, de hele Koran met tien reciteurs, Makkah live, widgets, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
@@ -98,6 +99,40 @@
         "heading": "Wijzigingen",
         "paragraphs": [
           "Als dit privacybeleid verandert, verschijnt de nieuwe versie op deze pagina, met een nieuwe datum."
+        ]
+      }
+    ]
+  },
+  "releases": {
+    "title": "Wat is er nieuw",
+    "intro": "Wat elke versie van de app brengt.",
+    "versions": [
+      {
+        "name": "Versie 1.1",
+        "when": "Binnenkort",
+        "items": [
+          "De Koran: de hele mushaf, pagina voor pagina, met een nachtpagina om in het donker te lezen.",
+          "Tien reciteurs, vers voor vers, op de snelheid die je wilt, ook met je scherm vergrendeld of offline.",
+          "Zie de qibla door je camera, en kijk naar Makkah live.",
+          "Middernacht en het laatste derde van de nacht bij de gebedstijden.",
+          "Widgets voor de tijden van vandaag, een vers van de dag, je leesplek en je tasbih.",
+          "Het volgende gebed met een aftelling op je toegangsscherm.",
+          "Deel een pagina, een vers of de tijden van vandaag als afbeelding.",
+          "Een eenvoudiger instellingenscherm, en makkelijker te gebruiken met VoiceOver en grotere tekst."
+        ]
+      },
+      {
+        "name": "Versie 1.0",
+        "when": "13 november 2026",
+        "items": [
+          "Gebedstijden volgens de methode van je moskee, met een maandoverzicht en de Hidjri-datum.",
+          "Een qibla-kompas, en een kaart met moskeeën in de buurt.",
+          "Tijden voor suhoor en iftar tijdens de ramadan, met een aftelling naar iftar op je toegangsscherm.",
+          "De bijzondere dagen en nachten van het islamitische jaar.",
+          "Herinneringen voor elk gebed, het vrijdaggebed, en suhoor en iftar.",
+          "Vraag Siri wanneer het volgende gebed is.",
+          "Een tasbih, en een plek om je vastendagen en gemiste gebeden bij te houden.",
+          "In het Engels, Nederlands, Duits, Frans, Turks en Arabisch."
         ]
       }
     ]
