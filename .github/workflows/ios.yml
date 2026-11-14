@@ -110,6 +110,11 @@ jobs:
             done
           done
           shot "de-times" -AppleLanguages "(de)" -AppleLocale de_DE -skipOnboarding YES -startTab times
+          shot "fr-times" -AppleLanguages "(fr)" -AppleLocale fr_FR -skipOnboarding YES -startTab times
+          # For qibla.dev: the compass turning until it faces the Qibla (126° from Amsterdam).
+          for heading in 30 75 105 126; do
+            shot "en-qibla-heading-$heading" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -demoHeading "$heading"
+          done
           # A poor heading: the calibration hint takes the advice's place, and the compass keeps its size.
           shot "en-qibla-low-accuracy" -AppleLanguages "(en)" -AppleLocale en_US -skipOnboarding YES -startTab qibla -demoHeading 100 -demoAccuracy 30
           for part in tasbih tracker; do
