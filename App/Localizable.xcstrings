@@ -12479,40 +12479,6 @@
         }
       }
     },
-    "The recitations; their reciters keep the copyright.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "التلاوات، وتبقى حقوقها لقرّائها."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Die Rezitationen; das Urheberrecht bleibt bei den Rezitatoren."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les récitations ; leurs récitateurs en gardent les droits."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "De recitaties; het auteursrecht blijft bij de reciteurs."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tilavetler; telif hakları karilerine aittir."
-          }
-        }
-      }
-    },
     "The Amiri Quran font.": {
       "localizations": {
         "ar": {
@@ -12543,6 +12509,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Amiri Quran yazı tipi."
+          }
+        }
+      }
+    },
+    "The reciters": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "القرّاء"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Rezitatoren"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les récitateurs"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De reciteurs"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kariler"
+          }
+        }
+      }
+    },
+    "Each recitation remains its reciter's own.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل تلاوة ملك لقارئها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jede Rezitation gehört ihrem Rezitator."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque récitation reste la propriété de son récitateur."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elke recitatie blijft van de reciteur."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her tilavet, karisine aittir."
           }
         }
       }

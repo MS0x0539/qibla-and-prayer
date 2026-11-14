@@ -398,14 +398,15 @@ struct AcknowledgementsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                credit("Adhan · Batoul Apps", Text("Calculates the prayer times and the Qibla direction."),
+                credit(Text(verbatim: "Adhan · Batoul Apps"), Text("Calculates the prayer times and the Qibla direction."),
                        site: "github.com/batoulapps/adhan-swift")
                 Divider().overlay(Theme.line)
-                credit("Tanzil Project", Text("The Qur'an text."), site: "tanzil.net")
+                credit(Text(verbatim: "Tanzil Project"), Text("The Qur'an text."), site: "tanzil.net")
                 Divider().overlay(Theme.line)
-                credit("Islamic Network", Text("The recitations; their reciters keep the copyright."), site: "alquran.cloud")
+                // The recordings are the reciters' own; the service they were copied from asks for no credit.
+                credit(Text("The reciters"), Text("Each recitation remains its reciter's own."))
                 Divider().overlay(Theme.line)
-                credit("Amiri Project", Text("The Amiri Quran font."), site: "github.com/aliftype/amiri")
+                credit(Text(verbatim: "Amiri Project"), Text("The Amiri Quran font."), site: "github.com/aliftype/amiri")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
@@ -415,15 +416,17 @@ struct AcknowledgementsView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    private func credit(_ name: String, _ reason: Text, site: String) -> some View {
+    private func credit(_ name: Text, _ reason: Text, site: String? = nil) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(verbatim: name)
+            name
                 .font(.headline)
                 .foregroundStyle(Theme.ink)
             reason
                 .foregroundStyle(Theme.muted)
-            Link(destination: URL(string: "https://\(site)")!) {
-                Text(verbatim: site)
+            if let site {
+                Link(destination: URL(string: "https://\(site)")!) {
+                    Text(verbatim: site)
+                }
             }
         }
     }
