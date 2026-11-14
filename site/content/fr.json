@@ -2,7 +2,7 @@
   "language": "Français",
   "dir": "ltr",
   "appName": "Wajh: Qibla & Prayer Times",
-  "tagline": "Horaires de prière et qibla, sans publicité ni pistage.",
+  "tagline": "Horaires de prière, qibla et Coran, sans publicité ni pistage.",
   "nav": {
     "home": "Accueil",
     "privacy": "Politique de confidentialité",
@@ -10,10 +10,10 @@
     "accessibility": "Accessibilité"
   },
   "home": {
-    "intro": "Les horaires de prière selon 17 méthodes de calcul, une boussole et une carte de la qibla, les horaires du ramadan, un tasbih et un suivi des jeûnes et des prières manquées. En anglais, néerlandais, allemand, français, turc et arabe.",
+    "intro": "Des horaires de prière qui suivent les mosquées de votre pays, une boussole de la qibla, le Coran entier avec dix récitateurs, La Mecque en direct, des widgets, un tasbih et un suivi des jeûnes et des prières manquées. En anglais, néerlandais, allemand, français, turc et arabe.",
     "points": [
       "Sans publicité, sans abonnement, sans compte.",
-      "Rien n’est collecté à votre sujet. Vos réglages, votre tasbih et votre suivi restent sur votre iPhone ; les noms de lieux, la recherche de ville et la carte proviennent de Plans d’Apple, les récitations du Coran du serveur audio de l’app, où je ne garde aucune trace de qui écoute, et La Mecque en direct de YouTube.",
+      "Rien n’est collecté à votre sujet : vos réglages, votre tasbih et votre suivi restent sur votre iPhone. Les noms de lieux et la carte proviennent de Plans d’Apple, les récitations du serveur audio de l’app, et La Mecque en direct de YouTube.",
       "Les horaires suivent la méthode de votre mosquée ou de votre autorité de référence, et ont été vérifiés à l’aide des calendriers publiés par les autorités. Vous pouvez décaler chaque horaire de quelques minutes pour qu’il corresponde à celui de votre mosquée."
     ]
   },

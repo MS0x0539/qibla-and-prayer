@@ -2,7 +2,7 @@
   "language": "Nederlands",
   "dir": "ltr",
   "appName": "Wajh: Qibla & Prayer Times",
-  "tagline": "Gebedstijden en de qibla, zonder advertenties of tracking.",
+  "tagline": "Gebedstijden, de qibla en de Koran, zonder advertenties of tracking.",
   "nav": {
     "home": "Home",
     "privacy": "Privacybeleid",
@@ -10,10 +10,10 @@
     "accessibility": "Toegankelijkheid"
   },
   "home": {
-    "intro": "Gebedstijden met keuze uit 17 berekeningsmethoden, een qibla-kompas en -kaart, tijden voor de ramadan, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
+    "intro": "Gebedstijden die de moskeeën in je land volgen, een qibla-kompas, de hele Koran met tien reciteurs, Makkah live, widgets, een tasbih en een plek om je vastendagen en gemiste gebeden bij te houden. In het Engels, Nederlands, Duits, Frans, Turks en Arabisch.",
     "points": [
       "Geen advertenties, geen abonnementen, geen account.",
-      "Er wordt niets over jou verzameld. Je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen, het zoeken naar een stad en de kaart komen van Apple Kaarten, recitaties van de Koran van de eigen audioserver van de app, waar ik niet bijhoud wie er luistert, en Makkah live van YouTube.",
+      "Er wordt niets over jou verzameld: je instellingen, je tasbih en wat je bijhoudt blijven op je iPhone. Plaatsnamen en de kaart komen van Apple Kaarten, recitaties van de eigen audioserver van de app, en Makkah live van YouTube.",
       "De tijden volgen de methode van je moskee of instantie. Ze zijn gecontroleerd aan de hand van de roosters die instanties publiceren. Je kunt elke tijd een paar minuten verschuiven, zodat die met de tijd van je moskee overeenkomt."
     ]
   },

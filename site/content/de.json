@@ -2,7 +2,7 @@
   "language": "Deutsch",
   "dir": "ltr",
   "appName": "Wajh: Qibla & Prayer Times",
-  "tagline": "Gebetszeiten und Qibla, ohne Werbung und Tracking.",
+  "tagline": "Gebetszeiten, Qibla und Koran, ohne Werbung und Tracking.",
   "nav": {
     "home": "Startseite",
     "privacy": "Datenschutz",
@@ -10,10 +10,10 @@
     "accessibility": "Barrierefreiheit"
   },
   "home": {
-    "intro": "Gebetszeiten nach 17 Berechnungsmethoden, ein Qibla-Kompass und eine Qibla-Karte, Ramadan-Zeiten, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
+    "intro": "Gebetszeiten, die den Moscheen in deinem Land folgen, ein Qibla-Kompass, der ganze Koran mit zehn Rezitatoren, Mekka live, Widgets, ein Tasbih und ein Tracker für Fastentage und verpasste Gebete. Auf Englisch, Niederländisch, Deutsch, Französisch, Türkisch und Arabisch.",
     "points": [
       "Keine Werbung, keine Abos, kein Konto.",
-      "Über dich wird nichts gesammelt. Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone; Ortsnamen, die Stadtsuche und die Karte kommen von Apple Karten, Koranrezitationen vom eigenen Audioserver der App, auf dem ich nicht festhalte, wer zuhört, und Mekka live von YouTube.",
+      "Über dich wird nichts gesammelt: Deine Einstellungen, dein Tasbih und dein Tracker bleiben auf deinem iPhone. Ortsnamen und die Karte kommen von Apple Karten, Rezitationen vom eigenen Audioserver der App und Mekka live von YouTube.",
       "Die Zeiten folgen der Methode deiner Moschee oder Institution und wurden mit den Gebetsplänen abgeglichen, die Institutionen veröffentlichen. Du kannst jede Zeit um ein paar Minuten verschieben, damit sie zu deiner Moschee passt."
     ]
   },
