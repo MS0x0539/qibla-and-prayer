@@ -277,62 +277,21 @@ private struct AppIconChoice: View {
     }
 }
 
+/// Who the app builds on: a name, what it's for and where to find it. The licences' full texts ship inside the app
+/// next to what they cover, which is all they ask: App/Adhan-LICENSE.txt (MIT), App/Quran/AmiriQuran-OFL.txt (OFL),
+/// and the copyright block of the Qur'an text (Tanzil also asks for its name and a link, which are here).
 struct AcknowledgementsView: View {
-    /// The font's licence (OFL 1.1), bundled next to it.
-    private static let amiriLicense = Bundle.main.url(forResource: "AmiriQuran-OFL", withExtension: "txt")
-        .flatMap { try? String(contentsOf: $0, encoding: .utf8) }
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("This app uses Adhan, by Batoul Apps, under the MIT License.")
-                    .foregroundStyle(Theme.muted)
-                // Licence text stays in English, as published.
-                Text(verbatim: """
-                    The MIT License (MIT)
-
-                    Copyright (c) 2016 Batoul Apps
-
-                    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and \
-                    associated documentation files (the "Software"), to deal in the Software without restriction, \
-                    including without limitation the rights to use, copy, modify, merge, publish, distribute, \
-                    sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is \
-                    furnished to do so, subject to the following conditions:
-
-                    The above copyright notice and this permission notice shall be included in all copies or \
-                    substantial portions of the Software.
-
-                    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT \
-                    NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND \
-                    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, \
-                    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT \
-                    OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                    """)
-                    .font(.footnote)
-                    .environment(\.layoutDirection, .leftToRight)
-                    .textSelection(.enabled)
+                credit("Adhan · Batoul Apps", Text("Calculates the prayer times and the Qibla direction."),
+                       site: "github.com/batoulapps/adhan-swift")
                 Divider().overlay(Theme.line)
-                // Tanzil's terms: the text unchanged, its source named and linked.
-                Text("The Qur'an text is the Uthmani text of the Tanzil Project, used unchanged under its terms (Creative Commons Attribution 3.0).")
-                    .foregroundStyle(Theme.muted)
-                Link(destination: URL(string: "https://tanzil.net")!) {
-                    Text(verbatim: "tanzil.net")
-                }
+                credit("Tanzil Project", Text("The Qur'an text."), site: "tanzil.net")
                 Divider().overlay(Theme.line)
-                Text("The recitations come from Islamic Network (alquran.cloud); the app plays them from its own copy. They remain the copyright of their reciters.")
-                    .foregroundStyle(Theme.muted)
-                Link(destination: URL(string: "https://alquran.cloud")!) {
-                    Text(verbatim: "alquran.cloud")
-                }
+                credit("Islamic Network", Text("The recitations; their reciters keep the copyright."), site: "alquran.cloud")
                 Divider().overlay(Theme.line)
-                Text("The Qur'an is shown in the Amiri Quran font by the Amiri Project, under the SIL Open Font License.")
-                    .foregroundStyle(Theme.muted)
-                if let license = Self.amiriLicense {
-                    Text(verbatim: license)
-                        .font(.footnote)
-                        .environment(\.layoutDirection, .leftToRight)
-                        .textSelection(.enabled)
-                }
+                credit("Amiri Project", Text("The Amiri Quran font."), site: "github.com/aliftype/amiri")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(20)
@@ -340,6 +299,19 @@ struct AcknowledgementsView: View {
         .background(Theme.background.ignoresSafeArea())
         .navigationTitle("Acknowledgements")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func credit(_ name: String, _ reason: Text, site: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(verbatim: name)
+                .font(.headline)
+                .foregroundStyle(Theme.ink)
+            reason
+                .foregroundStyle(Theme.muted)
+            Link(destination: URL(string: "https://\(site)")!) {
+                Text(verbatim: site)
+            }
+        }
     }
 }
 

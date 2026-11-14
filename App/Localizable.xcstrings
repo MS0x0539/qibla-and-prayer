@@ -7787,40 +7787,6 @@
         }
       }
     },
-    "The recitations come from Islamic Network (alquran.cloud); the app plays them from its own copy. They remain the copyright of their reciters.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "مصدر التلاوات Islamic Network ‏(alquran.cloud)، ويشغّلها التطبيق من نسخته الخاصة. وتبقى حقوقها لقرّائها."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Die Rezitationen stammen von Islamic Network (alquran.cloud); die App spielt sie aus einer eigenen Kopie ab. Das Urheberrecht bleibt bei den Rezitatoren."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les récitations proviennent d’Islamic Network (alquran.cloud) ; l’app les lit depuis sa propre copie. Elles restent la propriété de leurs récitateurs."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "De recitaties komen van Islamic Network (alquran.cloud); de app speelt ze af vanaf een eigen kopie. Het auteursrecht blijft bij de reciteurs."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tilavetler Islamic Network'ten (alquran.cloud) gelir; uygulama bunları kendi kopyasından çalar. Telif hakları karilerine aittir."
-          }
-        }
-      }
-    },
     "Reciter": {
       "localizations": {
         "ar": {
@@ -10099,74 +10065,6 @@
         }
       }
     },
-    "The Qur'an is shown in the Amiri Quran font by the Amiri Project, under the SIL Open Font License.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يُعرض القرآن بخط Amiri Quran من مشروع أميري، بموجب رخصة SIL Open Font License."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Der Koran wird in der Schrift Amiri Quran des Amiri Project angezeigt, unter der SIL Open Font License."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le Coran est affiché avec la police Amiri Quran de l’Amiri Project, sous la licence SIL Open Font License."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "De Koran wordt getoond in het lettertype Amiri Quran van het Amiri Project, onder de SIL Open Font License."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kur'an, Amiri Projesi'nin Amiri Quran yazı tipiyle, SIL Open Font License kapsamında gösterilir."
-          }
-        }
-      }
-    },
-    "The Qur'an text is the Uthmani text of the Tanzil Project, used unchanged under its terms (Creative Commons Attribution 3.0).": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "نص القرآن هو النص العثماني لمشروع تنزيل، ويُستخدم دون تغيير وفق شروطه (المشاع الإبداعي، نسب المصنف 3.0)."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Der Korantext ist der Uthmani-Text des Tanzil Project, unverändert nach dessen Bedingungen verwendet (Creative Commons Namensnennung 3.0)."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le texte du Coran est le texte uthmani du Tanzil Project, utilisé sans modification selon ses conditions (Creative Commons Attribution 3.0)."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "De Korantekst is de Uthmani-tekst van het Tanzil Project, ongewijzigd gebruikt volgens de voorwaarden ervan (Creative Commons Naamsvermelding 3.0)."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kur'an metni, Tanzil Projesi'nin Osmanî metnidir ve şartlarına uygun olarak değiştirilmeden kullanılır (Creative Commons Atıf 3.0)."
-          }
-        }
-      }
-    },
     "The app follows the language of your iPhone, unless you choose another one here.": {
       "localizations": {
         "ar": {
@@ -10673,40 +10571,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kâğıt gibi çevrilen mushafın tamamı; indirebileceğiniz on kariden tilavetle."
-          }
-        }
-      }
-    },
-    "This app uses Adhan, by Batoul Apps, under the MIT License.": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يستخدم هذا التطبيق مكتبة Adhan من Batoul Apps بموجب ترخيص MIT."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Diese App verwendet Adhan von Batoul Apps unter der MIT-Lizenz."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cette app utilise Adhan, de Batoul Apps, sous licence MIT."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deze app gebruikt Adhan van Batoul Apps, onder de MIT-licentie."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bu uygulama, Batoul Apps'in Adhan kütüphanesini MIT Lisansı altında kullanır."
           }
         }
       }
@@ -12543,6 +12407,142 @@
           "stringUnit": {
             "state": "translated",
             "value": "Başka bir kari seçin"
+          }
+        }
+      }
+    },
+    "Calculates the prayer times and the Qibla direction.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحسب مواقيت الصلاة واتجاه القبلة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berechnet die Gebetszeiten und die Qibla-Richtung."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calcule les horaires de prière et la direction de la qibla."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berekent de gebedstijden en de qibla-richting."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Namaz vakitlerini ve kıble yönünü hesaplar."
+          }
+        }
+      }
+    },
+    "The Qur'an text.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نص القرآن."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Text des Korans."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le texte du Coran."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De tekst van de Koran."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kur'an metni."
+          }
+        }
+      }
+    },
+    "The recitations; their reciters keep the copyright.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التلاوات، وتبقى حقوقها لقرّائها."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Rezitationen; das Urheberrecht bleibt bei den Rezitatoren."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les récitations ; leurs récitateurs en gardent les droits."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De recitaties; het auteursrecht blijft bij de reciteurs."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilavetler; telif hakları karilerine aittir."
+          }
+        }
+      }
+    },
+    "The Amiri Quran font.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خط Amiri Quran."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Schrift Amiri Quran."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La police Amiri Quran."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het lettertype Amiri Quran."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amiri Quran yazı tipi."
           }
         }
       }
