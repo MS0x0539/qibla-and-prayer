@@ -352,6 +352,15 @@ struct PrayerTimeTests {
         #expect(Formats.number(1448) == "1448")
     }
 
+    @Test func everyReciterHasMeasuredSizes() throws {
+        for reciter in Reciter.all {
+            let sizes = try #require(reciter.sizes)
+            #expect(sizes.surahs.count == 114 && sizes.juz.count == 30)
+            #expect(sizes.surahs.allSatisfy { $0 > 0 } && sizes.juz.allSatisfy { $0 > 0 })
+            #expect(reciter.wholeQuranBytes == sizes.total)
+        }
+    }
+
     @Test func typedPageNumbers() {
         #expect(GoToPageView.page(from: "12") == 12)
         #expect(GoToPageView.page(from: "١٢") == 12)  // an Arabic keypad

@@ -44,8 +44,11 @@ struct Reciter: Identifiable, Hashable {
     /// Verses played before: Caches, which iOS may clear when it needs space.
     func cached(_ number: Int) -> URL { URL.cachesDirectory.appending(path: "Recitation/\(id)/\(number).mp3") }
 
-    /// About the size of the whole Qur'an by this reciter: some 30 hours of recitation at its bitrate.
-    var wholeQuranBytes: Int64 { Int64(bitrate) * 1000 / 8 * 30 * 3600 }
+    /// The bytes each surah and juz take by this reciter, measured on the app's own copy.
+    var sizes: RecitationSizes.Sizes? { RecitationSizes.table[id] }
+
+    /// The size of the whole Qur'an by this reciter (a guess from the bitrate for one not measured).
+    var wholeQuranBytes: Int64 { sizes?.total ?? Int64(bitrate) * 1000 / 8 * 30 * 3600 }
 }
 
 /// Recites from any verse on, page after page. Each verse is downloaded once and kept in Caches (the service asks
@@ -68,6 +71,11 @@ final class Recitation {
 
     /// Pauses after a while, or stops at the end of the surah.
     private(set) var sleepTimer = SleepTimer.off
+
+    /// The speeds the player offers, slowest first; 1× is the reciter's own pace.
+    static let speeds: [Float] = [0.75, 1, 1.25, 1.5, 2]
+    /// How fast the reciter goes, kept for next time.
+    private(set) var speed = UserDefaults.standard.object(forKey: "recitationSpeed") as? Float ?? 1
     @ObservationIgnored private var sleepTask: Task<Void, Never>?
     /// The surah the recitation stops after, with the timer at "end of surah".
     @ObservationIgnored private var lastSurah: Int?
@@ -88,6 +96,7 @@ final class Recitation {
         // Recitation is audio: no AirPlay as video to a TV, which made iOS suggest the TV ("Tap to AirPlay").
         // AirPlay speakers can still be picked in Control Center.
         player.allowsExternalPlayback = false
+        player.defaultRate = speed
         observation = player.observe(\.currentItem) { [weak self] _, _ in
             Task { @MainActor in self?.advanced() }
         }
@@ -119,6 +128,32 @@ final class Recitation {
             }
             return .success
         }
+        // The same speeds in the Lock Screen's player.
+        commands.changePlaybackRateCommand.supportedPlaybackRates = Self.speeds.map { NSNumber(value: $0) }
+        commands.changePlaybackRateCommand.addTarget { [weak self] event in
+            guard let rate = (event as? MPChangePlaybackRateCommandEvent)?.playbackRate else { return .commandFailed }
+            Task { @MainActor in self?.setSpeed(rate) }
+            return .success
+        }
+    }
+
+    func setSpeed(_ speed: Float) {
+        self.speed = speed
+        UserDefaults.standard.set(speed, forKey: "recitationSpeed")
+        // play() takes the default rate; a playing player changes at once.
+        player.defaultRate = speed
+        if player.rate != 0 { player.rate = speed }
+        showNowPlaying()
+    }
+
+    /// The speed a tap on the player's speed button goes to: the next one, after 2× the slowest again.
+    static func speed(after speed: Float) -> Float {
+        speeds.first { $0 > speed } ?? speeds[0]
+    }
+
+    /// "1.25×", in the app's language.
+    static func label(_ speed: Float) -> String {
+        Double(speed).formatted(.number.precision(.fractionLength(0...2)).locale(.app)) + "×"
     }
 
     func play(from verse: Int, reciter: Reciter) {
@@ -138,6 +173,7 @@ final class Recitation {
     func pause() {
         isPlaying = false
         player.pause()
+        showNowPlaying()
         // Paused, the app no longer counts as playing (resume() takes the audio session back).
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
@@ -147,6 +183,7 @@ final class Recitation {
         isPlaying = true
         try? AVAudioSession.sharedInstance().setActive(true)
         player.play()
+        showNowPlaying()
         load()
     }
 
@@ -243,6 +280,8 @@ final class Recitation {
 
     private func enqueue(_ file: URL, verse: Int) {
         let item = AVPlayerItem(url: file)
+        // Faster or slower without changing the reciter's pitch, in the best quality iOS has (made for music).
+        item.audioTimePitchAlgorithm = .spectral
         queue.append((item, verse))
         player.insert(item, after: nil)
         if isPlaying { player.play() }
@@ -274,6 +313,8 @@ final class Recitation {
             MPMediaItemPropertyTitle: "\(Quran.title(of: quran.surahs[item.surah - 1])) \(item.surah):\(item.number)",
             MPMediaItemPropertyArtist: artistLine,
             MPMediaItemPropertyArtwork: Self.artwork,
+            MPNowPlayingInfoPropertyPlaybackRate: isPlaying ? speed : 0,
+            MPNowPlayingInfoPropertyDefaultPlaybackRate: speed,
         ]
     }
 

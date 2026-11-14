@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// The reader's settings in one place instead of a menu: the page (paper or night, text size), the reciter, the sleep
-/// timer, and the recitation downloaded to listen offline.
+/// The reader's settings in one place instead of a menu: the page (paper or night, text size), the reciter, and the
+/// recitation downloaded to listen offline. Speed and the sleep timer are in the player, while a recitation is on.
 struct ReaderSettingsView: View {
     let page: Int
     @Binding var night: Bool
@@ -13,7 +13,6 @@ struct ReaderSettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        let recitation = Recitation.shared
         NavigationStack {
             List {
                 Section("Page") {
@@ -51,34 +50,12 @@ struct ReaderSettingsView: View {
                 .listRowBackground(Theme.card)
 
                 Section("Reciter") {
-                    ForEach(Reciter.all) { reciter in
-                        Button { reciterID = reciter.id } label: {
-                            HStack {
-                                Text(verbatim: reciter.displayName)
-                                    .foregroundStyle(Theme.ink)
-                                Spacer()
-                                if reciter.id == reciterID {
-                                    Image(systemName: "checkmark")
-                                        .foregroundStyle(Theme.gold)
-                                }
-                            }
-                        }
-                        .accessibilityAddTraits(reciter.id == reciterID ? .isSelected : [])
+                    NavigationLink {
+                        ReciterList()
+                    } label: {
+                        Text(verbatim: Reciter.named(reciterID).displayName)
+                            .foregroundStyle(Theme.ink)
                     }
-                }
-                .listRowBackground(Theme.card)
-
-                Section("Sleep timer") {
-                    Picker("Sleep timer", selection: Binding(get: { recitation.sleepTimer },
-                                                             set: { recitation.setSleepTimer($0) })) {
-                        Text("Off").tag(Recitation.SleepTimer.off)
-                        ForEach([15, 30, 60], id: \.self) { minutes in
-                            Text("\(minutes) min").tag(Recitation.SleepTimer.minutes(minutes))
-                        }
-                        Text("End of surah").tag(Recitation.SleepTimer.endOfSurah)
-                    }
-                    .pickerStyle(.inline)
-                    .labelsHidden()
                 }
                 .listRowBackground(Theme.card)
 
@@ -97,8 +74,147 @@ struct ReaderSettingsView: View {
     }
 }
 
-/// Downloads the recitation of the surah or juz on the page, or of the whole Qur'an, by the chosen reciter, to listen
-/// without internet. The files stay inside the app until they are removed here.
+/// The ten reciters. The one chosen recites, and is the one downloaded; choosing goes back.
+struct ReciterList: View {
+    @AppStorage("reciter") private var reciterID = Reciter.all[0].id
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        List {
+            ForEach(Reciter.all) { reciter in
+                Button {
+                    reciterID = reciter.id
+                    dismiss()
+                } label: {
+                    HStack {
+                        Text(verbatim: reciter.displayName)
+                            .foregroundStyle(Theme.ink)
+                        Spacer()
+                        if reciter.id == reciterID {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(Theme.gold)
+                        }
+                    }
+                }
+                .accessibilityAddTraits(reciter.id == reciterID ? .isSelected : [])
+            }
+            .listRowBackground(Theme.card)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Theme.background.ignoresSafeArea())
+        .navigationTitle("Reciter")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// A surah, a juz or the whole Qur'an to download by one reciter, with the space it takes.
+struct RecitationPart: Identifiable {
+    let id: String
+    let title: String
+    let verses: Range<Int>
+    let bytes: Int64?
+
+    static func surah(_ number: Int, by reciter: Reciter) -> RecitationPart {
+        let surah = Quran.shared.surahs[number - 1]
+        return RecitationPart(id: "surah \(number)", title: Quran.title(of: surah),
+                              verses: surah.start..<(surah.start + surah.ayahs), bytes: reciter.sizes?.surahs[number - 1])
+    }
+
+    static func juz(_ number: Int, by reciter: Reciter) -> RecitationPart {
+        let quran = Quran.shared
+        let end = number < quran.juzStarts.count ? quran.juzStarts[number] : quran.verses.count
+        return RecitationPart(id: "juz \(number)", title: String(localized: "Juz \(number)", bundle: .app),
+                              verses: quran.juzStarts[number - 1]..<end, bytes: reciter.sizes?.juz[number - 1])
+    }
+
+    static func whole(by reciter: Reciter) -> RecitationPart {
+        RecitationPart(id: "all", title: String(localized: "The whole Qur'an", bundle: .app),
+                       verses: 0..<Quran.shared.verses.count, bytes: reciter.wholeQuranBytes)
+    }
+}
+
+/// One part and its size: downloaded, downloading (with a way to cancel), or a Download button.
+struct RecitationDownloadRow: View {
+    let part: RecitationPart
+    let reciter: Reciter
+    let downloaded: Bool
+    /// The surah's number, in the list of all surahs.
+    var number: Int?
+
+    var body: some View {
+        let downloads = RecitationDownloads.shared
+        HStack(spacing: 12) {
+            if let number {
+                Text(verbatim: Formats.number(number))
+                    .font(.subheadline.monospacedDigit())
+                    .foregroundStyle(Theme.muted)
+                    .frame(minWidth: 28, alignment: .leading)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(verbatim: part.title)
+                    .foregroundStyle(Theme.ink)
+                if let bytes = part.bytes {
+                    Text(verbatim: bytes.formatted(.byteCount(style: .file).locale(.app)))
+                        .font(.subheadline)
+                        .foregroundStyle(Theme.muted)
+                }
+            }
+            Spacer()
+            if downloaded {
+                Label("Downloaded", systemImage: "checkmark.circle.fill")
+                    .font(.subheadline)
+                    .foregroundStyle(Theme.gold)
+            } else if let current = downloads.current, current.title == part.title {
+                ProgressView(value: current.progress)
+                    .frame(width: 80)
+                    .tint(Theme.gold)
+                Button {
+                    downloads.cancel()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                }
+                .accessibilityLabel(Text("Cancel"))
+                .foregroundStyle(Theme.muted)
+            } else {
+                Button("Download") { downloads.download(part.verses, by: reciter, title: part.title) }
+                    .buttonStyle(.bordered)
+                    .disabled(downloads.current != nil)
+            }
+        }
+    }
+}
+
+/// Every surah or every juz, each with its size by the chosen reciter, to download one at a time.
+struct RecitationDownloadList: View {
+    let juz: Bool
+    @AppStorage("reciter") private var reciterID = Reciter.all[0].id
+    @State private var downloaded: Set<String> = []
+
+    var body: some View {
+        let reciter = Reciter.named(reciterID)
+        let parts = juz ? (1...30).map { RecitationPart.juz($0, by: reciter) }
+                        : (1...114).map { RecitationPart.surah($0, by: reciter) }
+        let downloads = RecitationDownloads.shared
+        List {
+            ForEach(Array(parts.enumerated()), id: \.element.id) { offset, part in
+                RecitationDownloadRow(part: part, reciter: reciter, downloaded: downloaded.contains(part.id),
+                                      number: juz ? nil : offset + 1)
+            }
+            .listRowBackground(Theme.card)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Theme.background.ignoresSafeArea())
+        .navigationTitle(juz ? Text("All juz") : Text("All surahs"))
+        .navigationBarTitleDisplayMode(.inline)
+        // On opening, after a download, and for another reciter.
+        .task(id: "\(reciterID) \(downloads.current == nil)") {
+            downloaded = Set(parts.filter { RecitationDownloads.isDownloaded($0.verses, by: reciter) }.map(\.id))
+        }
+    }
+}
+
+/// Downloads the recitation of the surah or juz on the page, the whole Qur'an, or any surah or juz from the lists, by
+/// the chosen reciter, to listen without internet. The files stay inside the app until they are removed here.
 struct OfflineRecitationSection: View {
     let page: Int
     @AppStorage("reciter") private var reciterID = Reciter.all[0].id
@@ -106,19 +222,20 @@ struct OfflineRecitationSection: View {
     @State private var downloaded: Set<String> = []
     @State private var bytes: Int64 = 0
 
-    private struct Part {
-        let id: String
-        let title: String
-        let verses: Range<Int>
-        var note: String?
-    }
-
     var body: some View {
         let reciter = Reciter.named(reciterID)
         let downloads = RecitationDownloads.shared
         Section {
-            ForEach(parts(by: reciter), id: \.id) { part in
-                row(part, reciter: reciter, downloads: downloads)
+            ForEach(parts(by: reciter)) { part in
+                RecitationDownloadRow(part: part, reciter: reciter, downloaded: downloaded.contains(part.id))
+            }
+            NavigationLink { RecitationDownloadList(juz: false) } label: {
+                Text("All surahs")
+                    .foregroundStyle(Theme.ink)
+            }
+            NavigationLink { RecitationDownloadList(juz: true) } label: {
+                Text("All juz")
+                    .foregroundStyle(Theme.ink)
             }
             if downloads.missing > 0 {
                 Text("Some verses couldn't be downloaded. Download again to finish.")
@@ -142,56 +259,11 @@ struct OfflineRecitationSection: View {
         .task(id: "\(reciterID) \(downloads.current == nil)") { refresh(reciter) }
     }
 
-    private func row(_ part: Part, reciter: Reciter, downloads: RecitationDownloads) -> some View {
-        HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(verbatim: part.title)
-                    .foregroundStyle(Theme.ink)
-                if let note = part.note {
-                    Text(verbatim: note)
-                        .font(.subheadline)
-                        .foregroundStyle(Theme.muted)
-                }
-            }
-            Spacer()
-            if downloaded.contains(part.id) {
-                Label("Downloaded", systemImage: "checkmark.circle.fill")
-                    .font(.subheadline)
-                    .foregroundStyle(Theme.gold)
-            } else if let current = downloads.current, current.title == part.title {
-                ProgressView(value: current.progress)
-                    .frame(width: 80)
-                    .tint(Theme.gold)
-                Button {
-                    downloads.cancel()
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                }
-                .accessibilityLabel(Text("Cancel"))
-                .foregroundStyle(Theme.muted)
-            } else {
-                Button("Download") { downloads.download(part.verses, by: reciter, title: part.title) }
-                    .buttonStyle(.bordered)
-                    .disabled(downloads.current != nil)
-            }
-        }
-    }
-
     /// The surah and the juz the page begins with, and the whole Qur'an.
-    private func parts(by reciter: Reciter) -> [Part] {
+    private func parts(by reciter: Reciter) -> [RecitationPart] {
         let quran = Quran.shared
         guard let first = quran.verses(onPage: page).first else { return [] }
-        let surah = quran.surahs[first.surah - 1]
-        let juz = quran.juz(ofVerse: first.index)
-        let juzEnd = juz < quran.juzStarts.count ? quran.juzStarts[juz] : quran.verses.count
-        let size = reciter.wholeQuranBytes.formatted(.byteCount(style: .file).locale(.app))
-        return [
-            Part(id: "surah", title: Quran.title(of: surah), verses: surah.start..<(surah.start + surah.ayahs)),
-            Part(id: "juz", title: String(localized: "Juz \(juz)", bundle: .app),
-                 verses: quran.juzStarts[juz - 1]..<juzEnd),
-            Part(id: "all", title: String(localized: "The whole Qur'an", bundle: .app), verses: 0..<quran.verses.count,
-                 note: String(localized: "About \(size)", bundle: .app)),
-        ]
+        return [.surah(first.surah, by: reciter), .juz(quran.juz(ofVerse: first.index), by: reciter), .whole(by: reciter)]
     }
 
     private func refresh(_ reciter: Reciter) {

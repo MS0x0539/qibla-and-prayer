@@ -27,6 +27,7 @@ struct QuranView: View {
     // `-quranSheet settings` or `goto` opens that sheet first (used for CI screenshots).
     @State private var showingSettings = UserDefaults.standard.string(forKey: "quranSheet") == "settings"
     @State private var showingGoTo = UserDefaults.standard.string(forKey: "quranSheet") == "goto"
+    @State private var showingReciters = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     /// Until the first page turn, a line says which way the pages go.
     @AppStorage("quranTurnHintSeen") private var turnHintSeen = false
@@ -86,21 +87,18 @@ struct QuranView: View {
                     .accessibilityHint(Text("Go to page"))
                     .accessibilityIdentifier("goToPage")
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        if recitation.isPlaying {
-                            recitation.pause()
-                        } else if let verse = recitation.verse, Quran.shared.page(ofVerse: verse) == page {
-                            recitation.resume()
-                        } else {
+                // Starts a recitation; once one is on, the player under the page has its controls.
+                if recitation.verse == nil {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
                             // From a verse found on this page, or from the top of the page.
                             let first = Quran.shared.verses(onPage: page).first?.index ?? 0
                             recitation.play(from: marked ?? first, reciter: .named(reciterID))
+                        } label: {
+                            Image(systemName: "play.fill")
                         }
-                    } label: {
-                        Image(systemName: recitation.isPlaying ? "pause.fill" : "play.fill")
+                        .accessibilityLabel(Text("Play recitation"))
                     }
-                    .accessibilityLabel(recitation.isPlaying ? Text("Pause recitation") : Text("Play recitation"))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     let bookmarked = QuranProgress.pages(bookmarks).contains(page)
@@ -123,8 +121,13 @@ struct QuranView: View {
                     if !turnHintSeen {
                         TurnHint(style: style) { turnHintSeen = true }
                     }
+                    RecitationBar(style: style) { showingReciters = true }
                     PageBar(page: page, style: style, turn: turn) { showingGoTo = true }
                 }
+            }
+            .sheet(isPresented: $showingReciters) {
+                NavigationStack { ReciterList() }
+                    .presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $showingIndex) {
                 QuranIndexView { verse in
@@ -205,6 +208,98 @@ struct QuranView: View {
     private func turn(to number: Int) {
         guard (1...Quran.pageCount).contains(number) else { return }
         withAnimation(reduceMotion ? nil : .smooth) { page = number }
+    }
+}
+
+/// While a recitation plays or is paused, above the page bar: the reciter (a tap picks another), the speed (a tap goes
+/// to the next), the sleep timer, play or pause, and stop.
+private struct RecitationBar: View {
+    let style: MushafStyle
+    let chooseReciter: () -> Void
+
+    var body: some View {
+        let recitation = Recitation.shared
+        if let verse = recitation.verse {
+            let item = Quran.shared.verses[verse]
+            HStack(spacing: 0) {
+                Button(action: chooseReciter) {
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(verbatim: recitation.reciterName)
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(style.ink)
+                        Text(verbatim: "\(Formats.number(item.surah)):\(Formats.number(item.number))")
+                            .font(.caption.monospacedDigit())
+                            .foregroundStyle(style.muted)
+                    }
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint(Text("Choose another reciter"))
+                Button {
+                    recitation.setSpeed(Recitation.speed(after: recitation.speed))
+                } label: {
+                    Text(verbatim: Recitation.label(recitation.speed))
+                        .font(.subheadline.weight(.semibold).monospacedDigit())
+                        .frame(minWidth: 56, minHeight: 44)
+                }
+                .accessibilityLabel(Text("Speed"))
+                .accessibilityValue(Text(verbatim: Recitation.label(recitation.speed)))
+                .accessibilityAdjustableAction { direction in
+                    let speeds = Recitation.speeds
+                    guard let index = speeds.firstIndex(of: recitation.speed) else { return }
+                    switch direction {
+                    case .increment: if index + 1 < speeds.count { recitation.setSpeed(speeds[index + 1]) }
+                    case .decrement: if index > 0 { recitation.setSpeed(speeds[index - 1]) }
+                    @unknown default: break
+                    }
+                }
+                .sensoryFeedback(.selection, trigger: recitation.speed)
+                Menu {
+                    Picker("Sleep timer", selection: Binding(get: { recitation.sleepTimer },
+                                                             set: { recitation.setSleepTimer($0) })) {
+                        Text("Off").tag(Recitation.SleepTimer.off)
+                        ForEach([15, 30, 60], id: \.self) { minutes in
+                            Text("\(minutes) min").tag(Recitation.SleepTimer.minutes(minutes))
+                        }
+                        Text("End of surah").tag(Recitation.SleepTimer.endOfSurah)
+                    }
+                } label: {
+                    Image(systemName: recitation.sleepTimer == .off ? "moon.zzz" : "moon.zzz.fill")
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel(Text("Sleep timer"))
+                .accessibilityValue(sleepTimerValue(recitation.sleepTimer))
+                Button {
+                    if recitation.isPlaying { recitation.pause() } else { recitation.resume() }
+                } label: {
+                    Image(systemName: recitation.isPlaying ? "pause.fill" : "play.fill")
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel(recitation.isPlaying ? Text("Pause recitation") : Text("Play recitation"))
+                Button {
+                    recitation.stop()
+                } label: {
+                    Image(systemName: "xmark")
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel(Text("Stop recitation"))
+            }
+            .foregroundStyle(style.accent)
+            .padding(.leading, 16)
+            .padding(.trailing, 4)
+            .background(style.paper)
+            .overlay(alignment: .top) { style.ornament.opacity(0.5).frame(height: 1) }
+        }
+    }
+
+    private func sleepTimerValue(_ timer: Recitation.SleepTimer) -> Text {
+        switch timer {
+        case .off: Text("Off")
+        case .minutes(let minutes): Text("\(minutes) min")
+        case .endOfSurah: Text("End of surah")
+        }
     }
 }
 
