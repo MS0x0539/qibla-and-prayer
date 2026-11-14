@@ -332,7 +332,8 @@ struct SetupView: View {
                     SummaryRow(label: "Location", value: model.place?.displayNameWithCountry ?? String(localized: "Not set", bundle: .app))
                     SummaryRow(label: "Calculation method", value: model.settings.methodSummary)
                     SummaryRow(label: "Asr calculation", value: model.settings.asrSummary)
-                    SummaryRow(label: "Reminders", value: remindersSummary, last: true)
+                    SummaryRow(label: "Reminders", value: remindersSummary)
+                    SummaryRow(label: "Lock Screen", value: lockScreenSummary, last: true)
                 }
                 .background(Theme.card, in: RoundedRectangle(cornerRadius: 16))
                 .padding(.top, 28)
@@ -353,6 +354,12 @@ struct SetupView: View {
         guard let place = model.place,
               let item = model.times(on: Date(), at: place)?.first(where: { $0.kind == kind }) else { return nil }
         return Text("Today \(Formats.time(item.time, in: place.timeZone))")
+    }
+
+    /// The next prayer's Live Activity, as chosen on the page before (off while iOS has Live Activities off).
+    private var lockScreenSummary: String {
+        nextPrayerActivity && model.liveActivitiesEnabled
+            ? String(localized: "On", bundle: .app) : String(localized: "Off", bundle: .app)
     }
 
     private var remindersSummary: String {
